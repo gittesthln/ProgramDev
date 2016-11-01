@@ -1,0 +1,636 @@
+%-*- coding: utf-8 -*-
+%
+% enshuuhead.tex 2004 版
+%　
+%
+\usepackage{array}
+%\usepackage{times}
+%\usepackage{timesnewp}
+%\usepackage{mathabx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{fancybox}
+\usepackage{epic}
+\usepackage{eepic}
+\usepackage{multibox}
+\usepackage{moreverb}
+%\usepackage[all,2cell]{xy}
+\usepackage{rotating}
+\rotdriver{dvips}
+%
+% the following macros are taken from Eijkhoout'book
+%	TeX by Topic Chap. 13.8.6 (p.137)
+%   some modification made by T. Hilano
+%
+\def\ifEq#1#2{\ifnum#1=#2\relax\taketrue \else \takefalse \fi}
+\def\ifGt#1#2{\ifnum#1>#2\relax\taketrue \else \takefalse \fi}
+\def\ifLt#1#2{\ifnum#1<#2\relax\taketrue \else \takefalse \fi}
+\def\takefalse\fi#1#2{\fi#2}
+\def\taketrue\else\takefalse\fi#1#2{\fi#1}
+
+\def\ifEqString#1#2{\def\stringone{#1}\def\stringtwo{#2}\ifx\stringone\stringtwo}
+%
+% End of Citation
+%
+\newcommand{\cosec}{\mathop{\nsh\text{cosec}}\nolimits}
+\newcommand{\goup}[1]{\raise1.0ex\hbox{#1}}
+
+\newcommand{\FRAC}[2]{\displaystyle\frac{{#1}}{#2}}
+\newcommand{\Expo}[1]{\raisebox{0.7ex}{{$\scriptstyle{#1}$}}}
+\newcommand{\SUM}{\displaystyle\sum}
+\newcommand{\PROD}{\displaystyle\prod}
+\newcommand{\INT}{\displaystyle\int}
+
+\newcommand{\DispInt}[4]{\makebox[#1]{%
+	$\displaystyle#2_{%
+		\mbox{\scriptsize$\begin{array}{c}#4\end{array}$}}%
+	$}\hspace{#3}}
+\newcommand{\DispInts}[4]{\makebox[#1]{%
+	$\smash{\displaystyle#2_{%
+		\mbox{\scriptsize$\begin{array}{c}#4\end{array}$}}}\vphantom{\INT}%
+	$}\hspace{#3}}
+
+\newcommand{\dint}{\mathop{\int\!\!\int}}
+\newcommand{\DINT}[1]{\DispInt{2em}{\dint}{0.5em}{#1}}
+\newcommand{\DINTs}[1]{\DispInts{2em}{\dint}{0.5em}{#1}}
+
+\newcommand{\triint}{\mathop{\int\!\!\int\!\!\int}}
+\newcommand{\TRIINT}[1]{\DispInt{2.2em}{\triint}{0.5em}{#1}}
+\newcommand{\TRIINTs}[1]{\DispInts{2.2em}{\triint}{0.5em}{#1}}
+
+\newcommand{\nint}{\mathop{\int\!\!\int\cdots\int}}
+\newcommand{\nINT}[1]{\DispInt{2.6em}{\nint}{0.9em}{#1}}
+\newcommand{\nINTs}[1]{\DispInts{2.6em}{\nint}{0.9em}{#1}}
+
+\newcommand{\LIMto}[2]{\displaystyle{\lim_{#1\rightarrow#2}}}
+
+\newcommand{\Pard}[1]{\partial#1}
+\newcommand{\ParDD}[4]{\FRAC{\partial^{#3}#1}{\partial{#2}^{#4}}}
+\newcommand{\ParDn}[3]{\ParDD{#1}{#2}{#3}{#3}}
+\newcommand{\ParD}[2]{\ParDD{#1}{#2}{}{}}
+
+\newcommand{\Del}{{\mit \Delta}}
+\newcommand{\GAMMA}{{\mit \Gamma}}
+
+\newcommand{\Arc}[1]{\stackrel{\frown}{\text{#1}}}
+\newcommand{\VEC}[1]{\overrightarrow{\mathrm{#1}}}
+\renewcommand{\Vec}[1]{\mbox{\boldmath $#1$}}
+
+\newcommand{\Matrix}[2]{\left(\SetComponent{#1}{#2}{c}\right) }
+\newcommand{\MatrixR}[2]{\left(\SetComponent{#1}{#2}{r}\right) }
+\newcommand{\Det}[2]{\left| \SetComponent{#1}{#2}{c}\right| }
+\newcommand{\DetR}[2]{\left| \SetComponent{#1}{#2}{r}\right| }
+\newcommand{\Vector}[1]{\Matrix{1}{#1}}
+\newcommand{\VectorR}[1]{\Matrix{1}{#1}}
+\newcommand{\Vect}[1]{\mathbf #1}
+\newcommand{\SetComponent}[3]{%
+	\def\CoNo{#1}\setcounter{subNo}{-1}%
+	\begin{array}{*{#1}{#3}}\MakeRaw #2?\end{array}}
+\newcommand{\MakeRaw}[1]{
+	\def\temp{#1}
+	\ifx\temp\endpiece\relax
+	\else%
+		\stepcounter{subNo}%
+		\ifEq{\value{subNo}}0{\stepcounter{subNo} #1}%
+			{\ifEq{\value{subNo}}1{\cr #1}{& #1}}%
+		\ifnum\value{subNo}=\number\CoNo {\setcounter{subNo}{0}} \fi%
+		\expandafter\MakeRaw%
+	\fi%
+}
+
+\newcommand{\qed}{\hspace{\fill}\rule{3pt}{1ex}\par}
+\newcommand{\Qed}{\hfill\rule{3pt}{1ex}}
+\newcommand{\qedss}{\intline\qed}
+\newcommand{\EquationwithQed}[1]{%
+	\par\noindent%
+%	\hspace*{\fill}%
+	\hspace{0pt plus 1fill}%
+	#1\qed}
+
+\newcommand{\DispMath}[2]{{\setlength{\arraycolsep}{0.15em}\begin{#1}%
+		#2\end{#1}}\ignorespaces}
+%\setlength{\oddsidemargin}{0pt}
+%\setlength{\evensidemargin}{0pt}
+%\setlength{\marginparwidth}{1in}
+%\setlength{\marginparsep}{0pt}
+
+\setlength{\topmargin}{-0.8in}
+\setlength{\headheight}{0.01\paperheight}
+\setlength{\headsep}{0.01\paperheight}
+\setlength{\topskip}{0pt}
+\setlength{\textheight}{\paperheight}
+\addtolength{\textheight}{-0.8in}
+\setlength{\oddsidemargin}{-0.5in}
+\setlength{\textwidth}{\paperwidth}
+\addtolength{\textwidth}{-1in}
+\setlength{\parindent}{0mm}
+%
+%
+%\thispagestyle{enshuu}
+\def\endpiece{?}
+%
+%  均等割付マクロ
+%   再帰呼び出しをして可変引数が取れるようにしてあるので
+%
+\def\WellSpace#1{#1\WellSpaceDo}
+\def\WellSpaceDo#1{%
+  \def\temp{#1}%
+  \ifx\temp\endpiece\relax%
+  \else
+       \hfill#1\expandafter\WellSpaceDo%
+  \fi%
+ }
+%
+%  文字列均等割付マクロ
+%   文字列の前後に空白なし
+%
+\newcommand{\wellspace}[1]{\WellSpace#1?}
+%
+%  文字列の前後に空白あり
+%
+\newcommand{\wellspaceside}[1]{%
+         \hfill{\WellSpace#1?}\hfill\rule{0em}{0em}}
+%\newcommand{\VSpace}[1]{%
+% \rule[-#1\textheight]{0em}{#1\textheight}
+% }
+%
+%     番号なし問題文環境
+%
+\newtheorem{ProbN}{}
+%     番号を出力しない設定
+\renewcommand{\theProbN}{ }
+%
+%　　　番号つき問題文環境
+%
+\newtheorem{Prob}{問題}
+%\renewcommand{\theProb}{{\bfseries\arabic{Prob}. }}
+%    小問用番号設定カウンター  問題ごとにリセット
+\newcounter{Probsub}[Prob]
+\renewcommand{\theProbsub}{\stepcounter{Probsub}\arabic{Probsub}. \ }
+%
+%  置換積分などの表による演習問題で式を中央に書くためのマクロ
+%   \TableSol
+%   #1  問題
+%   #2  解答
+%   #3  解答文記述位置上下移動量(単位をつける。)
+%   #4  解答記述幅
+%
+\newcommand{\TableSol}[4]{%
+#1\ifHMSol{\raisebox{#3}{\hspace{#4}#2}}\fi}
+%
+%   演習問題のヘッダー記述マクロ
+%   \ExcerciseHeadN
+%   #1 科目名
+%   #2 科目名記述前に挿入されるコマンド  通常は空欄でよい。
+%   #3 科目名記述位置調整
+%   #4  ヘッダー記述前に挿入されるコマンド  通常は空欄でよい。
+%   #5 表題の右上に使用されるタイトル
+%
+\newcommand{\ExcerciseHeadN}[5]{%
+\global\def\Pre{#5}%
+%\RunningHead%
+{\hfill
+\setlength{\arrayrulewidth}{0.002\paperwidth}\setlength{\tabcolsep}{0mm}
+  #4
+  \begin{tabular}[t]{|*{3}{p{0.175\paperwidth}|}%
+                      p{0.22\paperwidth}|p{0.11\paperwidth}|}
+  \hline
+  \wellspaceside{科目名}& \wellspaceside{{学科$\bullet$組}}&
+  \wellspaceside{学籍番号} &
+  \wellspaceside{氏名} & \wellspaceside{採点}\\ \hline
+  {#2 \rule{0mm}{0.033\paperheight}%
+    \wellspaceside{{\raisebox{#3mm}{\parbox{0.17\paperwidth}{#1}}}}} &
+   & & & \\ \hline
+  \end{tabular}
+\hfill}
+\setcounter{Prob}{0}
+\setcounter{Probsub}{0}
+\\[-0.02\paperheight]
+}
+\makeatletter
+\newcommand{\ps@enshuu}{%
+\renewcommand{\@oddhead}{%
+\hfill{\raisebox{-0.004\paperheight}%
+         {\rule{0.1\paperwidth}{0.002\paperwidth}}
+  \hspace*{-0.1\paperwidth}%
+  \makebox[0.09\paperwidth][l]{\upshape\Pre\hfill(\theLecNo 回)}}
+}%
+\renewcommand{\@evenhead}{}%
+\renewcommand{\@oddfoot}{}%
+\renewcommand{\@evenfoot}{}%
+}
+\makeatother
+\newcommand{\RunningHead}{%
+%\vspace*{-0.12\paperheight}%
+\hfill%
+  \smash{\raisebox{-0.004\paperheight}%
+         {\rule{0.1\paperwidth}{0.002\paperwidth}}
+  \hspace*{-0.1\paperwidth}%
+  \makebox[0.09\paperwidth][l]{\upshape\Pre\hfill(\theLecNo 回)}}
+%\\[-0.5\baselineskip]
+%  \vspace*{-0.5\baselineskip}\newline%
+}
+\newcommand{\AnsBox}{%
+{\setlength{\fboxrule}{0.002\paperheight}%
+ \fbox{\rule{0em}{1.em}\rule{2.5em}{0em}}
+}}
+%
+\newcommand{\MKSpace}{\rule{2.5em}{0em}}
+%
+%　問題文記述用マクロ
+%
+\newcounter{LecNo}
+\newcommand{\MakeTitleHead}[2]{%
+\expandafter\newcommand\csname Problem#1\endcsname[1]{%
+   \ExcerciseHeadN{\LecName}{}{2}{}{#2}
+   ##1
+   \clearpage}%
+}
+%
+%  演習用紙ごとに通し番号をつけるためのカウンターとコマンドの設定
+%
+\MakeTitleHead{R}{資料}%    \ProblemR(授業中の資料用)
+% A counter ProblemRNo and a command ProblemR are defined.
+\MakeTitleHead{P}{予習}%    \ProblemR(授業中の予習用)
+\MakeTitleHead{HM}{復習}%    \ProblemHM(自宅学習用)
+\MakeTitleHead{AD}{発展}%    \ProblemAD(発展用)
+\MakeTitleHead{}{演習}%    \Problem(授業中の演習用)
+
+%
+% 各授業ごとに用意されたファイルを読み込むためのマクロの定義
+% ホームページでは各回ごとに解答を記述した pdf ファイルを用意するため
+% カウンターのデータを別ファイルに記述する機能を持たせてある。
+%
+\newcommand{\inputfile}[2]{%
+\stepcounter{LecNo}
+\ifHMSol\else%
+%
+%  情報記述ファイルは解答なしのものを全体でTeXにかけたときに作る。
+%   \write15 で使われるファイルは大元で開く。
+%
+\immediate\write15{#1::#2::\arabic{LecNo}}\fi
+ \input #1.tex
+}
+\newcommand{\KeepSpaceShow}[1]{\rule[-15mm]{0mm}{23mm}%
+\raisebox{-5mm}{{#1}}}
+\newcommand{\KeepSpaceShowR}[1]{\rule[-8mm]{0mm}{13mm}\raisebox{-3mm}%
+{\makebox[3em][c]{#1}}}
+\newcommand{\HMSol}[2]{#1\ifHMSol #2\fi}
+%
+%   問題文の中に設けられる空欄記述用マクロ
+%
+%  \AnsBoxS
+%   #1  解答欄の縦幅
+%   #2  解答欄の横幅
+%   #3  解答欄を下に広げるための調整量(- はマクロ内でつけられる。)
+%   #4  解答
+%
+\newcommand{\AnsBoxS}[4]{\BoxS{#1}{#2}{#3}{#4}{1}}
+\newcommand{\MBoxS}[4]{\BoxS{#1}{#2}{#3}{#4}{0}}
+\newcommand{\BoxS}[5]{%
+{\setlength{\fboxrule}{#5pt}%
+    \hspace*{0.5em}\framebox[#2][c]{\ifHMSol\makebox[0em][c]{#4}\fi\rule[-#3]{0mm}{#1}}}%
+\hspace*{0.5em}\ignorespaces 
+}
+\newcommand{\TBox}[1]{\BoxS{0em}{2em}{0em}{#1}{0}}
+\newcommand{\TBoxS}[2]{\BoxS{0em}{#1}{0em}{#2}{0}}
+%
+% 解答欄横幅自動設定マクロ \setwd
+%
+%    \tmpwd に設定
+%
+\newsavebox{\tmpbox}
+\newdimen\tmpdp 
+\newdimen\tmpht 
+\newdimen\tmpwd
+\newdimen\mindim
+\mindim=2.5mm
+\newcommand{\setwd}{%
+     \tmpwd=\wd\tmpbox
+        \ifdim\tmpwd<10mm \tmpwd=15mm\else\advance\tmpwd by 6mm\fi
+}
+%
+% 解答欄縦幅自動設定マクロ \setheight
+%
+%    \tmpht に設定
+%
+\newcommand{\setheight}{%
+        \tmpdp=\dp\tmpbox%
+        \ifdim\tmpdp<\mindim \tmpdp=\mindim\else\advance\tmpdp by \mindim\fi%
+        \tmpht=\ht\tmpbox%
+        \advance\tmpht by \mindim%\tmpht　+= \mindim
+        \advance\tmpht by \tmpdp%
+}
+%
+% 解答欄縦幅および横幅自動設定 \AnsBoxA
+%
+\newcommand{\AnsBoxA}[1]{%
+     \savebox{\tmpbox}{\hbox{#1}}%
+     \setwd\setheight%
+    \BoxS{\tmpht}{\tmpwd}{\tmpdp}{#1}{1}%
+}
+\newcommand{\NAnsBoxA}[2]{%
+     \savebox{\tmpbox}{\hbox{#1}}%
+     \setwd\setheight%
+    \BoxS{\tmpht}{\tmpwd}{\tmpdp}{#1}{#2}%
+}
+\newcommand{\MBoxA}[1]{%
+     \savebox{\tmpbox}{\hbox{#1}}%
+     \setwd\setheight%
+    \BoxS{\tmpht}{\tmpwd}{\tmpdp}{#1}{0}%
+}
+%
+% 解答欄縦幅および横幅自動設定(添え字用) \AnsBoxScA
+%
+\newcommand{\AnsBoxScA}[1]{%
+{\mindim=0.5mm
+     \savebox{\tmpbox}{\hbox{#1}}%
+     \setwd\setheight%
+    \BoxS{\tmpht}{\tmpwd}{\tmpdp}{#1}{1}%
+}
+}
+%
+% 解答欄縦幅および横幅半自動設定 \AnsBoxSA
+%
+\newcommand{\AnsBoxSA}[2]{%
+    \savebox{\tmpbox}{\hbox{#2}}%
+    \setheight\setwd%
+    \BoxS{\tmpht}{\tmpwd}{\tmpdp}{#1}{1}%
+}
+\newcommand{\NAnsBoxSA}[2]{%
+    \savebox{\tmpbox}{\hbox{#2}}%
+    \setheight\setwd%
+    \BoxS{\tmpht}{\tmpwd}{\tmpdp}{#1}{0.4}%
+}
+\newcommand{\MBoxSA}[2]{%
+    \savebox{\tmpbox}{\hbox{#2}}%
+    \setheight\setwd%
+    \BoxS{\tmpht}{\tmpwd}{\tmpdp}{#1}{0}%
+}
+\newcommand{\AnsBoxN}[3]{\AnsBoxS{#1}{#2}{3mm}{#3}}
+%
+%  問題文と解答記述のためのマクロ(最新版)
+%     今後はこのマクロに統一
+%
+%   高さが解答記述に不足するときは警告 private Warning が出る。
+%
+%    \ProbandAnsN
+%    番号なし用
+%    #1 全体の高さ(\textheight単位)
+%    #2 問題文
+%    #3 解答
+%
+\newcommand{\ProbandAnsN}[3]{%
+\ProbandAnsBody{#1}{#2}{#3}{\relax}}
+%
+%  \ProbandAns
+%
+%    #1 全体の高さ(\textheight単位)
+%    #2 問題文
+%    #3 解答
+%
+\newcommand{\ProbandAns}[3]{%
+\ProbandAnsBody{#1}{#2}{#3}{\theProbsub}}
+%
+%  \ProbandAnsBody
+%
+%    #1 全体の高さ(\textheight単位)
+%    #2 問題文
+%    #3 解答
+%    #4 問題文の前に置かれるコマンド(ここに番号を出力するためのマクロを
+%            記述すればよい。
+%
+\newcommand{\ProbandAnsBody}[4]{%
+\setbox0=\hbox{\begin{minipage}[t]{0.99\textwidth}
+#4% 
+#2%
+{#3}
+\end{minipage}}
+\ifdim\dp0>#1\textheight%\else%
+\typeout{Private Warning:vspace #1(\textheight) of answer area 
+\arabic{Prob}.\arabic{Probsub} is not sufficient.}
+\fi
+\addtocounter{Probsub}{-1}
+ \rule[-#1\textheight]{0em}{#1\textheight}
+\begin{minipage}[t]{0.99\textwidth}
+#4% 
+#2%
+\ifHMSol%
+{#3}
+\fi
+\end{minipage}}
+%
+%  end of \ProbandAnsBody
+%
+%  選択肢つき解答記述マクロ
+%
+%      #1 正解の選択肢
+%      #2 選択肢のリスト  選択肢それぞれを {} でくくり全体をひとつのパラ
+%              メータとして渡す。
+%
+\newcounter{SelectNo}
+\renewcommand{\theSelectNo}{\Ding{\arabic{SelectNo}}\ }
+\newcommand{\SelectAnsBox}[2]{%
+\def\ansno{#1}
+\setcounter{SelectNo}{0}
+$\left(\right.$\makeAnsListBody#2\relax$\left.\right)$}
+\def\makeAnsListBody#1{%
+   \ifx#1\relax\relax%
+   \else%
+       \stepcounter{SelectNo}\let\currentbox=\mbox%
+         \ifnum\value{SelectNo}=\number\ansno%
+         \ifHMSol%
+         \let\currentbox=\Ovalbox\fi\fi%
+       \setbox0=\hbox{\Ovalbox{\theSelectNo #1}}%
+       \vphantom{\box0}%
+        \makebox[\wd0][c]{\currentbox{\theSelectNo #1}}%
+	 \expandafter\makeAnsListBody%
+   \fi%
+}
+\newcommand{\SelectAnsRem}{%
+\\\ifHMSol {\upshape(答を選択するところは正解のほうが囲まれています。)}\fi\par}
+
+%  丸付き数字記述マクロ(出典は忘れてしまいました。多分 LaTex Companion?)
+%   Ding という ps フォントを使うこともできますが 0 の丸付きがないので
+%   変更しました。
+%
+\newcommand{\Ding}[1]{{%
+\setbox0=\hbox{\bfseries\large{$\bigcirc$}}%
+\makebox[\wd0][c]{\textup{#1}}\hspace{-\wd0}\box0
+}}
+\newcommand{\Newpage}{\vfill\hfill{\bfseries 裏にもあります。}\newpage%
+}
+\newcommand{\StackShow}[4]{
+ \begin{minipage}{2.7em}
+\begin{center}
+ \begin{tabular}[t]{|p{2em}|}
+ \hline
+ \StackItem{#1}
+ \StackItem{#2}
+ \StackItem{#3}
+ \StackItem{#4}
+\end{tabular}
+\end{center}
+ \end{minipage}
+}
+\newcommand{\StackShowN}[6]{
+ \begin{tabular}{|@{}c@{}|}
+\multicolumn{1}{c}{\MBoxSA{%
+   \ifx#1d\Push{#2}\else%
+      \ifx#1u\relax\Pop\else%
+         \ifx#1o\relax\Operator{#2}%
+         \fi%
+      \fi%
+   \fi}{\hspace*{3.em}}}\\%
+ \hline
+ \MBoxSA{#3}{3}\\\hline\MBoxSA{#4}{3}\\\hline
+ \MBoxSA{#5}{3}\\\hline\MBoxSA{#6}{3}\\\hline
+\end{tabular}
+}
+\newcommand{\StackOp}[2]{
+\begin{minipage}{4.5em}
+\makebox[4.5em][c]{%
+   \ifx#1d\Push{#2}\else%
+      \ifx#1u\relax\Pop\else%
+         \ifx#1o\relax\Operator{#2}%
+         \fi%
+      \fi%
+   \fi}\\%
+\hspace*{\fill}$\longrightarrow$\hspace*{\fill}
+\end{minipage}
+}
+\newcommand{\Operator}[1]{%
+#1}
+\newcommand{\Push}[1]{%
+#1を\texttt{push}}
+\newcommand{\Pop}{\texttt{pop}}
+\newcommand{\StackItem}[1]{%
+\hspace*{\fill}\texttt{#1}\hspace*{\fill}\rule{0em}{0em}\\\hline}
+\newcommand{\Ls}[1]{\hbox{\Large #1}}
+%\renewcommand{\labelstyle}{\textstyle}
+\newcommand{\StateTable}[3]{%
+\begin{center}%\Large
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\smash{\raisebox{-0.8em}{状態}}& \multicolumn{2}{c|}{入力}&
+\smash{\raisebox{-0.8em}{受理状態}}&\smash{\raisebox{-0.8em}{コメント}}\\
+\cline{2-3}
+& \makebox[5em]{#1} &  \makebox[5em]{#2}&&\\\hline
+#3%\relax\relax\relax\relax\relax\relax
+\end{tabular}\end{center}
+}
+\newtheorem{Th}{定理}[section]
+\newcommand{\CSpace}{\rule{10mm}{0mm}}
+\newcommand{\RSpace}{\rule{0mm}{10mm}}
+\newcommand{\Node}[1]{*[o]=<8mm>[F]{#1}}
+\newcommand{\NodeA}[1]{*[o]=<8mm>[F=]{#1}}
+
+%%%%%%
+\newcommand{\SetHeight}[2]{\rule[#2]{0mm}{#1}}
+%
+%
+\newif\ifKaiNo
+\newcounter{Kai}
+\newcommand{\Kai}[2]{%
+\setcounter{Kai}{0}%
+\gdef\ifKaiNo{\iftrue}%
+\KaiNo{#1}{#2}%
+}
+\newcommand{\KaiNonum}[2]{%
+\setcounter{Kai}{0}%
+\gdef\ifKaiNo{\iffalse}%
+\KaiNo{#1}{#2}%
+}
+\newcommand{\KaiNo}[2]{%
+\stepcounter{Kai}%
+\ifLt{\value{Kai}}{#1}%
+  {&\makebox[#2em][c]{\ifKaiNo\arabic{Kai}\fi}\KaiNo{#1}{#2}}%
+  {\rule[-0.7em]{0em}{2em}}%
+}
+\newcommand{\VRULE}{\vrule height 0.4pt width 6mm}
+\newcommand{\VRULET}{\VRULE &\VRULE &\VRULE }
+\newcommand{\VRULEV}{\raisebox{-3mm}{\vrule height 9mm width 0.4pt}}
+\newcommand{\MM}[1]{\MV&\makebox[0mm][c]{#1}&\makebox[6mm][c]{}}
+\newcommand{\MV}{\VRULEV\makebox[6mm][c]{}}
+\newcommand{\MVS}[1]{\VRULEV\makebox[6mm][c]{\ifHMSol#1\fi}}
+\newcommand{\MVA}[2]{\VRULEV\makebox[6mm][c]{#1\ifHMSol#2\fi}}
+\newcommand{\MA}[1]{\makebox[6mm][c]{\ifHMSol#1\fi}}
+\newcommand{\Explanation}[1]{%
+{\ifHMSol\bfseries 解説:} #1\fi}
+%
+%
+%
+\newcommand{\StateTableHead}[2]{%
+\begin{center}%\Large
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\smash{\raisebox{-0.8em}{状態}}& \multicolumn{2}{c|}{入力}&
+受理&\smash{\raisebox{-0.8em}{コメント}}\\
+\cline{2-3}%
+& \makebox[4em]{#1} & \makebox[4em]{#2}&状態&\\\hline
+}
+\newcommand{\NFAStateTable}[3]{%
+\StateTableHead{#1}{#2}%
+\SetNFAStateTable#3\hline\relax\relax\relax\relax\relax%
+\end{center}
+}
+\newcommand{\eNFAStateTable}[4]{%
+\begin{center}%\Large
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+\smash{\raisebox{-0.8em}{状態}}& \multicolumn{3}{c|}{入力}&
+受理&\smash{\raisebox{-0.8em}{コメント}}\\
+\cline{2-4}%
+& \makebox[5em]{#1} &  \makebox[5em]{#2}&\makebox[5em]{#3}&状態&\\\hline
+\SeteNFAStateTable#4\hline\relax\relax\relax\relax\relax\relax%
+\end{center}
+}
+\newcommand{\NFAtoDFAStateTable}[3]{%
+\StateTableHead{#1}{#2}%
+\SetStateSet#3\hline\relax\relax\relax\relax\relax\relax%
+\end{center}
+}
+\newcommand{\SetL}[1]{\ifx#1-$-$\else\Ls{$\{#1\}$}\fi}
+\newcommand{\SetStateSet}[7]{%
+\ifx#1\hline\hline\end{tabular}\else%
+\ifx#1-\relax\else\Ls{$#1=$}\fi
+\hspace*{\fill}\MBoxA{\SetL{#2}}\hspace*{\fill}&
+\MBoxA{\SetL{#3}}&\MBoxA{\SetL{#4}}&
+\ifHMSol{\ifx#5y\relax$\bigcirc$\fi}\fi&\ifHMSol{#6}\fi\\#7%
+\expandafter\SetStateSet\fi}
+%
+%
+%
+\newcommand{\SetNFAStateTable}[6]{%
+\ifx#1\hline\hline\end{tabular}\else%
+\ifx#1-\relax\else\Ls{$#1$}\fi
+&
+\MBoxA{\SetL{#2}}&\MBoxA{\SetL{#3}}&
+\ifHMSol{\ifx#4y\relax$\bigcirc$\fi}\fi&\ifHMSol{#5}\fi\\#6%
+\expandafter\SetNFAStateTable\fi}
+%
+\newcommand{\SeteNFAStateTable}[7]{%
+\ifx#1\hline\hline\end{tabular}\else%
+\ifx#1-\relax\else\Ls{$#1$}\fi
+&
+\MBoxA{\SetL{#2}}&\MBoxA{\SetL{#3}}&\MBoxA{\SetL{#4}}&
+\MBoxA{\ifx#5y\relax$\bigcirc$\fi}&\MBoxA{#6}\\#7%
+\expandafter\SeteNFAStateTable\fi}
+\newcommand{\MinmizeDFA}[3]{%
+$\begin{array}[t]{|c|c|c|c|c|}
+\hline
+ \smash{\raisebox{-1em}{\small 同値類}}& \smash{\raisebox{-1em}{状態}}&
+\multicolumn{2}{c|}{入力}&受理 \\\cline{3-4}
+ & &#1 &#2 &{状態}\\\hline
+\ShowMinimizeDFA#3\hline\relax\relax\relax\relax\relax\relax
+\end{array}$
+}
+\newcommand{\ShowMinimizeDFA}[7]{%
+\ifx#1\hline\hline\else%
+\smash{\raisebox{-#1em}{\MBoxA{$ #2$}}}&
+\MBoxA{$ #3$}&\MBoxA{$ #4$}&\MBoxA{$ #5$}%
+&\MBoxA{\ifx#6y\relax$\bigcirc$\fi}\\#7
+\expandafter\ShowMinimizeDFA\fi%
+}
+\newcommand{\ProbS}[2]{\theProbsub #1\vspace*{#2\textheight}\\}

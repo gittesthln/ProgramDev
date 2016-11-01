@@ -1,0 +1,764 @@
+%\input devHeadMalmoe.tex
+\input devHeadGoettingen.tex
+\title{ソフトウェア開発\\第3回目授業}
+\author{平野 照比古}
+\institute{}
+\date{2016/10/7}
+\begin{document}
+\frame{\maketitle}
+%\frame{\tableofcontents}
+\section{第2回目復習課題}
+\subsection{前回の演習問題の解答}
+\newcommand{\Rule}{\iffalse\rule[-2ex]{0em}{5ex}\fi}
+\begin{frame}[containsverbatim]
+\frametitle{前回の演習問題の解答(1)}
+次の式の評価結果を求めなさい。
+\begin{center}
+ \begin{tabular}{|>{\Rule}c|c|m{14zw}|}\hline
+  \multicolumn{1}{|c|}{式}&\multicolumn{1}{c|}{結果} &\multicolumn{1}{c|}{理由} \\\hline
+  \Verb+5%3+& 2 & $5$を$3$で割った余り\\ \hline
+  \Verb-4+"5"-& \Verb+"45"+& 右のオペランドが文字列なので左の数は文字列
+    に変換され、それらが連接される。\\ \hline
+  \Verb+4-"5"+& $-1$& 演算子が\Verb+-+なので右の文字列が数に変換される。\\ \hline
+  \Verb-4+"ff"-&\Verb+"4ff"+ & 前と同様\\ \hline
+  \Verb-4+"0xff"-& \Verb+"40xff"+& 前と同様\\ \hline
+ \end{tabular}
+\end{center}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{前回の演習問題の解答(2)}
+次の式の評価結果を求めなさい。
+\begin{center}
+ \begin{tabular}{|>{\Rule}c|c|m{12zw}|}\hline
+  \multicolumn{1}{|c|}{式}&\multicolumn{1}{c|}{結果} &\multicolumn{1}{c|}{理由} \\\hline
+  \Verb-4+parseInt("ff")-& \Verb+NaN+& 文字列内に数として正しく変換され
+    るものがないので\Verb+parseInt()+の戻り値が \Verb-NaN-となり、
+    これ以降の数の演算は\Verb+NaN+となる。\\ \hline
+  \Verb-4+parseInt("0xff")-& $259$& \Verb+parseInt()+は正しく16進数とし
+    て解釈するので$4+255=259$となる。\\ \hline
+  \Verb-4+parseInt("ff",16)-& $259$& 基数を$16$と指定しているので、正しく$255$と解
+    釈される。\\ \hline
+ \end{tabular}
+\end{center}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{前回の演習問題の解答(3)}
+次の式の評価結果を求めなさい。
+\begin{center}
+ \begin{tabular}{|>{\Rule}c|c|m{12zw}|}\hline
+  \Verb-4+"1e1"-& \Verb+41e1+ & 文字列の連接\\\hline
+  \Verb-4+parseInt("1e1")-& $5$ & "1e1" は数値リテラルとしては
+    $1\times10^1=10$を表すが、\Verb+parseInt()+は整数リテラル表記
+          しか扱わない.
+          数の変換は\Verb+e+の前で終わるので $1$の値が
+    戻り値となる。 \\ \hline
+  \Verb-4+parseFloat("1e1")-& $14$& \Verb+parseInt()+と異なり、
+    \Verb+parseFloat()+の戻り値は $10$ となる。\\ \hline
+ \end{tabular}
+\end{center}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{前回の演習問題の解答(4)}
+次の式の評価結果を求めなさい。
+\begin{center}
+ \begin{tabular}{|>{\Rule}c|c|m{14zw}|}\hline
+  \Verb+"4"*"5"+& $20$& 文字列の間では\Verb+*+の演算が定義されていないの
+    で両方とも数に変換されて計算される。\\ \hline
+  \Verb+"4"/"5"+& $0.8$& 上と同様\\ \hline
+ \end{tabular}
+\end{center}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{前回の演習問題の解答(5)}
+次の式の評価結果を求めなさい。
+\begin{center}
+ \begin{tabular}{|>{\Rule}c|c|m{14zw}|}\hline
+  \Verb+[].length+& $0$& 配列の要素がないので長さは$0$となる。\\ \hline
+  \Verb+[[]].length+&$1$ & 長さを求める配列は空の配列一つを要素に持つ。\\ \hline
+  \Verb+0 == "0"+& \Verb+true+& 文字列\Verb+"0"+が数$0$に変換されて比較
+    される\\ \hline
+  \Verb+0 == []+& \Verb+true+& 空の配列が空文字\texttt{""}に変換されたのち、
+    数 $0$ に変換される。\\ \hline
+  \Verb+![]+& \Verb+false+& 空の配列の位置はオブジェクトとして存在するの
+          で\texttt{true}と解釈され、否定演算子で\texttt{false}になる。
+          \\ \hline
+ \end{tabular}
+\end{center}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{前回の演習問題の解答(6)}
+次の式の評価結果を求めなさい。
+\begin{center}
+ \begin{tabular}{|>{\Rule}c|c|m{11zw}|}\hline
+  \Verb+false == []+& \Verb+true+& 空の配列が空文字\texttt{""}に変換されたのち、
+    数 $0$ に変換される。\\ \hline
+  \Verb+"false" == []+& \Verb+false+& 文字列\Verb+"false"+は空文字ではな
+    いので\Verb+true+に変換される。\\ \hline
+  \Verb+[] == []+& \Verb+false+& 配列はオブジェクトであり、二つの空の配
+    列は別物とみなされる。\\ \hline
+  \Verb+typeof []+& "object"& 配列はオブジェクトである。\\ \hline
+  \Verb+null == undefined+& \Verb+true+ & 両方とも\Verb+false+に変換され
+    てから比較される。\\ \hline
+  \Verb+a=[], b=a, a==b;+&\Verb+true+&同じメモリーにあるオブジェクトを参
+    照している。\\ \hline
+ \end{tabular}
+\end{center}
+\end{frame}
+\section{第3回 -- 関数}
+\iffalse
+\subsection{今回の内容}
+\begin{frame}[containsverbatim]
+\frametitle{今回の内容}
+\begin{itemize}
+ \item 関数の定義方法と使用法
+ \item 関数への引数の渡し方
+ \item 関数の戻り値
+ \item JavaScript内での変数のスコープ
+ \item 関数も単なるオブジェクト
+ \item 無名関数
+ \item コールバック関数
+ \item 自己実行可能関数
+ \item 関数を返す関数
+ \item クロージャ
+\end{itemize}
+\end{frame}
+\fi
+\subsection{関数の定義方法と呼び出し}
+\begin{frame}[containsverbatim]
+\frametitle{簡単な関数の例}
+\Verb+sum()+という関数を定義している例
+\begin{Verbatim}
+function sum(a,b) {
+  var c = a + b;
+  return c;
+}
+\end{Verbatim}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{関数の定義の構成}
+\begin{itemize}
+ \item \Verb+function+キーワード\\
+戻り値の型を記す必要はない。
+ \item 関数の名前\\
+\Verb+function+の後にある識別名が関数の名前になる。この場合は \Verb+sum+
+       が関数の名前になる。
+ \item 引数のリスト\\
+関数名の後に\Verb+()+内にカンマで区切られた引数を記述する。この場合は変数
+       \Verb+a+と\Verb+b+が与えられている。引数はなくてもよい。
+ \item 関数の本体であるコードブロック\\
+\Verb+{}+で囲まれた部分に関数の内容を記述する。
+\item \Verb+return+ キーワード\\
+関数の戻り値をこの後に記述する。戻り値がない場合には戻り値として
+       \Verb+undefined+が返される。
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{関数の実行例}
+\begin{Verbatim}
+>sum(1,2)
+3
+>sum(1)
+NaN
+>sum(1,2,3)
+3
+\end{Verbatim} 
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{関数の実行例の解説}
+\begin{itemize}
+ \item 引数に \Verb+1+ と \Verb+2+ を与えれば期待通りの結果が得られる。
+ \item 引数に \Verb+1+ だけを与えた場合、エラーが起こらず、\Verb+NaN+ と
+       なる。これは、不足している引数(この場合には \Verb+b+)にば
+       \Verb+undefined+ が渡されるためである。\Verb+1+undefined+の結果は
+       \Verb+NaN+ になる。
+ \item 引数を多く渡してもエラーが発生しない。無視されるだけである。
+\end{itemize}
+これらのことから JavaScript の関数はオブジェクト指向で使われるポリモーフィ
+ズムをサポートしていない。
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{関数の再定義}
+同じ関数を定義しても
+エラーにならない。後の関数の定義が優先される。
+\begin{Verbatim}
+function sum(a, b){
+  var c = a+b;
+  return c;
+}
+function sum(a, b, c){
+  var d = a+b+c;
+  return d;
+}
+\end{Verbatim}
+\end{frame}
+\subsection{仮引数への代入}
+\begin{frame}[containsverbatim]
+\frametitle{仮引数への代入}
+\begin{itemize}
+ \item 仮引数に値を代入してもエラーとはならない。
+ \item 仮引数の値がプリミティブなとき
+とそうでないときとでは呼び出し元における変数の値が異なる。
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{呼び出した関数の中で仮引数の値を変化させたときの例}
+\begin{Verbatim}
+function func1(a){
+  a = a*2;
+  return 0;
+}
+function func2(a){
+  a[0] *=2;
+  return 0;
+}
+\end{Verbatim}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{ 呼び出した関数の中で仮引数の値を変化させたときの例の解説}
+\begin{itemize}
+ \item  \Verb+func1()+では仮引数\Verb+a+の値を2倍している。
+ \item 次のように実行すると、呼び出し元の変数の値には変化がない
+ \item プリミティブな値を仮引数で渡すと値そのものが渡される
+\end{itemize}
+\begin{Verbatim}
+>a = 4;
+4
+>func1(a);
+0
+>a;
+4
+\end{Verbatim}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{ 呼び出した関数の中で仮引数の値を変化させたときの例}
+\begin{itemize}
+ \item \Verb+func2()+の仮引数は配列が想定してある。この先頭の値だけ2倍さ
+       れる関数である
+ \item これに配列を渡すと、戻ってきたとき配列の先頭の値
+       が変化している
+ \item プライミティブ型以外では仮引数の渡し方が
+       参照渡しである
+\end{itemize}
+\begin{Verbatim}
+>a = [1,2,3];
+[1, 2, 3]
+>func2(a);
+0
+>a;
+[2, 2, 3]
+\end{Verbatim}
+\end{frame}
+\subsection{\protect\texttt{aruguments}について}
+\begin{frame}[containsverbatim]
+\frametitle{\protect\texttt{aruguments}について}
+\begin{itemize}
+ \item JavaScriptでは引数リストで引数の値などが渡されるほかに\texttt{arguments}
+という配列のようなオブジェクトでもアクセスできる。
+ \item 引き渡された変数の数は\Verb+length+で知ることができる。
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{\protect\texttt{aruguments}の利用例}
+\begin{Verbatim}
+function sumN(){
+  var i, s = 0;
+  for(i = 0; i <arguments.length;i++) {
+    s += arguments[i];
+  }
+  return s;
+}
+\end{Verbatim}
+実行例は次のとおりである。
+\begin{Verbatim}
+>sumN(1,2,3,4);
+10
+>sumN(1,2,3,4,5);
+15
+\end{Verbatim}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{\protect\texttt{aruguments}の利用例}
+引数があっても無視できる
+\begin{Verbatim}
+function sumN2(a,b,c){
+  var i, s = 0;
+  for(i = 0; i <arguments.length;i++) {
+    s += arguments[i];
+  }
+  return s;
+}
+\end{Verbatim}
+この例では引数が3個より少なくても正しく動く。実行例は次のとおりである。
+\begin{Verbatim}
+>sumN2(1,2,3,4,5);
+15
+\end{Verbatim}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{\protect\texttt{aruguments}の利用例}
+非\Strict では仮引数と\Verb+arguments+は対応していて、片方を変更しても他の方も
+       変更される。
+\begin{Verbatim}
+function sum2(a, b){
+  var c;
+  a *= 3;
+  console.log(arguments[0]);
+  return a + b;
+}
+\end{Verbatim}
+\begin{Verbatim}
+>sum2(1,2,3,4,5);
+3 
+5
+\end{Verbatim}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{\Strict の\Verb+arguments+}
+\begin{itemize}
+ \item \Strict では\Verb+argument+は仮引数の静的なコピーが保持\\
+       \Verb+a *=3+により\Verb+arguments[0]+の値は変更されない。
+ \item \Strict では\Verb+arguments+はキーワードのような働き\\
+       値の代入が不可
+\end{itemize} 
+
+\begin{Verbatim}
+>sum2(1,2,3,4,5);
+1
+5
+\end{Verbatim}
+\end{frame}
+\subsection{変数のスコープ}
+\begin{frame}[containsverbatim]
+\frametitle{JavaScriptにおける変数のスコープ}
+変数のスコープとはある場所で使われている変数がどこから参照できるかという
+概念
+\begin{enumerate}
+ \item 変数は宣言しなくても使用できる。\label{3-4NoDeclare}
+ \item 関数内で \Verb+var+ により明示的に定義された変数はその関数内で有
+       効となる。\label{3-4DeclareInFunc}
+ \item 関数の途中で宣言しても、関数の先頭で宣言したと同じ効果を持つ。
+       \label{3-4DeclareInFunc2}
+ \item 関数の外で宣言された変数や宣言されないで使用された変数はすべてグ
+       ローバルとなる。\label{3-4Declare2}
+\end{enumerate}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{変数のスコープの確認(1)}
+\begin{Verbatim}
+var S = "global";
+function func1(){
+  console.log(S);
+  return 0;
+}
+\end{Verbatim}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{変数のスコープの確認(1)解説}
+\begin{itemize}
+ \item グローバル変数 \Verb+S+ が宣言されていて\Verb+"global"+
+       という文字列の値に初期化されている。
+ \item \Verb+func1()+が定義されている。
+ \item \Verb+S+の値をコンソールに出力している。
+ \item この関数内で変数\Verb+S+
+       は宣言されていないので2行目で定義したグローバル変数が参照される。
+\end{itemize}
+\begin{Verbatim}
+>func1();
+global
+0
+\end{Verbatim}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{変数のスコープの確認(2)}
+\begin{Verbatim}
+var S = "global";
+function func2(){
+  console.log(S);
+  var S = "local";
+  console.log(S);
+  return 0;
+}
+\end{Verbatim}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{変数のスコープの確認(2)解説}
+\begin{itemize}
+ \item \Verb+S+の値をコンソールに2回出力している。
+ \item この関数内で変数\Verb+S+ はローカル変数として宣言されている。
+ \item そのしたの変数\Verb+S+はローカル変数となる
+  \item この段階ではローカル変数 \Verb+S+には値が代入されていないのでその
+       値は\Verb+undefined+となる。
+ \item 後の出力はその前で定義された値となる。
+\end{itemize}
+\begin{Verbatim}
+>func2();
+undefined
+local    
+0
+\end{Verbatim}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{変数のスコープの確認(3)}
+\begin{Verbatim}
+var S = "global";
+function func3(){
+  var S = "local";
+  func1();
+  return 0;
+}
+\end{Verbatim}
+\begin{itemize}
+ \item ローカル変数\Verb+S+を定義して、初期値を
+       \Verb+"local"+としている。
+ \item 初めに定義した関数\Verb+func1()+を呼び出している。
+ \item \Verb+func1()+の実行の際は、もともとこの関数が定義された時の変数
+       \Verb+S+(1行目)が参照される。
+\end{itemize}
+\begin{Verbatim}
+>func3();
+global
+0
+\end{Verbatim}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{変数のスコープの確認(4)}
+\begin{Verbatim}
+var S = "global";
+function func4(){
+  var S = "local in func4";
+  func5 = function() {
+    console.log(S);
+    return 0;
+  };
+  console.log(S);
+  return 0;
+}
+\end{Verbatim}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{変数のスコープの確認(4)解説}
+\begin{itemize}
+ \item ローカル変数\Verb+S+の値を設定している。
+ \item その後の出力は設定した値となる。
+\end{itemize}
+\begin{Verbatim}
+>func4();
+local in func4
+0
+\end{Verbatim}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{変数のスコープの確認(5)}
+\begin{itemize}
+ \item 関数オブジェクトを変数\Verb+func5+に代入している。これ
+       により\Verb+func5()+という関数が定義される。
+ \item \Verb+var+宣言がないので変数\Verb+func5+はグローバル変数となる
+  \item \Verb+func5()+内では変数\Verb+S+の内容を出力が定義されている。
+ \item \Verb+func4()+を実行した後では\Verb+func5()+が実行できる。
+ \item 関数\Verb+func5()+が定義された段階での変数\Verb+S+はこの関数が
+       \Verb+func4()+の中で定義されているので、18行目の変数\Verb+S+が参
+       照される。
+\end{itemize}
+\begin{Verbatim}
+func5();
+local in func4
+0
+\end{Verbatim}
+\end{frame}
+\subsection{スコープチェイン}
+\begin{frame}[containsverbatim]
+\frametitle{スコープチェイン}
+関数の中で関数を定義すると、その
+内側の関数内で\Verb+var+で宣言された変数のほかに、一つ上の関数で利用でき
+る(スコープにある)変数が利用できる。これがスコープチェインである。
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{スコープチェインの解説}
+\begin{Verbatim}
+var G1, G2;
+function func1(a) {
+  var b, c;
+  function func2() [
+    var G2, c;
+   ...
+  }
+}
+\end{Verbatim}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{スコープチェインの解説}
+\begin{itemize}
+ \item 関数\Verb+func1()+ではグローバル変数である\Verb+G1+と\Verb+G2+、
+       仮引数の \Verb+a+ とローカル変数\Verb+b+と\Verb+c+が利用できる。
+ \item 関数\Verb+func2()+ではグローバル変数である\Verb+G1+、
+       \Verb+func1()+の仮引数の \Verb+a+ と\Verb+func1()+のローカル変数
+       \Verb+b+、\Verb+func2()+のローカル変数\Verb+G2+と\Verb+c+が利用で
+       きる。
+\end{itemize}
+このように内側で定義された関数は自分自身の中で定義されたローカル変数があ
+るかを探し、見つからない場合には一つ上のレベルでの変数を探す。これがスコー
+プチェインである。
+
+JavaScriptの関数のスコープは関数が定義されたときのスコー
+プチェインが適用される。これをレキシカルスコープと呼ぶ。
+
+レキシカルスコー
+プは静的スコープとも呼ばれる。これに対して実行時にスコープが決まるものは
+動的スコープと呼ばれる。
+\end{frame}
+\subsection{JavaScriptにおける関数の特徴}
+\begin{frame}[containsverbatim]
+\frametitle{関数もデータ}
+\begin{itemize}
+ \item 関数もデータ型のひとつなので、関数の定義を変数に代入することがで
+       きる。
+ \item 代入はいつでもできるので、実行時に関数の定義を変えることも可能
+ \item 関数の戻り値として関数自体を返すことも可能
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{無名関数とコールバック関数}
+\begin{itemize}
+ \item 関数オブジェクトは関数の引数として直接
+渡すこともできる。その関数には名がなくてもよい(無名関数)。
+ \item イベント(マウスがクリックされた、一定の時間が経過した)が発生した
+       ときに、その処理を行う関数を登録する必要がある。このように関数に
+       引数として渡される関数のことをコールバック関数という。
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{無名関数の例}
+一定の経過時間後にある関数を呼び出す\Verb+window+オブジェクト
+ の\Verb+setTimeout()+メソッドの使用例
+
+ \hspace*{1zw}\begin{minipage}[t]{0.9\textwidth}
+\begin{Verbatim}[numbers=left]
+var T = new Date();
+window.setTimeout(
+  function(){
+    var NT = new Date();
+    if(NT-T<10000) {
+      console.log(Math.floor((NT-T)/1000));
+      window.setTimeout(arguments.callee,1000);
+    }
+   },1000);
+\end{Verbatim}
+              \end{minipage}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{無名関数の例の解説}
+\begin{itemize}
+ \item １行目では実行開始時の時間を変数\Verb+T+に格納している。単位はミ
+       リ秒である。
+ \item このメソッドは一定時間経過後に呼び出される関数と、実行される経過
+       時間(単位はミリ秒)を引数に取る。
+ \item 実行する関数は3行目から9行目で定義されている。
+ \item この関数内で一定の条件のときはこの関数を呼び出す。この関数
+       に名前はない(3行目)。
+ \item 4行目で呼び出されたときの時間を求め、経過時間が$10000$ミリ秒以下
+       であれば(5行目)、経過時間を秒単位で表示する(6行目)。
+ \item さらに、自分自身を1秒後に呼び出す(7行目)。\Verb+arguments+をもつ
+       関数を\Verb+arguments.callee+で呼び出すことができる。つまり自分
+       自身を呼び出せることとなる。\Strict では\Verb+arguments.callee+は
+       使用できないので、関数に名前を付け、それを参照するようにする。
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{自己実行関数の必要性}
+次のコード考える。
+\begin{Verbatim}
+  var i;
+  for(i=1;i<10;i++) {
+    console.log(i+" "+i*i);
+  }
+\end{Verbatim}
+このプログラムを実行すると$1$から$9$までの値とそれの2乗の値がコンソール
+に出力される。実行後に、コンソールに\Verb+i+と入力すれば\Verb+10+が出
+力される。
+
+関数を定義すれば、その関数はグローバル空間に残る。
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{自己実行関数の例}
+定義した関数をその場で実行できる機能
+\begin{Verbatim}
+(function(){
+  var i;
+  for(i=1;i<10;i++) {
+    console.log(i+" "+i*i);
+  })();
+\end{Verbatim}
+関数の定義を全体で\Verb+()+で囲み、そのあとに関数の呼び出しを示
+すための\Verb+()+を付ける。
+
+この技法は、初期化の段階で1回しか実行しない事柄を記述し、かつグローバル
+な空間を汚さない(余計な変数などを残さない)手段として用いられる。
+\end{frame}
+\subsection{クロージャ}
+\begin{frame}[containsverbatim]
+\frametitle{クロージャとは}
+\begin{itemize}
+ \item 関数内部で宣言された変数は、その外側から参照することができない。
+ \item その関数は関数内のローカル変数を閉じ込めている。
+ \item 関数内部で定義された関数を外部に持ち出す(グローバルな関数にする)
+       と、持ち出された関数のスコープチェイン内に定義された親の関数のス
+       コープを引き継いでいることから、親の関数のローカル変数の参照が可能
+\end{itemize}
+関数に対して
+依存する環境(変数や呼び出せる関数などのリスト)を合わせたものをその関数の
+クロージャと呼ぶ。
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{クロージャの例 -- 変数を隠す}
+\begin{Verbatim}
+function f1() {
+  var n=0;
+  return function() {
+    return n++;
+  };
+}
+\end{Verbatim}
+%\end{frame}
+%\begin{frame}[containsverbatim]
+ %\frametitle{クロージャの例 -- 変数を隠す(実行例)}
+ 実行例(変数\Verb+n+が参照できない)
+\begin{Verbatim}
+>ff= f1();
+() {
+ return n++;
+ }
+>n;
+VM351:2 Uncaught ReferenceError: n is not defined(…)
+\end{Verbatim}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{クロージャの例 -- 変数を隠す(実行例その2)}
+ 変数\Verb+n+は存在している
+\begin{Verbatim}
+>ff();
+0
+>ff();
+1
+>ff();
+2
+>ff2=f1();
+() {
+    return n++;
+  }
+>ff();
+2
+>ff2();
+0
+\end{Verbatim}
+ \end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{クロージャの例 -- 変数を隠す(解説)}
+\begin{itemize}
+ \item 変数\texttt{ff}に関数\texttt{f1()}で返される関数オブジェクトを代
+       入する。
+ \item \texttt{f1()}内のローカル変数は参照できない。
+ \item 関数\Verb+f1()+を実行して、戻り値の関数を実行すると、\Verb+f1()+
+       内のローカル変数が参照できている。
+ \item 何回か実行すると戻り値が順に増加していることがわかる。つまり、ローカルに
+は変数\texttt{n}が存在している。
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+% \frametitle{}
+ もう一度関数\texttt{f1()}を実行すると新しい関数が得られる。
+\begin{Verbatim}
+>ff2=f1();
+() {
+    return n++;
+  }
+>ff();
+2
+>ff2();
+0
+\end{Verbatim}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{クロージャの例 -- 無名関数をその場で実行する}
+関数\texttt{f1}を一度だけ実行して、それがこ
+        れ以上実行されないようにするためにはこの関数を無名関数としてそ
+ の場で実行すればよい。
+\begin{Verbatim}
+var foo = (function () {
+  var n=0;
+  return function() {
+    return n++;
+  };
+})();
+\end{Verbatim}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{無名関数をその場で実行する(解説)}
+\begin{itemize}
+ \item 無名関数を定義した部分を\texttt{()}でくくり、引数リストをその後の
+       \texttt{()}に記述する。ここでは、引数がないので中はない。
+   \item 戻された関数オブジェクトを変数\texttt{foo}に代入する。
+  \item 前と同じように実行できる。
+\begin{Verbatim}
+>foo();
+0
+>foo();
+1
+>foo();
+2
+\end{Verbatim}
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{ローカル変数の値を単純に返すと、不都合が起こる例}
+\begin{Verbatim}
+function f2() {
+  var a = [];
+  var i;
+  for(i=0; i<3; i++) {
+    a[i] = function() {
+      return i;
+    };
+  }
+  return a;
+}
+\end{Verbatim}
+%\end{frame}
+%\begin{frame}[containsverbatim]
+%\frametitle{ローカル変数の値を単純に返すと、不都合が起こる例(実行例)}
+\begin{Verbatim}
+>funcs=f2()
+[function a.(anonymous function)(), function a.(anonymous function)(),
+    function a.(anonymous function)()]
+>funcs[1]()
+3
+\end{Verbatim}
+すべて同じ値を返す関数になってしまっている。
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{改良}
+値を関数の引数に(値渡しで)渡すことで、スコープチェーンを切る。
+\begin{Verbatim}
+function f3() {
+  var a = [];
+  var i;
+  for(i=0; i<3; i++) {
+    a[i] = (function(x){
+      return function() {
+        return x;
+      }
+    })(i);
+  };
+  return a;
+}
+\end{Verbatim}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{解説と実行}
+\begin{itemize}
+ \item 引数を取る無名関数を用意し、その場で与えられた引数を返す無名関数
+       を返す関数を実行している。
+ \item 仮引数には、実行されたときの\Verb+i+のコピーが渡されるので、その
+       後変数の値が変わっても呼び出された時の値が仮引数に保持される。
+\end{itemize}
+\end{frame}
+\end{document}

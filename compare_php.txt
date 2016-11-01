@@ -1,0 +1,1394 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+
+  <title>PHP: PHP 型の比較表 - Manual </title>
+
+ <link rel="shortcut icon" href="http://jp2.php.net/favicon.ico">
+ <link rel="search" type="application/opensearchdescription+xml" href="http://php.net/phpnetimprovedsearch.src" title="Add PHP.net search">
+ <link rel="alternate" type="application/atom+xml" href="http://jp2.php.net/releases/feed.php" title="PHP Release feed">
+ <link rel="alternate" type="application/atom+xml" href="http://jp2.php.net/feed.atom" title="PHP: Hypertext Preprocessor">
+
+ <link rel="canonical" href="http://php.net/manual/ja/types.comparisons.php">
+ <link rel="shorturl" href="http://php.net/manual/ja/types.comparisons.php">
+ <link rel="alternate" href="http://php.net/manual/ja/types.comparisons.php" hreflang="x-default">
+
+ <link rel="contents" href="http://jp2.php.net/manual/ja/index.php">
+ <link rel="index" href="http://jp2.php.net/manual/ja/appendices.php">
+ <link rel="prev" href="http://jp2.php.net/manual/ja/transports.unix.php">
+ <link rel="next" href="http://jp2.php.net/manual/ja/tokens.php">
+
+ <link rel="alternate" href="http://jp2.php.net/manual/en/types.comparisons.php" hreflang="en">
+ <link rel="alternate" href="http://jp2.php.net/manual/pt_BR/types.comparisons.php" hreflang="pt_BR">
+ <link rel="alternate" href="http://jp2.php.net/manual/zh/types.comparisons.php" hreflang="zh">
+ <link rel="alternate" href="http://jp2.php.net/manual/fr/types.comparisons.php" hreflang="fr">
+ <link rel="alternate" href="http://jp2.php.net/manual/de/types.comparisons.php" hreflang="de">
+ <link rel="alternate" href="http://jp2.php.net/manual/ja/types.comparisons.php" hreflang="ja">
+ <link rel="alternate" href="http://jp2.php.net/manual/kr/types.comparisons.php" hreflang="kr">
+ <link rel="alternate" href="http://jp2.php.net/manual/ro/types.comparisons.php" hreflang="ro">
+ <link rel="alternate" href="http://jp2.php.net/manual/ru/types.comparisons.php" hreflang="ru">
+ <link rel="alternate" href="http://jp2.php.net/manual/es/types.comparisons.php" hreflang="es">
+ <link rel="alternate" href="http://jp2.php.net/manual/tr/types.comparisons.php" hreflang="tr">
+
+<link rel="stylesheet" type="text/css" href="http://jp2.php.net/cached.php?t=1421837618&amp;f=/fonts/Fira/fira.css" media="screen">
+<link rel="stylesheet" type="text/css" href="http://jp2.php.net/cached.php?t=1421837618&amp;f=/fonts/Font-Awesome/css/fontello.css" media="screen">
+<link rel="stylesheet" type="text/css" href="http://jp2.php.net/cached.php?t=1429291204&amp;f=/styles/theme-base.css" media="screen">
+<link rel="stylesheet" type="text/css" href="http://jp2.php.net/cached.php?t=1429259403&amp;f=/styles/theme-medium.css" media="screen">
+
+ <!--[if lte IE 7]>
+ <link rel="stylesheet" type="text/css" href="http://jp2.php.net/styles/workarounds.ie7.css" media="screen">
+ <![endif]-->
+
+ <!--[if lte IE 8]>
+ <script type="text/javascript">
+  window.brokenIE = true;
+ </script>
+ <![endif]-->
+
+ <!--[if lte IE 9]>
+ <link rel="stylesheet" type="text/css" href="http://jp2.php.net/styles/workarounds.ie9.css" media="screen">
+ <![endif]-->
+
+ <!--[if IE]>
+ <script type="text/javascript" src="http://jp2.php.net/js/ext/html5.js"></script>
+ <![endif]-->
+
+ <base href="http://jp2.php.net/manual/ja/types.comparisons.php">
+
+</head>
+<body class="docs ">
+
+<nav id="head-nav" class="navbar navbar-fixed-top">
+  <div class="navbar-inner clearfix">
+    <a href="/" class="brand"><img src="/images/logo.php" width="48" height="24" alt="php"></a>
+    <div id="mainmenu-toggle-overlay"></div>
+    <input type="checkbox" id="mainmenu-toggle">
+    <ul class="nav">
+      <li class=""><a href="/downloads">Downloads</a></li>
+      <li class="active"><a href="/docs.php">Documentation</a></li>
+      <li class=""><a href="/get-involved" >Get Involved</a></li>
+      <li class=""><a href="/support">Help</a></li>
+    </ul>
+    <form class="navbar-search" id="topsearch" action="/search.php">
+      <input type="hidden" name="show" value="quickref">
+      <input type="search" name="pattern" class="search-query" placeholder="Search" accesskey="s">
+    </form>
+  </div>
+  <div id="flash-message"></div>
+</nav>
+<nav id="trick"><div><dl>
+<dt><a href='/manual/en/getting-started.php'>Getting Started</a></dt>
+	<dd><a href='/manual/en/introduction.php'>Introduction</a></dd>
+	<dd><a href='/manual/en/tutorial.php'>A simple tutorial</a></dd>
+<dt><a href='/manual/en/langref.php'>Language Reference</a></dt>
+	<dd><a href='/manual/en/language.basic-syntax.php'>Basic syntax</a></dd>
+	<dd><a href='/manual/en/language.types.php'>Types</a></dd>
+	<dd><a href='/manual/en/language.variables.php'>Variables</a></dd>
+	<dd><a href='/manual/en/language.constants.php'>Constants</a></dd>
+	<dd><a href='/manual/en/language.expressions.php'>Expressions</a></dd>
+	<dd><a href='/manual/en/language.operators.php'>Operators</a></dd>
+	<dd><a href='/manual/en/language.control-structures.php'>Control Structures</a></dd>
+	<dd><a href='/manual/en/language.functions.php'>Functions</a></dd>
+	<dd><a href='/manual/en/language.oop5.php'>Classes and Objects</a></dd>
+	<dd><a href='/manual/en/language.namespaces.php'>Namespaces</a></dd>
+	<dd><a href='/manual/en/language.errors.php'>Errors</a></dd>
+	<dd><a href='/manual/en/language.exceptions.php'>Exceptions</a></dd>
+	<dd><a href='/manual/en/language.generators.php'>Generators</a></dd>
+	<dd><a href='/manual/en/language.references.php'>References Explained</a></dd>
+	<dd><a href='/manual/en/reserved.variables.php'>Predefined Variables</a></dd>
+	<dd><a href='/manual/en/reserved.exceptions.php'>Predefined Exceptions</a></dd>
+	<dd><a href='/manual/en/reserved.interfaces.php'>Predefined Interfaces and Classes</a></dd>
+	<dd><a href='/manual/en/context.php'>Context options and parameters</a></dd>
+	<dd><a href='/manual/en/wrappers.php'>Supported Protocols and Wrappers</a></dd>
+</dl>
+<dl>
+<dt><a href='/manual/en/security.php'>Security</a></dt>
+	<dd><a href='/manual/en/security.intro.php'>Introduction</a></dd>
+	<dd><a href='/manual/en/security.general.php'>General considerations</a></dd>
+	<dd><a href='/manual/en/security.cgi-bin.php'>Installed as CGI binary</a></dd>
+	<dd><a href='/manual/en/security.apache.php'>Installed as an Apache module</a></dd>
+	<dd><a href='/manual/en/security.filesystem.php'>Filesystem Security</a></dd>
+	<dd><a href='/manual/en/security.database.php'>Database Security</a></dd>
+	<dd><a href='/manual/en/security.errors.php'>Error Reporting</a></dd>
+	<dd><a href='/manual/en/security.globals.php'>Using Register Globals</a></dd>
+	<dd><a href='/manual/en/security.variables.php'>User Submitted Data</a></dd>
+	<dd><a href='/manual/en/security.magicquotes.php'>Magic Quotes</a></dd>
+	<dd><a href='/manual/en/security.hiding.php'>Hiding PHP</a></dd>
+	<dd><a href='/manual/en/security.current.php'>Keeping Current</a></dd>
+<dt><a href='/manual/en/features.php'>Features</a></dt>
+	<dd><a href='/manual/en/features.http-auth.php'>HTTP authentication with PHP</a></dd>
+	<dd><a href='/manual/en/features.cookies.php'>Cookies</a></dd>
+	<dd><a href='/manual/en/features.sessions.php'>Sessions</a></dd>
+	<dd><a href='/manual/en/features.xforms.php'>Dealing with XForms</a></dd>
+	<dd><a href='/manual/en/features.file-upload.php'>Handling file uploads</a></dd>
+	<dd><a href='/manual/en/features.remote-files.php'>Using remote files</a></dd>
+	<dd><a href='/manual/en/features.connection-handling.php'>Connection handling</a></dd>
+	<dd><a href='/manual/en/features.persistent-connections.php'>Persistent Database Connections</a></dd>
+	<dd><a href='/manual/en/features.safe-mode.php'>Safe Mode</a></dd>
+	<dd><a href='/manual/en/features.commandline.php'>Command line usage</a></dd>
+	<dd><a href='/manual/en/features.gc.php'>Garbage Collection</a></dd>
+	<dd><a href='/manual/en/features.dtrace.php'>DTrace Dynamic Tracing</a></dd>
+</dl>
+<dl>
+<dt><a href='/manual/en/funcref.php'>Function Reference</a></dt>
+	<dd><a href='/manual/en/refs.basic.php.php'>Affecting PHP's Behaviour</a></dd>
+	<dd><a href='/manual/en/refs.utilspec.audio.php'>Audio Formats Manipulation</a></dd>
+	<dd><a href='/manual/en/refs.remote.auth.php'>Authentication Services</a></dd>
+	<dd><a href='/manual/en/refs.utilspec.cmdline.php'>Command Line Specific Extensions</a></dd>
+	<dd><a href='/manual/en/refs.compression.php'>Compression and Archive Extensions</a></dd>
+	<dd><a href='/manual/en/refs.creditcard.php'>Credit Card Processing</a></dd>
+	<dd><a href='/manual/en/refs.crypto.php'>Cryptography Extensions</a></dd>
+	<dd><a href='/manual/en/refs.database.php'>Database Extensions</a></dd>
+	<dd><a href='/manual/en/refs.calendar.php'>Date and Time Related Extensions</a></dd>
+	<dd><a href='/manual/en/refs.fileprocess.file.php'>File System Related Extensions</a></dd>
+	<dd><a href='/manual/en/refs.international.php'>Human Language and Character Encoding Support</a></dd>
+	<dd><a href='/manual/en/refs.utilspec.image.php'>Image Processing and Generation</a></dd>
+	<dd><a href='/manual/en/refs.remote.mail.php'>Mail Related Extensions</a></dd>
+	<dd><a href='/manual/en/refs.math.php'>Mathematical Extensions</a></dd>
+	<dd><a href='/manual/en/refs.utilspec.nontext.php'>Non-Text MIME Output</a></dd>
+	<dd><a href='/manual/en/refs.fileprocess.process.php'>Process Control Extensions</a></dd>
+	<dd><a href='/manual/en/refs.basic.other.php'>Other Basic Extensions</a></dd>
+	<dd><a href='/manual/en/refs.remote.other.php'>Other Services</a></dd>
+	<dd><a href='/manual/en/refs.search.php'>Search Engine Extensions</a></dd>
+	<dd><a href='/manual/en/refs.utilspec.server.php'>Server Specific Extensions</a></dd>
+	<dd><a href='/manual/en/refs.basic.session.php'>Session Extensions</a></dd>
+	<dd><a href='/manual/en/refs.basic.text.php'>Text Processing</a></dd>
+	<dd><a href='/manual/en/refs.basic.vartype.php'>Variable and Type Related Extensions</a></dd>
+	<dd><a href='/manual/en/refs.webservice.php'>Web Services</a></dd>
+	<dd><a href='/manual/en/refs.utilspec.windows.php'>Windows Only Extensions</a></dd>
+	<dd><a href='/manual/en/refs.xml.php'>XML Manipulation</a></dd>
+</dl>
+<dl>
+<dt>Keyboard Shortcuts</dt><dt>?</dt>
+<dd>This help</dd>
+<dt>j</dt>
+<dd>Next menu item</dd>
+<dt>k</dt>
+<dd>Previous menu item</dd>
+<dt>g p</dt>
+<dd>Previous man page</dd>
+<dt>g n</dt>
+<dd>Next man page</dd>
+<dt>G</dt>
+<dd>Scroll to bottom</dd>
+<dt>g g</dt>
+<dd>Scroll to top</dd>
+<dt>g h</dt>
+<dd>Goto homepage</dd>
+<dt>g s</dt>
+<dd>Goto search<br>(current page)</dd>
+<dt>/</dt>
+<dd>Focus search box</dd>
+</dl></div></nav>
+<div id="goto">
+    <div class="search">
+         <div class="text"></div>
+         <div class="results"><ul></ul></div>
+   </div>
+</div>
+
+  <div id="breadcrumbs" class="clearfix">
+    <div id="breadcrumbs-inner">
+          <div class="next">
+        <a href="tokens.php">
+          パーサトークンの一覧 &raquo;
+        </a>
+      </div>
+              <div class="prev">
+        <a href="transports.unix.php">
+          &laquo; Unix ドメイン: Unix および UDG        </a>
+      </div>
+          <ul>
+            <li><a href='index.php'>PHP マニュアル</a></li>      <li><a href='appendices.php'>付録</a></li>      </ul>
+    </div>
+  </div>
+
+
+
+
+<div id="layout" class="clearfix">
+  <section id="layout-content">
+  <div class="page-tools">
+    <div class="change-language">
+      <form action="/manual/change.php" method="get" id="changelang" name="changelang">
+        <fieldset>
+          <label for="changelang-langs">Change language:</label>
+          <select onchange="document.changelang.submit()" name="page" id="changelang-langs">
+            <option value='en/types.comparisons.php'>English</option>
+            <option value='pt_BR/types.comparisons.php'>Brazilian Portuguese</option>
+            <option value='zh/types.comparisons.php'>Chinese (Simplified)</option>
+            <option value='fr/types.comparisons.php'>French</option>
+            <option value='de/types.comparisons.php'>German</option>
+            <option value='ja/types.comparisons.php' selected="selected">Japanese</option>
+            <option value='kr/types.comparisons.php'>Korean</option>
+            <option value='ro/types.comparisons.php'>Romanian</option>
+            <option value='ru/types.comparisons.php'>Russian</option>
+            <option value='es/types.comparisons.php'>Spanish</option>
+            <option value='tr/types.comparisons.php'>Turkish</option>
+            <option value="help-translate.php">Other</option>
+          </select>
+        </fieldset>
+      </form>
+    </div>
+    <div class="edit-bug">
+      <a href="https://edit.php.net/?project=PHP&amp;perm=ja/types.comparisons.php">Edit</a>
+      <a href="https://bugs.php.net/report.php?bug_type=Documentation+problem&amp;manpage=types.comparisons">Report a Bug</a>
+    </div>
+  </div><div id="types.comparisons" class="appendix">
+ <h1>PHP 型の比較表</h1>
+
+ <p class="para">
+  下記の表はPHPの<a href="language.types.php" class="link">型</a>と
+  <a href="language.operators.comparison.php" class="link">比較演算子</a>
+  の振る舞いについて、緩やかな場合と厳密な場合の両方について
+  例を示しています。この付録はマニュアルの
+  <a href="language.types.type-juggling.php" class="link">型の相互変換</a>
+  にも関連しています。種々のユーザーコメントと
+  <a href="http://www.blueshoes.org/en/developer/php_cheat_sheet/" class="link external">&raquo;&nbsp;BlueShoes</a>の働きの
+  おかげです。
+ </p>
+ <p class="para">
+  この表を活用する前に、型とその意味について理解しておく必要があります。
+  例えば、<em>&quot;42&quot;</em>は<span class="type"><span class="type 文字列">文字列</span></span>ですが
+  <em>42</em>は<span class="type"><span class="type 整数">整数</span></span>です。
+  <strong><code>FALSE</code></strong>は<span class="type"><a href="language.types.boolean.php" class="type boolean">boolean</a></span>ですが<em>&quot;false&quot;</em>は
+  <span class="type"><span class="type 文字列">文字列</span></span>です。
+ </p>
+ <blockquote class="note"><p><strong class="note">注意</strong>: 
+  <p class="para">
+   HTMLフォームは整数、浮動小数点数、booleanを渡してはくれず、
+   文字列を渡します。文字が数値であるかどうか確認するには、
+   <span class="function"><a href="function.is-numeric.php" class="function">is_numeric()</a></span>を使うとよいでしょう。
+  </p>
+ </p></blockquote>
+ <blockquote class="note"><p><strong class="note">注意</strong>: 
+  <p class="para">
+   <var class="varname"><var class="varname">$x</var></var>が定義されていない状態で単に
+   <em>if ($x)</em>としてしまうと<strong><code>E_NOTICE</code></strong>
+   レベルのエラーが発行てしまいます。代わりに、<span class="function"><a href="function.empty.php" class="function">empty()</a></span>や
+   <span class="function"><a href="function.isset.php" class="function">isset()</a></span>を使うかあるいは変数を初期化するように
+   してください。
+  </p>
+ </p></blockquote>
+ <blockquote class="note"><p><strong class="note">注意</strong>: 
+  <p class="para">
+   数値演算の結果が、定数 <strong><code>NAN</code></strong> で表される値になることがあります。
+   この値を、自分自身を含む他の値と比較すると、緩い比較であっても厳しい比較であっても結果は
+   <strong><code>FALSE</code></strong> となります
+   (つまり <em>NAN != NAN</em> であり <em>NAN !== NAN</em> であるということです)。
+   結果が <strong><code>NAN</code></strong> になる演算の例には
+   <em>sqrt(-1)</em> や <em>asin(2)</em> そして
+   <em>asinh(0)</em> があります。
+  </p>
+ </p></blockquote>
+ <p class="para">
+  <table class="doctable table">
+   <caption><strong>PHP 関数による <var class="varname"><var class="varname">$x</var></var> の比較</strong></caption>
+   
+    <thead>
+     <tr>
+      <th>式</th>
+      <th><span class="function"><a href="function.gettype.php" class="function">gettype()</a></span></th>
+      <th><span class="function"><a href="function.empty.php" class="function">empty()</a></span></th>
+      <th><span class="function"><a href="function.is-null.php" class="function">is_null()</a></span></th>
+      <th><span class="function"><a href="function.isset.php" class="function">isset()</a></span></th>
+      <th><span class="type"><a href="language.types.boolean.php" class="type boolean">boolean</a></span> : <em>if($x)</em></th>
+     </tr>
+
+    </thead>
+
+    <tbody class="tbody">
+     <tr>
+      <td><em>$x = &quot;&quot;;</em></td>
+      <td><span class="type"><a href="language.types.string.php" class="type string">string</a></span></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+     </tr>
+
+     <tr>
+      <td><em>$x = null;</em></td>
+      <td><span class="type"><a href="language.types.null.php" class="type NULL">NULL</a></span></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+     </tr>
+
+     <tr>
+      <td><em>var $x;</em></td>
+      <td><span class="type"><a href="language.types.null.php" class="type NULL">NULL</a></span></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+     </tr>
+
+     <tr>
+      <td><var class="varname"><var class="varname">$x</var></var> が未定義</td>
+      <td><span class="type"><a href="language.types.null.php" class="type NULL">NULL</a></span></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+     </tr>
+
+     <tr>
+      <td><em>$x = array();</em></td>
+      <td><span class="type"><a href="language.types.array.php" class="type array">array</a></span></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+     </tr>
+
+     <tr>
+      <td><em>$x = false;</em></td>
+      <td><span class="type"><a href="language.types.boolean.php" class="type boolean">boolean</a></span></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+     </tr>
+
+     <tr>
+      <td><em>$x = true;</em></td>
+      <td><span class="type"><a href="language.types.boolean.php" class="type boolean">boolean</a></span></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+     </tr>
+
+     <tr>
+      <td><em>$x = 1;</em></td>
+      <td><span class="type"><a href="language.types.integer.php" class="type integer">integer</a></span></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+     </tr>
+
+     <tr>
+      <td><em>$x = 42;</em></td>
+      <td><span class="type"><a href="language.types.integer.php" class="type integer">integer</a></span></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+     </tr>
+
+     <tr>
+      <td><em>$x = 0;</em></td>
+      <td><span class="type"><a href="language.types.integer.php" class="type integer">integer</a></span></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+     </tr>
+
+     <tr>
+      <td><em>$x = -1;</em></td>
+      <td><span class="type"><a href="language.types.integer.php" class="type integer">integer</a></span></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+     </tr>
+
+     <tr>
+      <td><em>$x = &quot;1&quot;;</em></td>
+      <td><span class="type"><a href="language.types.string.php" class="type string">string</a></span></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+     </tr>
+
+     <tr>
+      <td><em>$x = &quot;0&quot;;</em></td>
+      <td><span class="type"><a href="language.types.string.php" class="type string">string</a></span></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+     </tr>
+
+     <tr>
+      <td><em>$x = &quot;-1&quot;;</em></td>
+      <td><span class="type"><a href="language.types.string.php" class="type string">string</a></span></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+     </tr>
+
+     <tr>
+      <td><em>$x = &quot;php&quot;;</em></td>
+      <td><span class="type"><a href="language.types.string.php" class="type string">string</a></span></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+     </tr>
+
+     <tr>
+      <td><em>$x = &quot;true&quot;;</em></td>
+      <td><span class="type"><a href="language.types.string.php" class="type string">string</a></span></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+     </tr>
+
+     <tr>
+      <td><em>$x = &quot;false&quot;;</em></td>
+      <td><span class="type"><a href="language.types.string.php" class="type string">string</a></span></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+     </tr>
+
+    </tbody>
+   
+  </table>
+
+ </p>
+
+ <p class="para">
+  <table id="types.comparisions-loose" class="doctable table">
+   <caption><strong><em>==</em> による緩やかな比較</strong></caption>
+   
+    <thead>
+     <tr>
+      <th> </th>
+      <th><strong><code>TRUE</code></strong></th>
+      <th><strong><code>FALSE</code></strong></th>
+      <th><em>1</em></th>
+      <th><em>0</em></th>
+      <th><em>-1</em></th>
+      <th><em>&quot;1&quot;</em></th>
+      <th><em>&quot;0&quot;</em></th>
+      <th><em>&quot;-1&quot;</em></th>
+      <th><strong><code>NULL</code></strong></th>
+      <th><em>array()</em></th>
+      <th><em>&quot;php&quot;</em></th>
+      <th><em>&quot;&quot;</em></th>
+     </tr>
+
+    </thead>
+
+    <tbody class="tbody">
+     <tr>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+     </tr>
+
+     <tr>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+     </tr>
+
+     <tr>
+      <td><em>1</em></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+     </tr>
+
+     <tr>
+      <td><em>0</em></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+     </tr>
+
+     <tr>
+      <td><em>-1</em></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+     </tr>
+
+     <tr>
+      <td><em>&quot;1&quot;</em></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+     </tr>
+
+     <tr>
+      <td><em>&quot;0&quot;</em></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+     </tr>
+
+     <tr>
+      <td><em>&quot;-1&quot;</em></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+     </tr>
+
+     <tr>
+      <td><strong><code>NULL</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+     </tr>
+
+     <tr>
+      <td><em>array()</em></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+     </tr>
+
+     <tr>
+      <td><em>&quot;php&quot;</em></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+     </tr>
+
+     <tr>
+      <td><em>&quot;&quot;</em></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+     </tr>
+
+    </tbody>
+   
+  </table>
+
+ </p>
+
+ <p class="para">
+  <table id="type.comparisons-strict" class="doctable table">
+   <caption><strong><em>===</em> による厳密な比較</strong></caption>
+   
+    <thead>
+     <tr>
+      <th> </th>
+      <th><strong><code>TRUE</code></strong></th>
+      <th><strong><code>FALSE</code></strong></th>
+      <th><em>1</em></th>
+      <th><em>0</em></th>
+      <th><em>-1</em></th>
+      <th><em>&quot;1&quot;</em></th>
+      <th><em>&quot;0&quot;</em></th>
+      <th><em>&quot;-1&quot;</em></th>
+      <th><strong><code>NULL</code></strong></th>
+      <th><em>array()</em></th>
+      <th><em>&quot;php&quot;</em></th>
+      <th><em>&quot;&quot;</em></th>
+     </tr>
+
+    </thead>
+
+    <tbody class="tbody">
+     <tr>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+     </tr>
+
+     <tr>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+     </tr>
+
+     <tr>
+      <td><em>1</em></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+     </tr>
+
+     <tr>
+      <td><em>0</em></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+     </tr>
+
+     <tr>
+      <td><em>-1</em></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+     </tr>
+
+     <tr>
+      <td><em>&quot;1&quot;</em></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+     </tr>
+
+     <tr>
+      <td><em>&quot;0&quot;</em></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+     </tr>
+
+     <tr>
+      <td><em>&quot;-1&quot;</em></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+     </tr>
+
+     <tr>
+      <td><strong><code>NULL</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+     </tr>
+
+     <tr>
+      <td><em>array()</em></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+     </tr>
+
+     <tr>
+      <td><em>&quot;php&quot;</em></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+     </tr>
+
+     <tr>
+      <td><em>&quot;&quot;</em></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>FALSE</code></strong></td>
+      <td><strong><code>TRUE</code></strong></td>
+     </tr>
+
+    </tbody>
+   
+  </table>
+
+ </p>
+</div>
+
+<section id="usernotes">
+ <div class="head">
+  <span class="action"><a href="/manual/add-note.php?sect=types.comparisons&amp;redirect=http://jp2.php.net/manual/ja/types.comparisons.php"><img src='/images/notes-add@2x.png' alt='add a note' width='12' height='12'> <small>add a note</small></a></span>
+  <h3 class="title">User Contributed Notes <span class="count">17 notes</span></h3>
+ </div><div id="allnotes">
+  <div class="note" id="108264">  <div class="votes">
+    <div id="Vu108264">
+    <a href="/manual/vote-note.php?id=108264&amp;page=types.comparisons&amp;vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd108264">
+    <a href="/manual/vote-note.php?id=108264&amp;page=types.comparisons&amp;vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V108264" title="79% like this...">
+    52
+    </div>
+  </div>
+  <a href="#108264" class="name">
+  <strong class="user"><em>php at richardneill dot org</em></strong></a><a class="genanchor" href="#108264"> &para;</a><div class="date" title="2012-04-13 04:45"><strong>3 years ago</strong></div>
+  <div class="text" id="Hcom108264">
+<div class="phpcode"><code><span class="html">
+Be wary of string-comparison where both strings might be interpreted as numbers.&nbsp; Eg:<br /><br />$x="123456789012345678901234567890"; $y="123456789012345678900000000000";<br />echo&nbsp; ($x==$y)?"equal":"not_equal";&nbsp;&nbsp; #Prints equal !!<br /><br />Both strings are getting converted to floats, then losing precision, then becoming equal :-(<br /><br />Using "===" or making either of the strings non-numeric will prevent this.<br />[This is on a 32-bit machine, on a 64-bit, you will have to make the strings longer to see the effect]</span>
+</code></div>
+  </div>
+ </div>
+  <div class="note" id="96215">  <div class="votes">
+    <div id="Vu96215">
+    <a href="/manual/vote-note.php?id=96215&amp;page=types.comparisons&amp;vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd96215">
+    <a href="/manual/vote-note.php?id=96215&amp;page=types.comparisons&amp;vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V96215" title="77% like this...">
+    15
+    </div>
+  </div>
+  <a href="#96215" class="name">
+  <strong class="user"><em>php at benizi dot com</em></strong></a><a class="genanchor" href="#96215"> &para;</a><div class="date" title="2010-02-15 07:31"><strong>5 years ago</strong></div>
+  <div class="text" id="Hcom96215">
+<div class="phpcode"><code><span class="html">
+It's interesting to note that 'empty()' and 'boolean : if($x)'<br />are paired as logical opposites, as are 'is_null()' and 'isset()'.</span>
+</code></div>
+  </div>
+ </div>
+  <div class="note" id="60202">  <div class="votes">
+    <div id="Vu60202">
+    <a href="/manual/vote-note.php?id=60202&amp;page=types.comparisons&amp;vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd60202">
+    <a href="/manual/vote-note.php?id=60202&amp;page=types.comparisons&amp;vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V60202" title="70% like this...">
+    16
+    </div>
+  </div>
+  <a href="#60202" class="name">
+  <strong class="user"><em>Jan</em></strong></a><a class="genanchor" href="#60202"> &para;</a><div class="date" title="2005-12-29 08:23"><strong>9 years ago</strong></div>
+  <div class="text" id="Hcom60202">
+<div class="phpcode"><code><span class="html">
+Note that php comparison is not transitive:<br /><br />"php" == 0 =&gt; true<br />0 == null =&gt; true<br />null == "php" =&gt; false</span>
+</code></div>
+  </div>
+ </div>
+  <div class="note" id="77093">  <div class="votes">
+    <div id="Vu77093">
+    <a href="/manual/vote-note.php?id=77093&amp;page=types.comparisons&amp;vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd77093">
+    <a href="/manual/vote-note.php?id=77093&amp;page=types.comparisons&amp;vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V77093" title="69% like this...">
+    13
+    </div>
+  </div>
+  <a href="#77093" class="name">
+  <strong class="user"><em>frank</em></strong></a><a class="genanchor" href="#77093"> &para;</a><div class="date" title="2007-08-15 12:06"><strong>8 years ago</strong></div>
+  <div class="text" id="Hcom77093">
+<div class="phpcode"><code><span class="html">
+A comparison table for &lt;=,&lt;,=&gt;,&gt; would be nice...<br />Following are TRUE (tested PHP4&amp;5):<br />NULL &lt;= -1<br />NULL &lt;= 0<br />NULL &lt;= 1<br />!(NULL &gt;= -1)<br />NULL &gt;= 0<br />!(NULL &gt;= 1)<br />That was a surprise for me (and it is not like SQL, I would like to have the option to have SQL semantics with NULL...).</span>
+</code></div>
+  </div>
+ </div>
+  <div class="note" id="95141">  <div class="votes">
+    <div id="Vu95141">
+    <a href="/manual/vote-note.php?id=95141&amp;page=types.comparisons&amp;vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd95141">
+    <a href="/manual/vote-note.php?id=95141&amp;page=types.comparisons&amp;vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V95141" title="66% like this...">
+    11
+    </div>
+  </div>
+  <a href="#95141" class="name">
+  <strong class="user"><em>edgar at goodforall dot eu</em></strong></a><a class="genanchor" href="#95141"> &para;</a><div class="date" title="2009-12-15 03:55"><strong>5 years ago</strong></div>
+  <div class="text" id="Hcom95141">
+<div class="phpcode"><code><span class="html">
+Some function to write out your own comparisson table in tsv format. Can be easily modified to add more testcases and/or binary functions. It will test all comparables against each other with all functions. <br /><br /><span class="default">&lt;?php<br />$funcs </span><span class="keyword">= array(<br />&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="comment">/* Testing equality */<br />&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="string">'eq' </span><span class="keyword">=&gt; </span><span class="string">'=='</span><span class="keyword">,<br />&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="string">'ne' </span><span class="keyword">=&gt; </span><span class="string">'!='</span><span class="keyword">,<br />&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="string">'gt' </span><span class="keyword">=&gt; </span><span class="string">'&gt;'</span><span class="keyword">,<br />&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="string">'lt' </span><span class="keyword">=&gt; </span><span class="string">'&lt;'</span><span class="keyword">,<br />&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="string">'ne2' </span><span class="keyword">=&gt; </span><span class="string">'&lt;&gt;'</span><span class="keyword">,<br />&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="string">'lte' </span><span class="keyword">=&gt; </span><span class="string">'&lt;='</span><span class="keyword">,<br />&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="string">'gte' </span><span class="keyword">=&gt; </span><span class="string">'&gt;='</span><span class="keyword">,<br />&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="comment">/* Testing identity */<br />&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="string">'id' </span><span class="keyword">=&gt; </span><span class="string">'==='</span><span class="keyword">,<br />&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="string">'nid' </span><span class="keyword">=&gt; </span><span class="string">'!=='<br /></span><span class="keyword">);<br />class </span><span class="default">Test </span><span class="keyword">{<br />&nbsp; &nbsp; &nbsp; &nbsp; protected </span><span class="default">$a</span><span class="keyword">;<br />&nbsp; &nbsp; &nbsp; &nbsp; public </span><span class="default">$b</span><span class="keyword">;<br />&nbsp; &nbsp; &nbsp; &nbsp; public function </span><span class="default">__construct</span><span class="keyword">(</span><span class="default">$a</span><span class="keyword">,</span><span class="default">$b</span><span class="keyword">){<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="default">$this</span><span class="keyword">-&gt;</span><span class="default">a </span><span class="keyword">= </span><span class="default">$a</span><span class="keyword">;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="default">$this</span><span class="keyword">-&gt;</span><span class="default">b </span><span class="keyword">= </span><span class="default">$b</span><span class="keyword">;<br />&nbsp; &nbsp; &nbsp; &nbsp; }<br />&nbsp; &nbsp; &nbsp; &nbsp; public function </span><span class="default">getab</span><span class="keyword">(){<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; return </span><span class="default">$this</span><span class="keyword">-&gt;</span><span class="default">a</span><span class="keyword">.</span><span class="string">","</span><span class="keyword">. </span><span class="default">$this</span><span class="keyword">-&gt;</span><span class="default">b</span><span class="keyword">;<br />&nbsp; &nbsp; &nbsp; &nbsp; }<br /><br />}<br /></span><span class="default">$tst1 </span><span class="keyword">= new </span><span class="default">Test</span><span class="keyword">(</span><span class="default">1</span><span class="keyword">,</span><span class="default">2</span><span class="keyword">);<br /></span><span class="default">$tst2 </span><span class="keyword">= new </span><span class="default">Test</span><span class="keyword">(</span><span class="default">1</span><span class="keyword">,</span><span class="default">2</span><span class="keyword">);<br /></span><span class="default">$tst3 </span><span class="keyword">= new </span><span class="default">Test</span><span class="keyword">(</span><span class="default">2</span><span class="keyword">,</span><span class="default">2</span><span class="keyword">);<br /></span><span class="default">$tst4 </span><span class="keyword">= new </span><span class="default">Test</span><span class="keyword">(</span><span class="default">1</span><span class="keyword">,</span><span class="default">1</span><span class="keyword">);<br /><br /></span><span class="default">$arr1 </span><span class="keyword">= array(</span><span class="default">1</span><span class="keyword">,</span><span class="default">2</span><span class="keyword">,</span><span class="default">3</span><span class="keyword">);<br /></span><span class="default">$arr2 </span><span class="keyword">= array(</span><span class="default">2</span><span class="keyword">,</span><span class="default">3</span><span class="keyword">,</span><span class="default">4</span><span class="keyword">);<br /></span><span class="default">$arr3 </span><span class="keyword">= array(</span><span class="string">'a'</span><span class="keyword">,</span><span class="string">'b'</span><span class="keyword">,</span><span class="string">'c'</span><span class="keyword">,</span><span class="string">'d'</span><span class="keyword">);<br /></span><span class="default">$arr4 </span><span class="keyword">= array(</span><span class="string">'a'</span><span class="keyword">,</span><span class="string">'b'</span><span class="keyword">,</span><span class="string">'c'</span><span class="keyword">);<br /></span><span class="default">$arr5 </span><span class="keyword">= array();<br /><br /></span><span class="default">$comp1 </span><span class="keyword">= array(<br />&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="string">'ints' </span><span class="keyword">=&gt; array(-</span><span class="default">1</span><span class="keyword">,</span><span class="default">0</span><span class="keyword">,</span><span class="default">1</span><span class="keyword">,</span><span class="default">2</span><span class="keyword">),<br />&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="string">'floats' </span><span class="keyword">=&gt; array(-</span><span class="default">1.1</span><span class="keyword">,</span><span class="default">0.0</span><span class="keyword">,</span><span class="default">1.1</span><span class="keyword">,</span><span class="default">2.0</span><span class="keyword">),<br />&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="string">'string' </span><span class="keyword">=&gt; array(</span><span class="string">'str'</span><span class="keyword">, </span><span class="string">'str1'</span><span class="keyword">, </span><span class="string">''</span><span class="keyword">, </span><span class="string">'1'</span><span class="keyword">),<br />&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="string">'bools' </span><span class="keyword">=&gt; array(</span><span class="default">true</span><span class="keyword">, </span><span class="default">false</span><span class="keyword">),<br />&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="string">'null' </span><span class="keyword">=&gt; array(</span><span class="default">null</span><span class="keyword">),<br />&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="string">'objects' </span><span class="keyword">=&gt; array(</span><span class="default">$tst1</span><span class="keyword">,</span><span class="default">$tst2</span><span class="keyword">,</span><span class="default">$tst3</span><span class="keyword">,</span><span class="default">$tst4</span><span class="keyword">),<br />&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="string">'arrays' </span><span class="keyword">=&gt; array(</span><span class="default">$arr1</span><span class="keyword">, </span><span class="default">$arr2</span><span class="keyword">, </span><span class="default">$arr3</span><span class="keyword">, </span><span class="default">$arr4</span><span class="keyword">, </span><span class="default">$arr5</span><span class="keyword">)<br />);<br /></span><span class="default">$fbody </span><span class="keyword">= array();<br /><br />foreach(</span><span class="default">$funcs </span><span class="keyword">as </span><span class="default">$name </span><span class="keyword">=&gt; </span><span class="default">$op</span><span class="keyword">){<br />&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="default">$fbody</span><span class="keyword">[</span><span class="default">$name</span><span class="keyword">] = </span><span class="default">create_function</span><span class="keyword">(</span><span class="string">'$a,$b'</span><span class="keyword">, </span><span class="string">'return $a ' </span><span class="keyword">. </span><span class="default">$op </span><span class="keyword">. </span><span class="string">' $b;'</span><span class="keyword">);<br />}<br /><br /></span><span class="default">$table </span><span class="keyword">= array(array(</span><span class="string">'function'</span><span class="keyword">, </span><span class="string">'comp1'</span><span class="keyword">, </span><span class="string">'comp2'</span><span class="keyword">, </span><span class="string">'f comp1 comp2'</span><span class="keyword">, </span><span class="string">'type'</span><span class="keyword">));<br /></span><span class="comment">/* Do comparisons */<br /></span><span class="default">$comp2&nbsp; </span><span class="keyword">= array();<br />foreach(</span><span class="default">$comp1 </span><span class="keyword">as </span><span class="default">$type </span><span class="keyword">=&gt; </span><span class="default">$val</span><span class="keyword">){<br />&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="default">$comp2</span><span class="keyword">[</span><span class="default">$type</span><span class="keyword">] = </span><span class="default">$val</span><span class="keyword">;<br />}<br /><br />foreach(</span><span class="default">$comp1 </span><span class="keyword">as </span><span class="default">$key1 </span><span class="keyword">=&gt; </span><span class="default">$val1</span><span class="keyword">){<br />&nbsp; &nbsp; &nbsp; &nbsp; foreach(</span><span class="default">$comp2 </span><span class="keyword">as </span><span class="default">$key2 </span><span class="keyword">=&gt; </span><span class="default">$val2</span><span class="keyword">){<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="default">addTableEntry</span><span class="keyword">(</span><span class="default">$key1</span><span class="keyword">, </span><span class="default">$key2</span><span class="keyword">, </span><span class="default">$val1</span><span class="keyword">, </span><span class="default">$val2</span><span class="keyword">);<br />&nbsp; &nbsp; &nbsp; &nbsp; }<br />}<br /></span><span class="default">$out </span><span class="keyword">= </span><span class="string">''</span><span class="keyword">;<br />foreach(</span><span class="default">$table </span><span class="keyword">as </span><span class="default">$row</span><span class="keyword">){<br />&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="default">$out </span><span class="keyword">.= </span><span class="default">sprintf</span><span class="keyword">(</span><span class="string">"%-20s\t%-20s\t%-20s\t%-20s\t%-20s\n"</span><span class="keyword">, </span><span class="default">$row</span><span class="keyword">[</span><span class="default">0</span><span class="keyword">], </span><span class="default">$row</span><span class="keyword">[</span><span class="default">1</span><span class="keyword">], </span><span class="default">$row</span><span class="keyword">[</span><span class="default">2</span><span class="keyword">], </span><span class="default">$row</span><span class="keyword">[</span><span class="default">3</span><span class="keyword">], </span><span class="default">$row</span><span class="keyword">[</span><span class="default">4</span><span class="keyword">]);<br />}<br /><br />print </span><span class="default">$out</span><span class="keyword">;<br />exit;<br /><br />function </span><span class="default">addTableEntry</span><span class="keyword">(</span><span class="default">$n1</span><span class="keyword">, </span><span class="default">$n2</span><span class="keyword">, </span><span class="default">$comp1</span><span class="keyword">, </span><span class="default">$comp2</span><span class="keyword">){<br />&nbsp; &nbsp; &nbsp; &nbsp; global </span><span class="default">$table</span><span class="keyword">, </span><span class="default">$fbody</span><span class="keyword">;<br />&nbsp; &nbsp; &nbsp; &nbsp; foreach(</span><span class="default">$fbody </span><span class="keyword">as </span><span class="default">$fname </span><span class="keyword">=&gt; </span><span class="default">$func</span><span class="keyword">){<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; foreach(</span><span class="default">$comp1 </span><span class="keyword">as </span><span class="default">$val1</span><span class="keyword">){<br />&nbsp; foreach(</span><span class="default">$comp2 </span><span class="keyword">as </span><span class="default">$val2</span><span class="keyword">){<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="default">$val </span><span class="keyword">= </span><span class="default">$func</span><span class="keyword">(</span><span class="default">$val1</span><span class="keyword">,</span><span class="default">$val2</span><span class="keyword">);<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="default">$table</span><span class="keyword">[] = array(</span><span class="default">$fname</span><span class="keyword">, </span><span class="default">gettype</span><span class="keyword">(</span><span class="default">$val1</span><span class="keyword">) . </span><span class="string">' =&gt; ' </span><span class="keyword">. </span><span class="default">sprintval</span><span class="keyword">(</span><span class="default">$val1</span><span class="keyword">), </span><span class="default">gettype</span><span class="keyword">(</span><span class="default">$val2</span><span class="keyword">) .</span><span class="string">' =&gt; ' </span><span class="keyword">. </span><span class="default">sprintval</span><span class="keyword">(</span><span class="default">$val2</span><span class="keyword">), </span><span class="default">gettype</span><span class="keyword">(</span><span class="default">$val</span><span class="keyword">) . </span><span class="string">' =&gt; ' </span><span class="keyword">. </span><span class="default">sprintval</span><span class="keyword">(</span><span class="default">$val</span><span class="keyword">), </span><span class="default">gettype</span><span class="keyword">(</span><span class="default">$val1</span><span class="keyword">) . </span><span class="string">"-" </span><span class="keyword">. </span><span class="default">gettype</span><span class="keyword">(</span><span class="default">$val2</span><span class="keyword">) . </span><span class="string">'-' </span><span class="keyword">. </span><span class="default">$fname</span><span class="keyword">);<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }<br />&nbsp; &nbsp; &nbsp; &nbsp; }<br />}<br /><br />function </span><span class="default">sprintval</span><span class="keyword">(</span><span class="default">$val</span><span class="keyword">){<br />&nbsp; &nbsp; &nbsp; &nbsp; if(</span><span class="default">is_object</span><span class="keyword">(</span><span class="default">$val</span><span class="keyword">)){<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; return </span><span class="string">'object-' </span><span class="keyword">. </span><span class="default">$val</span><span class="keyword">-&gt;</span><span class="default">getab</span><span class="keyword">();<br />&nbsp; &nbsp; &nbsp; &nbsp; }<br />&nbsp; &nbsp; &nbsp; &nbsp; if(</span><span class="default">is_array</span><span class="keyword">(</span><span class="default">$val</span><span class="keyword">)){<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; return </span><span class="default">implode</span><span class="keyword">(</span><span class="string">','</span><span class="keyword">, </span><span class="default">$val</span><span class="keyword">);<br />&nbsp; &nbsp; &nbsp; &nbsp; }<br />&nbsp; &nbsp; &nbsp; &nbsp; if(</span><span class="default">is_bool</span><span class="keyword">(</span><span class="default">$val</span><span class="keyword">)){<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if(</span><span class="default">$val</span><span class="keyword">){<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; return </span><span class="string">'true'</span><span class="keyword">;<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; return </span><span class="string">'false'</span><span class="keyword">;<br />&nbsp; &nbsp; &nbsp; &nbsp; }<br />&nbsp; &nbsp; &nbsp; &nbsp; return </span><span class="default">strval</span><span class="keyword">(</span><span class="default">$val</span><span class="keyword">);<br />}<br /><br /></span><span class="default">?&gt;</span>
+</span>
+</code></div>
+  </div>
+ </div>
+  <div class="note" id="49327">  <div class="votes">
+    <div id="Vu49327">
+    <a href="/manual/vote-note.php?id=49327&amp;page=types.comparisons&amp;vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd49327">
+    <a href="/manual/vote-note.php?id=49327&amp;page=types.comparisons&amp;vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V49327" title="65% like this...">
+    8
+    </div>
+  </div>
+  <a href="#49327" class="name">
+  <strong class="user"><em>aidan at php dot net</em></strong></a><a class="genanchor" href="#49327"> &para;</a><div class="date" title="2005-01-24 04:00"><strong>10 years ago</strong></div>
+  <div class="text" id="Hcom49327">
+<div class="phpcode"><code><span class="html">
+The way PHP handles comparisons when multiple types are concerned is quite confusing.<br /><br />For example:<br />"php" == 0<br /><br />This is true, because the string is casted interally to an integer. Any string (that does not start with a number), when casted to an integer, will be 0.</span>
+</code></div>
+  </div>
+ </div>
+  <div class="note" id="115939">  <div class="votes">
+    <div id="Vu115939">
+    <a href="/manual/vote-note.php?id=115939&amp;page=types.comparisons&amp;vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd115939">
+    <a href="/manual/vote-note.php?id=115939&amp;page=types.comparisons&amp;vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V115939" title="64% like this...">
+    4
+    </div>
+  </div>
+  <a href="#115939" class="name">
+  <strong class="user"><em>Anonymous</em></strong></a><a class="genanchor" href="#115939"> &para;</a><div class="date" title="2014-10-17 03:19"><strong>1 year ago</strong></div>
+  <div class="text" id="Hcom115939">
+<div class="phpcode"><code><span class="html">
+The loose comparison chart is missing a few things.<br /><br />array(1)==true returns true.<br /><br />also:<br /><br />(int)array(1) === 1 returns true<br /><br />This is symmetric:<br /><br />array(1) === (array)1 returns true<br /><br />but the loose comparison<br /><br />array(1)==1 still returns false.</span>
+</code></div>
+  </div>
+ </div>
+  <div class="note" id="80258">  <div class="votes">
+    <div id="Vu80258">
+    <a href="/manual/vote-note.php?id=80258&amp;page=types.comparisons&amp;vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd80258">
+    <a href="/manual/vote-note.php?id=80258&amp;page=types.comparisons&amp;vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V80258" title="65% like this...">
+    6
+    </div>
+  </div>
+  <a href="#80258" class="name">
+  <strong class="user"><em>info at shaelf dot ru</em></strong></a><a class="genanchor" href="#80258"> &para;</a><div class="date" title="2008-01-06 10:51"><strong>7 years ago</strong></div>
+  <div class="text" id="Hcom80258">
+<div class="phpcode"><code><span class="html">
+Compare object<br /><span class="default">&lt;?php<br />$o </span><span class="keyword">= new </span><span class="default">stdClass</span><span class="keyword">();<br /></span><span class="default">$o</span><span class="keyword">-&gt;</span><span class="default">we </span><span class="keyword">= </span><span class="default">12</span><span class="keyword">;<br /><br /></span><span class="default">$o2 </span><span class="keyword">= new </span><span class="default">stdClass</span><span class="keyword">();<br /></span><span class="default">$o2</span><span class="keyword">-&gt;</span><span class="default">we </span><span class="keyword">= </span><span class="default">12</span><span class="keyword">;<br /><br /></span><span class="default">$o3 </span><span class="keyword">= clone </span><span class="default">$o2</span><span class="keyword">;<br /></span><span class="default">var_dump</span><span class="keyword">(</span><span class="default">$o </span><span class="keyword">== </span><span class="default">$o2</span><span class="keyword">); </span><span class="comment">//true<br /></span><span class="default">var_dump</span><span class="keyword">(</span><span class="default">$o </span><span class="keyword">=== </span><span class="default">$o2</span><span class="keyword">); </span><span class="comment">//false<br /></span><span class="default">var_dump</span><span class="keyword">(</span><span class="default">$o3 </span><span class="keyword">=== </span><span class="default">$o2</span><span class="keyword">); </span><span class="comment">//true<br /></span><span class="default">?&gt;</span>
+</span>
+</code></div>
+  </div>
+ </div>
+  <div class="note" id="55161">  <div class="votes">
+    <div id="Vu55161">
+    <a href="/manual/vote-note.php?id=55161&amp;page=types.comparisons&amp;vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd55161">
+    <a href="/manual/vote-note.php?id=55161&amp;page=types.comparisons&amp;vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V55161" title="61% like this...">
+    6
+    </div>
+  </div>
+  <a href="#55161" class="name">
+  <strong class="user"><em>jerryschwartz at comfortable dot com</em></strong></a><a class="genanchor" href="#55161"> &para;</a><div class="date" title="2005-07-26 10:04"><strong>10 years ago</strong></div>
+  <div class="text" id="Hcom55161">
+<div class="phpcode"><code><span class="html">
+In some languages, a boolean is promoted to an integer (with a value of 1 or -1, typically) if used in an expression with an integer. I found that PHP has it both ways:<br /><br />If you add a boolean with a value of true to an integer with a value of 3, the result will be 4 (because the boolean is cast as an integer).<br /><br />On the other hand, if you test a boolean with a value of true for equality with an integer with a value of three, the result will be true (because the integer is cast as a boolean).<br /><br />Surprisingly, at first glance, if you use either &lt; or &gt; as the comparison operator the result is always false (again, because the integer as cast as a boolean, and true is neither greater nor less than true).</span>
+</code></div>
+  </div>
+ </div>
+  <div class="note" id="117175">  <div class="votes">
+    <div id="Vu117175">
+    <a href="/manual/vote-note.php?id=117175&amp;page=types.comparisons&amp;vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd117175">
+    <a href="/manual/vote-note.php?id=117175&amp;page=types.comparisons&amp;vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V117175" title="60% like this...">
+    1
+    </div>
+  </div>
+  <a href="#117175" class="name">
+  <strong class="user"><em>trexx68</em></strong></a><a class="genanchor" href="#117175"> &para;</a><div class="date" title="2015-04-26 02:11"><strong>6 months ago</strong></div>
+  <div class="text" id="Hcom117175">
+<div class="phpcode"><code><span class="html">
+If you want to view the truth tables colorized, just:<br /><br />1. Save a local copy of this page as an .html file,<br />2. View the page source with any text editor.<br />3. Replace the opening &lt;head&gt; tag so it will include this: <br /><br />&lt;head&gt; <br />&nbsp; &lt;script src="<a href="https://code.jquery.com/jquery-1.10.2.js" rel="nofollow" target="_blank">https://code.jquery.com/jquery-1.10.2.js</a>"&gt;&lt;/script&gt;<br /><br />4. Replace the closing &lt;/body&gt; tag with this: <br /><br />&nbsp; &lt;script&gt;<br />&nbsp; &nbsp; $( "td:contains('FALSE')" ).css("color", "red");<br />&nbsp; &nbsp; $( "td:contains('TRUE')" ).css("color", "green");<br />&nbsp; &lt;/script&gt;<br />&lt;/body&gt;<br /><br />5. Save the file, and view it on your browser.&nbsp; Enjoy.</span>
+</code></div>
+  </div>
+ </div>
+  <div class="note" id="113724">  <div class="votes">
+    <div id="Vu113724">
+    <a href="/manual/vote-note.php?id=113724&amp;page=types.comparisons&amp;vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd113724">
+    <a href="/manual/vote-note.php?id=113724&amp;page=types.comparisons&amp;vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V113724" title="52% like this...">
+    1
+    </div>
+  </div>
+  <a href="#113724" class="name">
+  <strong class="user"><em>Anonymous</em></strong></a><a class="genanchor" href="#113724"> &para;</a><div class="date" title="2013-11-21 10:43"><strong>2 years ago</strong></div>
+  <div class="text" id="Hcom113724">
+<div class="phpcode"><code><span class="html">
+I'm running PHP 5.5.3.<br /><br />This is a correction to one of the previous posts.<br /><br /><span class="default">&lt;?php<br />$o </span><span class="keyword">= new </span><span class="default">stdClass</span><span class="keyword">();<br /></span><span class="default">$o</span><span class="keyword">-&gt;</span><span class="default">we </span><span class="keyword">= </span><span class="default">12</span><span class="keyword">;<br /><br /></span><span class="default">$o2 </span><span class="keyword">= new </span><span class="default">stdClass</span><span class="keyword">();<br /></span><span class="default">$o2</span><span class="keyword">-&gt;</span><span class="default">we </span><span class="keyword">= </span><span class="default">12</span><span class="keyword">;<br /><br /></span><span class="default">$o3 </span><span class="keyword">= clone </span><span class="default">$o2</span><span class="keyword">;<br /></span><span class="default">var_dump</span><span class="keyword">(</span><span class="default">$o </span><span class="keyword">== </span><span class="default">$o2</span><span class="keyword">); </span><span class="comment">//true<br /></span><span class="default">var_dump</span><span class="keyword">(</span><span class="default">$o </span><span class="keyword">=== </span><span class="default">$o2</span><span class="keyword">); </span><span class="comment">//false<br /></span><span class="default">var_dump</span><span class="keyword">(</span><span class="default">$o3 </span><span class="keyword">=== </span><span class="default">$o2</span><span class="keyword">); </span><span class="comment">//false<br /></span><span class="default">?&gt;<br /></span><br />Output is:<br /><br />true, false, false</span>
+</code></div>
+  </div>
+ </div>
+  <div class="note" id="110851">  <div class="votes">
+    <div id="Vu110851">
+    <a href="/manual/vote-note.php?id=110851&amp;page=types.comparisons&amp;vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd110851">
+    <a href="/manual/vote-note.php?id=110851&amp;page=types.comparisons&amp;vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V110851" title="48% like this...">
+    -1
+    </div>
+  </div>
+  <a href="#110851" class="name">
+  <strong class="user"><em>crazy888s at hotmail dot com</em></strong></a><a class="genanchor" href="#110851"> &para;</a><div class="date" title="2012-12-15 03:14"><strong>2 years ago</strong></div>
+  <div class="text" id="Hcom110851">
+<div class="phpcode"><code><span class="html">
+PHP's loose comparisons can be a huge convenience when used properly! It's extremely helpful to just remember the following are always FALSE:<br /><br />null, false, "", 0, "0", array()<br /><br />If your application never depends on a particular "empty/false/null/0/not set" value type, you won't have to worry about 99% of the other weird cases listed here. You won't need empty() or isset(). And ALL variable types will always work as expected for statements like:<br /><br />if(boolean &amp;&amp; !string){...}<br />if(array){...}<br />if(!null || int){...}<br /><br />Consider the same when working with your database values.</span>
+</code></div>
+  </div>
+ </div>
+  <div class="note" id="53926">  <div class="votes">
+    <div id="Vu53926">
+    <a href="/manual/vote-note.php?id=53926&amp;page=types.comparisons&amp;vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd53926">
+    <a href="/manual/vote-note.php?id=53926&amp;page=types.comparisons&amp;vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V53926" title="46% like this...">
+    -1
+    </div>
+  </div>
+  <a href="#53926" class="name">
+  <strong class="user"><em>tom</em></strong></a><a class="genanchor" href="#53926"> &para;</a><div class="date" title="2005-06-17 11:27"><strong>10 years ago</strong></div>
+  <div class="text" id="Hcom53926">
+<div class="phpcode"><code><span class="html">
+<span class="default">&lt;?php<br /></span><span class="keyword">if (</span><span class="default">strlen</span><span class="keyword">(</span><span class="default">$_POST</span><span class="keyword">[</span><span class="string">'var'</span><span class="keyword">]) &gt; </span><span class="default">0</span><span class="keyword">) {<br />&nbsp; &nbsp; </span><span class="comment">// form value is ok<br /></span><span class="keyword">}<br /></span><span class="default">?&gt;<br /></span><br />When working with HTML forms this a good way to:<br /><br />(A) let "0" post values through like select or radio values that correspond to array keys or checkbox booleans that would return FALSE with empty(), and;<br />(B) screen out $x = "" values, that would return TRUE with isset()!<br /><br />Because HTML forms post values as strings, this is a good way to test variables!<br /><br />[[Editor Note: This will create a PHP Error of level E_NOTICE if the checked variable (in this case $_POST['var']) is undefined. It may be used after (in conjuection with) isset() to prevent this.]]</span>
+</code></div>
+  </div>
+ </div>
+  <div class="note" id="115681">  <div class="votes">
+    <div id="Vu115681">
+    <a href="/manual/vote-note.php?id=115681&amp;page=types.comparisons&amp;vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd115681">
+    <a href="/manual/vote-note.php?id=115681&amp;page=types.comparisons&amp;vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V115681" title="42% like this...">
+    -1
+    </div>
+  </div>
+  <a href="#115681" class="name">
+  <strong class="user"><em>blue dot hirano at gmail dot com</em></strong></a><a class="genanchor" href="#115681"> &para;</a><div class="date" title="2014-09-07 11:29"><strong>1 year ago</strong></div>
+  <div class="text" id="Hcom115681">
+<div class="phpcode"><code><span class="html">
+The truth tables really ought to be colorized; they're very hard to read as they are right now (just big arrays of TRUE and FALSE).<br /><br />Also, something to consider: clustering the values which compare similarly (like is done on qntm.org/equality) would make the table easier to read as well. (This can be done simply by hand by rearranging the order of headings to bring related values closer together).</span>
+</code></div>
+  </div>
+ </div>
+  <div class="note" id="104483">  <div class="votes">
+    <div id="Vu104483">
+    <a href="/manual/vote-note.php?id=104483&amp;page=types.comparisons&amp;vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd104483">
+    <a href="/manual/vote-note.php?id=104483&amp;page=types.comparisons&amp;vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V104483" title="43% like this...">
+    -4
+    </div>
+  </div>
+  <a href="#104483" class="name">
+  <strong class="user"><em>Jouriy LYSENKO</em></strong></a><a class="genanchor" href="#104483"> &para;</a><div class="date" title="2011-06-17 11:18"><strong>4 years ago</strong></div>
+  <div class="text" id="Hcom104483">
+<div class="phpcode"><code><span class="html">
+If $var not declared.<br /><br />In php 5.2 :<br /><span class="default">&lt;?php </span><span class="keyword">if(</span><span class="default">$var</span><span class="keyword">) </span><span class="default">?&gt;</span> - work<br /><br />in php 5.3 :<br /><span class="default">&lt;?php </span><span class="keyword">if(</span><span class="default">$var</span><span class="keyword">) </span><span class="default">?&gt;</span> - dont work and generate error E_NOTICE</span>
+</code></div>
+  </div>
+ </div>
+  <div class="note" id="117150">  <div class="votes">
+    <div id="Vu117150">
+    <a href="/manual/vote-note.php?id=117150&amp;page=types.comparisons&amp;vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd117150">
+    <a href="/manual/vote-note.php?id=117150&amp;page=types.comparisons&amp;vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V117150" title="40% like this...">
+    -1
+    </div>
+  </div>
+  <a href="#117150" class="name">
+  <strong class="user"><em>aravind dot a dot padmanabhan at gmail dot com</em></strong></a><a class="genanchor" href="#117150"> &para;</a><div class="date" title="2015-04-22 11:31"><strong>7 months ago</strong></div>
+  <div class="text" id="Hcom117150">
+<div class="phpcode"><code><span class="html">
+please note that<br /> <br />$x = 0.0 ;<br />print empty($x); // returns 1 (true) <br /><br />$x = "0.0";<br />print empty($x); // returns blank (false);</span>
+</code></div>
+  </div>
+ </div>
+  <div class="note" id="114181">  <div class="votes">
+    <div id="Vu114181">
+    <a href="/manual/vote-note.php?id=114181&amp;page=types.comparisons&amp;vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd114181">
+    <a href="/manual/vote-note.php?id=114181&amp;page=types.comparisons&amp;vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V114181" title="22% like this...">
+    -17
+    </div>
+  </div>
+  <a href="#114181" class="name">
+  <strong class="user"><em>lorenzo dot campagna at ymail dot com</em></strong></a><a class="genanchor" href="#114181"> &para;</a><div class="date" title="2014-01-22 06:33"><strong>1 year ago</strong></div>
+  <div class="text" id="Hcom114181">
+<div class="phpcode"><code><span class="html">
+Someone can explain why this comparison result TRUE&nbsp; when it should be FALSE?<br /><br /><span class="default">&lt;?php<br /><br /> $a </span><span class="keyword">= </span><span class="string">"3abcdef"</span><span class="keyword">;<br /> </span><span class="default">$b </span><span class="keyword">= </span><span class="default">3</span><span class="keyword">;<br /><br /> if(</span><span class="default">$a </span><span class="keyword">== </span><span class="default">$b</span><span class="keyword">) {print(</span><span class="string">"Match!"</span><span class="keyword">);}&nbsp; &nbsp; </span><span class="comment">//Because of this comparison TRUE script will output:<br /><br /></span><span class="default">?&gt;</span>
+</span>
+</code></div>
+  </div>
+ </div></div>
+
+ <div class="foot"><a href="/manual/add-note.php?sect=types.comparisons&amp;redirect=http://jp2.php.net/manual/ja/types.comparisons.php"><img src='/images/notes-add@2x.png' alt='add a note' width='12' height='12'> <small>add a note</small></a></div>
+</section>    </section><!-- layout-content -->
+        <aside class='layout-menu'>
+    
+        <ul class='parent-menu-list'>
+                                    <li>
+                <a href="appendices.php">付録</a>
+    
+                                    <ul class='child-menu-list'>
+    
+                          
+                        <li class="">
+                            <a href="history.php" title="PHP の歴史と関連するプロジェクト">PHP の歴史と関連するプロジェクト</a>
+                        </li>
+                          
+                        <li class="">
+                            <a href="migration70.php" title="PHP 5.6.x から PHP 7.0.x への移行">PHP 5.6.x から PHP 7.0.x への移行</a>
+                        </li>
+                          
+                        <li class="">
+                            <a href="migration56.php" title="PHP 5.5.x から PHP 5.6.x への移行">PHP 5.5.x から PHP 5.6.x への移行</a>
+                        </li>
+                          
+                        <li class="">
+                            <a href="migration55.php" title="PHP 5.4.x から PHP 5.5.x への移行">PHP 5.4.x から PHP 5.5.x への移行</a>
+                        </li>
+                          
+                        <li class="">
+                            <a href="migration54.php" title="PHP 5.3.x から PHP 5.4.x への移行">PHP 5.3.x から PHP 5.4.x への移行</a>
+                        </li>
+                          
+                        <li class="">
+                            <a href="migration53.php" title="PHP 5.2.x から PHP 5.3.x への移行">PHP 5.2.x から PHP 5.3.x への移行</a>
+                        </li>
+                          
+                        <li class="">
+                            <a href="migration52.php" title="PHP 5.1.x から PHP 5.2.x への移行">PHP 5.1.x から PHP 5.2.x への移行</a>
+                        </li>
+                          
+                        <li class="">
+                            <a href="migration51.php" title="PHP 5.0.x から PHP 5.1.x への移行">PHP 5.0.x から PHP 5.1.x への移行</a>
+                        </li>
+                          
+                        <li class="">
+                            <a href="migration5.php" title="PHP 4 から PHP 5.0.x への移行">PHP 4 から PHP 5.0.x への移行</a>
+                        </li>
+                          
+                        <li class="">
+                            <a href="oop4.php" title="クラスとオブジェクト (PHP 4)">クラスとオブジェクト (PHP 4)</a>
+                        </li>
+                          
+                        <li class="">
+                            <a href="debugger.php" title="PHP のデバッグ">PHP のデバッグ</a>
+                        </li>
+                          
+                        <li class="">
+                            <a href="configure.php" title="Configure オプション">Configure オプション</a>
+                        </li>
+                          
+                        <li class="">
+                            <a href="ini.php" title="php.ini ディレクティブ">php.ini ディレクティブ</a>
+                        </li>
+                          
+                        <li class="">
+                            <a href="extensions.php" title="拡張モジュールの一覧/分類">拡張モジュールの一覧/分類</a>
+                        </li>
+                          
+                        <li class="">
+                            <a href="aliases.php" title="関数エイリアスのリスト">関数エイリアスのリスト</a>
+                        </li>
+                          
+                        <li class="">
+                            <a href="reserved.php" title="予約語の一覧">予約語の一覧</a>
+                        </li>
+                          
+                        <li class="">
+                            <a href="resource.php" title="リソース型の一覧">リソース型の一覧</a>
+                        </li>
+                          
+                        <li class="">
+                            <a href="filters.php" title="利用できるフィルタのリスト">利用できるフィルタのリスト</a>
+                        </li>
+                          
+                        <li class="">
+                            <a href="transports.php" title="サポートされるソケットトランスポートのリスト">サポートされるソケットトランスポートのリスト</a>
+                        </li>
+                          
+                        <li class="current">
+                            <a href="types.comparisons.php" title="PHP 型の比較表">PHP 型の比較表</a>
+                        </li>
+                          
+                        <li class="">
+                            <a href="tokens.php" title="パーサトークンの一覧">パーサトークンの一覧</a>
+                        </li>
+                          
+                        <li class="">
+                            <a href="userlandnaming.php" title="ユーザーレベルでの命名の手引き">ユーザーレベルでの命名の手引き</a>
+                        </li>
+                          
+                        <li class="">
+                            <a href="about.php" title="マニュアルについて">マニュアルについて</a>
+                        </li>
+                          
+                        <li class="">
+                            <a href="cc.license.php" title="Creative Commons Attribution 3.0">Creative Commons Attribution 3.0</a>
+                        </li>
+                          
+                        <li class="">
+                            <a href="indexes.php" title="索引">索引</a>
+                        </li>
+                          
+                        <li class="">
+                            <a href="doc.changelog.php" title="変更履歴">変更履歴</a>
+                        </li>
+                            
+                    </ul>
+                    
+            </li>
+                        
+                    </ul>
+    </aside>
+
+
+  </div><!-- layout -->
+         
+  <footer>
+    <div class="container footer-content">
+      <div class="row-fluid">
+      <ul class="footmenu">
+        <li><a href="/copyright.php">Copyright &copy; 2001-2015 The PHP Group</a></li>
+        <li><a href="/my.php">My PHP.net</a></li>
+        <li><a href="/contact.php">Contact</a></li>
+        <li><a href="/sites.php">Other PHP.net sites</a></li>
+        <li><a href="/mirrors.php">Mirror sites</a></li>
+        <li><a href="/privacy.php">Privacy policy</a></li>
+      </ul>
+      </div>
+    </div>
+  </footer>
+
+    
+ <!-- External and third party libraries. -->
+ <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript" src="http://jp2.php.net/cached.php?t=1421837618&amp;f=/js/ext/modernizr.js"></script>
+<script type="text/javascript" src="http://jp2.php.net/cached.php?t=1421837618&amp;f=/js/ext/hogan-2.0.0.min.js"></script>
+<script type="text/javascript" src="http://jp2.php.net/cached.php?t=1421837618&amp;f=/js/ext/typeahead.min.js"></script>
+<script type="text/javascript" src="http://jp2.php.net/cached.php?t=1421837618&amp;f=/js/ext/mousetrap.min.js"></script>
+<script type="text/javascript" src="http://jp2.php.net/cached.php?t=1421837618&amp;f=/js/search.js"></script>
+<script type="text/javascript" src="http://jp2.php.net/cached.php?t=1435099203&amp;f=/js/common.js"></script>
+
+<a id="toTop" href="javascript:;"><span id="toTopHover"></span><img width="40" height="40" alt="To Top" src="/images/to-top@2x.png"></a>
+
+</body>
+</html>
+

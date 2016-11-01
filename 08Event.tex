@@ -1,0 +1,186 @@
+%-*- coding: utf-8 -*-
+\chapter{イベント}
+ \section{イベント概説}
+イベントとはプログラムに対して働きかける動作を意味する。Windowsで動く
+プログラムにはマウスボタンが押された(\keyitem{クリック})
+などのユーザからの要求、一定時間経ったことをシステムから通知される
+(タイマーイベント)など
+ありとあらゆる行為がイベントという概念で処理される。プログラムが開始さ
+れるということ自体イベントである。このイベントはプログラムの初期化をする
+ために利用される。
+
+イベントの発生する順序はあらかじめ決まっていないので、それぞれのイベント
+を処理するプログラムは独立している必要がある。このようにイベントの発
+生を順次処理していくプログラムのモデルを\keyitem{イベントドリブン}なプロ
+グラムという。
+
+\section{イベント処理の方法}
+イベントは各要素内で発生するので、イベントを処理する関数を適当
+な要素に登録する。この関数をイベントハンドラーという。イベントハンドラー
+の登録には表\ref{event-list}にある属性に関数を登録する方法と、メソッドを用い
+て要素に登録する方法がある。最近の傾向としては、HTML文書には表示するもの
+だけを記述し、イベントハンドラーなどのJavaScriptのプログラムに関すること
+は書かないということがある。この授業ではメソッドを通じて登録する方法だけ
+を紹介する。
+
+要素にイベントハンドラーを登録するメソッドは次の\texttt{document}オブジェ
+クトのメソッドを使う。
+
+\texttt{addEventListner(string }{\sl type}
+\texttt{,functiion }{\sl listener}
+\texttt{,[boolean }
+{\sl useCapture}
+\texttt{])}
+
+引数の意味は次のとおりである。
+\begin{itemize}
+ \item {\sl type} はイベントの種類を示す文字列であり、表
+\ref{event-list}におけるイベントの属性名から\texttt{on}を取り除いたもの
+ \item {\sl listener} はイベントを処理する関数(イベントハンドラー)
+ \item {\sl useCapture} はイベントの処理順序(詳しくは後述)
+\end{itemize}
+
+要素からイベントハンドラーを削除する\texttt{document}オブジェ
+クトのメソッドは次のとおりである。
+
+\texttt{removeEventListener(string }{\sl type}
+\texttt{,functiion }{\sl listner}
+\texttt{,[boolean }
+{\sl useCapture}
+\texttt{])}
+
+\noindent
+イベントハンドラーが削除されるためには登録したときと同じ条件を指定する必
+要がある。
+
+通常、イベントハンドラーの関数は通常、イベントオブジェクトを引数に取るよ
+うに定義する。
+\iffalse
+このオブジェクトは表%\ref{mouseeventprop}や
+\ref{mouseeventmethod}のようなプロパティ%とメソッド
+を持つ。
+\fi
+\section{DOM Level 2 のイベント処理モデル}
+DOM Level 2 のイベント処理モデルでは、あるオブジェクトの上でイベントが発生
+すると次の順序で各オブジェクトにイベントの発生が伝えられる。
+\begin{enumerate}
+ \item 発生したオブジェクトを含む最上位のオブジェクトにイベントの発生が
+       伝えられる。このオブジェクトにイベント処理関数が定義されていな
+       ければなにも起きない。
+ \item 以下順に DOM ツリーに沿ってイベントが発生したオブジェクトの途中に
+       あるオブジェクトにイベントの発生が伝えられる(\keyitem{イベントキャプチャリング})。
+ \item イベントが発生したオブジェクトまでイベントの発生が伝えられる。
+ \item その後、
+       DOM ツリーに沿ってこのオブジェクトを含む最上位のオブジェクトま
+       で再びイベントの発生が伝えられる(\keyitem{イベントバブリング})。
+\end{enumerate}
+DOM Level 2 のモデルではイベントが発生したオブジェクトは渡されたイベント
+オブジェクトの\DOMP{target}プロパティで、
+イベントを処理している関数が登録されたオブジェクトは
+\DOMP{currentTarget}で参照できる。
+%
+また、イベントが発生したオブジェクトにイベントハンドラーが登録され
+ていなくてもその親やその上の祖先にイベントハンドラーが登録されていると、イベント
+が発生する。
+
+
+\DOMM{addEventListner()}の3番目の引数を\ElmJ{false}にするとイベント処理はイ
+ベントバブリングの段階で、\ElmJ{true}にするとイベン
+ト処理はイベントキャプチャリングの段階で呼び出される。このイベントの伝播
+を途中で中断させるメソッドが\DOMM{stopPropagation}{()}である。
+
+通常、ブラウザの画面で右クリックをすると、ページのコンテキストメニュが表
+示される。このようなデフォルトの操作を行わせないようにする方法が
+\DOMM{preventDefault}{()}である。
+\iffalse%\else
+\newcommand{\ShowRawII}[4]{%
+%#2&%
+#3&
+%#4&
+#1\\\hline}
+%\begin{minipage}[t]{\textwidth}
+\begin{table}[ht]
+ \caption{\keyitem{イベントのメソッド}}\label{mouseeventmethod}
+\begin{center}%\ \\[-2.em]
+\begin{tabular}[t]{|c|%c|
+c|%m{4.9cm}
+m{22zw}
+|}
+ \hline
+\ShowRawII{\multicolumn{1}{c|}{意味}}{プロパティ}{メソッド}{型}
+\ShowRawII{デフォルトの動作を実行しないようにする}{}{\DOMM{preventDefault}{()}}{}
+\ShowRawII{イベントの伝播を中止する}{}{\DOMM{stopPropagation}{()}}{}
+\end{tabular}
+ \end{center}
+\end{table}
+\fi
+%\clearpage
+
+\section{HTML における代表的なイベント}
+\subsection{ドキュメントの\Event{onload}イベント}
+WebブラウザはHTML文書を次のような順序で解釈し、実行する\footnote{ここの
+説明は少し簡略化している。詳しくは[\ref{JS6}](\pageref{JS6}ページ)の13.3節を参照のこと}。
+\begin{enumerate}
+ \item 初めに\texttt{document}オブジェクトを作成し、Webページの解釈を行
+       う。
+ \item HTML要素やテキストコンテンツを解釈しながら、要素やテキスト(ノード)を
+       追加する。この時点では、\texttt{document.readystate}プロパティは
+       \texttt{"loading"}という値を持つ。
+ \item \texttt{<script>}要素が来ると、このこの要素を\texttt{document}に
+       追加し、スクリプトを実行する。したがって、この時点で存在しない要
+       素に対してアクセスすることはできない。つまり、\texttt{<script>}要
+       素より後に書かれている要素のはアクセスできない。
+ % \item
+			 したがって、この段階では後で利用するための関数の定義やイベントハ
+       ンドラーの登録だけをするのがふつうである。
+ \item ドキュメントが完全に解釈できたら、\texttt{document.readystate}プロパティは
+       \texttt{"interactive"}という値に変わる。
+ \item ブラウザはドキュメントオブジェクトに対し\texttt{DOMContentLoaded}
+       イベントを発生させる。
+ %\item
+			 この時点では画像などの追加コ
+       ンテンツの読み込みは終了していない可能性がある。
+ \item それらのことが終了すると、\texttt{document.readyState}プロパティ
+       の値が\texttt{"complete"}となり、\texttt{window}オブジェクトに対し
+       て\texttt{load}イベントを発生させる。
+\end{enumerate}
+\subsection{マウスイベント}
+\input 08-02mouseEvent.tex
+%\clearpage
+\iffalse
+\begin{table}[ht]
+ \caption{その他のイベントの例}\label{event-list}
+\begin{center}
+\begin{tabular}{|c|c|}\hline
+イベントの発生条件& イベントの属性名%&
+\\\hline
+ファイルのロード終了時  &\Event{onload} \\ \hline
+値が変化した& \Event{onchange}\\ \hline
+\end{tabular} 
+\end{center}
+\end{table}
+\fi
+
+
+\section{イベント処理の例}
+\input 08-04EventExInput.tex
+\begin{Prob}\upshape
+次のようなオブジェクトをもとにプルダウンメニューを作成するJavaScriptの関
+ 数を作成しなさい。
+
+関数に渡すオブジェクト:\Verb+{"red": "赤", "orange":"橙", "yellow":"黄色", "green":"緑"}+
+
+作成されるDOM
+\begin{Verbatim}
+<select>
+  <option value="red">赤</option>
+  <option value="orange">橙</option>
+  <option value="yellow">黄色</option>
+  <option value="green">緑</option>
+</select>
+\end{Verbatim}
+ また、18行目から22行目にあるようなラジオボタンを作成する関数も作成しな
+ さい。
+\end{Prob}
+
+\input 08-05EventExDate.tex

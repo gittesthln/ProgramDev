@@ -1,0 +1,89 @@
+%-*- coding: utf-8 -*-
+表\ref{compareByFunction}\footnote{この表と次の表はPHPユーザー会のHPから
+転用した。}は変数の状態を調べる関数が引数の値によりどのようになるか、ま
+た、論理値が必要なところでどのようになるかを表している。
+\begin{itemize}
+ \item \texttt{gettype()} 変数の型を調べる
+ \item \texttt{isempty()} 変数が空であることを調べる
+ \item \texttt{is\_null()} 変数の値が\texttt{NULL}であるかを調べる
+ \item \texttt{isset()} 変数の値がセットされていて、その値が
+       \texttt{NULL}でないことを調べる
+ \item \texttt{if(変数)}としたときに\texttt{TRUE}となるかどうか
+\end{itemize}
+\begin{table}[ht]
+\caption{PHP 関数による \protect\texttt{\$x} の比較}\label{compareByFunction}
+\begin{center}
+  \begin{tabular}{|*{6}{c|}}\hline
+式&\verb+gettype()+&\verb+empty()+&\verb+is_null()+&\verb+isset()+&\verb+boolean : if($x)+\\\hline
+\verb+$x = "";+&\verb+string+&\verb+TRUE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+\\\hline
+\verb+$x = null;+&\verb+NULL+&\verb+TRUE+&\verb+TRUE+&\verb+FALSE+&\verb+FALSE+\\\hline
+\verb+var $x;+&\verb+NULL+&\verb+TRUE+&\verb+TRUE+&\verb+FALSE+&\verb+FALSE+\\\hline
+\verb+$x が未定義+&\verb+NULL+&\verb+TRUE+&\verb+TRUE+&\verb+FALSE+&\verb+FALSE+\\\hline
+\verb+$x = array();+&\verb+array+&\verb+TRUE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+\\\hline
+\verb+$x = false;+&\verb+boolean+&\verb+TRUE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+\\\hline
+\verb+$x = true;+&\verb+boolean+&\verb+FALSE+&\verb+FALSE+&\verb+TRUE+&\verb+TRUE+\\\hline
+\verb+$x = 1;+&\verb+integer+&\verb+FALSE+&\verb+FALSE+&\verb+TRUE+&\verb+TRUE+\\\hline
+\verb+$x = 42;+&\verb+integer+&\verb+FALSE+&\verb+FALSE+&\verb+TRUE+&\verb+TRUE+\\\hline
+\verb+$x = 0;+&\verb+integer+&\verb+TRUE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+\\\hline
+\verb+$x = -1;+&\verb+integer+&\verb+FALSE+&\verb+FALSE+&\verb+TRUE+&\verb+TRUE+\\\hline
+\verb+$x = "1";+&\verb+string+&\verb+FALSE+&\verb+FALSE+&\verb+TRUE+&\verb+TRUE+\\\hline
+\verb+$x = "0";+&\verb+string+&\verb+TRUE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+\\\hline
+\verb+$x = "-1";+&\verb+string+&\verb+FALSE+&\verb+FALSE+&\verb+TRUE+&\verb+TRUE+\\\hline
+\verb+$x = "php";+&\verb+string+&\verb+FALSE+&\verb+FALSE+&\verb+TRUE+&\verb+TRUE+\\\hline
+\verb+$x = "true";+&\verb+string+&\verb+FALSE+&\verb+FALSE+&\verb+TRUE+&\verb+TRUE+\\\hline
+\verb+$x = "false";+&\verb+string+&\verb+FALSE+&\verb+FALSE+&\verb+TRUE+&\verb+TRUE+\\\hline
+  \end{tabular}
+\end{center}
+\end{table}
+いろいろな値を論理値として評価した結果がJavaScriptと異なる場合があるので
+注意が必要である。
+
+表\ref{compare==}は比較演算子\texttt{==}の結果をまとめたものである。
+\begin{table}\setlength{\tabcolsep}{0.2em}
+\caption{\protect\texttt{==} による緩やかな比較}\label{compare==}
+\begin{center}
+  \begin{tabular}{|*{13}{c|}}\hline
+ &\verb+TRUE+&\verb+FALSE+&\verb+1+&\verb+0+&\verb+-1+&\verb+"1"+&\verb+"0"+&\verb+"-1"+&\verb+NULL+&\verb+array()+&\verb+"php"+&\verb+""+\\\hline
+\verb+TRUE+&\verb+TRUE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+TRUE+&\verb+TRUE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+\\\hline
+\verb+FALSE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+TRUE+&\verb+TRUE+&\verb+FALSE+&\verb+TRUE+\\\hline
+\verb+1+&\verb+TRUE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+\\\hline
+\verb+0+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+TRUE+&\verb+TRUE+\\\hline
+\verb+-1+&\verb+TRUE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+\\\hline
+\verb+"1"+&\verb+TRUE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+\\\hline
+\verb+"0"+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+\\\hline
+\verb+"-1"+&\verb+TRUE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+\\\hline
+\verb+NULL+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+TRUE+&\verb+TRUE+&\verb+FALSE+&\verb+TRUE+\\\hline
+\verb+array()+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+TRUE+&\verb+TRUE+&\verb+FALSE+&\verb+FALSE+\\\hline
+\verb+"php"+&\verb+TRUE+&\verb+FALSE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+\\\hline
+\verb+""+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+FALSE+&\verb+TRUE+\\\hline
+  \end{tabular}
+\end{center}
+\end{table}
+この演算子ではいろいろなものを数に変換してから判定をする。通常のプログラ
+ムでは厳密な比較をするのがよい。
+\iffalse
+\begin{table}\setlength{\tabcolsep}{0.2em}
+\caption{=== による厳密な比較}
+\begin{center}
+  \begin{tabular}{|*{13}{c|}}\hline
+ &\verb+TRUE+&\verb+FALSE+&\verb+1+&\verb+0+&\verb+-1+&\verb+"1"+&\verb+"0"+&\verb+"-1"+&\verb+NULL+&\verb+array()+&\verb+"php"+&\verb+""+\\\hline
+\verb+TRUE+&\verb+TRUE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+\\\hline
+\verb+FALSE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+\\\hline
+\verb+1+&\verb+FALSE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+\\\hline
+\verb+0+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+\\\hline
+\verb+-1+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+\\\hline
+\verb+"1"+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+\\\hline
+\verb+"0"+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+\\\hline
+\verb+"-1"+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+\\\hline
+\verb+NULL+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+\\\hline
+\verb+array()+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+FALSE+\\\hline
+\verb+"php"+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+\\\hline
+\verb+""+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+TRUE+\\\hline
+  \end{tabular}
+\end{center}
+\end{table}
+\fi
+\begin{Prob}\upshape
+PHPとJavaScript で\texttt{if(変数)}と\texttt{==}の結果が異なるものを指摘
+ しなさい。
+ \end{Prob}

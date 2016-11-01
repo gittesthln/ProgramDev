@@ -1,0 +1,498 @@
+%-*- coding: utf-8 -*-
+\documentclass[dvipsk]{beamer}
+\usepackage{pgfpages}
+\usepackage{moreverb,array}
+%\usetheme{Malmoe}
+%\usetheme{Goettingen} %7 8 9
+%\usetheme{Darmstadt}% 1, 2, 3
+%\usetheme{Boadilla}
+%\usetheme{CambridgeUS}%4, 5 6 
+%
+\usetheme{AnnArbor} %10
+%\usetheme{Marburg}
+\iffalse\else
+\renewcommand{\familydefault}{\sfdefault}
+\renewcommand{\kanjifamilydefault}{\gtdefault}
+\setbeamerfont{title}{size=\Large,series=\bfseries}%,color=white}
+\setbeamerfont{frametitle}{size=\large,series=\bfseries}
+\setbeamerfont{beamergotobutton}{size=\Large}
+%\setbeamercolor{frametitle}{fg=yellow}
+\setbeamertemplate{frametitle}[default][center]
+%\addtobeamertemplate{footline}{}{\insertframenumber/\inserttotalframenumber}
+\usefonttheme{professionalfonts}
+\fi
+%\iftrue
+\title{ソフトウェア開発\\第11回目授業}
+\author{平野 照比古}
+\institute{}
+\date{2015/12/4}
+\newtheorem{Prob}{解説}
+\newcommand{\Elm}[1]{\texttt{<#1>}}
+\setbeamercovered{transparent}
+
+\newcommand{\DOMM}{\texttt}
+\newcommand{\Event}{\texttt}
+\newcommand{\DOMP}{\texttt}
+\newcommand{\DOM}{\texttt{DOM}}
+\newcommand{\keyitem}{\relax}
+\newcommand{\HTML}{HTML文書}
+\begin{document}
+\frame{\maketitle}
+\frame{\tableofcontents}
+\section{PHP入門--続き}
+\subsection{配列に関する関数}
+\begin{frame}[containsverbatim]
+\frametitle{\texttt{list()}}
+
+  配列の個々の要素をいくつかの変数にまとめて代入できる。
+       これは関数ではなく、言語構造
+\begin{verbatim}
+list($first,$second, $third) = array(1,2,3,4,5);
+  //$first = 1, $second+2, $third=3
+list($first, , $third) = array(1,2,3,4,5);
+  //$second に値が代入されない以外は同じ
+\end{verbatim}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{\texttt{array\textunderscore pop()}と\texttt{array\textunderscore
+       push()}}
+\begin{verbatim}
+$a = array(1,2,3,4);
+array_pop($a)// 戻り値は 4, $a=array(1,2,3);
+array_push($a,10,20); //$a は array(1,2,3,10,20)
+\end{verbatim}
+配列の先頭に対して要素を取り出したり(\verb+array_shift()+)、追加する
+ (\verb+array_unshift()+)することもできる。
+\begin{verbatim}
+$a = array(1,2,3,4);
+array_shift($a)// 戻り値は 1, $a=array(2,3,4);
+array_unshift($a,10,20); //$a は array(10,20,2,3)
+\end{verbatim}
+ \end{frame}
+ \begin{frame}[containsverbatim]
+  \frametitle{その他の関数}
+  \begin{itemize}
+   \item \texttt{in\textunderscore array(\$needle, \$array)}\\
+与えられた配列(\verb+$array+)内に指定した値(\verb+$needle+)が存在するか
+         を調べる
+ \item \verb+shuffle()+\\
+与えられた配列の要素をランダムに並べ替える
+ \item 配列の切り出しと追加\\
+\verb+array_slice()+, \verb+array_splice()+
+  \end{itemize}
+ \end{frame}
+\subsection{関数}
+\begin{frame}[containsverbatim]
+\frametitle{関数の特徴}
+\begin{itemize}
+ \item 関数はキーワード\texttt{function} に引き続いて\texttt{()}内に、仮
+       引数のリストを書く。そのあとに\texttt{\{\}}内にプログラム本体を書
+       く。
+ \item 引数は値渡しである。参照渡しをするときは仮引数の前に\texttt{\&}を
+       付ける。
+ \item 関数のオーバーロードはサポートされない。
+ \item 関数の宣言を取り消せない。
+ \item 仮引数の後に値を書くことができる。この値は引数がなかった場合のデ
+       フォルトの値となる。デフォルトの値を与えた仮引数の後にデフォルト
+       の値がない仮引数を置くことはできない。
+ \item 関数は使用される前に定義する必要はない。
+ \item 関数内で関数を定義できる。関数内で定義された関数はグローバルスコー
+       プに存在する。ただし、外側の関数が実行されないと定義はされない。
+ \item 関数の戻り値は \texttt{return}文の後の式の値。複数の値を関
+       数の戻り値にしたいときは配列にして返す。
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{ユーザー定義関数の使用例}
+{\small
+\begin{listing}{1}
+<?php
+function example($a, $as, &$b, $f=false) {
+  print "\$a = $a\n";
+  print_r($as);
+  print "\$b = $b\n";
+  if(!isset($x)) $x = "defined in function";
+  print "\$x = $x\n";
+  if($f) {
+    print "\$GLOBALS['x'] = ". $GLOBALS['x']."\n";
+  }
+  $a = $a*2;
+  $as[0] += 10;
+  $b = $b*2;
+  return array($a,$as);
+}
+\end{listing}
+}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{ユーザー定義関数の使用例---解説}
+\begin{itemize}
+ \item 1行目での関数では3番目の引数が参照渡し、4番目の引数がデフォルトの値
+       が設定されている。
+ \item 6行目の関数\texttt{isset()}は与えられた変数に値がセットされている
+       かどうかを確かめるものである。
+ \item ここでは\verb+$x+は仮引数ではないのでローカルな変数となり、
+       \verb+isset($x)+は\texttt{false}となる。\verb+!isset($x)+は
+       \texttt{true}となるので変数\verb+$x+には
+       \verb+"defined in function"+が代入される。
+ \item 9行目ではデフォルトの引数のチェックのための部分である。
+ \item 11行目から13行目までは変数に値を代入して、呼び出し元の変数が変わ
+       るかどうかのチェックをする。
+ \item 14行目は初めの二つの仮引数を配列にして戻り値としている。
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{関数の動作チェック}
+\begin{listingcont}
+$a = 10;
+$as = array(1,2);
+$b = 15;
+$x = "\$x is defined at top level";
+\end{listingcont}
+ここでは、関数に渡す引数の値を設定している。
+\begin{listingcont}
+example($a, $as, $b, true);
+print "\$a = $a\n";
+print_r($as);
+print "\$b = $b\n";
+\end{listingcont}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{実行結果}
+ 20行目で呼び出した関数内での出力結果は次のようになる。
+\begin{verbatim}
+$a = 10
+Array
+(
+    [0] => 1
+    [1] => 2
+)
+$b = 15
+$x = defined in function
+$GLOBALS['x'] = $x is defined at top level
+\end{verbatim}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{関数の動作チェック---解説}
+\begin{itemize}
+ \item 仮引数の値は正しく渡されている。
+ \item 6行目は判定が\texttt{true}になるのでここで新たに値が設定され、そ
+       れが7行目で出力される。
+ \item デフォルトの仮引数に対して\texttt{true}が渡されているので、9行目
+       が実行される。スーパーグローバル\verb+$GLOBAL+にはグローバルスコー
+       プ内の変数が格納されている。ここでは19行目に現れる変数の値が表示
+       される。
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{関数の動作チェック---続き}
+21行目から23行目の出力は次のようになる。
+\begin{verbatim}
+$a = 10
+Array
+(
+    [0] => 1
+    [1] => 2
+)
+$b = 30
+\end{verbatim}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{関数の動作チェック---続き(解説)}
+\begin{itemize}
+ \item 初めの2つの引数は配列であっても書き直されていない。11行目と12行目
+       の設定は戻り値にしか反映されない。
+ \item 参照渡しの変数\verb+$b+は書き直されている。
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{関数の動作チェック---続き}
+\begin{listingcont}
+list($resa) = example($a, $as, $b);
+print "\$resa = $resa\n";
+?>
+\end{listingcont}
+\begin{itemize}
+ \item 24行目の関数呼び出しはデフォルトの引数がない。
+ \item したがって、引数\verb+$f+の値が\texttt{false}に設定され、9行目は
+       実行されない。
+ \item \texttt{list()}は配列である右辺の値のうち先頭から順に指定された変
+       数に代入
+ \item ここでは関数内の11行目で計算された値を変数\verb+$resa+に代入
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{関数の動作チェック---続き}
+\begin{verbatim}
+$a = 10
+Array
+(
+    [0] => 1
+    [1] => 2
+)
+$b = 30
+$x = defined in function
+$resa = 20
+\end{verbatim}
+\end{frame}
+ \begin{frame}[containsverbatim]
+  \frametitle{可変関数}
+ 文字列が代入された変数の後に\texttt{()}をつけると、その文字列の関数
+  を呼び出すことができる。
+  {\small
+\begin{verbatim}
+<?php
+function add($a, $b) { return $a+$b;}
+function sub($a, $b) { return $a-$b;}
+
+$a = 5;
+$b = 2;
+$f = "add";
+print "$f($a,$b) = " . $f($a,$b) ."\n";// add(5,2) = 7
+
+$f = "sub";
+print "$f($a,$b) = " . $f($a,$b) ."\n";// sub(5,2) = 3
+?>
+\end{verbatim}
+  }
+ \end{frame}
+  \begin{frame}[containsverbatim]
+  \frametitle{可変関数--解説}
+\begin{itemize}
+\item 2行目と3行目で2つの関数\texttt{add()}と
+       \texttt{sub()}を定義
+ \item 7行目で変数\verb+$f+に文字列\verb+"add"+を代入して、8行目で可変
+       関数として呼び出すと、関数\texttt{add}が呼び出されている。
+ \item 同様に、変数\verb+$f+に文字列\verb+"sub"+を代入して、可変
+       関数として呼び出すと、関数\texttt{sub}が呼び出されている。
+\end{itemize}
+\end{frame}
+ \section{サーバーとのデータ－の交換(2)}
+ \subsection{サーバーとのデータのやり取り}
+ \begin{frame}[containsverbatim]
+ \frametitle{サーバーとのデータ交換の基本}
+ Webページにおいてサーバーにデータを送る方法には\texttt{POST}と
+ \texttt{PUT}の2通りの方法がある。
+ \end{frame}
+ \begin{frame}[containsverbatim]
+ \frametitle{\texttt{POST}による送信}
+ \texttt{windows.onload =function()}内に次のコードを追加する。
+ \begin{verbatim}
+    var Form = document.getElementsByTagName("form")[0];
+    Form.setAttribute("method","POST");
+    Form.setAttribute("action","09sendData.php");
+ \end{verbatim}
+ HTMLの要素に対しては次のことを行う。
+ \begin{itemize}
+ \item \texttt{<select>}要素の属性に\verb+name="select"+ を追加する。
+ \item \texttt{id}が\verb+"colorName"+であるテキストボックスに
+       \verb+name="colorName"+ を追加する。
+ \item 「設定」ボタンの要素の後に次の要素を追加する。
+ \begin{center}
+ \verb+<input type="submit" value="送信" id="Send"></input>+ 
+ \end{center}
+ \end{itemize}
+ \end{frame}
+ \begin{frame}[containsverbatim]
+ \frametitle{\texttt{POST}による送信(解説)}
+ \begin{itemize}
+ \item このページでは「送信」ボタンを押すと\texttt{<form>}の
+ \texttt{action}属性で指定されたプログラムが呼び出される。
+ \item ここではWebペー ジと同じ場所にある\texttt{09sendData.php}が呼び出
+      される。
+ \end{itemize}
+ \end{frame}
+ \begin{frame}[containsverbatim]
+ \frametitle{サーバープログラムのリスト}
+ {\scriptsize
+ \begin{listing}{1}
+ <?php
+ print <<<_EOL_
+ <!DOCTYPE html>
+ <head>
+ <meta charset="UTF-8"/>
+ <title>サーバーに送られたデータ</title>
+ </head>
+ <body>
+ <table>
+ _EOL_;
+ foreach($_POST as $key=>$value) {
+  print "<tr><td>$key</td><td>$value</td></tr>\n";
+ }
+ print <<<_EOL_
+ </table>
+ </body>
+ </html>
+ _EOL_;
+ ?>
+ \end{listing}
+ }
+ \end{frame}
+ \begin{frame}[containsverbatim]
+ \frametitle{サーバープログラムのリスト(解説)}
+ \begin{itemize}
+ \item 2行目から10行目の間はヒアドキュメント形式でHTML文書の初めの部分を
+       出力させている。
+ \item \verb+method="POST"+で呼び出されたときには\texttt{form}要素内の
+       \texttt{name}属性が指定されたものの値がスーパーグローバル
+       \verb+$_POST+内の連想配列としてアクセスができる。
+ \item 11行目から13行目でそれらの値を\texttt{table}要素内の要素として出
+       力している。
+ \end{itemize}
+ \end{frame}
+ \begin{frame}[containsverbatim]
+ \frametitle{サーバープログラムのリスト(ソース)}
+ \begin{verbatim}
+ <!DOCTYPE html>
+ <head>
+ <meta charset="UTF-8"/>
+ <title>サーバーに送られたデータ</title>
+ </head>
+ <body>
+ <table><tr><td>select</td><td>yellow</td></tr>
+ <tr><td>color</td><td>green</td></tr>
+ <tr><td>colorName</td><td>gray</td></tr>
+ </table>
+ </body>
+ </html>
+ \end{verbatim}
+ \end{frame}
+ \begin{frame}[containsverbatim]
+ \frametitle{\texttt{GET}による通信}
+ \begin{itemize}
+ \item \verb+method="PUT"+で呼び出した場合にはスーパーグローバル
+ \verb+$_GET+を用いる。
+ \item スーパーグローバル\verb+$_REQUEST+は
+ \verb+method="POST"+でも\verb+method="PUT"+で呼び出された場合の
+ \verb+$_POST+や\verb+$_GET+の代わりに使用できる。
+ \end{itemize}
+ \end{frame}
+ \begin{frame}[containsverbatim]
+ \frametitle{通信に関する注意}
+ \begin{itemize}
+ \item \verb+type="submit"+の\texttt{input}要素は、ボタンが押されたときに直ちに、
+ \texttt{action}属性で指定された処理が呼び出される。
+ \item サーバーにデータを送る前に最低限のエラーチェックを行い、エラーが
+       ない場合にだけサーバーと通信するのが良い。
+ \end{itemize}
+ \end{frame}
+ \begin{frame}[containsverbatim]
+ \frametitle{スパーグローバルの補足}
+ \begin{itemize}
+ \item {\texttt{\$\_SERVER}}\\
+ サーバーにアクセスしたときのクライ
+ アントの情報などを提供。具体的な内容はクライアントごとに異なる。
+ \item \texttt{\$\_COOKIE}\\
+ COOKIE とはWebサーバー側からクライアント側に一時的にデータを保存させる仕
+ 組み。すでに訪問したことがあるサイトに対して情報を開始
+ 時に補填する機能などを実現できる。
+ \item \texttt{\$\_SESSION}\\
+ セッションとはある作業の一連の流れを指す。たとえば会員制のサイトではログイ
+ ン後でなければページを見ることができない。情報のページに直接行くことがで
+ きないような仕組みが必要
+ \end{itemize}
+ \end{frame}
+ \begin{frame}[containsverbatim]
+ \frametitle{セッション}
+ \begin{itemize}
+ \item HTTP通信はセッションレスな通信である（各ページが独立して存在し、ページ間
+ のデータを直接渡せない）
+ \item セッションを確立するためには、クライアント側から情報を送り、それに基づい
+ てサーバー側が状況を判断するなどの操作を意識的にする必要
+ \item PHPではセッションを開始するための関数\texttt{session\_start()}とセッショ
+ ンを終了させる\texttt{session\_destroy()}が用意されている。
+ \item セッションを通じで保存させておきたい情報はこの連想配列に保存
+ \item セッションの管理はサーバーが管理
+ \item この機能はCOOKIEの機能を利用して実現
+ \end{itemize}
+ \end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{Web Storage}
+ \begin{itemize}
+ \item localStoarage と sessionStorage の2種類
+ \item localStorage は文字列をキーに、文字列の値を持つStorageオブジェク
+ ト
+ \item 同一の出身(プロトコルやポート番号も含む)のすべてのドキュメント
+ がおなじlocalStorageを共有
+ \item このデータは意識的に消さない限り存在
+ \item sessionStorageはウインドウやブラウザが閉じられると消滅
+ \item セッション間の情報の移動を可能にしている。
+ \end{itemize}
+ \end{frame}
+ \begin{frame}[containsverbatim]
+ \frametitle{Web Storageの補足}
+ \begin{itemize}
+ \item いくつかのサイトではこの機能を用いており、その開発者ツールで見る
+       ことが可能
+ \item データの形式は文字列である。構造化されたデータはJSON形式で保存するのがよい
+ \end{itemize}
+ \end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{WebStrageの例(1)}
+ {\small
+ \begin{verbatim}
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>WebStorage --- localStorage</title>
+\end{verbatim}
+ }
+ \end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{WebStrageの例(2)}
+ {\small
+  \begin{verbatim}
+<script type="text/javascript">
+//<![CDATA[
+var Storage = window.localStorage;
+//var Storage = window.sessionStorage;
+window.onload = function() {
+  var AccessList, Message = document.getElementById("message");
+  var D = new Date();
+  if(Storage["access"]) {
+    AccessList = JSON.parse(Storage["access"]);
+  } else {
+    AccessList = [];
+    appendMessage(Message, "初めてのアクセスです");
+  }
+  AccessList.unshift(D.getTime());
+  Storage["access"] = JSON.stringify(AccessList);
+  appendMessage(Message, "今までのアクセス時間です");
+  AccessList.forEach(function(D, i, A) {
+    appendMessage(Message, new Date(D));
+  });
+}
+\end{verbatim}
+ }
+ \end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{WebStrageの例(3)}
+ {\small
+  \begin{verbatim}
+function appendMessage(P, Mess) {
+  var div = document.createElement("div");
+  P.appendChild(div);
+  div.appendChild(document.createTextNode(Mess));
+}
+//]]
+</script>
+</head>
+ \end{verbatim}
+ }
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{WebStrageの例(4)}
+ {\small
+  \begin{verbatim}
+<body>
+  <form action="10next.html">
+    <input type="submit" value="次のページ"></input>
+  </form>
+  <div  id="message"/>
+</body>
+</html>
+\end{verbatim}
+ }
+\end{frame}
+\end{document}

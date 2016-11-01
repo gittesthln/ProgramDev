@@ -1,0 +1,593 @@
+%-*- coding: utf-8 -*-
+\documentclass[dvipsk]{beamer}
+\usepackage{pgfpages}
+\usepackage{moreverb,array}
+%\usetheme{Malmoe}
+%
+\usetheme{Goettingen}
+%\usetheme{Darmstadt}% 1, 2, 3
+%\usetheme{Boadilla}
+%\usetheme{CambridgeUS}%4, 5 6
+%\usetheme{AnnArbor}
+%\usetheme{Marburg}
+\iffalse\else
+\renewcommand{\familydefault}{\sfdefault}
+\renewcommand{\kanjifamilydefault}{\gtdefault}
+\setbeamerfont{title}{size=\Large,series=\bfseries}%,color=white}
+\setbeamerfont{frametitle}{size=\large,series=\bfseries}
+\setbeamerfont{beamergotobutton}{size=\Large}
+%\setbeamercolor{frametitle}{fg=yellow}
+\setbeamertemplate{frametitle}[default][center]
+%\addtobeamertemplate{footline}{}{\insertframenumber/\inserttotalframenumber}
+\usefonttheme{professionalfonts}
+\fi
+%\iftrue
+\title{ソフトウェア開発\\第7回目授業}
+\author{平野 照比古}
+\institute{}
+\date{2015/11/13}
+\newtheorem{Prob}{解説}
+\setbeamercovered{transparent}
+\begin{document}
+\frame{\maketitle}
+%\frame{\tableofcontents}
+\section{レポートについて}
+\begin{frame}[containsverbatim]
+ \frametitle{九九の表を作る}
+ \begin{itemize}
+	\item 問題の意図はコンソールにいくつかのデータをまとめて表示する方法を
+				考えること
+	\item HTML 文書で表示したものもあったが、今回のレポートの解答としては
+				正しくない
+ \end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{九九の表を作る(解決法)}
+1行分のデータを保存するための変数を用意し、そこに順次必要なデー
+				タを付け加える。
+\begin{verbatim}
+var i,j, k, res;
+for(i=1;i<=9;i++){
+  res ="";
+  for(j=1;j<=9;j++) {
+    k = i*j;
+    if(k<10) res +=" ";
+    res += k+" ";
+  }
+  console.log(res);
+}
+\end{verbatim}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{解説}
+ \begin{itemize}
+	\item \texttt{if(k<10) res +=" ";}の行を次の行\texttt{res += k+" ";}に
+				書いたものがあったが、数の右端がそろわない
+	\item 文字列から部分文字列を得る\texttt{substr()}に負の数を与えると右
+				からの部分文字列が得られるので次のように書いてもよい。
+
+				\verb/res += /\verb*/("  "+i*j).substr(-3)/
+ \end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{\protect{window}オブジェクトのプロパティの表示}
+ あまり解説が少ないオブジェクトに対してどのようなプロパティやメソッドが
+ あるかを調べる方法を理解するための問題である。
+ \begin{itemize}
+	\item 何も表示しないページを作成して、そこで
+
+				\texttt{for(p in window) console.log(p+":"+window[p])}
+
+				の結果に対する考察が必要
+	\item どこかのページでライブラリーを読み込むとその分、余計なものが増え
+				る。(\texttt{window.a} と変数\texttt{a}が同じものという解説をし
+				た)
+	\item ネットにある情報での細かい違いを報告するわけではない。
+	\item 同じことをするためがブラウザによって対応が異なるものに対処する方
+				法については後の授業で解説する。
+ \end{itemize}
+\end{frame}
+\iffalse
+\begin{frame}[containsverbatim]
+ \frametitle{}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{}
+\end{frame}
+\fi
+\section{前回の演習}
+\subsection{正規表現を作る}
+\begin{frame}[containsverbatim]
+ \frametitle{C言語の変数名にマッチする}
+\begin{itemize}
+%\onslide<1->
+ \item C言語の変数名(正確には識別子)は英字で始まり、そのあとに英数字が並んだも
+の(正確にはもう少し使える文字がある)
+ \item 先頭の文字は文字クラスを使うと\texttt{[A-Za-z]}
+ \item そのあとは英数字
+ \item その文字クラスは\texttt{\textbackslash w}
+ \item $0$ 個でもよいので、\texttt{\textbackslash w*}
+ \item 全体がこれだけであることを保証するためには位置指定子をつける
+\end{itemize}
+%\onslide<2->
+{\LARGE
+\verb+^[A-Za-z]\w*$+}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{浮動小数リテラルをにマッチする正規表現(1)}
+浮動小数リテラルは次の部分から成り立っている。
+
+[符号][整数部][小数点][小数部][指数部]
+
+このうち、[符号]や小数点以下の部分はなくてもよい。
+
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{浮動小数リテラルをにマッチする正規表現(2)}
+\begin{itemize}
+ \item 符号部は\texttt{+}または\texttt{-}からなる一文字からなる。一度だ
+       けまで現れてよいので、この部分は \texttt{[+-]?}または\texttt{(+|-)?}で表される。
+ \item 整数部は10進数の並びであり最低1文字は必要であるので反復の指定は
+       \texttt{+}となる。したがって、この部分は \texttt{\d+}で表される。
+ \item 小数点\texttt{.}は正規表現では任意の文字にマッチするのでエスケー
+       プする必要がある。したがってこの部分は \texttt[\textbackslash .]
+       となる。
+ \item 小数部は数字が並べられる。全くなくてもよいので反復の指定は
+       \texttt{*}となる。
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+  \frametitle{浮動小数リテラルをにマッチする正規表現(3)}
+\begin{itemize}
+\item 指数部は指数の開始を表す文字\texttt{E}または\texttt{e}で始まる10
+       進数である。数字は最低一つ必要であるのでこの部分は
+       \texttt{(E|e)\textbackslash d+}となる。
+ \item これらを合わせると求める正規表現が得られる。小数部などがなくても
+       よいのでそれらの部分には反復指定\texttt{?}を付ければよい。
+ {\Large
+\begin{verbatim}
+^[+-]?\d+(\.\d*)?((E|e)[+-]?\d+)?$
+\end{verbatim}
+}
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+  \frametitle{浮動小数リテラルをにマッチする正規表現(4)}
+正式な数値リテラルでは小数点の前に整数部がない \texttt{.1}など
+       も許しているが、ここではマッチしない。
+%"-.1e10".match(/^[+-]?((\d+(\.\d*)?)|(\.\d+))((E|e)[+-]?\d+)?$/);
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{24時間制の時刻の表し方}
+時、分、秒はすべて2桁とし、それらの区切りは\texttt{:}
+%\end{frame}
+%\begin{frame}[containsverbatim]
+\begin{itemize}
+ \item 時間は\texttt{00}から\texttt{23}までであるので時間の初めの文字が
+       \texttt{0}と\texttt{1}のときと、\texttt{2}のときで分ける必要があ
+       る。
+ \item 時間の先頭が\texttt{0}と\texttt{1}のときはそのあとの文字は
+       \texttt{0}から\texttt{9}まで取れるので、
+       \texttt{[01]\textbackslash d} となる。
+ \item \texttt{2}ではじまるときは\texttt{0}から\texttt{3}まで取れるので、
+\texttt{2[0-3]}となる。
+ \item 同様に、分と秒は先頭の文字が\texttt{0}から\texttt{5}までであるの
+       で \texttt{[0-5]\textbackslash d}となる。
+ \item \texttt{|}の範囲を限定す
+			 るため時間のところの\texttt{()}を忘れないこと。
+\end{itemize}
+求めるものは次のとおりである。
+{\Large
+\begin{verbatim}
+^([01]\d|2[0-3]):[0-5]\d:[0-5]\d$
+^([01]\d|2[0-3])(:[0-5]\d){2}$
+\end{verbatim}
+}
+\end{frame}
+\subsection{正規表現のマッチを確認する}
+\newcommand{\ShowCh}[1]{{\Large \texttt{#1}}}
+\newcommand{\Stringi}{%
+\begin{center}
+\begin{tabular}{*{10}{c}}
+ 1&2&3&4&5&6&7&8&9&10\\
+ \ShowCh{a}&
+ \ShowCh{a}&
+ \ShowCh{a}&
+ \ShowCh{a}&
+ \ShowCh{b}&
+ \ShowCh{a}&
+ \ShowCh{a}&
+ \ShowCh{a}&
+ \ShowCh{b}&
+ \ShowCh{b}\\
+\end{tabular}
+\end{center}
+}
+\newcommand{\Stringii}{%
+\begin{center}
+\setlength{\tabcolsep}{0.2em}
+\begin{tabular}{*{20}{c}}
+ 1&2&3&4&5&6&7&8&9&10&11&12&13&14&15&16&17&18&19%&20
+\\
+ \ShowCh{a}&
+ \ShowCh{b}&
+ \ShowCh{c}&
+ \ShowCh{c}&
+ \ShowCh{b}&
+ \ShowCh{c}&
+ \ShowCh{c}&
+ \ShowCh{k}&
+ \ShowCh{k}&
+ \ShowCh{c}&
+ \ShowCh{c}&
+ \ShowCh{a}&
+ \ShowCh{a}&
+ \ShowCh{M}&
+ \ShowCh{M}&
+ \ShowCh{a}&
+ \ShowCh{a}&
+ \ShowCh{c}&
+ \ShowCh{c}\\
+\end{tabular}
+\end{center}
+}
+\newcommand{\Stringiii}{%
+\begin{center}
+\setlength{\tabcolsep}{0.2em}
+\begin{tabular}{*{20}{c}}
+ 1&2&3&4&5&6&7&8&9&10&11&12&13&14&15&16&17&%18&19%&20
+\\
+ \ShowCh{a}&
+ \ShowCh{b}&
+ \ShowCh{c}&
+ \ShowCh{c}&
+ \ShowCh{b}&
+ \ShowCh{c}&
+ \ShowCh{c}&
+ \ShowCh{k}&
+ \ShowCh{k}&
+ \ShowCh{c}&
+ \ShowCh{c}&
+ \ShowCh{a}&
+ \ShowCh{a}&
+ \ShowCh{M}&
+ \ShowCh{M}&
+ \ShowCh{a}&
+ \ShowCh{a}\\
+\end{tabular}
+\end{center}
+}
+\newcommand{\Stringiv}{%
+\begin{center}
+\setlength{\tabcolsep}{0.2em}
+\begin{tabular}{*{20}{c}}
+ 1&2&3&4&5&6&7&8&9&10&11&12&13&14&15&16&17&18&19%&20
+\\
+ \ShowCh{a}&
+ \ShowCh{b}&
+ \ShowCh{c}&
+ \ShowCh{c}&
+ \ShowCh{b}&
+ \ShowCh{c}&
+ \ShowCh{c}&
+ \ShowCh{k}&
+ \ShowCh{k}&
+ \ShowCh{c}&
+ \ShowCh{c}&
+ \ShowCh{a}&
+ \ShowCh{a}&
+ \ShowCh{M}&
+ \ShowCh{M}&
+ \ShowCh{c}&
+ \ShowCh{c}&
+ \ShowCh{a}&
+ \ShowCh{a}
+\\
+\end{tabular}
+\end{center}
+}
+
+
+\begin{frame}[containsverbatim]
+ \frametitle{\protect\texttt{"aaaabaaabb".match(/.*b/);}}
+\Stringi
+\begin{verbatim}
+["aaaabaaabb"]
+\end{verbatim}
+\begin{itemize}
+ \item 最後に\texttt{b}が来る文字列がマッチ
+ \item \texttt{.*}は貪欲であるのでで
+       きるだけ長い任意の文字列とマッチする
+ \item 最後の\texttt{b}は10番目のものが対応
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{\protect\texttt{"aaaabaaabb".match(/.*b/g);}}
+\begin{verbatim}
+["aaaabaaabb"]
+\end{verbatim}
+前と同じ理由により、結果は同じ
+\end{frame}
+\begin{frame}[containsverbatim]
+  \frametitle{\protect\texttt{"aaaabaaabb".match(/.*?b/);}}
+\Stringi
+\begin{verbatim}
+["aaaab"]
+\end{verbatim}
+\begin{itemize}
+ \item \texttt{b}で終わる文字列を表している
+ \item その前の\texttt{.*?}は非貪欲なマッ
+       チをする
+ \item 最後の\texttt{b}は5番目のもの
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+  \frametitle{\protect\texttt{"aaaabaaabb".match(/.*?b/g);}}
+\Stringi
+ \begin{verbatim} 
+["aaaab", "aaab", "b"]
+\end{verbatim}
+\begin{itemize}
+ \item 前と同様に非貪欲なマッチング
+ \item \texttt{g}オプションがついているの
+       で一つ目以降見つかった位置から再度マッチするものを探す
+ \item 全体で3つ答えを返す
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+   \frametitle{\protect\texttt{"aaaabaaabb".match(/.*?b\textbackslash B/);}}
+\Stringi
+\begin{verbatim}
+["aaaab"]
+\end{verbatim}
+\begin{itemize}
+ \item 非貪欲なマッチング
+ \item \texttt{b}の位置が単語境界以外のところ
+       (\texttt{\textbackslash B})を探す
+ \item 5番目の\texttt{b}は単語境界に
+       いないのでここまでがマッチ
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+   \frametitle{\protect\texttt{"aaaabaaabb".match(/.*?b\textbackslash B/g);}}
+\Stringi
+\begin{verbatim}
+["aaaab", "aaab"]
+\end{verbatim}
+\begin{itemize}
+ \item 繰り返しの探索をする
+ \item \texttt{b}が単語境界に
+       いないものを探す
+ \item 10番目の\texttt{b}は候補にならない。
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+   \frametitle{\protect\texttt{"aaaabaaabb".match(/.*(?=b)/);}}
+\Stringi
+\begin{verbatim}
+["aaaabaaab"]
+\end{verbatim}
+\begin{itemize}
+ \item 任意の文字列(\texttt{.*})でそのあとが\texttt{b}であるもの
+       (\texttt{(?=b)})を探す
+ \item 貪欲な探索なので10番目の\texttt{b}が
+       \texttt{(?=b)}で指定されたもの
+ \item マッチした部分にはこの部分
+       が含まれない
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+   \frametitle{\protect\texttt{"aaaabaaabb".match(/.*?(?=b)/);}}
+\Stringi
+\begin{verbatim}
+["aaaa"]
+\end{verbatim}
+\begin{itemize}
+ \item 非貪欲なマッチ
+ \item \texttt{(?=b)}で指定された部分が5番目の\texttt{b}
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+   \frametitle{\protect\texttt{"aaaabaaabb".match(/.*?(?=b)/g);}}
+\Stringi
+\begin{verbatim}
+["aaaa", "", "aaa", "", ""]
+\end{verbatim}
+\begin{itemize}
+ \item 非貪欲なマッチで繰り返しを行うもの
+ \item 戻り値に空文字列があ
+       るのは、一度\texttt{(?=b)}でマッチした処理を行った後、もう一度
+       \texttt{b}のところから探索を始めているためではないかと考えられる
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+   \frametitle{\protect\texttt{"abccbcckkccaaMMaacc".match(/((.)\textbackslash2).*\textbackslash1/);}}
+\Stringii
+\begin{verbatim}
+["ccbcckkccaaMMaacc", "cc", "c"]
+\end{verbatim}
+\begin{itemize}
+ \item 正規表現の\texttt{(.)}は左から数えて2番目の括弧になる
+ \item この部分にマッ
+      チした文字は\texttt{\textbackslash2}で参照できる
+ \item \texttt{(.)\textbackslash2}は同じ文字が2つ並ぶものにマッチ
+ \item この部分
+      全体が再び括弧でくくられているので、この部分が
+      \texttt{\textbackslash1}で参照できる
+ \item この正規表現は同じ2つの文字
+      で挟まれた文字列にマッチする
+ \item 中央部の正規表現は任意の文
+      字列を表す
+ \item 貪欲なマッチなのではじめに現れる同じ文字が2つ続く3,4番
+      目の\texttt{cc}が一番最後に現れる18番目と19番目の\texttt{cc}と組み
+      合わされる
+ \item グローバルな検索ではないときには戻り値に\texttt{\textbackslash1}と
+\texttt{\textbackslash2}が含まれる。
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+   \frametitle{\protect\texttt{"abccbcckkccaaMMaacc".match(/((.)\textbackslash2).*\textbackslash1/g);}}
+\Stringii
+\begin{verbatim}
+["ccbcckkccaaMMaacc"]
+\end{verbatim}
+\begin{itemize}
+ \item \texttt{g}フラグが付いているが、条件に合うものは一つしかない
+ \item 戻り値に\texttt{\textbackslash1}と
+\texttt{\textbackslash2}が含まれない
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+   \frametitle{\protect\texttt{"abccbcckkccaaMMaacc".match(/((.)\textbackslash2).*?\textbackslash1/);}}
+\Stringii
+\begin{verbatim}
+["ccbcc", "cc", "c"]
+\end{verbatim}
+\begin{itemize}
+ \item 前問と異なり、中央部の任意の文字列が非貪欲になっている
+ \item 3，4番目と6，7
+       番目の\texttt{cc}が対応
+ \item 戻り値の配列の2番目と3番目は
+\texttt{\textbackslash1}と
+\texttt{\textbackslash2}
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+   \frametitle{\protect\texttt{"abccbcckkccaaMMaacc".match(/((.)\textbackslash2).*?\textbackslash1/g);}}
+\Stringii
+\begin{verbatim}
+["ccbcc", "ccaaMMaacc"]
+\end{verbatim}
+\texttt{g}が付いているのでさらに
+10番目と11番目、18番目と19番目の\texttt{cc}が対応
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{\protect\texttt{"abccbcckkccaaMMaa".match(/((.)\textbackslash2).*\textbackslash1/);}}
+\Stringiii
+\begin{verbatim}
+["ccbcckkcc", "cc", "c"]
+\end{verbatim}
+\begin{itemize}
+ \item これまでの文字列から最後の2文字を取り除いた文字列で同じことを行っ
+       ている
+ \item 3,4番目の\texttt{cc}に対応するのは11，12番目のもの
+\end{itemize}。
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{\protect\texttt{"abccbcckkccaaMMaa".match(/((.)\textbackslash2).*\textbackslash1/g);}}
+\Stringiii
+ \begin{verbatim}
+["ccbcckkcc", "aaMMaa"]
+\end{verbatim}
+\begin{itemize}
+ \item \texttt{g}フラグが付いているのでマッチした部分列が返される
+ \item 3,4番目の
+      と10,11番目の \texttt{cc}が対応
+ \item そのあとの部分列で12,13番目
+       と16,17番目の\texttt{aa}が対応する
+ \item マッチした部分列は2つ
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{\protect\texttt{"abccbcckkccaaMMccaa".match(/((.)\textbackslash2).*\textbackslash1/g);}}
+\Stringiv
+\begin{verbatim}
+["ccbcckkccaaMMcc"]
+\end{verbatim}
+\begin{itemize}
+ \item これまでの文字列と最後の4つが入れ替わっている
+ \item 3,4番目と16,17番目の
+       \texttt{cc}が対応
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{\protect\texttt{"abccbcckkccaaMMccaa".match(/((.)\textbackslash2).*?\textbackslash1/g);}}
+\Stringiv
+\begin{verbatim}
+["ccbcc", "ccaaMMcc"]
+\end{verbatim}
+\begin{itemize}
+ \item 前問と異なり、非貪欲な任意の部分文字列を途中に取る
+ \item 3，4番目と6，7番
+       目の\texttt{cc}、10,11番目と16,17番目の\texttt{cc}が対応する
+\end{itemize}
+\end{frame}
+\subsection{正規表現の利用}
+ \begin{frame}[containsverbatim]
+ \frametitle{エラー処理の例(改良版)}
+	2回前の授業で次のエラー処理を紹介した。
+{\small
+\begin{verbatim}
+function Person(name, y, m, d){
+  if(name === "") throw new Error("名前がありません");
+  this.name = name;
+  this.year = y;
+  if(m<1 || m>12) throw new Error("月が不正です");
+  var date = new Date(y,m,0);
+  if(d<1 || d>date.getDate()) throw new Error("日が不正です");
+  this.month = m,
+  this.day = d
+}
+Person.prototype = {
+...
+}
+\end{verbatim}
+ }
+\end{frame}
+ \begin{frame}[containsverbatim]
+	\frametitle{エラー処理が不十分}
+ このリストでは十分なエラー処理がなされていない。
+ \begin{itemize}
+	\item 数に変換されない文字列の入力に対しては値が\texttt{NaN}になる。
+	\item その結果、たとえば月の値の評価\texttt{m<1}は\texttt{false}となり、
+				エラーチェックを通り抜けてしまう。
+	\item 対処法としては\verb+!(m>=1 && m<=12)+とすることも考えられるが、
+				これでも小数点付きの数が排除できない。
+	\item Web アプリケーションではテキストボックスの入力は文字列になるので、
+				文字列の段階でチェックするほうが楽
+ \end{itemize}
+ \end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{\protect\texttt{Person2}の修正}
+\texttt{Person}オブジェクトの範囲を外部から入力させる
+ときに文字列を数に変換する前に数値リテラルになっているかを判定することでプログラ
+ ムが不正な値を受け付けないようにできる。
+
+ 整数値だけにするのであれば正規表現は\verb-/^\d+$/-である。
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{\protect\texttt{Person2}の修正}\small
+\begin{verbatim}
+<title>エラーオブジェクト(改良)</title>
+function Person(name, y, m, d){
+  if(name === "") throw new Error("名前がありません");
+  this.name = name;
+  this.year = checkNum(y,1900,2020,"年");
+  this.month = checkNum(m,1,12,"月");
+  var date = new Date(y,this.month,0);
+  this.day = checkNum(d,1,date.getDate(),"日");
+}
+function checkNum(s, low, high, mes) {
+  if(s.match(/^\d+$/)) {
+    if(s>=low &&s<=high) return s-0;//文字列を数字に変換
+  }
+  throw new Error(mes+"が不正です");
+}
+	
+...
+\end{verbatim}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{解説}
+\texttt{prompt()}で戻ってきた文字列が数字だけからなっているかをチェック
+ したうえで、与えられた範囲内にあるかを調べている。
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{外部入力のチェックを！}
+\begin{itemize}
+ \item 外部からのデータの入力に対しては、データを吟味してから利用する
+ \item 特にWebページのテキストボックスからのデータ入力を利用し
+て不正行為を行う手法が知られている
+\end{itemize}
+\end{frame}
+\end{document}

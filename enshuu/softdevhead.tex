@@ -1,0 +1,184 @@
+%\usepackage[all,2cell]{xy}
+%\usepackage{rotating}
+\usepackage{moreverb}
+%\rotdriver{dvips}
+\newcommand{\StackShow}[4]{
+ \begin{minipage}{2.7em}
+\begin{center}
+ \begin{tabular}[t]{|p{2em}|}
+ \hline
+ \StackItem{#1}
+ \StackItem{#2}
+ \StackItem{#3}
+ \StackItem{#4}
+\end{tabular}
+\end{center}
+ \end{minipage}
+}
+\newcommand{\StackShowN}[6]{
+ \begin{tabular}{|@{}c@{}|}
+\multicolumn{1}{c}{\MBoxSA{%
+   \ifx#1d\Push{#2}\else%
+      \ifx#1u\relax\Pop\else%
+         \ifx#1o\relax\Operator{#2}%
+         \fi%
+      \fi%
+   \fi}{\hspace*{3.em}}}\\%
+ \hline
+ \MBoxSA{#3}{3}\\\hline\MBoxSA{#4}{3}\\\hline
+ \MBoxSA{#5}{3}\\\hline\MBoxSA{#6}{3}\\\hline
+\end{tabular}
+}
+\newcommand{\StackOp}[2]{
+\begin{minipage}{4.5em}
+\makebox[4.5em][c]{%
+   \ifx#1d\Push{#2}\else%
+      \ifx#1u\relax\Pop\else%
+         \ifx#1o\relax\Operator{#2}%
+         \fi%
+      \fi%
+   \fi}\\%
+\hspace*{\fill}$\longrightarrow$\hspace*{\fill}
+\end{minipage}
+}
+\newcommand{\Operator}[1]{%
+#1}
+\newcommand{\Push}[1]{%
+#1を\texttt{push}}
+\newcommand{\Pop}{\texttt{pop}}
+\newcommand{\StackItem}[1]{%
+\hspace*{\fill}\texttt{#1}\hspace*{\fill}\rule{0em}{0em}\\\hline}
+\newcommand{\Ls}[1]{\hbox{\Large #1}}
+%\renewcommand{\labelstyle}{\textstyle}
+\newcommand{\StateTable}[3]{%
+\begin{center}%\Large
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\smash{\raisebox{-0.8em}{状態}}& \multicolumn{2}{c|}{入力}&
+\smash{\raisebox{-0.8em}{適格状態}}&\smash{\raisebox{-0.8em}{コメント}}\\
+\cline{2-3}
+& \makebox[5em]{#1} &  \makebox[5em]{#2}&&\\\hline
+#3%\relax\relax\relax\relax\relax\relax
+\end{tabular}\end{center}
+}
+\newtheorem{Th}{定理}[section]
+\newcommand{\CSpace}{\rule{10mm}{0mm}}
+\newcommand{\RSpace}{\rule{0mm}{10mm}}
+\newcommand{\Node}[1]{*[o]=<8mm>[F]{#1}}
+\newcommand{\NodeA}[1]{*[o]=<8mm>[F=]{#1}}
+
+%%%%%%
+\newcommand{\SetHeight}[2]{\rule[#2]{0mm}{#1}}
+%
+%
+\newif\ifKaiNo
+\newcounter{Kai}
+\newcommand{\Kai}[2]{%
+\setcounter{Kai}{0}%
+\gdef\ifKaiNo{\iftrue}%
+\KaiNo{#1}{#2}%
+}
+\newcommand{\KaiNonum}[2]{%
+\setcounter{Kai}{0}%
+\gdef\ifKaiNo{\iffalse}%
+\KaiNo{#1}{#2}%
+}
+\newcommand{\KaiNo}[2]{%
+\stepcounter{Kai}%
+\ifLt{\value{Kai}}{#1}%
+  {&\makebox[#2em][c]{\ifKaiNo\arabic{Kai}\fi}\KaiNo{#1}{#2}}%
+  {\rule[-0.7em]{0em}{2em}}%
+}
+\newcommand{\VRULE}{\vrule height 0.4pt width 6mm}
+\newcommand{\VRULET}{\VRULE &\VRULE &\VRULE }
+\newcommand{\VRULEV}{\raisebox{-3mm}{\vrule height 9mm width 0.4pt}}
+\newcommand{\MM}[1]{\MV&\makebox[0mm][c]{#1}&\makebox[6mm][c]{}}
+\newcommand{\MV}{\VRULEV\makebox[6mm][c]{}}
+\newcommand{\MVS}[1]{\VRULEV\makebox[6mm][c]{\ifHMSol#1\fi}}
+\newcommand{\MVA}[2]{\VRULEV\makebox[6mm][c]{#1\ifHMSol#2\fi}}
+\newcommand{\MA}[1]{\makebox[6mm][c]{\ifHMSol#1\fi}}
+\newcommand{\Explanation}[1]{%
+{\ifHMSol\bfseries 解説:} #1\fi}
+%
+%
+%
+\newcommand{\StateTableHead}[2]{%
+\begin{center}%\Large
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\smash{\raisebox{-0.8em}{状態}}& \multicolumn{2}{c|}{入力}&
+適格&\smash{\raisebox{-0.8em}{コメント}}\\
+
+\cline{2-3}%
+& \makebox[4em]{#1} & \makebox[4em]{#2}&状態&\\\hline
+}
+\newcommand{\NFAStateTable}[4]{%
+\gdef\LWidth{#1}
+\StateTableHead{#2}{#3}%
+\SetNFAStateTable#4\hline\relax\relax\relax\relax\relax%
+\end{center}
+}
+\newcommand{\eNFAStateTable}[4]{%
+\begin{center}%\Large
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+\smash{\raisebox{-0.8em}{状態}}& \multicolumn{3}{c|}{入力}&
+適格&\smash{\raisebox{-0.8em}{コメント}}\\
+\cline{2-4}%
+& \makebox[5em]{#1} &  \makebox[5em]{#2}&\makebox[5em]{#3}&状態&\\\hline
+\SeteNFAStateTable#4\hline\relax\relax\relax\relax\relax\relax%
+\end{center}
+}
+\newcommand{\NFAtoDFAStateTable}[4]{%
+\gdef\LWidth{#1}
+\StateTableHead{#2}{#3}%
+\SetStateSet#4\hline\relax\relax\relax\relax\relax\relax%
+\end{center}
+}
+\newcommand{\SetLW}[1]{%
+     \MBoxA{\makebox[\LWidth]{\SetL{#1}}}}
+\newcommand{\SetL}[1]{%
+    \ifx#1-\Ls{$\emptyset$}\else%
+         \rule[-0.2em]{0em}{1.2em}\ifx#1.\relax\else\Ls{$\{#1\}$}\fi\fi}
+\newcommand{\SetStateSet}[7]{%
+\ifx#1\hline\hline\end{tabular}\else%
+\ifx#1-\relax\else\Ls{$#1=$}\fi%
+\hspace*{\fill}\SetLW{#2}\hspace*{\fill}&
+\SetLW{#3}&\SetLW{#4}&
+\ifHMSol{\ifx#5y\relax$\bigcirc$\fi}\fi&\ifHMSol{#6}\fi\\\ifHMSol #7\fi%
+\expandafter\SetStateSet\fi}
+%
+%
+%
+\newcommand{\SetNFAStateTable}[6]{%
+\ifx#1\hline\hline\end{tabular}\else%
+\Ls{$#1$}
+&
+\SetLW{#2}&\SetLW{#3}&
+\ifHMSol{\ifx#4y\relax$\bigcirc$\fi}\fi&\ifHMSol{#5}\fi\\#6%
+\expandafter\SetNFAStateTable\fi}
+%
+\newcommand{\SeteNFAStateTable}[7]{%
+\ifx#1\hline\hline\end{tabular}\else%
+\Ls{$#1$}
+&
+\MBoxA{\SetL{#2}}&\MBoxA{\SetL{#3}}&\MBoxA{\SetL{#4}}&
+\MBoxA{\ifx#5y\relax$\bigcirc$\fi}&\MBoxA{#6}\\#7%
+\expandafter\SeteNFAStateTable\fi}
+\newcommand{\MinmizeDFA}[3]{%
+$\begin{array}[t]{|c|c|c|c|c|}
+\hline
+ \smash{\raisebox{-1em}{\small 同値類}}& \smash{\raisebox{-1em}{状態}}&
+\multicolumn{2}{c|}{入力}&適格 \\\cline{3-4}
+ & &#1 &#2 &{状態}\\\hline
+\ShowMinimizeDFA#3\hline\relax\relax\relax\relax\relax\relax
+\end{array}$
+}
+\newcommand{\ShowMinimizeDFA}[7]{%
+\ifx#1\hline\hline\else%
+\smash{\raisebox{-#1em}{\MBoxA{$ #2$}}}&
+\MBoxA{$ #3$}&\MBoxA{$ #4$}&\MBoxA{$ #5$}%
+&\MBoxA{\ifx#6y\relax$\bigcirc$\fi}\\#7
+\expandafter\ShowMinimizeDFA\fi%
+}
+\newcommand{\RegExp}{正則表現}

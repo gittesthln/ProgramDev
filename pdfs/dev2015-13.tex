@@ -1,0 +1,529 @@
+%-*- coding: utf-8 -*-
+\documentclass[dvipsk]{beamer}
+\usepackage{pgfpages}
+\usepackage{moreverb,array}
+%\usetheme{Malmoe}
+%\usetheme{Goettingen} %7 8 9
+%\usetheme{Darmstadt}% 1, 2, 3
+%\usetheme{Boadilla}
+%\usetheme{CambridgeUS}%4, 5 6 
+%
+\usetheme{AnnArbor} %10
+%\usetheme{Marburg}
+\iffalse\else
+\renewcommand{\familydefault}{\sfdefault}
+\renewcommand{\kanjifamilydefault}{\gtdefault}
+\setbeamerfont{title}{size=\Large,series=\bfseries}%,color=white}
+\setbeamerfont{frametitle}{size=\large,series=\bfseries}
+\setbeamerfont{beamergotobutton}{size=\Large}
+%\setbeamercolor{frametitle}{fg=yellow}
+\setbeamertemplate{frametitle}[default][center]
+%\addtobeamertemplate{footline}{}{\insertframenumber/\inserttotalframenumber}
+\usefonttheme{professionalfonts}
+\fi
+%\iftrue
+\title{ソフトウェア開発\\第13回目授業}
+\author{平野 照比古}
+\institute{}
+\date{2016/1/8}
+\newtheorem{Prob}{解説}
+\newcommand{\Elm}[1]{\texttt{<#1>}}
+\setbeamercovered{transparent}
+
+\newcommand{\DOMM}{\texttt}
+\newcommand{\Event}{\texttt}
+\newcommand{\DOMP}{\texttt}
+\newcommand{\DOM}{\texttt{DOM}}
+\newcommand{\keyitem}{\relax}
+\newcommand{\HTML}{HTML文書}
+\begin{document}
+\frame{\maketitle}
+\section{jQuery}
+\subsection{jQueryとは}
+\begin{frame}[containsverbatim]
+\frametitle{jQueryとは}
+jQuery の開発元\footnote{\texttt{jQuery.com}}には次のように書かれている。
+\begin{quotation}
+jQuery is a fast, small, and feature-rich JavaScript library. It makes
+ things like HTML document traversal and manipulation, event handling,
+ animation, and Ajax much simpler with an easy-to-use API that works
+ across a multitude of browsers. With a combination of versatility and
+ extensibility, jQuery has changed the way that millions of people write
+ JavaScript.
+\end{quotation}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{jQueryの目的}
+\begin{itemize}
+ \item JavaScriptのライブラリー
+ \item これまでに解説してきたJavaScriptの使い方を簡単にすることを目的
+ \item jQueryには ver. 1 のものと ver. 2 の系列が提供
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{ver. 1 と ver. 2 の違い}
+\begin{quotation}
+jQuery 2.x
+
+jQuery 2.x has the same API as jQuery 1.x, but does not support Internet
+Explorer 6, 7, or 8. All the notes in the jQuery 1.9 Upgrade Guide apply
+here as well. Since IE 8 is still relatively common, we recommend using
+the 1.x version unless you are certain no IE 6/7/8 users are visiting
+the site. Please read the 2.0 release notes carefully. 
+\end{quotation}
+ ver. 2 では古い Internet Explorer の対応を打ち切った
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{minファイルの意味}
+配布されているライブラリーはコメントなどがそのまま入っているものと、
+コメントを取り除き、変数名などを短いものに置き換えて、ファイルサイズを小
+さくしたものの2種類がある。
+\end{frame}
+\newcounter{Func}
+\newcommand{\FuncRef}[1]{%
+\refstepcounter{Func}\label{#1}({\bfseries 機能\arabic{Func}})}
+\section{jQueryの基本}
+\subsection{jQuery()関数とjQueryオブジェクト}
+\begin{frame}[containsverbatim]
+\frametitle{jQuery オブジェクト}
+\begin{itemize}
+ \item jQueryライブラリーは\texttt{jQuery()}というグローバル関数を一つだ
+       け定義
+ \item この関数の短縮形として、\texttt{\$}というグローバル関数も定義
+ \item jQuery() 関数はコンストラクタではない。
+ \item jQuery関数は引数の与え方により動作が異なる
+ \item 戻り値としてjQueryオブジェクトとと呼ばれるDOMの要素群を返す
+ \item このオブジェクトには多数のメソッドが定義されていて、これらの要素
+       群を操作可能
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{jQuery関数の引数の型(1)}
+jQuery() 関数の呼び出し方は引数の型により返される要素群が異なる。
+\begin{itemize}
+ \item 引数が(拡張された)CSSセレクタ形式の場合\FuncRef{CSSSelector}
+
+\begin{itemize}
+ \item CSSセレクタにマッチした要素群を返す。
+ \item 省略可能な2番目の引数として要素やjQueryオブ
+       ジェクトを指定した場合には、その要素の子要素からマッチしたものを
+       返す。
+ \item この形はすでに解説したDOMのメソッド
+       \texttt{querySelectorAll()}と似ている。
+\end{itemize}  
+ \item 引数が要素やDocumentオブジェクトなどの場合\FuncRef{ObjSelector}
+
+       与えられた要素をjQueryオブジェクトに変換する。
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{jQuery関数の引数の型(2)}
+\begin{itemize}
+ \item 引数としてHTMLテキストを渡す場合\FuncRef{HTMLText}
+
+\begin{itemize}
+ \item テキストで表される要素を作成し、この要素を表すjQueryオブジェクト
+       を返す。\texttt{createElement()}メソッドに相当する。
+ \item 省略可能な2番目の引数は属性を定義するものであり、オブジェクトリテ
+       ラルの形式で与える。
+\end{itemize}       
+
+ \item 引数として関数を渡す場合\FuncRef{Function}
+
+       引数の関数はドキュメントがロードされ、DOMが操作で可能になった時に実行される。
+\end{itemize}
+\end{frame}
+\subsection{jQueryオブジェクトのメソッド}
+\begin{frame}[containsverbatim]
+\frametitle{jQueryオブジェクトのメソッドの基本}
+jQueryオブジェクトに対する多くの処理はHTMLの属性やCSSスタイルの値を設定
+したり、読み出したりすること
+\begin{itemize}
+ \item これらのメソッドに対してセッターと
+ゲッターを同じメソッドを使う。メソッドに値を与えるとセッターになり、ない
+とゲッターになる。
+ \item セッターとして使った場合は戻り値がjQueryオブジェクトとなるので、
+       メソッドチェインが使える。
+ \item ゲッターとして使った場合は要素群の最初の要素だけ問い合わせる。
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{HTML属性の取得と設定}
+\texttt{attr()}メソッドはHTML属性用のjQueryのゲッター/セッターである。
+\begin{itemize}
+ \item 属性名だけを引数に与えるとゲッターとなる。
+ \item 属性名と値の2つを与えるとセッターになる。
+ \item 引数にオブジェクトリテラルを与えると複数の属性を一時に設定できる。
+ \item 属性を取り除く\texttt{removeAttr()}もある。
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{CSS属性の取得と設定}
+\texttt{css()}メソッドはCSSのスタイルを設定する。
+\begin{itemize}
+ \item CSSスタイル名は元来のCSSスタイル名（ハイフン付）でもJavaScriptの
+       キャメル形式でも問い合わせ、設定が可能である。
+ \item 戻り値は単位を含めて文字列で返される。
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{HTMLフォーム要素の値の取得と設定}
+\begin{itemize}
+ \item \texttt{val()}はHTMLフォーム要素の\texttt{value}属性の値の設定や
+       取得が可能
+ \item これにより、\texttt{<select>}要素の選択された値を得ることなどが可
+       能
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{要素のコンテンツの取得と設定}
+\begin{itemize}
+ \item \texttt{text()}と\texttt{html()}メソッドはそれぞれ要素のコンテンツを通常
+のテキストまたはHTML形式で返す。
+ \item 引数がある場合には、既存のコンテンツを置き換える。　
+\end{itemize}
+\end{frame}
+\subsection{ドキュメントの構造の変更}
+\begin{frame}[containsverbatim]
+\frametitle{DOM構造を変える}
+\begin{table}[ht]
+ \caption{ドキュメントの構造の変更するメソッド}\label{Insertreplace}
+\begin{tabular}{|c|c|m{10zw}|}
+ \hline
+ \texttt{\$(T).method(C)}&\texttt{\$(C).method(T)}&
+    \multicolumn{1}{c|}{機能}\\\hline
+ \texttt{append}&\texttt{appendTo}&
+	 要素\texttt{T}の最後の子要素として\texttt{C}を付け加える\\ \hline
+ \texttt{prepend}&\texttt{prependTo}&
+	 要素\texttt{T}の初めの子要素として\texttt{C}を付け加える\\ \hline
+ \texttt{before}&\texttt{insertBefore}&
+	 要素\texttt{T}の直前の要素として\texttt{C}を付け加える\\ \hline
+ \texttt{after}&\texttt{insertAfter}&
+	 要素\texttt{T}の直後の要素として\texttt{C}を付け加える\\ \hline
+ \texttt{replaceWith}&\texttt{replaceAll}&
+	 要素\texttt{T}と\texttt{C}を置き換える\\ \hline
+\end{tabular}\end{table}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{DOMの操作(補足)}
+\begin{itemize}
+ \item 要素をコピーする\texttt{clone()}
+ \item 、要素の子要素をすべて消す\texttt{empty()}
+ \item 選択された要素(とその子要素すべて)を削除する\texttt{remove()}
+\end{itemize}
+\end{frame}
+\subsection{イベントハンドラーの取り扱い}
+\begin{frame}[containsverbatim]
+\frametitle{イベントハンドラーの登録}
+\begin{itemize}
+ \item イベントの種類ごとにメソッドが定義されていてる。
+ \item 指定されたjQueryオブジェクトが複数の場合にはそれぞれに対してイ
+ベントハンドラーが登録される。
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{イベントハンドラー登録のメソッド}
+ \begin{tabular}{llllll}
+\texttt{blur()}& \texttt{focusin()}&\texttt{mouseenter()} &\texttt{scroll()}\\
+\texttt{change()}&\texttt{keydown()}&\texttt{mouseleave()} &\texttt{select()} \\
+  \texttt{click()}& \texttt{keypress()} &\texttt{mousemove()} &\texttt{submit()} \\
+\texttt{dbleclick()}& \texttt{keyup()} &\texttt{mouseover()}& \texttt{unload()} \\
+\texttt{error()}&\texttt{load()} &\texttt{mouseup()} &\\
+ \texttt{focus()}&\texttt{mousedown()}&\texttt{resize()}&\\
+ \end{tabular}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{イベントハンドラーの登録}
+\begin{itemize}
+ \item \texttt{hover()}：\texttt{mouseenter}イベントと
+       \texttt{mouseleave}イベントに対するハンドラ－を同時に登録できる。
+ \item \texttt{toggle()}はクリックイベントに複数のイベントハンドラ－を登
+       録し、イベントが発生するごとに順番に呼び出す。
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{イベントハンドラ－の登録解除}
+ イベントハンドラ－の登録解除は\texttt{unbind()}メソッドで行う。
+ \begin{itemize}
+  \item \texttt{removeEvenListener()}
+と同様な形式として1番目の引数にイベントタイプ(文字列で与える)、2番目の引
+数に登録した関数を与えるものがある
+  \item 登録したイベントハンドラ－には名前が必要
+ \end{itemize}
+\end{frame}
+\section{Ajaxの処理}
+\subsection{\texttt{jQuery.ajax()}関数}
+\begin{frame}[containsverbatim]
+ \frametitle{\texttt{jQuery.ajax()}関数}
+ \begin{itemize}
+  \item jQueryではAjaxの処理に関するいろいろな方法を提供
+  \item \texttt{jQuery.ajax()}関数を紹介
+  \item この関数は引数にオブジェクトリテラルをとる。
+ \end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{\texttt{jQuery.ajax()}関数の引数}
+ \begin{table}[ht]
+ \caption{jQuery.ajax()関数で利用できる属性(一部))}\label{jQueryAjax}
+\begin{center}
+ \begin{tabular}{|c|m{22zw}|}\hline
+属性名  &\multicolumn{1}{c|}{説明} \\\hline
+  \texttt{type}&通信の種類。通常は\texttt{"POST"}または\texttt{"GET"}を指定\\
+  \hline
+  \texttt{url}&サーバーのアドレス\\ \hline
+  \texttt{data}&\texttt{"GET"}のときはURLの後に続けるデータ。
+      \texttt{"POST"}のときは\texttt{null}\\ \hline
+  \texttt{dataType}&戻り値のデータの型を指定する。\texttt{"text"}、
+      \texttt{"html"}、\texttt{"script"}、      
+\texttt{"json"}、\texttt{"xml"}などがある\\ \hline
+\texttt{success}&通信が正常終了したときに呼び出されるコールバック関数
+      \\ \hline
+\texttt{error}&通信が成功しなかったときに呼び出されるコールバック関数
+      \\ \hline
+  \texttt{timeout}&タイムアウト時間をミリ秒単位で指定\\ \hline
+ \end{tabular}
+\end{center}
+\end{table}
+\end{frame}
+\subsection{jQuery のサンプル}
+\begin{frame}[containsverbatim]
+ \frametitle{今日は何の日---jQuery版(1)}
+ {\scriptsize
+ \begin{listing}{1}
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>今日は何の日(jQuery版)</title>
+
+<script type="text/ecmascript" src="jquery-1.11.2.min.js"></script>
+\end{listing}
+ }
+ 6行目はローカルに保存したjQueryライブラリーを読み込んでいる。
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{今日は何の日---jQuery版(2)}
+ {\scriptsize
+ \begin{listingcont}
+ <script type="text/ecmascript">
+//<![CDATA[
+$(window).ready(function(){
+    function makeSelectNumber(from, to, prefix, suffix, id, parent){
+      var i, option;
+      var Select = $("<select/>", {"id":id});
+      if(parent) parent.append(Select);//$(parent).append(Select);
+      for(i=from; i<=to; i++) {
+        option = $("<option/>",{"value":i,"text":prefix+i+suffix});
+        Select.append(option);
+//          $("<option/>",{"value":i,"text":prefix+i+suffix}).appendTo(Select);
+      }
+      return Select;
+    };
+\end{listingcont}
+ }
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{今日は何の日---jQuery版(2)解説}
+ \begin{itemize}
+  \item 10行目の\texttt{\$(window).redy()}はドキュメントが解釈されたとき
+	に引数の関数が呼び出されるイベントである。ここでの要素の参照は機
+	能\ref{ObjSelector}を用いている。
+  \item 11行目から21行目は連続した番号を値に持つプルダウンメニューを作成
+	する関数。仕様は以前と同じ
+	\begin{itemize}
+	 \item 13行目では\texttt{<select>}要素を作成し、同時に属性も設定
+	       している(機能\ref{HTMLText})。
+	 \item 15行目から19行目で\texttt{<option>}要素を定義し、
+	       \texttt{<select>}要素の子要素にしている。なお、15行目と16
+	       行目は\texttt{appendTo()}メソッドを用いると18行目のコメン
+	       トアウトしてあるように記述することができる。
+	\end{itemize}
+ \end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{今日は何の日---jQuery版(3)}
+ {\scriptsize
+ \begin{listingcont}
+    var i, today = new Date();
+    var y = today.getFullYear();
+    var m = today.getMonth();
+    var Form  = $("#menu");
+    var Year  = makeSelectNumber(2000,2020,"","年","year", Form);
+    var Month = makeSelectNumber(1,12,"","月","month", Form);
+    var Days = [];
+    for(i=28; i<=31; i++) {
+      Days[i] = makeSelectNumber(1,i,"","日","day");
+    }
+    Year.val(y);     //$("#year").val(y);
+    Month.val(m+1);  //$("#month").val(m+1);
+    var d = new Date(y, m+1,0).getDate();
+    Form.append(Days[d]);
+  $("#day").val(today.getDate());
+\end{listingcont}
+ }
+ \end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{今日は何の日---jQuery版(3)解説}
+ \begin{itemize}
+   \item 22行目から31行目も依然とほとんど同じである。25行目では機能
+	\ref{HTMLText}を用いて要素を参照している。
+  \item 32行目、33行目と36行目はプルダウンメニューの初期値を本日に設定し
+	ている。
+  \end{itemize}
+ \end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{今日は何の日---jQuery版(4)}
+{\scriptsize
+ \begin{listingcont}
+    var changePulldown = function(){
+      var d2 = $("#day").val();
+      d = new Date(Year.val(), Month.val(), 0).getDate();
+      if( d != $("#day option").length) {
+        $("#day").replaceWith(Days[d]);
+        $("#day").val(Math.min($("#day option").length, d2));
+  }
+ \end{listingcont}
+ }
+ \end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{今日は何の日---jQuery版(4)解説}
+ \begin{itemize}
+  \item jQueryのメソッドを用いていることをのぞけは38行目から43行
+	目までは以前と同じである。
+  \item 40行目のセレクタは\texttt{id}が
+	\texttt{day}(\texttt{\#day})の下にある
+	\texttt{<option>}要素を選択し、その数を\texttt{length}で
+	調べている。
+\end{itemize}
+ \end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{今日は何の日---jQuery版(5)}
+ {\scriptsize
+ \begin{listingcont}
+      jQuery.ajax({
+        type:"GET",
+        url:      "./aniversary.php",
+        data:     "month=" + Month.val()+ "&day="+d2,
+        dataType: "text",
+        success : function(Data){
+          $("#details").text(Data);
+        },
+        error:function(){alert("error");}
+      });
+    };
+    Form.change(changePulldown);
+    changePulldown();
+});
+//]]>
+  </script>
+\end{listingcont}
+ }
+ \end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{今日は何の日---jQuery版(5)解説}
+\begin{itemize}
+ \item  44行目から53行目はAjaxの処理を定義
+ \item ブラウザによる違いに対する対処や、XMLHTTPRequestの処理部分が大幅に減っ
+	       ていて見やすいコードになっている
+\end{itemize}
+ \end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{今日は何の日---jQuery版(6)}
+ {\scriptsize
+ \begin{listingcont}
+</head>
+<body>
+  <form id="menu"></form>
+  <p id="details"> </p>
+</body>
+</html> 
+\end{listingcont}
+}
+\end{frame}
+\iffalse
+\section{jQueryのコードを読む}
+\begin{frame}[containsverbatim]
+ \frametitle{jQueryファイルの違い}
+\begin{itemize}
+ \item jQueryのソースファイルには\texttt{jQuery-<Version No>.js}と
+\texttt{jQuery-<Version No>.min.js}の2種類が存在
+ \item \texttt{jQuery-<Version No>.min.js}は\texttt{jQuery-<Version No>.js}から
+コメントや、空白を取り除き、変数名を短いものに置き換えるという操作を行っ
+て、ファイルサイズを小さくしたもの
+\end{itemize}
+
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{jQuery 1.12.2.jsのソース}
+ \begin{itemize}
+  \item このリストでは詳細なコメントが付いていて比較的読みやすい。
+  \item コメントを見るとクロスブラウザ対策が行われていることも見て取れる。
+  \item ソースコードの最小化のテクニックとしてグローバルなオブジェクトを短い変数
+名で置き換える
+  \item 冒頭の定義された関数
+の引数に、関数を渡している。その関数の仮引数は\texttt{window}となってい
+る。これにより、開発時はわかりやすい変数名が使えるメリットがある。
+ \end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{短縮化のリスト}
+{\scriptsize
+\begin{verbatim}
+/*! jQuery v1.11.2 | (c) 2005, 2014 jQuery Foundation, Inc. | jquery.org/license */
+!function(a,b){"object"==typeof module&&"object"==typeof module.exports?
+module.exports=a.document?b(a,!0):
+function(a){if(!a.document)
+throw new Error("jQuery requires a window with a document");
+return b(a)}:b(a)
+}("undefined"!=typeof window?window:this,function(a,b){
+var c=[],d=c.slice,e=c.concat,f=c.push,g=c.indexOf,h={},
+i=h.toString,j=h.hasOwnProperty,k={},l="1.11.2",
+m=function(a,b){return new m.fn.init(a,b)},
+n=/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,
+o=/^-ms-/,
+p=/-([\da-z])/gi,
+q=function(a,b){return b.toUpperCase()};
+\end{verbatim}
+}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{短縮化の方法}
+\begin{itemize}
+ \item 各関数内で変数名は1文字から始めている。
+ \item 関数の仮引数も\texttt{a}から付け直している。
+ \item JavaScriptの固有の関数は当然のことながら変換されていない。
+ \item このライブラリーは一つの関数を定義して、その場で実行している。14
+       行目の\texttt{function()}の前に\texttt{(}がついている。
+ \item 短縮化されたコードではこの部分が\texttt{!function()}となっている。
+       関数オブジェクトを演算の対象とすることで実行する。
+ \item そのほかにもキーワード\texttt{true}の代わりに\texttt{!0}としてい
+       る。
+ \item \texttt{if()\{\}else\{\}}構文は\texttt{?}に置き換えている。
+\end{itemize}
+\end{frame}
+\fi
+\end{document}
+\begin{frame}[containsverbatim]
+\frametitle{}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{}
+\end{frame}
+%-*- coding: utf-8 -*-
+
+イベントに関してはこのほかにも便利な事項が多くある。
+する。
+
+このオブジェクトリテラルの属
+性名として代表的なものを表\ref{jQueryAjax}に挙げる。
+ \begin{Exec}\upshape
+  次の例は実行例\ref{WhatDay}をjQueryを用いて書き直したもので
+ ある。
+ \listinginput{1}{DEV/09-01whatday-jquery.html}
+ \item 37行目から54行目はプルダウンメニュが変化したときに呼び出される関
+	数を定義している。
+	 \item 
+ \end{itemize}
+ \end{itemize}
+ \end{Exec}
+\input 10-02jQuerySource.tex

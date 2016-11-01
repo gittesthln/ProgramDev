@@ -1,0 +1,947 @@
+%-*- coding: utf-8 -*-
+\documentclass[a4j]{jarticle}
+\usepackage{fancyvrb,array}
+\title{ソフトウェア開発}
+\author{平野 照比古}
+\date{}
+
+\newcommand{\LIST}[3]{\LISTN{#1}{#2}{#3}{\footnotesize}}
+\newcommand{\LISTN}[4]{%
+\renewcommand{\theFancyVerbLine}{#4\arabic{FancyVerbLine}}
+\VerbatimInput[numbers=left,fontsize=#4,
+numbersep=1pt,firstline=#2,lastline=#3]{#1} 
+}
+
+\newtheorem{Prob}{課題}[section]
+\newtheorem{Exec}{実行例}[section]
+\begin{document}
+\maketitle
+\section{ガイダンス(第1回)}
+\subsection{受講に関する注意}
+この授業に関する注意は次の通りである。
+\begin{itemize}
+ \item JavaScript を通常の計算機言語として利用するための解説を行う。
+ \item 進度が今までのプログラミングの授業より早いので復習をよくすること。
+ \item 演習は原則行わないので、出された課題は自宅で行うこと。また、レポート
+       の提出を必ずすること。
+ \item パソコンを授業に持参する必要がある場合はその旨、前回の授業で指示
+       する。
+ \item 11年度以前の学生に対しては「アルゴリズムとデータ構造」の読み替え
+       科目となっている。
+ \item 教科書に沿って、サンプルをそのまま解説するわけではない。
+  \item 復習用の課題を必ず行うこと。次回の授業の開始時に確認の小テストを
+       行うことがある。
+\item 最終的な成績は試験にする。
+% \item jQuery のコードの解説は別のAPIの解説に変えるかもしれない。たとえ
+%       ば、Goole Maps API を考えている。
+\end{itemize}
+\subsection{参考図書}
+\begin{thebibliography}{9}
+ \bibitem{GoodParts}D. Crockford, JavaScript: The Good Parts 「良いパー
+	 ツ」によるベストプラ クティス, オライリージャパン
+ \bibitem{JS6}David Flanagan, JavaScript 第6 版, オライリージャパン
+ \bibitem{JSR6}David Flanagan, JavaScript クイックリファレンス第6 版, オ
+	 ライリージャパン
+ \bibitem{HPJS}Nicholas C. Zakas, ハイパフォーマンスJavaScript, オライリー
+	 ジャパン
+ \bibitem{MenJS}Nicholas C. Zakas, メンテナブルJavaScript 　読みやすく保守しやすいJavaScript 
+コードの作法, オライリージャパン
+\end{thebibliography}
+\subsection{シラバス}
+
+\begin{center}
+\begin{tabular}{|c|m{25zw}|}\hline
+ 授業回数&\multicolumn{1}{c|}{内容}\\\hline
+ 第1回&授業のガイダンスとブラウザの開発者モードについて \newline
+     JavaScriptの実行環境の確認\\\hline
+ 第2回&JavaScript が取り扱うデータ\newline
+     データの型と演算子に関する注意など\\\hline
+ 第3回& 関数 \newline
+     関数の定義方法と変数のスコープ\\\hline
+ 第4回&オブジェクト\newline
+     オブジェクトの定義方法\\\hline
+ 第5回&オブジェクト属性と継承\newline
+     プロトタイプによる継承など\\\hline
+ 第6回&正規表現と文字列の処理  \\\hline
+ 第7回&正規表現の利用例 \\\hline
+ 第8回&DOMの利用\newline
+     HTML文書の例、CSSと DOM の基礎\\\hline
+ 第9回&イベント処理 \newline
+     イベントモデルとイベント処理の例\\\hline
+ 第10回&PHP超入門\newline
+       PHPに関する簡単なプログラムの例\\\hline
+ 第11回&サーバーとのデータの交換(1)\newline
+     PHP入門の続きとサーバーとのデータ交換の基礎\\\hline
+ 第12回&サーバーとのデータの交換(2)\newline
+     サーバーとのデータの交換とAjaxの基礎\\\hline
+ 第13回&jQuery \newline
+     DOMの処理を簡単にするライブラリーの紹介\\   \hline
+ 第14回&jQueryのコード\newline
+     jQueryのコードの短縮化についての解説 \hline
+ 第15回&最終試験と解説\\ \hline
+\end{tabular}
+\end{center}
+\newpage
+\subsection{第1回目復習課題}
+\begin{Prob}\upshape
+ 各自が使用しているブラウザにおいてJavaScriptが直接実行できるコンソール
+ が開けることを確認しなさい。また、\texttt{1+2}と入力すると、計算結果が
+ 表示されることを確認すること。
+\end{Prob}
+\begin{Prob}\label{FisatJS}
+ 次のコードをテキストエディタで入力して、コンソールに何が出力されるか確
+ 認しなさい。また、コンソールに\texttt{i}と入力したときの結果を確認しな
+ さい。
+\LIST{a.html}{1}{last}
+\end{Prob}
+コードの簡単な説明
+\begin{itemize}
+ \item 1行目 HTML5におけるHTML文書の宣言
+ \item 4行目 このファイルのエンコーデイングの指定。UTF-8 を指定している。
+ \item 6行目 スクリプトの開始の要素。プログラミング言語がECMAScriptであ
+       ることを宣言している。
+ \item 7行目 \texttt{//}は行末までの部分をコメントにするJavaScriptの記法。
+残りの部分はこれ以降12行目までは通常の文字として解釈することを指定して
+       いる(\texttt{CDATA}セクションの開始)。
+
+       HTML文書内に直接記述されたJavaScriptプログラムではこの部分が必要
+       になる場合がある(最近のブラウザではこれがなくても動くようである)。
+       7行目と13行目を消去して確認すること。エラーが起きた場合にはその理
+       由も考えること。
+ \item 変数 \texttt{i}の宣言
+ \item 9行目 C言語などでおなじみの繰り返しの指定
+ \item 10行目 引数内の式をコンソールに出力する。
+ \item メッセージボックスを開く。
+\end{itemize}
+\newpage
+\section{第2回 -- JavaScriptが取り扱うデータ}
+\subsection{変数}
+JavaScriptの変数の特徴は次の通りである。
+\begin{itemize}
+ \item 変数名はアルファベットまたは\verb+_+(アンダースコア)で始まる英数
+       字または\verb+_+で始まる文字列
+ \item 大文字と小文字は区別される。
+ \item 変数の宣言は \texttt{var} で行う。
+ \item 宣言時に初期化ができる。
+ \item 変数は宣言をしなくても使用できる。初期化していない変数を使うとエ
+       ラーが起こる。詳しくは後述する。
+ \item 変数に保存するデータの型には制限がない。途中で変更することもでき
+       る。
+\end{itemize}
+\subsection{データーの型}
+\subsubsection{プリミティブデータ型}
+JavaScript の方には大きく分けてプリミティブ型と非プリミティブがたの2種類
+がある。
+\begin{center}
+\begin{tabular}{|c|m{30zw}|}\hline
+ 型&\multicolumn{1}{c|}{説明} \\\hline
+ Number & 浮動小数点数だけ\\ \hline
+ String & 文字列型、1文字だけのデータ型はない。ダブルクオート(\verb+"+)
+     か%"
+     シングルクオート(\verb+'+)で囲む。\\ \hline
+ Boolean& \verb+true+ か \verb+false+ の値のみ\\ \hline
+ \verb+undefined+ & 変数の値が定義されていないことを示す\\ \hline
+ \verb+null+& \verb+null+という値しか取ることができない特別なオブジェク
+     ト\\ \hline
+\end{tabular}
+\end{center}
+変数や値の型を知りたいときは\verb+typeof+ 演算子を使う。
+\paragraph{Number型}
+JavaScriptで扱う数は64ビット浮動小数点形式である。数を表現する方法(数値
+リテラル)としては次のものがある。
+\begin{itemize}
+ \item{\bfseries 整数リテラル} 10進整数は通常通りの形式である。16進数を表す場合は
+	      先頭に\verb+0x+ か \verb+0X+ をつける。\verb+0+で始まりそ
+	      のあとに\verb+x+または\verb+X+が来ない場合には8進数と解釈
+	      される場合があるので注意が必要である。
+ \item{\bfseries 浮動小数点リテラル} 整数部、そのあとに必要ならば小数点、小数部そ
+       のあとに指数部がある形式である。
+\end{itemize}
+{\bfseries 特別なNumber} Number型には次のような特別な Number が定義され
+ている。
+\begin{itemize}
+ \item {\bfseries \verb+Infinity+}無限大を表す読み出し可能な変数である。
+       オーバーフローした場合や \verb+1/0+などの結果としてこの値が設定さ
+       れる。
+ \item {\bfseries \verb+NaN+} Not a Number の略である。計算ができなかった場合
+       表す読み出し可能な変数である。
+       文字列を数値に変換できない場合や \verb+0/0+ などの結果としてこの値が設定さ
+       れる。
+\end{itemize}
+\paragraph{String型}
+文字列に関する情報や操作には次のようなものがあります（教科書319ページ以
+降参照) 。
+\begin{center}
+ \begin{tabular}{|c|m{28zw}|}\hline
+ メンバー&\multicolumn{1}{c|}{説明} \\\hline
+  \verb+length+ &文字列の長さ\\ \hline
+\verb+indexOf(needle,start)+& \verb+needle+が与えられた文字列内にあ
+      ればその位置を返す。\verb+start+の引数がある場合には、指定された位
+      置以降から調べる。見つからない場合は$-1$を返す。\\\hline
+  \verb+split(separator,limit)+&\verb+separator+で与えられた文字列で与え
+      られた文字列を分けて配列で返す。セパレーターの部分は返されない。
+      2番目の引数はオプションで分割する最大数を返す。\\ \hline
+  \verb+substring(start,end)+&与えられた文字列の\verb+start+から
+      \verb+end+の位置までの部分文字列を返す。\\ \hline
+\end{tabular}
+\end{center}
+\paragraph{Bool型}
+\verb+true+ と \verb+false+ の2つの値をとる。この2つは予約語である。論理
+式の結果としてこれらの値が設定されたり、論理値が必要なところでこれらの値
+に設定される。詳しくは後述する。
+\paragraph{\protect\texttt{undefined}}
+値が存在しないことを示す読み出し可能な変数である。変数が宣言されたのに値
+が設定されていない場合などはこの値に初期化される。
+\paragraph{\protect\texttt{null}}
+\verb+typeof null+ の値が \verb+"object"+であることを示すように、オブジェ
+クトが存在しないことを示す特別なオブジェクト値（であると同時にオブジェク
+トでもある）である。
+\subsubsection{配列}
+\paragraph{配列の宣言と初期化}
+配列を使うためには、変数を配列で初期化する必要がある。変数の宣言と同時に
+行ってもよい。
+\begin{Verbatim}
+var a = [];
+var b = [1,2,3];
+\end{Verbatim}
+\verb+a+ は空の配列で初期化されている。\verb+b+ は　
+\verb+b[0]=1,b[1]=2,b[2]=3+ となる配列で初期化されている。
+次のことに注意する必要がある。
+\begin{itemize}
+ \item 配列の各要素のデータの型は同じでなくてもよい。
+ \item 実行時に配列の大きさを自由に変えられる。
+ \item 配列の要素に配列を置くことができる。
+\begin{Verbatim}
+var a=[1,[2,3,4],"a"];
+\end{Verbatim}
+\end{itemize}
+\paragraph{配列のメソッド}
+\begin{center}
+ \begin{tabular}{|c|m{28zw}|}\hline
+ メンバー&\multicolumn{1}{c|}{説明} \\\hline
+  \verb+length+ &配列の要素の数\\ \hline
+  \verb+join(separator)+& 配列を文字列に変換する。\verb+separator+はオプ
+      ションの引数で、省略された場合はカンマ\verb+,+である。\\ \hline
+  \verb+pop()+& 配列の最後の要素を削除し、その値を返す。配列をスタックと
+      して利用できる。\\ \hline
+  \verb+push(i1,i2,...)+& 引数で渡された要素を配列の最後に付け加える。配
+      列をスタックやキューとして利用できる。\\ \hline
+  \verb+shift()+&配列の最初の要素を削除し、その値を返す。配列をキューと
+      して利用できる。\\ \hline
+  \verb+slice(start,end)+&\verb+start+から\verb+end+の前の位置にある要素を取
+      り出した配列を返す。元の配列は変化しない。\\ \hline
+  \verb+splice(start,No,i1,i2,...)+&\verb+start+の位置から\verb+No+の要素を取
+      り除き、その位置に\verb+i1,i1,...+以下の要素を付け加える。\\ \hline
+\end{tabular}
+\end{center}
+\begin{Verbatim}
+[1,2,[],3].length
+var a=[1,2,3]; a.pop(); a.length;
+var a=[1,2,3]; a.push(4,5); a.length;
+var a=[1,2,3]; a.shift(4,5); a.length;
+var a=[1,2,3]; a.join(" ");
+var a=[1,2,3,4,5]; a.slice(1,2); a.length;
+var a=[1,2,3,4,5]; a.splice(1,2); a.length;
+\end{Verbatim}
+\subsection{演算子}
+\subsubsection{代入、四則演算}
+数に対してはC言語と同様の演算子が使用できる。ただし、次のことに注意する
+こと。
+\begin{itemize}
+ \item \verb-+-演算子は文字列の連接にも使用できる。\verb-+-演算子は左右のオペ
+ランドがNumberのときだけ、数の和をとる。どちらかが数でもう一方が文字列の
+場合は数を文字列に直して、文字列の連接を行う。
+\begin{Verbatim}
+1+2  => 3
+1+"2" => 12
+\end{Verbatim}
+ \item そのほかの演算子(\verb+-*/+)については文字列を数に変換してから数
+       として計算する。
+ \item 文字列全体が数にならない場合には変換の結果が\verb+NaN+になる。
+\begin{Verbatim}
+ "2" + 3  => "23"
+ "2"-0 +3 => 5
+ "2"*3    => 6
+ "2"*"3"  => 6
+ "f" *2   => NaN
+ "0xf"*2 => 30
+\end{Verbatim}
+ \item 整数を整数で割った場合、割り切れなければ小数となる。
+\begin{Verbatim}
+1/3 => 0.3333333333333333
+\end{Verbatim}
+\end{itemize}
+\subsubsection{論理演算子と比較演算子}
+\paragraph{論理演算子}
+Boolean 型に対して使用できる演算子は次の3つである。
+\begin{itemize}
+ \item \verb+!+ 論理否定
+ \item \verb+&&+ 論理積
+ \item \verb+||+ 論理和
+\end{itemize}
+論理演算子をBoolean 型でない値を与えると元の値がBoolean型に変換されてか
+ら実行される。次の値は \verb+false+ に変換される。
+\begin{itemize}
+ \item 空文字列 \verb+""+
+ \item \verb+null+
+ \item \verb+undefined+
+ \item 数字の $0$
+ \item 数値の \verb+NaN+
+ \item Boolean の\verb+false+
+\end{itemize}
+論理和や論理積では左のオペランドの結果により、式の値が決まる場合は右のオ
+ペランドの評価は行われない。たとえば、論理和の場合、左の値が
+\verb+true+であれば右のオペランドの評価が行われない。
+\begin{Verbatim}
+var a=1; true ||(a=3); 
+\end{Verbatim}
+では変数 \verb+a+ の値は $1$ のままである。
+\paragraph{比較演算子}
+比較演算子は比較の結果、Boolean の値を返す演算である。C言語と同様の比較
+演算子のほかに 型変換を伴わない等価比較 \verb+===+ と型変換を伴わない非等
+価比較 \verb+!==+ がある。
+\begin{Verbatim}
+0 == "0" => true
+0 === "0" => false
+\end{Verbatim}
+また、\verb+NaN == NaN+ の結果は \verb+false+ である。値が \verb+NaN+ で
+あるかどうかを調べる関数がある。
+\subsection{組み込みオブジェクト}
+\paragraph{組み込み関数}
+JavaScript に初めから組み込まれている関数としては次のものがある。
+\begin{itemize}
+ \item \verb+parseInt(string,radix)+ \verb+string+(文字列)と
+       \verb+radix+(基数、省略したときは$10$)をとり、先頭から見て正しい
+       整数表現のところまで整数に変換する。
+ \item \verb+parseFloat(string)+ \verb+string+(文字列)
+       をとり、先頭から見て正しい
+       浮動小数点表現のところまで浮動小数に変換する。
+ \item \verb+isNaN(N)+ \verb+N+ が数であれば \verb+true+、そうでなければ
+       \verb+false+ を返す関数
+ \item \verb+isFinite(N)+ \verb+N+ が数値または数値に変換できる値でかつ
+       \verb+Infinity+ または \verb+-Infinity+ でないときに \verb+true+、
+       そうでないとき、\verb+false+ を返す。
+\end{itemize}
+このほかにも関数があるが、省略する。教科書の310ページを参照のこと。
+\paragraph{\protect\texttt{Math}オブジェクト}
+数学的な定数の定義(円周率など)や三角関数などの関数が定義されている。教科
+書324ページ以降を参照のこと。
+\paragraph{\protect\texttt{Date}オブジェクト}
+日付や時間に関するデータを扱うオブジェクトである。教科書321ページ以降を
+参照のこと。基本的にはミリ秒単位の値が返ってくるので、実行時間の測定など
+にも使える。
+\newpage
+\subsection{第2回目復習課題}
+\newcommand{\Rule}{\iffalse\rule[-2ex]{0em}{5ex}\fi}
+次の式の評価結果を求めなさい。
+\begin{center}
+ \begin{tabular}{|>{\Rule}c|c|m{26zw}|}\hline
+  \multicolumn{1}{|c|}{式}&\multicolumn{1}{c|}{結果} &\multicolumn{1}{c|}{理由} \\\hline
+  \verb+5%3+& 2 & $5$を$3$で割った余り\\ \hline
+  \verb-4+"5"-& \verb+"45"+& 右のオペランドが文字列なので左の数は文字列
+	  に変換され、それらが連接される。\\ \hline
+  \verb+4-"5"+& $-1$& 演算子が\verb+-+なので右の文字列が数に変換される。\\ \hline
+  \verb-4+"ff"-&\verb+"4ff"+ & 前と同様\\ \hline
+  \verb-4+"0xff"-& \verb+"40xff"+& 前と同様\\ \hline
+  \verb-4+parseInt("ff")-& \verb+NaN+& 文字列内に数として正しく変換され
+	  るものがないので\verb+parseInt()+の戻り値が \verb-NaN-となり、
+	  これ以降の数の演算は\verb+NaN+となる。\\ \hline
+  \verb-4+parseInt("0xff")-& $259$& \verb+parseInt()+は正しく16進数とし
+	  て解釈するので$4+255=159$となる。\\ \hline
+  \verb-4+parseInt("ff",16)-& $155$& 基数を$16$と指定しているので、正しく$255$と解
+	  釈される。\\ \hline
+  \verb-4+"1e1"-& $5$ & "1e1" は数値リテラルとしては
+	  $1\times10^1=10$を表すが、\verb+parseInt()+は整数リテラル表記
+	  しか扱わないので、数の変換は\verb+e+の前で終わるので $1$の値が
+	  戻り値となる。 \\ \hline
+  \verb-4+parseFloat("1e1")-& $14$& \verb+parseInt()+と異なり、
+	  \verb+parseFloat()+の戻り値は $10$ となる。\\ \hline
+  \verb+"4"*"5"+& $20$& 文字列の間では\verb+*+の演算が定義されていないの
+	  で両方とも数に変換されて計算される。\\ \hline
+  \verb+"4"/"5"+& $0.8$& 上と同様\\ \hline
+  \verb+[].length+& $0$& 配列の要素がないので長さは$0$となる。\\ \hline
+  \verb+[[]].length+&$1$ & 長さを求める配列は空の配列一つを要素に持つ。\\ \hline
+  \verb+0 == "0"+& \verb+true+& 文字列\verb+"0"+が数$0$に変換されて比較
+	  される\\ \hline
+  \verb+0 == []+& \verb+true+& 空の配列が\verb+false+に変換されたのち、
+	  数 $0$ に変換される。\\ \hline
+  \verb+![]+& \verb+true+& 空の配列が\verb+false+に変換されたのち、否定
+	  演算子で\verb+true+になる。\\ \hline
+  \verb+false == []+& \verb+true+& 前と同様\\ \hline
+  \verb+"false" == []+& \verb+false+& 文字列\verb+"false"+は空文字ではな
+	  いので\verb+true+に変換される。\\ \hline
+  \verb+[] == []+& \verb+false+& 配列はオブジェクトであり、二つの空の配
+	  列は別物とみなされる。\\ \hline
+  \verb+typeof []+& "object"& 配列はオブジェクトである。\\ \hline
+  \verb+null == undefined+& \verb+true+ & 両方とも\verb+false+に変換され
+	  てから比較される。\\ \hline
+  \verb+a=[], b=a, a==b;+&\verb+true+&同じメモリーにあるオブジェクトを参
+	  照している。\\ \hline
+ \end{tabular}
+\end{center}
+\newpage
+\section{第3回 -- 関数}
+\subsection{今回の内容}
+JavaScript における関数はいろいろな目的のために利用される。
+今季あの授業では次のことについて説明する。
+\begin{itemize}
+ \item 関数の定義方法と使用法
+ \item 関数への引数の渡し方
+ \item 関数の戻り値
+ \item JavaScript内での変数のスコープ
+ \item 関数も単なるオブジェクト
+\end{itemize}
+さらに次の事柄についても説明する。
+\begin{itemize}
+ \item 無名関数
+ \item コールバック関数
+ \item 自己実行可能関数
+ \item 関数内で定義された関数
+ \item 関数を返す関数
+ \item クロージャ
+\end{itemize}
+\subsection{関数の定義方法と呼び出し}
+\subsubsection{簡単な関数の例}
+次の例は \verb+sum()+という関数を定義している例である。
+\begin{Verbatim}
+function sum(a,b) {
+  var c = a + b;
+  return c;
+}
+\end{Verbatim}
+関数の定義は次の部分から成り立っている。
+\begin{itemize}
+ \item \verb+function+キーワード\\
+戻り値の型を記す必要はない。
+ \item 関数の名前\\
+\verb+function+の後にある識別名が関数の名前になる。この場合は \verb+sum+
+       が関数の名前になる。
+ \item 引数のリスト\\
+関数名の後に\verb+()+内にカンマで区切られた引数を記述する。この場合は変数
+       \verb+a+と\verb+b+が与えられている。引数はなくてもよい。
+ \item 関数の本体であるコードブロック\\
+\verb+{}+で囲まれた部分に関数の内容を記述する。
+\item \verb+return+ キーワード\\
+関数の戻り値をこの後に記述する。戻り値がない場合には戻り値として
+       \verb+undefined+が返される。
+\end{itemize}
+\paragraph{実行例}
+次の部分はこの関数の実行例である。
+\begin{Verbatim}
+>sum(1,2)
+3
+>sum(1)
+NaN
+>sum(1,2,3)
+3
+\end{Verbatim} 
+\begin{itemize}
+ \item 引数に \verb+1+ と \verb+2+ を与えれば期待通りの結果が得られる。
+ \item 引数に \verb+1+ だけを与えた場合、エラーが起こらず、\verb+NaN+ と
+       なる。これは、不足している引数(この場合には \verb+b+)にば
+       \verb+undefined+ が渡されるためである。\verb+1+undefined+の結果は
+       \verb+NaN+ になる。
+ \item 引数を多く渡してもエラーが発生しない。無視されるだけである。
+\end{itemize}
+これらのことから JavaScript の関数はオブジェクト指向で使われるポリモーフィ
+ズムをサポートしていない。さらに、次の例で見るように同じ関数を定義しても
+エラーにならない。後の関数の定義が優先される。
+\begin{Verbatim}
+function sum(a, b){
+  var c = a+b;
+  return c;
+}
+function sum(a, b, c){
+  var d = a+b+c;
+  return d;
+}
+\end{Verbatim}
+\subsubsection{仮引数への代入}
+仮引数に値を代入してもエラーとはならない。仮引数の値がプリミティブなとき
+とそうでないときとでは呼び出し元における変数の値が異なる。
+\begin{Exec}\label{Params}
+ 次の例は呼び出した関数の中で仮引数の値を変化させたときの例である。
+\begin{listing}{1}
+function func1(a){
+  a = a*2;
+  return 0;
+}
+function func2(a){
+  a[0] *=2;
+  return 0;
+}
+\end{listing}
+\end{Exec}
+\begin{itemize}
+ \item \verb+func1()+では仮引数\verb+a+の値を2倍している。これを次のよう
+       に実行すると、呼び出し元の変数の値には変化がないことがわかる。つ
+       まり、プリミティブな値を仮引数で渡すと値そのものが渡される。
+\begin{Verbatim}
+>a = 4;
+4
+>func1(a);
+0
+>a;
+4
+\end{Verbatim}
+ \item \verb+func2()+の仮引数は配列が想定してある。この先頭の値だけ2倍さ
+       れる関数である。これに配列を渡すと、戻ってきたとき配列の先頭の値
+       が変化している。つまり、プライミティブ型以外では仮引数の渡し方が
+       参照渡しであることがわかる。
+\begin{Verbatim}
+>a = [1,2,3];
+[1, 2, 3]
+>func2(a);
+0
+>a;
+[2, 2, 3]
+\end{Verbatim}
+\end{itemize}
+
+\subsubsection{\protect\texttt{aruguments}について}
+JavaScriptでは引数リストで引数の値などが渡されるほかに\texttt{arguments}
+という配列のようなオブジェクトでもアクセスできる。
+\begin{itemize}
+ \item 引き渡された変数の数は\verb+length+で知ることができる。
+\begin{Verbatim}
+function sumN(){
+  var i, s = 0;
+  for(i = 0; i <arguments.length;i++) {
+    s += arguments[i];
+  }
+  return s;
+}
+\end{Verbatim}
+実行例は次のとおりである。
+\begin{Verbatim}
+>sumN(1,2,3,4);
+10
+>sumN(1,2,3,4,5);
+15
+\end{Verbatim}
+ \item 引数があっても無視できる
+\begin{Verbatim}
+function sumN2(a,b,c){
+  var i, s = 0;
+  for(i = 0; i <arguments.length;i++) {
+    s += arguments[i];
+  }
+  return s;
+}
+\end{Verbatim}
+この例では引数が3個より少なくても正しく動く。実行例は次のとおりである。
+\begin{Verbatim}
+>sumN2(1,2,3,4,5);
+15
+
+\end{Verbatim}
+ \item 仮引数と\verb+arguments+は対応していて、片方を変更しても他の方も
+       変更される。
+\end{itemize}
+実行例は次のとおりである。
+\begin{Verbatim}
+function sum2(a, b){
+  var c;
+  a *= 3;
+  console.log(arguments[0]);
+  return a + b;
+}
+\end{Verbatim}
+\begin{Verbatim}
+>sum2(1,2,3,4,5);
+3 
+5
+\end{Verbatim}
+\subsubsection{変数のスコープ}
+変数のスコープとはある場所で使われている変数がどこから参照できるかという
+概念である。JavaScriptでは次の特徴がある。
+\begin{enumerate}
+ \item 変数は宣言しなくても使用できる。\label{3-4NoDeclare}
+ \item 関数内で \verb+var+ により明示的に定義された変数はその関数内で有
+       効となる。\label{3-4DeclareInFunc}
+ \item 関数の途中で宣言しても、関数の先頭で宣言したと同じ効果を持つ。
+       \label{3-4DeclareInFunc2}
+ \item 関数の外で宣言された変数や宣言されないで使用された変数はすべてグ
+       ローバルとなる。\label{3-4Declare2}
+\end{enumerate}
+\begin{Exec}\label{ExecScope}
+変数のスコープを次の例で確かめる。
+\begin{listing}{1}
+var S = "global";
+function func1(){
+  console.log(S);
+  return 0;
+}
+function func2(){
+  console.log(S);
+  var S = "local";
+  console.log(S);
+  return 0;
+}
+function func3(){
+  var S = "local";
+  func1();
+  return 0;
+}
+function func4(){
+  var S = "local in func4";
+  func5 = function() {
+    console.log(S);
+    return 0;
+  };
+  console.log(S);
+  return 0;
+}
+\end{listing}
+\end{Exec}
+このリストは次のようになっている。
+\begin{itemize}
+ \item \verb+func1()+から\verb+func4()+までの関数が定義されている。
+ \item 1行目ではグローバル変数 \verb+S+ が宣言されていて\verb+"global"+
+       という文字列の値に初期化されている。
+ \item 2行目から5行目で\verb+func1()+が定義されている。
+\begin{itemize}
+ \item 3行目で\verb+S+の値をコンソールに出力している。
+ \item この関数内で変数\verb+S+
+       は宣言されていないので2行目で定義したグローバル変数が参照される。
+\end{itemize}この関数内で変数
+       
+\begin{Verbatim}
+>func1();
+global
+0
+\end{Verbatim}
+ \item 6行目から11行目で\verb+func2()+が定義されている。
+\begin{itemize}
+ \item 7行目と9行目で\verb+S+の値をコンソールに2回出力している。
+ \item この関数内で変数\verb+S+ は8行目で
+       ローカル変数として宣言されている。
+ \item したがって、7行目の変数\verb+S+はローカル変数となる
+       (\ref{3-4DeclareInFunc2}参照)。
+ \item この段階ではローカル変数 \verb+S+には値が代入されていないのでその
+       値は\verb+undefined+となる。
+ \item 9行目の出力は8行目で定義された値となる。
+\begin{Verbatim}
+>func2();
+undefined
+local    
+0
+\end{Verbatim}
+\end{itemize}
+ \item 12行目から16行目で\verb+func3()+が定義されている。
+\begin{itemize}
+ \item 13行目でローカル変数\verb+S+を定義して、初期値を
+       \verb+"local"+としている。
+ \item 14行目で初めに定義した関数\verb+func1()+を呼び出している。
+ \item \verb+func1()+の実行の際は、もともとこの関数が定義された時の変数
+       \verb+S+(1行目)が参照される。
+\end{itemize}
+\begin{Verbatim}
+>func3();
+global
+0
+\end{Verbatim}
+ \item 17行目から25行目で\verb+func4()+が定義されている。
+\begin{itemize}
+ \item 18行目でローカル変数\verb+S+の値を設定している。
+ \item 23行目の出力は18行目での値となる。
+\begin{Verbatim}
+>func4();
+local in func4
+0
+\end{Verbatim}
+ \item 19行目では関数オブジェクトを変数\verb+func5+に代入している。これ
+       により\verb+func5()+という関数が定義される。
+ \item \verb+var+宣言がないので変数\verb+func5+はグローバル変数となる
+       (\ref{3-4Declare2}参照)。
+ \item \verb+func5()+内では変数\verb+S+の内容を出力が定義されている。
+ \item \verb+func4()+を実行した後では\verb+func5()+が実行できる。
+ \item 関数\verb+func5()+が定義された段階での変数\verb+S+はこの関数が
+       \verb+func4()+の中で定義されているので、18行目の変数\verb+S+が参
+       照される。この状況についてはクロージャの項でより詳しく説明する。
+\begin{Verbatim}
+func5();
+local in func4
+0
+\end{Verbatim}
+\end{itemize}
+\end{itemize}
+\begin{Prob}
+ 実行例\ref{ExecScope}のプログラムにおいて、次のように書き直したら套なる
+ か答えなさい。なお、示している修正は問題ごとに元のファイルに対して行う
+ ものとする。
+\begin{enumerate}
+ \item 8行目のキーワード\verb+var+ を省略したのち,\verb+func2()+を実行し、
+       そのあとで変数\verb+S+の値を出力する。
+ \item 13行目のキーワード\verb+var+ を省略したのち,\verb+func3()+を実行
+       する。
+ \item 19行目の先頭にキーワード\verb+var+ を付け、\verb+func4()+を実行し
+       たのち、\verb+func5()+を実行する。
+\end{enumerate}
+\end{Prob}
+\subsection{JavaScriptにおける関数の特徴}
+JavaScript関数ではほかの言語では見られない関数の取り扱い方法がある。
+\subsubsection{関数もデータ}
+関数もデータ型のひとつなので、関数の定義を変数に代入することができる。課
+題\ref{ExecScope}の19行目以降で関数オブジェクトを変数に代入している。
+代入はいつでもできるので、実行時に関数の定義を変えることも可能である。
+\subsubsection{無名関数とコールバック関数}
+課題\ref{ExecScope}の19行目以降の関数オブジェクトは関数の引数として直接
+渡すこともできる。このとき、\verb+function+の後には関数名がない。このよ
+うな関数は無名関数と呼ばれる。HTML文書などでは、いろいろなイベント(マウ
+スがクリックされた、一定の時間が経過した)が発生したときに、その処理を行
+う関数を登録する必要がある。このように関数に引数として渡される関数のこと
+をコールバック関数という。
+\begin{Exec}
+ 次の例は、一定の経過時間後にある関数を呼び出す\verb+window+オブジェクト
+ の\verb+setTimeout()+メソッドの使用例である。
+\begin{listing}{1}
+var T = new Date();
+window.setTimeout(
+  function(){
+    var NT = new Date();
+    if(NT-T<10000) {
+      console.log(Math.floor((NT-T)/1000));
+      window.setTimeout(arguments.callee,1000);
+    }
+   },1000);
+\end{listing}
+\begin{itemize}
+ \item １行目では実行開始時の時間を変数\verb+T+に格納している。単位はミ
+       リ秒である。
+ \item このメソッドは一定時間経過後に呼び出される関数と、実行される経過
+       時間(単位はミリ秒)を引数に取る。
+ \item 実行する関数は3行目から9行目で定義されている。
+ \item この関数内で一定の条件のときはこの関数を呼び出すために、この関数
+       に名前はない(3行目)。
+ \item 4行目で呼び出されたときの時間を求め、経過時間が$10000$ミリ秒以下
+       であれば(5行目)、経過時間を秒単位で表示する(6行目)。
+ \item さらに、自分自身を1秒後に呼び出す(7行目)。\verb+arguments+をもつ
+       関数を\verb+arguments.callee+で呼び出すことができる。つまり自分
+       自身を呼び出せることとなる。
+\end{itemize}
+\end{Exec}
+\begin{Prob}
+次のプログラムは何を計算するか答えよ。
+\begin{Verbatim}
+var f = function(n) {
+  if( n<=1) return 1;
+  return n*arguments.callee(n-1);
+}
+\end{Verbatim}
+\end{Prob}
+\subsubsection{自己実行関数}
+関数を定義してその場で直ちに実行することができる。たとえば次のコードを
+考える。これは課題\ref{FisatJS}の関数の中身である。
+\begin{Verbatim}
+  var i;
+  for(i=1;i<10;i++) {
+    console.log(i+" "+i*i);
+  }
+\end{Verbatim}
+このプログラムを実行すると$1$から$9$までの値とそれの2乗の値がコンソール
+に出力される。実行後に、コンソールに\verb+i+と入力すれば\verb+10+が出
+力される。
+
+一方、課題\ref{FisatJS}では関数が定義されただけで何も出力されないので、
+\verb+foo()+と入力して関数を実行する必要がある。この場合、変数
+\verb+i+は関数内のローカル変数なので関数実行後、変数\verb+i+の値は参照で
+きない(\verb+undefined+が出力される)。
+
+どちらの場合もグローバル変数が残ってしまっている。これを避けるためには定
+義した関数をその場で実行できる機能があればよい。これを実行するためには次
+のように記述する。
+\begin{Verbatim}
+(function(){
+  var i;
+  for(i=1;i<10;i++) {
+    console.log(i+" "+i*i);
+  })();
+\end{Verbatim}
+この様に関数の定義を全体で\verb+()+で囲み、そのあとに関数の呼び出しを示
+すための\verb+()+を付ける。
+
+この技法は、初期化の段階で1回しか実行しない事柄を記述し、かつグローバル
+な空間を汚さない(余計な変数などを残さない)手段として用いられる。
+\subsubsection{関数を返す関数}
+関数もデータなので、ある関数の戻り値として関数自体を返すことも可能である。
+この使用法の例としてはある処理がブラウザごとに異なる作業を必要とするとき
+に、それに適応した判定を1回だけしてあとは戻した関数を実行するだけにする
+ことができる。他の利用法については後で例をあげる。
+\subsection{クロージャ}
+JavaScriptをオブジェクト指向言語として使用するための基本的な概念である。
+ここで上げる例は実用に乏しいと思われるかもしれないが、この後に出てくる
+オブジェクトの項ではより実用的なものと理解できるであろう。
+\subsubsection{スコープチェイン}
+変数のスコープについてはすでに説明した。関数の中で関数を定義すると、その
+内側の関数内で\verb+var+で宣言された変数のほかに、一つ上の関数で利用でき
+る(スコープにある)変数が利用できる。これがスコープチェインである。
+例を挙げる。
+\begin{Verbatim}
+var G1, G2;
+function func1(a) {
+  var b, c;
+  function func2() [
+    var G2, c;
+   ...
+  }
+}
+\end{Verbatim}
+\begin{itemize}
+ \item 関数\verb+func1()+ではグローバル変数である\verb+G1+と\verb+G2+、
+       仮引数の \verb+a+ とローカル変数\verb+b+と\verb+c+が利用できる。
+ \item 関数\verb+func2()+ではグローバル変数である\verb+G1+、
+       \verb+func1()+の仮引数の \verb+a+ と\verb+func1()+のローカル変数
+       \verb+b+、\verb+func2()+のローカル変数\verb+G2+と\verb+c+が利用で
+       きる。
+\end{itemize}
+このように内側で定義された関数は自分自身の中で定義されたローカル変数があ
+るかを探し、見つからない場合には一つ上のレベルでの変数を探す。これがスコー
+プチェインである。JavaScriptの関数のスコープは関数が定義されたときのスコー
+プチェインが適用される。これをレキシカルスコープと呼ぶ。レキシカルスコー
+プは静的スコープとも呼ばれる。これに対して実行時にスコープが決まるものは
+動的スコープと呼ばれる。
+\subsubsection{クロージャ}
+このように関数内部で宣言された変数は、その外側から参照することができない。
+つまり、その関数は関数内のローカル変数を閉じ込めている。しかし、関数内部
+で定義された関数を外部に持ち出す(グローバルな関数にする)と、持ち出された
+関数のスコープチェイン内に定義された親の関数のスコープを引き継いでいるこ
+とから、親の関数のローカル変数の参照が可能となる。
+
+このような関数に対して
+依存する環境(変数や呼び出せる関数などのリスト)を合わせたものをその関数の
+クロージャと呼ぶ。
+
+教科書からいくつかの例を引用しよう。
+\begin{Exec}
+ 教科書のクロージャ\#1の例(101ページ)である。
+\begin{Verbatim}
+function f1() {
+  var b = "b";
+  return function() {
+    return b;
+  };
+}
+\end{Verbatim}
+次が実行サンプルである。
+\begin{Verbatim}
+>b;
+ReferenceError: b is not defined
+>var n = f1();
+undefined
+>n();
+"b"
+\end{Verbatim}
+\begin{itemize}
+ \item 変数\verb+b+はグローバルでは定義されていない。
+ \item 関数\verb+f1()+を実行して、戻り値の関数を実行すると、\verb+f1()+
+       内のローカル変数が参照できている。
+\end{itemize}
+\end{Exec}
+\begin{Exec}
+ 教科書のクロージャ\#2(102ページ)の例である。
+\begin{Verbatim}
+var n1;
+function f2() {
+  var b = "b";
+  n1 = function() {
+    return b;
+  };
+}
+\end{Verbatim}
+前のサンプルとは異なり、関数内部でグローバルな関数を定義している。
+次が実行サンプルである。
+\begin{Verbatim}
+>n1();
+TypeError: undefined is not a function
+>f2();
+undefined
+>n1();
+"b"
+\end{Verbatim}
+関数\verb+f2()+を実行した後では、関数\verb+n1()+が定義され、前の例と同様
+ に、ローカル変数が参照できている。
+\end{Exec}
+\begin{Exec}
+ 教科書のクロージャ\#3(103ページ)の例である。関数を定義したのちに、仮引
+ 数の値を\verb+1+増加している。
+\begin{Verbatim}
+function f3(arg) {
+  var n = function() {
+    return arg;
+  }
+  arg++;
+  return n;
+}
+\end{Verbatim}
+\begin{Verbatim}
+>var m = f3(123);
+undefined
+>m();
+124
+\end{Verbatim}
+定義時の\verb+arg+の値ではなく、参照時の\verb+arg+の値が参照されている。
+\end{Exec}
+このことが連続して関数を作成したときにバグを引き起こすことがある。
+\begin{Exec}
+ 教科書のループの中のクロージャ(103ページ)の例である。
+配列の添え字を戻り値にする関数を3つ定義しているが、思ったようには動かな
+ い。
+\begin{Verbatim}
+function f4() {
+  var a = [];
+  var i;
+  for(i=0; i<3; i++) {
+    a[i] = function() {
+      return i;
+    };
+  }
+  return a;
+}
+\end{Verbatim}
+\begin{Verbatim}
+>var a = f4();
+undefined
+>a[0]();
+3
+>a[1]();
+3
+>a[2]();
+3
+\end{Verbatim}
+すべて同じ値が変える関数になってしまっている。
+これを避けるためにはもう一つ変数が必要になる。
+\begin{Verbatim}
+function f5() {
+  var a = [];
+  var i;
+  for(i=0; i<3; i++) {
+    a[i] = (function(x){
+      return function() {
+        return x;
+      }
+    })(i);
+  };
+  return a;
+}
+\end{Verbatim}
+\begin{itemize}
+ \item 引数を取る無名関数を用意し、その場で与えられた引数を返す無名関数
+       を返す関数を実行している。
+ \item 仮引数には、実行されたときの\verb+i+のコピーが渡されるので、その
+       後変数の値が変わっても呼び出された時の値が保持される。
+\end{itemize}
+\begin{Verbatim}
+>var a = f5();
+undefined
+>a[0]();
+0
+>a[1]();
+1
+>a[2]();
+2
+\end{Verbatim}
+\end{Exec}
+最後の例題は同じオブジェクトを連続的に作成したとき、通し番号を付けたい場
+合に応用できる。
+\end{document}

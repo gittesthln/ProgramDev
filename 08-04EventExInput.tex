@@ -1,0 +1,131 @@
+%-*- coding: utf-8 -*-
+\begin{Exec}\label{EventInput}\upshape
+次の例は、\texttt{form}要素内でユーザの入力を取り扱う代表的な\texttt{input}要素の
+ 処理方法を示したものである。
+
+このページでは大きさが指定された\texttt{div}要素が3つ並び、その横にプル
+ ダウンメニュー、ラジオボタン、テキスト入力エリアと設定ボタンが並んでい
+ る。
+\LISTN{09-01event.html}{1}{last}{\normalsize}
+このリストではCSSファイル、JavaScriptファイルが外部ファイルとなっている
+ (5行目と6行目)。
+
+このページでは左にある3つの領域でマウスをクリックすると、クリックした位置の情報
+       が右側下方の8つのテキストボックスに表示される。
+\begin{itemize}
+ \item 上の6つはイベントオブジェクトのプロパティをそのまま表示している
+       (表\ref{PropertyDOM}参照)。
+ \item 最下部の値はそれぞれの領域から見た相対位置を表している。
+\end{itemize}
+ プルダウンメニュー、ラジオボタンで選択された色、テキストボックスでは
+ 最後にクリックされた領域の背景色を変えることができる。プルダウンメニュー
+ 、ラジオボタンでは値に変化があったときに設定が行われる。
+ テキストボックス
+ ではCSS3で定義された色の表示形式が使用できる。設定するためには隣の「設定」ボタンを押す
+       必要がある。
+
+次のリストは上のHTMLファイルから読み込まれるCSSファイルである。
+\LISTN{event.css}{1}{last}{\normalsize}
+このスタイルシートは各要素の大きさや配置について指定している。
+\begin{itemize}
+ \item 左側の3つの領域は
+       \texttt{id}が\texttt{block}である要素の直下の\texttt{div}要素であ
+       ることから5行目のセレクタが適用される。
+\begin{itemize}
+ \item これらの3つの部分は大きさが$200$pxの正方形となっている(6行目と7行
+       目)。
+ \item 横に並べるようにするため、\texttt{display}を\texttt{inline-block}
+       に指定している。
+ \item 背景色(\texttt{background})はプログラムから設定される。
+\end{itemize}
+ \item これらの領域全体を囲む\texttt{div}の垂直方向の配置の位置が3行目で
+       定められている。
+ \item 右上方のプルダウンメニューのフォントの大きさは20行目からのセレク
+       タで定義されているが、文書のロード時に30pxに変更している。
+ \item ラジオボタンの要素の幅は10行目からのセレクタで定められている。
+
+ \item クリックしたときの位置情報を示す部分のCSSは23行目以下で定められて
+       いる。
+ \begin{itemize}
+  \item テキストボックスがない行は23行目から26行目が適用されている。
+  \item テキストボックスがある行は、テキストボックスの位置をそろえるため
+	に、その前の文字列を\texttt{div}要素の中に入れ、幅(29行目)、テキ
+	ストの配置位置(30行目)とフォントの大きさ(31行目)を指定している。
+ \end{itemize}
+\end{itemize}
+\LISTN{event.js}{1}{8}{\normalsize}
+ここでは\texttt{id}属性を持つ要素すべてを得ている。また、8行目で、最後に
+ クリックされた正方形のオブジェクトを記憶する変数を初期化している。
+\LISTN{event.js}{9}{12}{\normalsize}
+\begin{itemize}
+ \item \texttt{id}が\texttt{Squares}である\texttt{div}要素の下には3つの
+ \texttt{div}要素がある。これらの要素の背景色を指定するために、
+ \texttt{children}プロパティを用いて参照している。。
+ \item スタイルを変更するためには\texttt{style}プロパティの後に属性を付
+       ける。
+ \item 9行目から11行目では左の3つの領域の背景色(\texttt{background})を設
+       定している。
+ \item フォントの大きさを指定するCSS属性は\texttt{font-size}であるが、こ
+       れは \texttt{-} を含んでいるのでそのままではJavaScriptの属性になら
+       ない。このような属性は\texttt{-}を省き、次
+       の単語を大文字で始めるという規約がある。したがって、この場合には
+       \texttt{fontSize}となる。
+\end{itemize}
+
+次のリストは正方形の領域がクリックされたときのイベントハンドラーを定義している部分で
+ ある。イベントハンドラーは3つの正方形を含んだ\texttt{div}要素につけてい
+ る。
+\LISTN{event.js}{13}{25}{\normalsize}
+\begin{itemize}
+ \item 表示するためのテキストボックスのリストは7行目で得ている。
+ \item 14行目から19行目でそれぞれのテキストボックスに該当する値を入れて
+       いる。
+ \item 21行目と22行目では該当する領域からの相対位置を求めている。そのた
+       めにはそれぞれの領域がページの先頭からどれだけ離れているかを知る
+       必要がある。その情報を得るメソッドが
+       \texttt{getBoundingClientRect()}である。
+
+       このメソッドは次のようなプロパティを持つ\texttt{ClientRect}オブジェクトを返す。
+\begin{center}
+\begin{tabular}{|c|c|}\hline
+プロパティ&\multicolumn{1}{c|}{解説} \\\hline
+ \texttt{top}&領域の上端のY座標 \\\hline
+ \texttt{bottom}&領域の下端のY座標 \\\hline
+ \texttt{left}& 領域の左端のX座標\\\hline
+ \texttt{right}& 領域の右端のX座標\\\hline
+ \texttt{width}& 領域の幅\\\hline
+ \texttt{height}& 領域の高さ\\\hline
+\end{tabular}
+\end{center}
+ \item これらの値とイベントが起きた位置の情報から領域内での位置が計算で
+       きる。
+ \item 24行目ではクリックした正方形のオブジェクトを更新している。
+\end{itemize}
+ここでは3つの入力方法に対して、イベントハンドラーを定義している。
+\LISTN{event.js}{26}{last}{\normalsize}
+ \begin{itemize}
+ \item 26行目から27行目ではプルダウンメニューに\texttt{change}イベントの
+       ハンドラーを定義している。直前にクリックされた部分の背景色を変えている。
+ \item 28行目から34行目はラジオボタンのあるところがクリックされたときの
+       イベントハンドラーを設定している。ラジオボタンは\texttt{name}属性
+       が同じ値のものが一つのものとして扱われる(どこか一つだけオンになる)。
+\begin{itemize}
+ \item 29行目ではクリックされた場所の要素名を表示している(通常は必要ない)。
+       HTMLの要素名は小文字で書かれていても大文字に変換されることが確認
+       できる。
+ \item HTMLのリストの28行目にある
+       \texttt{div}要素にクリックのイベントハンドラーを登録する(28行目か
+       ら29行目)ので、クリックされた場所がラジオボタンの上でなくても、こ
+       の範囲内であればイベントは発生する。
+ \item クリックされた場所がラジオボタンの上でなければ(
+       ラジオボタンの親要素の\texttt{div}要素が\texttt{E.target}と
+       なる)のでその\texttt{firstChild}が値を変えるラジオボタンになる(31
+       行目)。
+ \item ラジオボタンの集まりには\texttt{value}プロパティがない。チェッ
+       クされている場所を探すために
+       \texttt{querySelector("input:checked")}を用いて、チェックされてい
+       る要素を探す(33行目の右辺)。
+ \item 色の設定はテキストボックスの値を代入する(36行目)。
+\end{itemize}
+ \end{itemize}
+\end{Exec}

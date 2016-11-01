@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<title>コンストラクタとPrototype</title>
+<script type="text/ecmascript">
+//<![CDATA[
+"use strict";
+function Person(){
+  console.log(this);
+  this.name = "foo";
+  this.year = 2001;
+  this.month = 4;
+  this.day = 1;
+  this.toString = function(){
+    return "私の名前は"+this.name+"です";
+  }
+  this.showBirthday = function() {
+    return this.name+"の誕生日は"+
+      this.year+"年"+this.month+"月"+this.day+"日です";
+  }
+}
+function Person2(name, y, m, d){
+  console.log(this);
+  this.name = name;
+  this.year = y,
+  this.month = m,
+  this.day = d
+}
+Person2.prototype.toString =function (){
+      return "私の名前は"+this.name+"です";
+    };
+Person2.prototype.showBirthday = function() {
+    return this.name+"の誕生日は"+
+      this.year+"年"+this.month+"月"+this.day+"日です";
+ }
+function Student(n, id, y, m, d){
+  this.name   = n;
+  this.year  = y;
+  this.month = m;
+  this.day   = d;
+  this.id    = id;
+}
+Student.prototype = new Person();
+Student.prototype.constructor = Student;
+
+function Student2(n, id, y, m, d){
+  Person2.call(this, n, y, m, d);
+  this.id    = id;
+}
+Student2.prototype = new Person2();
+Student2.prototype.constructor = Student2;
+//]]>
+</script>
+</head>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<head>
+<meta charset="UTF-8"/>
+<title>サーバーにデータを送信(PUT)</title>
+<link rel="stylesheet" type="text/css" href="event.css"/>
+<script type="text/ecmascript" src="eventSendPut.js"></script>
+</head>
+<body>
+  <div class="block" id="Squares">
+    <div></div><div></div><div></div>
+  </div>
+  <form>
+    <select id="select"  name="select">
+      <option value="red" >赤</option>
+      <option value="yellow">黄色</option>
+      <option value="blue">青</option>
+    </select>
+    <div id="radio">
+      <div><input type="radio" value="red" name="color">赤</input></div>
+      <div><input type="radio" value="yellow" name="color">黄</input></div>
+      <div><input type="radio" value="blue" name="color">青</input></div>
+    </div>
+    <div>
+      色名<input type="text" size="10" id="colorName" name="colorName"></input>
+      <input type="button" value="設定" id="Set"></input>
+      <input type="submit" value="送信" id="Send"></input>
+    </div>
+    <div id="position">
+      <div>クリック位置</div>
+      <div><div>clientX</div><input type="text" size="3" class="click">
+           <div>clientY</div><input type="text" size="3" class="click"></div>
+      <div><div>pageX</div><input type="text" size="3" class="click">
+           <div>pageY</div><input type="text" size="3" class="click"></div>
+      <div><div>pageXOffset</div><input type="text" size="3" class="click">
+           <div>pageYOffset</div><input type="text" size="3" class="click"></div>
+     <div>from Boundary</div>
+      <div><div> Left</div><input type="text" size="3" class="click">
+           <div>Top</div><input type="text" size="3" class="click"></div>
+      </div>
+  </form>
+</body>
+</html>

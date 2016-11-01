@@ -1,0 +1,34 @@
+% -*- coding: utf-8 -*-
+\begin{table}[ht]
+ \caption{\JS における\ElmJ{Date}オブジェクトのメソッド}\label{JSDate}
+ \begin{center}
+	\begin{tabular}{|c|m{25zw}|}\hline%
+  {名称}&{説明}\\\hline
+  \ElmJ{getTime()}&日付オブジェクトのタイムスタンプを得る\\\hline
+	 \ElmJ{setTime(time)}& 日付オブジェクトのタイムスタンプを\texttt{time}
+			 に設定する \\ \hline
+	 \ElmJ{getFullYear()}& 西暦の年の値を得る。\texttt{getYear()}もあるが、
+			 2000年問題の影響があるので使わないこと\\ \hline
+	 \ElmJ{setFullYear(year,month,date)}& \texttt{year}年\texttt{month}$＋1$月
+\\ \hline
+	 \ElmJ{getMonth()}& 月の値を得る。\texttt{0}が1月を表すことに注意\\ \hline
+	 \ElmJ{setMonth(month,date)}& \texttt{month}$+1$月\texttt{date}日に設定
+			 する。\\ \hline
+	 \ElmJ{getDate()}& 日の値を得る。\\ \hline
+	 \ElmJ{setDate(date)}& \texttt{date}日に設定する。\\ \hline
+	 \ElmJ{getHours()}&時間の設定を行う \\ \hline
+	 \ElmJ{setHours(hour,min,sec,ms)}& \texttt{hour}時\texttt{min}分
+			 \texttt{sec}秒\texttt{ms}ミリ秒に設定する\\ \hline
+	 \ElmJ{getMinutes()}& 分の値を得る\\ \hline
+	 \ElmJ{setMinutes(min,sec,ms)}& \texttt{min}分
+			 \texttt{sec}秒\texttt{ms}ミリ秒に設定する\\ \hline
+	 \ElmJ{getSeconds()}& 秒の値を得る\\ \hline
+	 \ElmJ{setMinutes(sec,ms)}& \texttt{sec}秒\texttt{ms}ミリ秒に設定する
+			 \\ \hline
+	 \ElmJ{getMilliseconds()}& ミリ秒の値を得る\\ \hline
+	 \ElmJ{setMilliseconds(ms)}& \texttt{ms}ミリ秒に設定する \\ \hline
+	 \ElmJ{getTimezoneOffset()}& ローカルタイムとUTCの時差を分単位で返す\\ \hline
+	 \ElmJ{getDay()}& 曜日(\texttt{0}が日曜日)を得る\\ \hline
+	\end{tabular}
+ \end{center}
+\end{table}

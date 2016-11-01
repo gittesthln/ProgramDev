@@ -1,0 +1,275 @@
+%-*- coding: utf-8 -*-
+\chapter{プロトタイプ}
+\section{\protect\texttt{prototype}プロパティ}
+JavaScriptの関数オブジェクトには\texttt{prototype}というプロパティがある。
+これは関数を定義すると直ちに生成される。通常は空のオブジェクトとなる。こ
+のオブジェクトにプロパティとメソッドを追加していくことができる。
+\subsection{\protect\texttt{prototype}の使用例}
+この節の例は\cite{JS6}9章の例9.2の \texttt{Range} を参考に作成している。
+\begin{Exec}\label{ExRange}\upshape
+ある範囲の値を管理する \texttt{Range} オブジェクトを作成する。
+\begin{verbatim}
+function Range(from, to) {
+  this.from = from;
+  this.to   = to;
+}
+\end{verbatim}
+これらのオブジェクトにメソッドを導入するとき、メソッドの関数のコードを共
+ 有するためにオブジェクトの \texttt{prototype} に関数を定義する。
+\begin{verbatim}
+Range.prototype = {
+  includes : function(n) {
+    return this.from <= n && n <= this.to;
+  },
+  foreach : function(f) {
+    for(var k = Math.ceil(this.from); k<= this.to; k++) f(k);
+  },
+  toString : function() { return "[" + this.from+",...,"+this.to+"]";}
+}
+\end{verbatim}
+ここでは3つのメソッドが定義されている。
+\begin{itemize}
+ \item \texttt{include} は引数として与えられた数がこの範囲に入っているか
+       判定する。
+ \item \texttt{foreach} は範囲にある整数にたいして、与えられた関数をそれ
+       ぞれ実行する。
+ \item \texttt{toString} は文字列が必要になったときにオブジェクトを文字
+       列に変換する。このメソッドは JavaScript が取り扱うすべてのデータ
+       に対して定義されている。
+\end{itemize}
+\begin{itemize}
+ \item コンストラクタを使って $1\sim5$ の範囲を扱うオブジェクトを作る。
+\begin{verbatim}
+>var r = new Range(1,5);
+undefined
+\end{verbatim}
+ \item このオブジェクトに対して$3.5$ と $-2$ がこの範囲にあるかチェック
+       する。
+\begin{verbatim}
+>r.includes(3.5);
+true
+>r.includes(-2);
+false
+\end{verbatim}
+$3.5$ は入っていて、$-2$ が入っていないことが正しく判定されている。
+ \item この範囲の整数に対して、与えられた関数を順番に実行させている。こ
+       こでは引数の値を$2$乗した値を出力させている。
+\begin{verbatim}
+>r.foreach(function(x){console.log(x+"*"+x+"="+(x*x));});
+1*1=1
+2*2=4
+3*3=9
+4*4=16
+5*5=25
+undefined
+\end{verbatim}
+ \item \texttt{Range}オブジェクトが文字列を必要とするとことで
+       \texttt{toString}が呼び出されることを確認する。
+\begin{verbatim}
+>console.log(r+"");
+[1,...,5]
+undefined
+\end{verbatim}
+\texttt{r+""}で\texttt{r}を文字列に強制的に変換している。
+ \item なお、\texttt{console.log} に直接渡すと、ここで定義した
+       \texttt{toString} が呼ばれない。
+\begin{verbatim}
+>console.log(r);
+Range {from: 1, to: 5, includes: function, foreach: function, toString: function}
+undefined
+\end{verbatim}
+ \item この設定では、プロパティの \texttt{from} や \texttt{to} はいつで
+       も変更が可能である。
+\begin{verbatim}
+>r.includes(8);
+false
+>r.to = 10;
+10
+>r.includes(8);
+true
+\end{verbatim}
+ \item また、プロパティも削除可能である。
+\begin{verbatim}
+>delete r.to
+true
+>r.to;
+undefined
+\end{verbatim}
+ \item \texttt{prototype}に定義されたプロパティは同じコンストラクタから生成され
+たオブジェクトで共有される。
+\begin{verbatim}
+>Range.prototype.name = "interval";
+"interval"
+\end{verbatim}
+ここではプロトタイプにプロパティ \texttt{name} に値を設定している。
+\begin{verbatim}
+>r.name;
+"interval"
+\end{verbatim}
+\texttt{prototype}に新たに定義されたプロパティは、それ以前に作成されたオ
+       ブジェクトにも有効である。このとき、\texttt{prototype}を付けてい
+       ないことに注意すること。
+ \item 新規に作成されたオブジェクトでも同じように参照できる。
+\begin{verbatim}
+>r2 = new Range(-5,5);
+Range {from: -5, to: 5, includes: function, foreach: function, toString: function…}
+>r2.name;
+"interval"
+\end{verbatim}
+ \item 同じ名前のプロパティに値を代入すると、そのオブジェクトに対して新
+       たにプロパティが生成され、\texttt{prototype}内のプロパティが参照
+       されない。
+\begin{verbatim}
+>r.name = "changed";
+"changed"
+>r2.name;
+"interval"
+\end{verbatim}
+\texttt{r2.name}は値が変更されていない。
+ \item プロパティを消去すると前の値が参照できるようになる。
+\begin{verbatim}
+>delete r.name;
+true
+>r.name;
+"interval"
+\end{verbatim}
+\end{itemize}
+\end{Exec}
+\subsection{プロトタイプチェインについて}
+実行例\ref{ExRange}にみられるプロパティやメソッドの参照方法について詳し
+い解説をする。
+
+オブジェクトに対するプロパティの参照は次のような規則に従っ
+ている。
+\begin{itemize}
+ \item まず、自分自身のプロパティにあるかを調べる。
+ \item もし見つからない場合は自分自身のコンストラクタのプロトタイプの中
+       を調べる。
+ \item コンストラクタ自身もオブジェクトなので、そこで見つからなければコ
+       ンストラクタ関数ののコンストラクタのプロトタイプを調べる。
+ \item このように見つからないときはコンストラクタのプロトタイプをたどっ
+       て存在するかを調べる。
+ \item 最終的にはすべてのオブジェクトは\texttt{Object}に行きつく。
+\end{itemize}
+このプアロトタイプの並びをプロトタイプチェインと呼ぶ。
+\subsection{プロパティの性質を調べる}
+%\paragraph{プロパティを列挙する}
+すでにオブジェクトのプロパティを列挙するには
+「\texttt{for-in}ループを使えばできる」
+と述べた。
+\begin{verbatim}
+>for(key in r2) {console.log(key+":"+r2[key])};
+from:-5 
+to:5 
+includes:function (n) {return this.from <= n && n <= this.to; } 
+foreach:function (f) { for(var k = Math.ceil(this.from); k<= this.to; k++) f(k);} 
+toString:function () { return "[" + this.from+",...,"+this.to+"]";} 
+name:interval
+undefined
+\end{verbatim}
+しかし、この中には \texttt{constractor} は現れていない。
+\begin{verbatim}
+>r2.constructor;
+function Object() { [native code] }
+\end{verbatim}
+このように \texttt{for-in}ループで取得できるプロパティは
+\texttt{enumerable}であるという。
+\begin{itemize}
+ \item 特定のプロパティが\texttt{enumerable}か
+どうかを調べるには\texttt{propertyIsEnumerable()}メソッドで調べることが
+できる。
+\begin{verbatim}
+>r2.propertyIsEnumerable("from");
+true
+>r2.propertyIsEnumerable("name");
+false
+\end{verbatim}
+%プロパティ\texttt{from}は \texttt{true} で \texttt{name} は \texttt{false} と
+%       なっている。
+\texttt{for-in} ループで取得できるプロトタイプにあるものについては
+       \texttt{propertyIsEnumerable()}で得られる結果が \texttt{false}　となる。
+ \item オブジェクト自身のプロパティかどうかは \texttt{hasOwnProperty()}
+       で調べることができる。
+\begin{verbatim}
+>r2.hasOwnProperty("name");
+false
+>r2.hasOwnProperty("from");
+true
+\end{verbatim}
+ \item オブジェクトのプロトタイプは \texttt{getPrototypeOf()}で取得でき
+       る\footnote{教科書173ページの脚注参照}。
+\begin{verbatim}
+>Object.getPrototypeOf(r2);
+Object {includes: function, foreach: function, toString: function, 
+name: "interval"}
+\end{verbatim}
+\end{itemize}
+\begin{Prob}\upshape
+適当な \texttt{prototype} と自身のプロパティを持つオブジェクトを定義して、
+ 自分自身の中にあるプロパティだけを出力するプログラムを作成せよ。
+\end{Prob}
+\section{エラーオブジェクトについて}
+前節の例ではオブジェクトの条件に合わない値を設定すると、エラーを発生する
+ようにしている。ここでは エラーオブジェクトについて詳しく説明する。
+\begin{Exec}\upshape
+次の例は実行例\ref{ExRange2} に加えて、実行時に上限と下限の値を設定する
+ ためのテスト関数である。コンソールから \texttt{var r = test()} などで実
+ 行すると上限と下限の値が正しくなるまで繰り返される。
+
+なお、このプログラムはブラウザ上で実行されることを想定している。
+\begin{listing}{1}
+function test() {
+  var f, t;
+  for(;;) {
+    try {
+      f = Number(prompt("区間の下限の値を入力してください"));
+      t = Number(prompt("区間の上限の値を入力してください"));
+      return new Range(f,t);
+    } catch(e) {
+      console.log(e.name+":"+e.message);
+      console.log("from:"+f+", to:"+t);
+    }
+  }
+}
+\end{listing}
+\begin{itemize}
+ \item 2行目でこの関数内で使用するローカル変数を宣言している。
+ \item 3行目の \texttt{for(;;)} は初期条件、終了条件、後処理がすべて記述
+       されていない \texttt{for} ループである。これにより無限ループが構
+       成できる。
+ \item エラー処理をする構文が \texttt{try/catch/finnally} 構文である。
+\begin{itemize}
+ \item \texttt{try}の後に書かれたブロック(ここでは5行目から7行目を含むブ
+       ロック)が通常実行される。
+ \item この実行の間エラーが発生しなければ \texttt{catch}の後のブロックは
+       実行されない。
+ \item エラーが起きると \texttt{catch(e)} に書かれた変数 \texttt{e}にエ
+       ラーオブジェクトが設定されている。この変数はこのブロック内でしか
+       有効ではない。
+\end{itemize}
+ \item \texttt{try} ブロック内ではキーボードから2つの数を読むため、
+       \texttt{window} オブジェクトの \texttt{prompt()} を呼び出している。
+ \item この関数の戻り値（文字列)を \texttt{Number} コンストラクタで
+       数に変換している(5行目と6行目)。
+ \item 7行目で作成した \texttt{Range} オブジェクトを戻り値としている。
+ \item \texttt{Range}コンストラクタでは上限の値が下限の値より小さいとき
+       はエラーが発生させている。エラーオブジェクトではエラーが起きたコ
+       ンストラクタの名前が \texttt{name} プロパティに、投げられたエラー
+       で引数に書かれた文字列が \texttt{message} プロパティに設定されて
+       いるので、その内容を9行目で表示させている。
+ \item その後、コンストラクタを呼んだときの値を表示させている。
+\end{itemize}
+\end{Exec}
+次の実行例は、はじめに下限値を $5$、上限値を $1$ に設定しエラーを表示さ
+せ、その後、下限値を $1$ 、上限値を $5$ に設定したときのものである。
+希望したオブジェクトが作成できていることがわかる。
+\begin{verbatim}
+>r = test();
+Error:Range: from must be <= to
+from:5, to:1
+Range {from: (...), to: (...), toString: function}
+>r.from
+1
+>r.from =10;
+Error: Range: from must be <= to
+\end{verbatim}

@@ -1,0 +1,312 @@
+\input devHeadDarmstadt.tex
+\title{ソフトウェア開発\\第2回目授業}
+\author{平野 照比古}
+\institute{}
+\date{2016/9/30}
+\begin{document}
+\frame{\maketitle}
+%\frame{\tableofcontents}
+\section{JavaScriptが取り扱うデータ}
+\subsection{データーの型}
+\begin{frame}[containsverbatim]
+ \frametitle{プリミティブデータ型}
+\begin{tabular}{|c|m{20zw}|}\hline
+ 型&\multicolumn{1}{c|}{説明} \\\hline
+ Number & 浮動小数点数だけ\\ \hline
+ String & 文字列型、1文字だけのデータ型はない。ダブルクオート(\Verb+"+)
+     か%"
+     シングルクオート(\Verb+'+)で囲む。\\ \hline
+ Boolean& \Verb+true+ か \Verb+false+ の値のみ\\ \hline
+ \Verb+undefined+ & 変数の値が定義されていないことを示す\\ \hline
+ \Verb+null+& \Verb+null+という値しか取ることができない特別なオブジェク
+     ト\\ \hline
+\end{tabular}
+
+変数や値の型を知りたいときは\Verb+typeof+ 演算子を使う。
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{Number型}
+JavaScriptで扱う数は64ビット浮動小数点形式
+\begin{itemize}
+ \item{\bfseries 整数リテラル} 10進整数は通常通りの形式である。16進数を表す場合は
+	      先頭に\Verb+0x+ か \Verb+0X+ をつける。\Verb+0+で始まりそ
+	      のあとに\Verb+x+または\Verb+X+が来ない場合には8進数と解釈
+      される場合があるので注意が必要である。
+
+      \Strict ではこの形式はエラーとなる。
+ \item{\bfseries 浮動小数点リテラル} 整数部、そのあとに必要ならば小数点、小数部そ
+       のあとに指数部がある形式である。
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{特別なNumber}
+\begin{itemize}
+ \item {\bfseries \Verb+Infinity+}無限大を表す読み出し可能な変数である。
+       オーバーフローした場合や \Verb+1/0+などの結果としてこの値が設定さ
+       れる。
+ \item {\bfseries \Verb+NaN+} Not a Number の略である。計算ができなかった場合
+       表す読み出し可能な変数である。
+       文字列を数値に変換できない場合や \Verb+0/0+ などの結果としてこの値が設定さ
+       れる。
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{String型}
+文字列に関する情報や操作には次のようなものがある 。
+\begin{center}
+ \begin{tabular}{|c|m{12zw}|}\hline
+ メンバー&\multicolumn{1}{c|}{説明} \\\hline
+  \Verb+length+ &文字列の長さ\\ \hline
+\Verb+indexOf(needle,start)+& \Verb+needle+が与えられた文字列内にあ
+      ればその位置を返す。\Verb+start+の引数がある場合には、指定された位
+      置以降から調べる。見つからない場合は$-1$を返す。\\\hline
+\Verb+lastIndexOf(needle,start)+& \Verb+needle+が与えられた文字列内にあ
+      ればそれが一番最後に現れる位置を返す。\Verb+start+の引数がある場合
+      には、指定された位置以前から調べる。見つからない場合は$-1$を返す。\\\hline
+\end{tabular}
+\end{center}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{String型}
+\begin{center}
+ \begin{tabular}{|c|m{12zw}|}\hline
+ メンバー&\multicolumn{1}{c|}{説明} \\\hline
+  \Verb+split(separator,limit)+&\Verb+separator+で与えられた文字列で与え
+      られた文字列を分けて配列で返す。セパレーターの部分は返されない。
+      2番目の引数はオプションで分割する最大数を返す。\\ \hline
+  \Verb+substring(start,end)+&与えられた文字列の\Verb+start+から
+      \Verb+end+の位置までの部分文字列を返す。\\ \hline
+\end{tabular}
+\end{center}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{Bool型}
+\Verb+true+ と \Verb+false+ の2つの値をとる。この2つは予約語である。論理
+式の結果としてこれらの値が設定されたり、論理値が必要なところでこれらの値
+に設定される。詳しくは後述する。
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{\texttt{undefined}}
+値が存在しないことを示す読み出し可能な変数である。
+
+変数が宣言されたのに値
+が設定されていない場合などはこの値に初期化される。
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{\texttt{null}}
+\Verb+typeof null+ の値が \Verb+"object"+であることを示すように、オブジェ
+クトが存在しないことを示す特別なオブジェクト値（であると同時にオブジェク
+トでもある）である。
+\end{frame}
+\subsection{変数}
+\begin{frame}[containsverbatim]
+ \frametitle{JavaScriptにおける変数}
+\begin{itemize}
+ \item 変数名はアルファベットまたは\Verb+_+(アンダースコア)で始まる英数
+       字または\Verb+_+で始まる文字列
+ \item 大文字と小文字は区別される。
+ \item 変数の宣言は \texttt{var} で行う。
+ \item 宣言時に初期化ができる。
+ \item 非\Strict のときは変数は宣言をしなくても使用できる。初期化してい
+       ない変数を使うとエラーが起こる。詳しくは後述する。
+ \item 変数に保存するデータの型には制限がない。途中で変更することもでき
+       る。
+\end{itemize}
+\end{frame}
+\section{配列}
+\subsection{配列の宣言と初期化}
+\begin{frame}[containsverbatim]
+ \frametitle{配列の宣言と初期化}
+配列を使うためには、変数を配列で初期化する必要がある。変数の宣言と同時に
+行ってもよい。
+\begin{Verbatim}
+var a = [];
+var b = [1,2,3];
+\end{Verbatim}
+\Verb+a+ は空の配列で初期化されている。\Verb+b+ は　
+\Verb+b[0]=1,b[1]=2,b[2]=3+ となる配列で初期化されている。
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{配列に関する注意}
+\begin{itemize}
+ \item 配列の各要素のデータの型は同じでなくてもよい。
+ \item 実行時に配列の大きさを自由に変えられる。
+ \item 配列の要素に配列を置くことができる。
+\begin{Verbatim}
+var a=[1,[2,3,4],"a"];
+\end{Verbatim}
+\end{itemize}
+\end{frame}
+\subsection{配列のメソッド}
+\begin{frame}[containsverbatim]
+ \frametitle{配列のメソッド}
+\begin{center}
+ \begin{tabular}{|c|m{20zw}|}\hline
+ メンバー&\multicolumn{1}{c|}{説明} \\\hline
+  \Verb+length+ &配列の要素の数\\ \hline
+  \Verb+join(separator)+& 配列を文字列に変換する。\Verb+separator+はオプ
+      ションの引数で、省略された場合はカンマ\Verb+,+である。\\ \hline
+  \Verb+pop()+& 配列の最後の要素を削除し、その値を返す。配列をスタックと
+      して利用できる。\\ \hline
+  \Verb+push(i1,i2,...)+& 引数で渡された要素を配列の最後に付け加える。配
+      列をスタックやキューとして利用できる。\\ \hline
+  \Verb+shift()+&配列の最初の要素を削除し、その値を返す。配列をキューと
+      して利用できる。\\ \hline
+\end{tabular}
+\end{center}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{配列のメソッド}
+\begin{center}
+ \begin{tabular}{|c|m{12zw}|}\hline
+   \Verb+slice(start,end)+&\Verb+start+から\Verb+end+の前の位置にある要素を取
+      り出した配列を返す。元の配列は変化しない。\\ \hline
+  \Verb+splice(start,end,i1,i2,...)+&\Verb+start+から\Verb+end+の位置に
+      ある要素を取
+      り出した配列を返す。元の配列からこれらのデータを取り除き、その位置
+      に\Verb+i1,i1,...+以下の要素を付け加える。\\ \hline
+\end{tabular}
+\end{center}
+\end{frame}
+\section{演算子}
+\subsection{代入、四則演算}
+\begin{frame}[containsverbatim]
+ \frametitle{代入、四則演算}
+\begin{itemize}
+ \item \Verb-+-演算子は文字列の連接にも使用できる。\Verb-+-演算子は左右のオペ
+ランドがNumberのときだけ、数の和をとる。どちらかが数でもう一方が文字列の
+場合は数を文字列に直して、文字列の連接を行う。
+\begin{Verbatim}
+1+2  => 3
+1+"2" => 12
+\end{Verbatim}
+ \item そのほかの演算子(\Verb+-*/+)については文字列を数に変換してから数
+       として計算する。
+ \item 文字列全体が数にならない場合には変換の結果が\Verb+NaN+になる。
+
+ \item 整数を整数で割った場合、割り切れなければ小数となる。
+       小数部分を切り捨てたいときは\Verb+Math.floor()+を用いる。
+\begin{Verbatim}
+1/3 => 0.3333333333333333
+Math.floor(1/3) =>0
+\end{Verbatim}
+\end{itemize}
+\end{frame}
+\subsection{論理演算子と比較演算子}
+\begin{frame}[containsverbatim]
+ \frametitle{論理演算子}
+Boolean 型に対して使用できる演算子は次の3つ
+\begin{itemize}
+ \item \Verb+!+ 論理否定
+ \item \Verb+&&+ 論理積
+ \item \Verb+||+ 論理和
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{論理演算子に関する注意}
+論理演算子をBoolean 型でない値を与えると元の値がBoolean型に変換されてか
+ら実行される。次の値は \Verb+false+ に変換される。
+\begin{itemize}
+ \item 空文字列 \Verb+""+
+ \item \Verb+null+
+ \item \Verb+undefined+
+ \item 数字の $0$
+ \item 数値の \Verb+NaN+
+ \item Boolean の\Verb+false+
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{論理演算子に関する注意}
+論理和や論理積では左のオペランドの結果により、式の値が決まる場合は右のオ
+ペランドの評価は行われない。たとえば、論理和の場合、左の値が
+\Verb+true+であれば右のオペランドの評価が行われない。
+\begin{Verbatim}
+var a=1; true ||(a=3); 
+\end{Verbatim}
+では変数 \Verb+a+ の値は $1$ のままである。
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{比較演算子}
+比較演算子は比較の結果、Boolean の値を返す演算である。C言語と同様の比較
+演算子が使用できる。\texttt{>,>=,<,<=}など。等しいことを比較するためには
+\Verb+==+(等価比較演算子)のほかに 型変換を伴わない等価比較演算子
+\Verb+===+ がある。等価比較演算子\texttt{==}は必要に応じて型変換を行う。
+\begin{Verbatim}
+0 == "0" => true
+0 === "0" => false
+\end{Verbatim}
+同様に非等価比較演算子\texttt{!=}にも型変換を伴わない非等価演算子
+\texttt{!==}がある。
+
+ また、\Verb+NaN == NaN+ の結果は \Verb+false+ である。値が \Verb+NaN+ で
+あるかどうかを調べる関数がある。
+\end{frame}
+\section{組み込みオブジェクト}
+\subsection{組み込み関数}
+\begin{frame}[containsverbatim]
+ \frametitle{組み込み関数}
+JavaScript に初めから組み込まれている関数としては次のものがある。
+\begin{itemize}
+ \item \Verb+parseInt(string,radix)+ \Verb+string+(文字列)と
+       \Verb+radix+(基数、省略したときは$10$)をとり、先頭から見て正しい
+       整数表現のところまで整数に変換する。
+ \item \Verb+parseFloat(string)+ \Verb+string+(文字列)
+       をとり、先頭から見て正しい
+       浮動小数点表現のところまで浮動小数に変換する。
+ \item \Verb+isNaN(N)+ \Verb+N+ が数であれば \Verb+true+、そうでなければ
+       \Verb+false+ を返す関数
+ \item \Verb+isFinite(N)+ \Verb+N+ が数値または数値に変換できる値でかつ
+       \Verb+Infinity+ または \Verb+-Infinity+ でないときに \Verb+true+、
+       そうでないとき、\Verb+false+ を返す。
+\end{itemize}
+このほかにも関数があるが、省略する。
+\end{frame}
+
+\begin{frame}[containsverbatim]
+ \frametitle{組み込みオブジェクト}
+\begin{itemize}
+ \item \texttt{Date}オブジェクト
+
+日付や時間に関するデータを扱うオブジェクトである。
+基本的にはミリ秒単位の値が返ってくるので、実行時間の測定など
+にも使える。
+ \item {\texttt{Math}オブジェクト}
+
+数学的な定数の定義(円周率など)や三角関数などの関数が定義されている。
+\end{itemize}
+
+\end{frame}
+
+\end{document}
+
+\subsection{第2回目復習課題}
+\newcommand{\Rule}{\rule[-2ex]{0em}{5ex}}
+次の式の評価結果を求めなさい。
+\begin{center}
+ \begin{tabular}{|>{\Rule}c|p{5zw}|p{23zw}|}\hline
+  式&\multicolumn{1}{c|}{結果} &\multicolumn{1}{c|}{理由} \\\hline
+  \Verb+5%3+& & \\ \hline
+  \Verb-4+"5"-& & \\ \hline
+  \Verb+4-"5"+& & \\ \hline
+  \Verb-4+"ff"-& & \\ \hline
+  \Verb-4+"0xff"-& & \\ \hline
+  \Verb-4+parseInt("ff")-& & \\ \hline
+  \Verb-4+parseInt("0xff")-& & \\ \hline
+  \Verb-4+parseInt("ff",16)-& & \\ \hline
+  \Verb-4+"1e1"-& & \\ \hline
+  \Verb-4+parseInt("1e1")-& & \\ \hline
+  \Verb-4+parseFloat("1e1")-& & \\ \hline
+  \Verb+"4"*"5"+& & \\ \hline
+  \Verb+"4"/"5"+& & \\ \hline
+  \Verb+[].length+& & \\ \hline
+  \Verb+[[]].length+& & \\ \hline
+  \Verb+0 == "0"+& & \\ \hline
+  \Verb+0 == []+& & \\ \hline
+  \Verb+![]+& & \\ \hline
+  \Verb+false == []+& & \\ \hline
+  \Verb+"false" == []+& & \\ \hline
+  \Verb+[] == []+& & \\ \hline
+  \Verb+typeof []+& & \\ \hline
+  \Verb+null == undefined+& & \\ \hline
+ \end{tabular}
+\end{center}

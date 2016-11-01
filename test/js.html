@@ -1,0 +1,38 @@
+<!DOCTYPE himl>
+<head>
+<script type="text/ecmascript">
+//<![CDATA[
+var x = 4;
+console.log(1/4*4);           //(1)
+console.log("1/4*4="+1/4*4);  //(2)
+function F1(x) {
+  x = 10;
+  return x*x;
+}
+console.log(F1(x));           //(3)
+console.log(x);               //(4)
+
+function F2(x) {
+  for(i=0;i<x.length;i++) {
+    x[i] *= 2;
+  }
+}
+
+a = [2,3,4];
+F2(a);
+console.log(a[0]);            //(5)
+console.log(i);               //(6)
+
+function F3(x) {
+  function F4(x) {
+    return 3*x;
+  }
+  return F4(x);
+}
+console.log(F3(4));           //(7)
+console.log(F4(4));           //(8)
+//]]>
+</script>
+<body>
+</body>
+</html>

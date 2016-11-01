@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<title>プロパティ属性</title>
+<script type="text/ecmascript">
+//<![CDATA[
+var Person = (function (){
+  var ID = 0;
+  return function(name, year, month, day, hometown){
+    this.name = name;
+    var getID = (function(x) {
+      return function(){ return x;}
+    })(ID++);
+    this.birthday = {};
+    this.birthday.year = year;
+    this.birthday.month = month;
+    this.birthday.day = day;
+    this.name = name;
+    Object.defineProperty(this, "ID",
+      {get: getID,
+       enumerable:true,
+       configurable:false
+      });
+    Object.defineProperties(this.birthday,
+      {year  : {enumerable : true},
+       month : {enumerable : true, configurable : false},
+       day   : {enumerable : false, writable : false}
+    });
+  }
+})();
+//]]>
+</script>
+</head>
+</html>

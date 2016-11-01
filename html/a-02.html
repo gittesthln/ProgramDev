@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<title>Join</title>
+<script type="text/ecmascript">
+//<![CDATA[
+function join1(N){
+  var i; 
+  var a = new Array(N);
+  for(i=1;i<N;i++) {
+    a[i-1] = i;
+  }
+  var T = new Date();
+  var b = "";
+  for(i=0;i<N;i++) {
+    b +=a[i];
+  }
+  console.log(typeof b);
+  return(new Date()- T);
+}
+function conn(N) {
+  var i; 
+  var a = new Array(N);
+  for(i=1;i<=N;i++) {
+    a[i-1] = i;
+  }
+  var T = new Date();
+  a.join("");
+  return(new Date()- T);
+}
+//]]>
+</script>
+</head>
+</html>

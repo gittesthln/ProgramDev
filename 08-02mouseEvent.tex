@@ -1,0 +1,72 @@
+表\ref{event-list} は\HTML で発生するマウスイベントを記述したものであ
+る。
+\begin{table}[ht]
+ \caption{マウスイベントの例}\label{event-list}
+\begin{center}
+\begin{tabular}{|c|c|}\hline
+イベントの発生条件& イベントの属性名%&
+\\\hline
+ボタンがクリックされた &\Event{onclick}  \\ \hline
+ボタンが押された &\Event{onmousedown}  \\ \hline
+マウスカーソルが移動した&\Event{onmousemove}  \\ \hline
+マウスボタンが離された&  \Event{onmouseup} \\ \hline
+マウスカーソルが範囲に入った&\Event{onmouseover}  \\ \hline
+マウスカーソルが範囲から出た&\Event{onmouseout}  \\ \hline
+\end{tabular} 
+\end{center}
+\end{table}
+
+表\ref{mouseeventprop}はマウスイベントのプロパティを表したものである。
+\newcommand{\ShowRaw}[4]{%
+#2&%#3&
+#4&#1\\\hline}
+%\begin{minipage}[t]{\textwidth}
+\begin{longtable}{|c|c|m{25.5zw}|}
+ \caption{\keyitem{マウスイベントのプロパティ}}\label{mouseeventprop}
+\\  \hline
+\ShowRaw{\multicolumn{1}{c|}{意味}}{プロパティ}{メソッド}{型}
+\endfirsthead
+ \caption{\keyitem{マウスイベントのプロパティ}(続き)}
+\\  \hline
+\ShowRaw{\multicolumn{1}{c|}{意味}}{プロパティ}{メソッド}{型}
+\endhead
+ %\hline
+ \multicolumn{3}{r}{次ページへ続く}
+\endfoot
+%\hline
+\endlastfoot
+\ShowRaw{イベントが発生したオブジェクト}{\DOMP{target}}{
+	 \DOMM{getTarget}{()}}{\texttt{EventTarget}}
+\ShowRaw{イベントハンドラーが登録されているオブジェクト}{\DOMP{currentTarget} }{
+	 \DOMM{getCurrentTarget}{()}}{\texttt{EventTarget} }
+\ShowRaw{マウスポインタのディスプレイ画面における$x$座標}
+    {\DOMP{screenX} }{\DOMM{getScreenX}{()}}{\texttt{long}}
+\ShowRaw{マウスポインタのディスプレイ画面における$y$座標 }
+    {\DOMP{screenY} }{\DOMM{getScreenY}{()}}{\texttt{long}}
+\ShowRaw{マウスポインタのクライアント領域における相対的な$x$座標(スク
+ ロールしている場合には\DOMP{window.pageXOffset}を加える) }
+     {\DOMP{clientX} }{\DOMM{getclientX}{()} }{\texttt{long}}
+\ShowRaw{マウスポインタのクライアント領域における相対的な$y$座標(スク
+ ロールしている場合には\DOMP{window.pageYOffset}を加える) }
+     {\DOMP{clientY} }{\DOMM{getclientY}{()} }{\texttt{long}}
+\ShowRaw{マウスポインタの\texttt{document}領域における相対的な$x$座標}
+     {\DOMP{pageX} }{}{\texttt{long}}
+\ShowRaw{マウスポインタの\texttt{document}領域における相対的な$y$座標}
+     {\DOMP{pageY} }{}{\texttt{long}}
+\ShowRaw{\texttt{cntrl}キーが押されているか }
+   {\DOMP{ctrlKey} }{ \DOMM{getCntrlKey}{()}}{\texttt{boolean} }
+\ShowRaw{\texttt{shift}キーが押されているか }
+   {\DOMP{shiftKey} }{ \DOMM{getShiftKey}{()}}{ \texttt{boolean} }
+\ShowRaw{\texttt{alt}キーが押されているか }
+   {\DOMP{altKey} }{ \DOMM{getAltKey}{()}}{\texttt{boolean} }
+\ShowRaw{\texttt{meta}キーが押されているか }
+   {\DOMP{metaKey} }{ \DOMM{getMetaKey}{()}}{\texttt{boolean} }
+\ShowRaw{マウスボタンの種類、$0$は左ボタン、$1$は中ボタン、$2$は右ボタン
+ を表す。}{\DOMP{button} }{
+ \DOMM{getButton}{()}}{\texttt{unsigned short}}
+\ShowRaw{イベント伝播の現在の段階を表す。次の値がある。\newline
+\ElmJ{Event.CAPUTURING\_PHASE}($1$)、
+\ElmJ{Event.AT\_TARGET}($2$)、\ElmJ{Event.BUBBLING\_PHASE}($3$)
+}
+      {\DOMP{eventPhase}}{}{\texttt{unsigned short}}
+\end{longtable}

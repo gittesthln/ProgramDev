@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<title>プロトタイプ</title>
+<script type="text/ecmascript">
+//<![CDATA[
+function Range(from, to) {
+  this.from = from;
+  this.to   = to;
+}
+Range.prototype = {
+  includes : function(n) {
+    return this.from <= n && n <= this.to;
+  },
+  foreach : function(f) {
+    for(var k = Math.ceil(this.from); k<= this.to; k++) f(k);
+  },
+  toString : function() { return "[" + this.from+",...,"+this.to+"]";}
+}
+//]]>
+</script>
+</head>
+</html>

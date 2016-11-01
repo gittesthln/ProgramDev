@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/ecmascript">
+//<![![CDATA
+console.log(1/8*16);                               //(1)
+console.log(21>8?"TRUE":"FALSE");                  //(2)
+console.log(21>"8"?"TRUE":"FALSE");                //(3)
+console.log("21">"8"?"TRUE":"FALSE");              //(4)
+console.log("2"+3);                                //(5)
+console.log("2"-3);                                //(6)
+console.log(([ ])?"TRUE":"FALSE");                 //(7)
+console.log("false"?"TRUE":"FALSE");               //(8)
+w = 5;
+function F(a,b,c){
+  this.x = a;
+  b =-5;
+  c[0] *= 2;
+  var w = 15;
+}
+console.log(typeof x === "undefined"?"無効":x);     //(9)
+y =20;
+c = [1,2,3];
+P = F(10,y,c);
+console.log(typeof x === "undefined"?"無効":x);     //(10)
+console.log(typeof P === "undefined"?"無効":P.x);   //(11)
+console.log(w);                                    //(12)
+console.log(y);                                    //(13)
+console.log(c[0]);                                 //(14)
+y = 20;
+P = new F(100,y,c);                                //(15)
+console.log(typeof x ==="undefined"?"無効":x);     //(16)
+console.log(typeof P.x ==="undefined"?"無効":P.x); //(17)
+console.log(y);                                    //(18)
+console.log(c[0]);                                 //(19)
+//]]
+</script>
+</head>
+<body>
+</body>
+</html>

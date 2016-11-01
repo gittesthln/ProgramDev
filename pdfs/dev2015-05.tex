@@ -1,0 +1,760 @@
+%-*- coding: utf-8 -*-
+\documentclass[dvipsk]{beamer}
+\usepackage{pgfpages}
+\usepackage{moreverb,array}
+%\usetheme{Malmoe}
+%\usetheme{Goettingen}
+%\usetheme{Darmstadt}% 1, 2, 3
+%\usetheme{Boadilla}
+%
+\usetheme{CambridgeUS}%4, 5
+%\usetheme{AnnArbor}
+%\usetheme{Marburg}
+\iffalse\else
+\renewcommand{\familydefault}{\sfdefault}
+\renewcommand{\kanjifamilydefault}{\gtdefault}
+\setbeamerfont{title}{size=\Large,series=\bfseries}%,color=white}
+\setbeamerfont{frametitle}{size=\large,series=\bfseries}
+\setbeamerfont{beamergotobutton}{size=\Large}
+%\setbeamercolor{frametitle}{fg=yellow}
+\setbeamertemplate{frametitle}[default][center]
+%\addtobeamertemplate{footline}{}{\insertframenumber/\inserttotalframenumber}
+\usefonttheme{professionalfonts}
+\fi
+%\iftrue
+\title{ソフトウェア開発\\第5回目授業}
+\author{平野 照比古}
+\institute{}
+\date{2015/10/23}
+\begin{document}
+\frame{\maketitle}
+%\frame{\tableofcontents}
+\section{レポート課題について}
+\begin{frame}[containsverbatim]
+ \frametitle{レポート課題 3について}
+ 単純に付け加えただけでは失敗する。
+ {\small
+\begin{verbatim}
+var Person2 = (function (){
+  var ID = 0;
+  return function(){
+    this.ID = ID++;
+    this.name = "foo";
+    Object.defineProperty(this, "ID",
+      {get : function(){return this.ID},
+       enumerable:true,
+       configurable:false
+      });
+  }
+})();
+\end{verbatim}
+ 
+\begin{verbatim}
+>p = new Person2();
+Object {name: "foo"}
+>p.ID
+Uncaught RangeError: Maximum call stack size exceeded(…)
+\end{verbatim}
+ }
+ \end{frame} 
+\begin{frame}[containsverbatim]
+ \frametitle{レポート課題 3について--エラーの理由}
+ スタックオーバーフローが起きている。
+
+ 原因は\texttt{Object.defineProperty()}内の関数の戻り値\texttt{this.ID}
+ が
+
+ \texttt{this.ID = ID++}を指しているのではなく、この関数自体を指してい
+ るため
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{レポート課題 3について--解決方法}
+ オブジェクト内に変数を用意する
+\begin{verbatim}
+var Person2 = (function (){
+  var ID = 0;
+  return function(){
+    var mID = ID++;
+    this.name = "foo";
+    Object.defineProperty(this, "ID",
+      {get : function(){return mID},
+       enumerable:true,
+       configurable:false
+      });
+  }
+})();
+\end{verbatim}
+\end{frame}
+\newcommand{\ElmJ}[1]{\texttt{#1}}
+\section{オブジェクト属性}
+\subsection{関数オブジェクトの属性}
+\begin{frame}[containsverbatim]
+% \frametitle{関数オブジェクトの属性}
+\texttt{prototype}、\texttt{class}と
+ \texttt{extensible}という３つの属性がある。
+\end{frame}
+\subsection{\protect\ElmJ{class}属性}
+\begin{frame}[containsverbatim]
+ \frametitle{\protect\ElmJ{class}属性}
+ \begin{itemize}
+  \item \ElmJ{class}属性はオブジェクトの型情報を表す文字列
+  \item 最新の ECMAScript 5 でもこの属性を設定する方法はない。
+  \item 直接値を取得する方法もない。
+  \item クラス属性は間接的にしか得られない。
+  \item 組み込みのコンストラクタで生成されたオブジェクトではそのクラス名が間接的
+に得られる
+  \item 独自のコンストラクタ関数では、\texttt{"Object"}しか得られ
+ない。
+ \end{itemize}
+ \end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{\protect\ElmJ{class}属性--実行例}
+\begin{verbatim}
+function Person(){
+  this.name = "foo";
+  this.birthday = {
+    year : 2001,
+    month : 4,
+    day : 1
+  };
+  this["hometown"] = "神奈川";
+}
+\end{verbatim}
+ \end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{\protect\ElmJ{class}属性--\protect\ElmJ{toString}}
+\ElmJ{Object}から継承した\ElmJ{toString()}を直接呼び出すと次のような結果
+ になる。
+\begin{verbatim}
+>p = new Person();
+Person {name: "foo", birthday: Object, hometown: "神奈川"}
+>p.toString();
+"[object Object]"
+>p +"";
+"[object Object]"
+\end{verbatim}
+\texttt{Person()}コンストラクタには\ElmJ{toString()}メソッドが定
+義されていないので、もともとの\ElmJ{Object}で定義されている
+ \texttt{toString()}が呼び出されている。
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{他のオブジェクトのメソッドを自分のメソッドのように呼び出す}
+ \ElmJ{Object}の\ElmJ{prototype}属性に定義されている
+\ElmJ{toString}を引数のメソッドとして利用する
+\begin{verbatim}
+>Object.prototype.toString.call([]);
+"[object Array]"
+>Object.prototype.toString.call(null);
+"[object Null]"
+>Object.prototype.toString.call(undefined);
+"[object Undefined]"
+>Object.prototype.toString.call(NaN);
+"[object Number]"
+>Object.prototype.toString.call(window);
+"[object global]"
+>window+""
+"[object Window]"
+\end{verbatim}
+\end{frame}
+ \subsection{\protect\ElmJ{extensible}属性}
+ \begin{frame}[containsverbatim]
+  \frametitle{\protect\ElmJ{extensible}属性}
+\ElmJ{extensible}はオブジェクトに対してプロパティの追加ができるか
+  どうかを指定
+ \begin{itemize}
+    \item ECMAScript 5 ではこの属性の取得や設定ができる関数が用意され
+ている。
+   \item この属性の取得は\ElmJ{Object.isExtensible()}に調べたいオブジェクトを引数
+にして渡す。
+   \item オブジェクトのプロパティを拡張できなくするためには
+\ElmJ{Object.preventExtension()}に引数として設定したいオブジェクトを渡す。
+  \end{itemize}
+ \end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{\protect\ElmJ{extensible}属性の変更---実行例}
+\begin{verbatim}
+>p = new Person();
+Person {name: "foo", birthday: Object, hometown: "神奈川"}
+>p.mother = "aaa"
+"aaa"
+>p.mother
+"aaa"
+\end{verbatim}
+\texttt{Object.preventExtensions(p)}を実行する前では存在しな
+ い属性の追加ができる。
+ \end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{\protect\ElmJ{extensible}属性の変更---実行例(続き)}
+\begin{verbatim}
+>Object.preventExtensions(p);
+Person {name: "foo", birthday: Object, hometown: "神奈川", mother: "aaa"}
+>p.grandmother = "AAA";
+"AAA"
+>p.grandmother;
+undefined
+\end{verbatim}
+ 設定後は、新しい属性が定義できていない。
+ \end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{\protect\ElmJ{extensible}属性の変更---実行例(つづき)}
+\begin{verbatim}
+>p.mother = "bbb";
+"bbb"
+>p.mother;
+"bbb"
+>delete p.mother;
+true
+>p.mother
+undefined
+\end{verbatim}
+存在するプロパティは値の変更や削除が可能
+ \end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{属性の削除の禁止}
+ 属性の削除まで禁止したい場合には\ElmJ{Object.seal()}を用いる。
+ \begin{itemize}
+  \item 一度この関数を実行されたオブジェクトは解除できない。
+  \item すでにその状態になっているかどうかは、\ElmJ{Object.isSealed()}を用いる。
+  \item 書き込み可の属性の値は変えることができる。
+ \end{itemize}
+ \end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{属性の削除の禁止---実行例}
+\begin{verbatim}
+>p = new Person();
+Person {name: "foo", birthday: Object, hometown: "神奈川"}
+>Object.isSealed(p);
+false
+>Object.seal(p);
+Person {name: "foo", birthday: Object, hometown: "神奈川"}
+>Object.isSealed(p);
+true
+>p.mother = "aaa";
+"aaa"
+>p.mother;
+undefined
+\end{verbatim}
+\texttt{Object.seal()}を実行した後、存在しない属性
+ \texttt{p.mother}は定義されていない
+ \end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{属性の削除の禁止---実行例(続き)}
+\begin{verbatim}
+>p.hometown
+"神奈川"
+>p.hometown = "Japan"
+"Japan"
+>p.hometown
+"Japan"
+\end{verbatim}
+ 既存の属性の値は変更可能
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{オブジェクトの固定化}
+ オブジェクトを拘束するためには、\ElmJ{Object.freeze()}を用いる。
+
+ この状態を確認するためには\ElmJ{Object.isFrozen()}を用いる。
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{オブジェクトの固定化---(実行例)}
+\begin{verbatim}
+>Object.isFrozen(p);
+false
+>Object.freeze(p);
+Person {name: "foo", birthday: Object, hometown: "Japan"}
+>p.hometown = "Tokyo"
+"Tokyo"
+>p.hometown;
+"Japan"
+\end{verbatim}
+ \begin{itemize}
+  \item  \texttt{p.hometown}の値が設定できていない
+  \item この状態で属性値を変えたい場合には、属性にたいするセッターメソッド
+ を定義する
+  \item \texttt{Object.seal()}や \texttt{Object.freeze()}の影響は、渡され
+ たオブジェクト自身の属性にしか影響を及ぼさない。
+  \item 継承元のオブジェクトには影響を及ぼさない。
+ \end{itemize}
+ \end{frame}
+\subsection{\protect\ElmJ{prototye}属性}
+\begin{frame}[containsverbatim]
+ \frametitle{\protect\ElmJ{prototye}属性}
+ \begin{itemize}
+  \item オブジェクトの\ElmJ{prototype}属性の値は、同じコンストラクタ関数で生成
+ された間で共通のもの
+  \item オブジェクトリテラルで生成されたオブ
+ ジェクトは\ElmJ{Object.prototype}で参照できる
+  \item \ElmJ{new}を用いて生成さ
+ れたオブジェクトはそのコンストラクタ関数の\ElmJ{prototype}を参照
+  \item コンストラクタ関数の\ElmJ{prototype}もオブジェクトであるから、それ
+ の\ElmJ{prototype}も存在
+ \end{itemize}
+ この一連の\ElmJ{prototype}オブジェクトを
+ プロトタイプチェーンとよぶ。
+ \end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{\protect\ElmJ{Object.create()}}
+ \begin{itemize}
+  \item ECMAScript 5 で定義されている \ElmJ{Object.create()} メソッドは引数で与
+ えられたオブジェクトの\ElmJ{prototype}を\ElmJ{prototype}に持つオブジェ
+        クトを生成
+  \item このメソッドに対して2番目の引数を与えて、新たに生成され
+ たオブジェクトのプロパティを指定できる。
+ \end{itemize}
+ \end{frame}
+ \subsection{\protect\texttt{prototype}の使用例}
+\begin{frame}[containsverbatim]
+ \frametitle{基本のオブジェクト}
+\begin{verbatim}
+function Person(){
+  this.name = "foo";
+  this.year = 2001;
+  this.month = 4;
+  this.day = 1;
+  this.toString = function(){
+    return "私の名前は"+this.name+"です";
+  }
+  this.showBirthday = function() {
+    return this.name+"の誕生日は"+
+      this.year+"年"+this.month+"月"+this.day+"日です";
+  }
+}
+\end{verbatim}
+ \end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{基本のオブジェクト---解説}
+ \begin{itemize}
+  \item 6行目から8行目ではオブジェクトを文字列に変換する必要ができたとき
+        に呼び出される\texttt{toString()}メソッドを定義
+  \item 9行目から12行目では誕生日をわかりやすい形で表示する
+        \texttt{showBirthday()}メソッドを定義
+ \end{itemize}
+ \end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{基本のオブジェクト---実行例}
+\begin{verbatim}
+>p=new Person();
+Person {name: "foo", year: 2001, month: 4, day: 1}
+>p +"";
+"私の名前はfooです"
+>p.showBirthday();
+"fooの誕生日は2001年4月1日です"
+\end{verbatim}
+ \end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{基本のオブジェクト---問題点}
+ \begin{itemize}
+  \item このコードをみるとコンストラクタ関数が呼ばれるごとに、2つのメ
+ ソッドのコードが繰り返し使用されている
+  \item 同じコンストラクタ関数から生成さるオブジェクトに対して共通す
+ るプロパティやメソッドはコンストラクタ関数の\ElmJ{prototype}に移動した
+ 方が効率が良い。
+ \end{itemize}
+ \end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{基本のオブジェクト---改良}
+\begin{verbatim}
+function Person2(name, y, m, d){
+  this.name = name;
+  this.year = y,
+  this.month = m,
+  this.day = d
+}
+\end{verbatim}
+ \end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{基本のオブジェクト---改良(続き)}
+ {\small
+\begin{verbatim}
+Person2.prototype = {
+  toString : function(){
+      return "私の名前は"+this.name+"です";
+    },
+  get age(){
+      var Now = new Date();
+      var Age = Now.getFullYear() - this.year;
+      if((Now.getMonth()+1) < this.month) {
+        Age--;
+      } else {
+        if((Now.getMonth()+1) == this.month &&
+           Now.getDate() < this.day) Age--;
+      }
+      return Age;
+    },
+  get birthday() {
+      return this.year+"年"+this.month+"月"+this.day+"日";
+    }
+}
+\end{verbatim}
+ }
+ \end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{基本のオブジェクト---改良(解説)}
+ \begin{itemize}
+  \item \ElmJ{prototype}はオブジェクトリテラルの形式で定義
+  \item 8行目から10行目では\texttt{toString()}メソッドを定義
+  \item 11行目から21行目では、\texttt{age} プロパティを定義
+        
+        \texttt{function}キーワードの代わりに\ElmJ{get}を用いることで、
+        ゲッターとして定義している
+
+        この関数は実行時におけるオブジェクトの満年齢を得る
+        \begin{itemize}
+         \item 12行目で実行時の日時を求めている。
+         \item 13行目で実行時の年から、誕生日の年の差を求めている。
+         \item 14行目では実行時の月と誕生日の月を比較し、誕生日の月を過
+               ぎていなければ、年齢を1だけ減らす。
+
+               \texttt{Date.getMonth()}は0(1月)から11(12月)の値
+               を返すことに注意
+         \item 17行目では実行時の月と誕生日の月が同じ時に、両者の日を比
+               較して、誕生日前か判定
+        \end{itemize}
+  \item 22行目から24行目では\texttt{birthday}プロパティをゲッターとして
+        定義
+ \end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{基本のオブジェクト---改良(実行結果)}
+\begin{verbatim}
+>p2 = new Person2("me",1995,4,1);
+Person2 {name: "me", year: 1995, month: 4, day: 1}
+>p2.birthday;
+"1995年4月1日"
+>p2.age;
+20
+>p.age=30;
+30
+>p2.age;
+20
+>Person2.prototype.constructor
+Object() { [native code] }
+\end{verbatim}
+ \end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{基本のオブジェクト---改良(実行結果解説)}
+\begin{itemize}
+ \item \texttt{p.age}にはセッターが定義されていないので見かけ上の代入を
+       行っても無効
+ \item \texttt{Person2.prototype.constructor}の結果が\texttt{Person2}に
+なっていないのは、7行目で\texttt{Person2.prototype}に代入しているいオブ
+       ジェクトに\texttt{constructor}プロパティがないからである。
+ \item  通常はこれには
+問題があるので代入するオブジェクト内に次のような記述を追加
+\begin{verbatim}
+constructor : Person2,
+\end{verbatim}
+ \item 別の方法としては、\texttt{Person2.prototype.constructor = Person2;}
+の行を追加
+\end{itemize}
+
+\ElmJ{get}キーワードの代わりに\ElmJ{set}キーワードを用いるとセッター
+を定義できる。
+\end{frame}
+\subsection{継承}
+\begin{frame}[containsverbatim]
+ \frametitle{オブジェクトの継承}
+ \begin{itemize}
+  \item オブジェクトの継承とは既に存在するオブジェクト(クラス)に対して機能の追加や修正を
+        行って新しいオブジェクト(クラス)を構成すること
+  \item JavaScript ではクラスをサポートしていないので厳密な意味での継承はできな
+        い
+  \item \ElmJ{prototype}を用いることでメソッドや共通プロパティの継承が可能
+ \end{itemize}
+ \end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{継承の例}
+ \texttt{Person2}を継承して、学籍番号
+ を追加のプロパティとする\texttt{Student}オブジェクトを構成
+\begin{verbatim}
+function Student(n, id, y, m, d){
+  this.name   = n;
+  this.year  = y;
+  this.month = m;
+  this.day   = d;
+  this.id    = id;
+}
+Student.prototype = new Person2();
+Student.prototype.constructor = Student;
+\end{verbatim}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{継承の例---解説}
+ \begin{itemize}
+ \item \texttt{name}などのプロパティはオブジェクトごとに違う値をとるので
+       \texttt{Person2.rototype}内には置くことができない。したがって、そ
+       れぞれを\texttt{this}のプロパティに格納(２行目から６行目)
+ \item \texttt{Person2}の\texttt{prototype}を利用するために、
+       \texttt{Student.prototype}にオブジェクトを新規に作成して代入
+       (8行目)。
+  \item これにより、この後で\texttt{Person2}のプロパティが変更さ
+       れても、\texttt{Student}オブジェクトには影響がでない。
+ \item \texttt{Student.prototype.constructor}を\texttt{Student}に戻して
+       おく(9行目)
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{継承の例---実行結果}
+\begin{verbatim}
+>s = new Student("me",1323300,1995,4,1)
+Student {name: "me", year: 1995, month: 4, day: 1, id: 1323300}
+>s.age;
+20
+>s.name
+"me"
+>s+"";
+"私の名前はmeです"
+>s.constructor;
+Student(n, id, y, m, d){
+  this.name   = n;
+  this.year  = y;
+  this.month = m;
+  this.day   = d;
+  this.id    = id;
+}
+\end{verbatim}
+\texttt{Person2}で定義されたメソッドが利用できていることがわかる。
+\end{frame}
+\section{エラーオブジェクトについて}
+\subsection{エラーオブジェクトの概要}
+\begin{frame}[containsverbatim]
+ \frametitle{エラーオブジェクトとは}
+ \begin{itemize}
+  \item エラーが発生したことを知らせるオブジェクト
+  \item 通常は計算の継続ができなくなったときにエラーオブジェクトをシステムに送る
+操作が必要
+  \item これをエラーを投げる(\ElmJ{throw}する)という
+ \end{itemize}
+
+エラーオブジェクトには表\ref{ErrorProp}のようなプロパティがある。
+\begin{table}
+ \caption{エラーオブジェクトのプロパティ}\label{ErrorProp}
+ \begin{center}
+	 \begin{tabular}{|c|m{20zw}|}\hline
+		プロパティ&\multicolumn{1}{c|}{説明}\\ \hline
+		\texttt{message}&エラーに関する詳細なメッセージ。コンストラクタで渡
+				された文字列か、デフォルトの文字列\\ \hline
+		\texttt{name}&エラーの名前。エラーを作成したコンストラクタ名になる\\ \hline
+
+	\end{tabular}
+ \end{center}
+\end{table}
+\end{frame}
+\subsection{エラー処理の例}
+\begin{frame}[containsverbatim]
+ \frametitle{エラー処理の例}
+コンストラクタに与えられ
+	た引数をチェックして不正な値の場合にはエラーを投げるように書き直したも
+ の
+ {\small
+\begin{verbatim}
+function Person(name, y, m, d){
+  if(name === "") throw new Error("名前がありません");
+  this.name = name;
+  this.year = y;
+  if(m<1 || m>12) throw new Error("月が不正です");
+  var date = new Date(y,m,0);
+  if(d<1 || d>date.getDate()) throw new Error("日が不正です");
+  this.month = m,
+  this.day = d
+}
+\end{verbatim}
+ }
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{エラー処理の例---解説}
+\begin{itemize}
+ \item 2行目で、\texttt{name} が空文字であればエラーを発生
+ \item 5行目では月の値の範囲をチェック
+ \item 6行目では、与えられた年と月からその月の最終の日を求めている。
+       
+			 \ElmJ{Date.getMonth()}の戻り値が0(1月)から11(12月)になっているの
+			 で、\texttt{new Date(y,m,0)}により翌月の1日の1日前、つまり、問題
+			 としている月の最終日が設定できる
+ \item 7行目で与えられた範囲に日が含まれていなければエラーを発生
+\end{itemize}
+ \end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{エラー処理の例---実行例}
+\begin{itemize}
+ \item 通常の日時ならば問題なく、オブジェクトが構成される。
+\begin{verbatim}
+>p = new Person("foo",1995,4,1);
+Person {name: "foo", year: 1995, month: 4, day: 1}
+\end{verbatim}
+ \item 1996年はうるう年なので2月29日が存在する。したがって、エラーは起こ
+			 らず正しくオブジェクトが作成できる。
+\begin{verbatim}
+>p = new Person("foo",1996,2,29);
+Person {name: "foo", year: 1996, month: 2, day: 29}
+\end{verbatim}
+ \item 1995年はうるう年ではないので2月29日がない。したがって、エラーが起
+			 きる。
+\end{itemize}
+ \end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{エラー処理の例---実行例(続き)}
+ 不正な月や日では当然、エラーが起こる。
+\begin{verbatim}
+>p = new Person("foo",1995,2,29);
+ Uncaught Error: 日が不正です(…)
+>p = new Person("foo",1995,13,29);
+ Uncaught Error: 月が不正です(…)
+>p = new Person("foo",1995,12,0);
+ Uncaught Error: 日が不正です(…)
+\end{verbatim}
+ \end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{エラー処理の例---問題点}
+オブジェクトを継承するオブジェクトに対して、継承先
+ のオブジェクトに対してエラーチェックの部分を再び書く必要がある。
+
+エラーチェックの部分を関数化して、継承先でも同じようなチェッ
+ クができるようにする。
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{エラー処理の例(改良版)}
+\begin{verbatim}
+function Person2(name, y, m, d){
+  this.checkDate(y, m, d);
+  this.checkName(name);
+  this.name = name;
+  this.year = y;
+  this.month = m,
+  this.day = d
+}
+\end{verbatim}
+ \end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{エラー処理の例(改良版)---続き}
+{\small
+\begin{verbatim}
+Person2.prototype = {
+  toString : function(){
+      return "私の名前は"+this.name+"です";
+    },
+  checkDate : function(y, m, d) {
+      var date = new Date(y,m,0);
+      if(m<1 || m>12) throw new Error("月が不正です");
+      if(d<1 || d>date.getDate()) throw new Error("日が不正です");
+    },
+  checkName : function(name) {
+      if(name === "") throw new Error("名前がありません");
+    },
+ get age(){
+   ... // 内容は省略
+    },
+  get birthday() {
+      return this.year+"年"+this.month+"月"+this.day+"日";
+    }
+}
+\end{verbatim}
+ }
+ \end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{エラー処理の例(改良版)---解説}
+エラーチェックをする関数を作成して、それを
+ \texttt{Person2.prototype}のなかに置いている。
+\begin{itemize}
+ \item 2行目と3行目でエラーチェックをする関数を呼び出している。この関数
+			 はエラーが起きたときはエラーを投げるので、コンストラクタ関数の制
+			 御から離れる
+ \item それぞれのエラーチェックをする関数は13行目から17行目と18行目から
+			 20行目に記述
+\end{itemize}
+ \end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{エラー処理の例(改良版)---続き}
+\texttt{Person2}継承した\texttt{Student}オブジェクト
+\begin{verbatim}
+function Student(n, id, y, m, d){
+  this.checkDate(y, m, d);
+  this.checkName(name);
+  this.name   = n;
+  this.year  = y;
+  this.month = m;
+  this.day   = d;
+  this.id    = id;
+}
+Student.prototype = new Person2();
+Student.prototype.constructor = Student;
+\end{verbatim}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{エラー処理の例(改良版)---実行例}
+\begin{verbatim}
+>s=new Student("foo",1223300,1995,12,1);
+Student {name: "foo", year: 1995, month: 12, day: 1, id: 1223300}
+>s=new Student("foo",1223300,1995,4,0);
+ Uncaught Error: 日が不正です(…)
+>s=new Student("foo",1223300,1995,13,1);
+ Uncaught Error: 月が不正です(…)
+\end{verbatim}
+\end{frame}
+\subsection{エラーからの復帰}
+\begin{frame}[containsverbatim]
+ \frametitle{エラー処理の問題点}
+\begin{itemize}
+ \item 前節の例ではエラーが発生するとそこでプログラムの実行が止まる
+ \item エラーが発生したときに、投げられた(\ElmJ{throw}された)エラーを捕まえる
+(\ElmJ{catch}する)ことが必要
+ \item \ElmJ{try\{...\}catch\{...\}}構文を使用
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{エラー発生でプログラムを停止させない方法}
+\ElmJ{try\{...\}catch\{...\}}構文を用いてオブジェクトが正しくでき
+ るまで繰り返す。
+\begin{verbatim}
+function test() {
+  var y, m, d;
+  for(;;) {
+    try {
+      y = Number(prompt("生まれた年を西暦で入力してください"));
+      m = Number(prompt("生まれた月を入力してください"));
+      d = Number(prompt("生まれた日を入力してください"));
+      return new Person2("foo", y, m, d);
+    } catch(e) {
+      console.log(e.name+":"+e.message);
+    }
+  }
+}
+\end{verbatim}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{解説}
+\begin{itemize}
+ \item テストを繰り返す関数\texttt{test()}が定義
+ \item 3行目では無限ループが定義されている。正しいパラメータが与えられた
+			 ときに8行目で作成されたオブジェクトを戻り値にして関数の実行が終了
+ \item \ElmJ{try\{\}}内にはエラーが発生するかもしれないコードを中に含め
+			 る。
+	\begin{itemize}
+	 \item ここでは年、月、日の入力を\ElmJ{prompt}用いてダイアログボックス
+				 を表示させ、そこに入力させている。
+	 \item 戻り値は文字列なので、\ElmJ{Number}で数に直している。
+	\end{itemize}
+ \item 与えられた入力が正しくなければエラーが投げられ、
+			 \ElmJ{catch}\texttt{(e)}の中に制御が移る。
+ \item \ElmJ{catch}\texttt{(e)}における\texttt{e}には発生したエラーオブ
+			 ジェクトが渡されるので、コンソールにその情報を出力する(10行目)。
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{実行はブラウザで}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{補足}
+\ElmJ{try\{...\}catch\{\}}構文について
+\begin{itemize}
+ \item \ElmJ{finally\{\}}を付けることも
+できます。\ElmJ{try\{...\}catch\{\}}内の部分は\texttt{try}や
+\texttt{catch}の部分が実行された後必ず呼び出される
+ \item \ElmJ{try\{...\}catch\{...\}}構文は入れ子にできる。投げられたエラー
+			 に一番近い\texttt{catch}にエラーがつかまる。
+\end{itemize}
+\end{frame}
+\end{document}%-*- coding: utf-8 -*-
+
+
+

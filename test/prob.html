@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<title>集合</title>
+<script type="text/ecmascript">
+//<![CDATA[
+function Set() {
+  var Member = [];
+  this.length = arguments.length;
+  for(var i=0;i<this.length;i++){
+    Member[arguments[i]]=i;
+  }
+  Object.defineProperty(this, "Member",
+    {get: function(){
+        var M = [];
+        for( var key in Member) {
+          M.push(key);
+        }
+        return M;
+      }
+    });
+  this.includes = function(v) {
+    return typeof Member[v] !== "undefined";};
+  this.add = function() {
+    for(var i=0;i<arguments.length;i++){
+      if(!this.includes(arguments[i])) {
+        Member[arguments[i]]=i;
+        this.length++;
+      }
+    }
+  };
+}
+Set.prototype = {
+  isEmpty : function() {return this.length == 0;},
+  foreach : function(f) {
+    var M = this.Member;
+    for(var key in M) f(M[key]);
+  },
+  toString : function() {
+    if(this.isEmpty()) return "{}";
+    var res = "{";
+    var M = this.Member;
+    for( var key in M) {
+      res += M[key] +",";
+    }
+    return res.substr(0,res.length-1)+"}";
+  }
+};
+</script>
+</head>
+</html>

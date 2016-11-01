@@ -1,0 +1,41 @@
+\newcommand{\ShowFig}[1]{
+  \begin{figure}[ht]
+     \begin{center}
+        \includegraphics[width=0.9\textwidth]{googleMapsAPI#1.eps}
+     \caption{Google Maps APIキーの取得(#1)}\label{googleMapsAPI#1}
+     \end{center}
+  \end{figure}
+  \clearpage
+}
+\chapter{Google Maps API キーの取得方法}
+ \section{Google Maps API キーの取得手順}
+  ここでは、Google Maps API　キーの取得手順について述べる。
+
+Google Maps API キーを取得するためには、Google のアカウントが必要であ
+  る。
+ このアカウントで
+  ログインした後、次のサイトにアクセスする。
+
+  \texttt{https://code.google.com/apis/console}
+  
+ 新しいプロジェクトを作成する。図\ref{googleMapsAPI01}はプロジェク
+       トを作成した後の画面である。
+       \ShowFig{01}
+
+       「Google API を利用する」の部分をクリックすると、
+       図\ref{googleMapsAPI02}となる。
+       \ShowFig{02}
+ ここで、「Google Maps JavaScript API」をクリックすると
+       図\ref{googleMapsAPI03}となる。
+       \ShowFig{03}
+ 「認証情報を追加」をクリックすると、図\ref{googleMapsAPI04}となる。
+　       \ShowFig{04}
+ 新しいプロジェクトにプロジェクト名を入れて、「作成」を押すと図
+       \ref{googleMapsAPI05}となる。
+       　       \ShowFig{05}
+ 「APIキー」を選択すると図\ref{googleMapsAPI06}となる。
+       　       \ShowFig{06}
+ 「作成」を押すと図\ref{googleMapsAPI07}となる。
+       　       \ShowFig{07}
+ 「ブラウザキー」を選択するとこで必要なキーが得られる。
+

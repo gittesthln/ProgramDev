@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>今日は何の日(jQuery版)</title>
+
+<script type="text/ecmascript" src="jquery-1.11.2.min.js"></script>
+<script type="text/ecmascript">
+//<![CDATA[
+$(window).ready(function(){
+    function makeSelectNumber(from, to, prefix, suffix, id, parent){
+      var i, option;
+      var Select = $("<select/>", {"id":id});
+      if(parent) parent.append(Select);//$(parent).append(Select);
+      for(i=from; i<=to; i++) {
+        option = $("<option/>",{"value":i,"text":prefix+i+suffix});
+        Select.append(option);
+//          $("<option/>",{"value":i,"text":prefix+i+suffix}).appendTo(Select);
+      }
+      return Select;
+    };
+    var i, today = new Date();
+    var y = today.getFullYear();
+    var m = today.getMonth();
+    var Form  = $("#menu");
+    var Year  = makeSelectNumber(2000,2020,"","年","year", Form);
+    var Month = makeSelectNumber(1,12,"","月","month", Form);
+    var Days = [];
+    for(i=28; i<=31; i++) {
+      Days[i] = makeSelectNumber(1,i,"","日","day");
+    }
+    Year.val(y);     //$("#year").val(y);
+    Month.val(m+1);  //$("#month").val(m+1);
+    var d = new Date(y, m+1,0).getDate();
+    Form.append(Days[d]);
+    $("#day").val(today.getDate());
+    var changePulldown = function(){
+      var d2 = $("#day").val();
+      d = new Date(Year.val(), Month.val(), 0).getDate();
+      if( d != $("#day option").length) {
+        $("#day").replaceWith(Days[d]);
+        $("#day").val(Math.min($("#day option").length, d2));
+      }
+      jQuery.ajax({
+        type:"GET",
+        url:      "./aniversary.php",
+        data:     "month=" + Month.val()+ "&day="+d2,
+        dataType: "text",
+        success : function(Data){
+          $("#details").text(Data);
+        },
+        error:function(){alert("error");}
+      });
+    };
+    Form.change(changePulldown);
+    changePulldown();
+});
+//]]>
+</script>
+</head>
+<body>
+  <form id="menu"></form>
+  <p id="details"> </p>
+</body>
+</html> 

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>キーイベント</title>
+<style type="text/css">
+  #down{
+    background:green;
+  }
+</style>
+<script type="text/ecmascript">
+//<![CDATA[
+var res, T, KeyD, KeyP, KeyU;
+window.onload = function () {
+  var base = document.getElementsByTagName("body").item(0);
+  base.addEventListener("keydown",
+    function(event) {
+      if(KeyP.firstChild) KeyP.removeChild(KeyP.firstChild);
+      if(KeyU.firstChild) KeyU.removeChild(KeyU.firstChild);
+      key(event, KeyD);
+    }, true);
+  base.addEventListener("keypress",
+    function(event) {
+      key(event, KeyP);
+    },true);
+  base.addEventListener("keyup",
+    function(event){
+      key(event, KeyU);
+    },true);
+
+  KeyD = document.getElementById("down");
+  KeyP = document.getElementById("press");
+  KeyU = document.getElementById("up");
+}
+function key(event, O) {
+//    event.preventDefault();
+//    event.stopPropagation();
+  var TBL = document.createElement("tbody");
+  if(O.firstChild) {
+    O.replaceChild(TBL,O.firstChild);
+  } else {
+    O.appendChild(TBL);
+  }
+  for( var prop in event) {
+    makeTR(TBL, prop, event[prop]);
+  }
+  makeTR(TBL, "----", "----");
+  makeTR(TBL, "[Char]", String.fromCharCode(event.keyCode));
+}
+function makeTR(P, S1, S2) {
+  var TR = document.createElement("tr");
+  if(P) P.appendChild(TR);
+  makeTD(TR,S1);
+  makeTD(TR,S2);
+  return TR;
+}
+function makeTD(P, Txt) {
+  var TD = document.createElement("td");
+  TD.appendChild(document.createTextNode(Txt));
+  if(P) P.appendChild(TD);
+  return TD;
+}
+//]]>
+</script>
+</head>
+<body>
+  <table>
+    <tr>
+      <td align="center">keydown</td>
+      <td align="center">keypress</td>
+      <td align="center">keyup</td>
+    </tr>
+    <tr>
+      <td><table id="down"><tr></tr></table></td>
+      <td><table id="press"><tr></tr></table></td>
+      <td><table id="up"><tr></tr></table></td>
+    </tr>
+  </table>
+</body >
+</html>

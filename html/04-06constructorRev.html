@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<title>コンストラクタの例</title>
+<script type="text/ecmascript">
+//<![CDATA[
+var Person2 = (function (){
+  var ID = 0;
+  return function(){
+    var mID = ID++;
+    this.name = "foo";
+    Object.defineProperty(this, "ID",
+      {get : function(){return mID},
+       enumerable:true,
+       configurable:false
+      });
+  }
+})();
+var Person2 = (function (){
+  var ID = 0;
+  return function(){
+    var mID = ID++;
+    this.name = "foo";
+    Object.defineProperty(this, "ID",
+      {get : function(){return mID},
+       enumerable:true,
+       configurable:false
+      });
+  }
+})();
+//]]>
+</script>
+</head>
+</html>

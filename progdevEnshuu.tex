@@ -1,0 +1,29 @@
+\documentclass[a4j,12pt]{jarticle}
+\newif\ifHMSol
+\newcommand{\LecName}{ソフトウェア開発}
+\input enshuuhead.tex
+\input softdevhead.tex
+\HMSolfalse%%%
+%\input automatonrev.tex
+\begin{document}
+\pagestyle{enshuu}
+\ProblemR{
+\begin{ProbN}
+\upshape
+次の文字列にマッチする正規表現を作れ。
+\begin{enumerate}
+ \item C言語の変数名の命名規則に合う文字列
+ \item 符号付小数。符号はなくてもよい。小数点はなくてもよい。また、小数
+       点はあっても小数部はなくてもよい。整数部分には数字が少なくても一
+       つはあること。たとえば\verb+-1.+にはマッチするが、\verb+-.0+には
+       整数部分がないのでマッチしてはいけない。\verb+.+のエスケープを忘
+       れないようにすること。
+ \item 前問の正規表現を拡張して、指数部が付いた浮動小数にマッチするもの
+       を作れ。指数部は\verb+E+または\verb+e+で始まり、符号付き(なくても
+       よい)整数とする。
+ \item 24時間生の時刻の表し方。時、分、秒はすべて2桁とし、それらの区切り
+       は\verb+:+とする。たとえば午後1時10分6秒は\verb+13:10:06+である。
+  また、\verb+13:10:66+ は秒数が60以上になっているのでマッチしてはいけない。
+\end{enumerate}
+\end{ProbN}
+}

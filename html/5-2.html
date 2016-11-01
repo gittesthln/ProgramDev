@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<title>プロパティ属性</title>
+<script type="text/ecmascript">
+//<![CDATA[
+function Range(from, to) {
+  if(from > to ) throw Error("Range: from must be <= to");
+  function getF() { return from;};
+  function setF(v) {
+    if(v <= to ) from = v;
+    else throw Error("Range: from must be <= to");
+  };
+  function getT() {return to;};
+  function setT(v) {
+    if(v >= from ) to = v;
+    else throw Error("Range: from must be <= to");
+  }
+  Object.defineProperty(this, "from",
+    {get: getF, set: setF, enumerable:true, configurable:false});
+  Object.defineProperty(this, "to",
+    {get: getT, set: setT, enumerable:true, configurable:false});
+}
+Range.prototype = {
+  includes : function(v) {
+    return this.from <= v && v <= this.to;
+  },
+  foreach : function(f) {
+    for(var k = Math.ceil(this.from); k<= this.to; k++) f(k);
+  },
+  toString : function() { return "[" + this.from+",...,"+this.to+"]";}
+};
+Object.defineProperties(Range.prototype, 
+  { includes : {enumerable : false},
+    foreach  : {enumerable : false},
+    toString : {enumerable : true}
+  });
+//]]>
+</script>
+</head>
+</html>

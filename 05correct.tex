@@ -1,0 +1,36 @@
+\input ProgramDevHead.tex
+\begin{document}
+\paragraph{訂正}
+
+実行例5.7（配布資料49ページ）の\Verb+Student+を次のように変えてもよい。
+
+\LISTN{05-01prototype-test2.html}{47}{52,firstnumber=1}{\normalsize}
+\begin{itemize}
+ \item \Verb+Person2+内で定義されているメンバー変数をそのまま利用するた
+			 めに、2行目で\Verb+Person2+を呼び出している。
+ \item 単純に呼び出すのでは\Verb+Person2+内での\Verb+this+が
+			 \Verb+Person2+になる。
+ \item そこで\Verb+Object+のメソッド\Verb+call+を用いると、第1番目の引数
+			 をそのオブジェクト内での\Verb+this+を書き直すことが可能となる。
+\end{itemize}
+このリストでは\Verb+Person2+内で\Verb+this+を出力している。
+
+\paragraph{\texttt{class}について}
+
+ECMAScriptは 6 から \Verb+class+によりクラスの宣言が可能となった。
+今までの例を\Verb+class+で書き直すと次のようになる。
+\LISTN{05-01prototype-class.html}{8}{39,firstnumber=1}{\normalsize}
+\begin{itemize}
+ \item クラスの宣言は\Verb+class+を用いる(1行目)。
+ \item コンストラクターは\Verb+constructor+関数で定義される(2行目から7行
+			 目)。
+ \item \Verb+class+内ではメソッドを宣言する。ここでは3つのメソッドが定義
+			 されている。
+ \item 27行目から32行目は継承の例である。
+ \item クラス名の後にキーワード\Verb+extends+をつけて親クラスを指定する。
+			 親クラスを複数指定する多重継承はできない。
+ \item 29行目では親クラスのコンストラクタを呼び出すために\Verb+super+を
+			 利用している。
+% \item いわゆるクラス変数は定義できない。
+\end{itemize}
+\end{document}

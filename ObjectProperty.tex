@@ -1,0 +1,382 @@
+%-*- coding: utf-8 -*-
+\section{ECMAScript5のオブジェクト属性}
+\subsection{オブジェクト指向言語におけるプロパティとメソッドの属性}
+オブジェクト指向言語ではオブジェクトのプロパティやメソッドは次のよ
+うに分類されきる。
+\begin{itemize}
+ \item {\bfseries インスタンスフィールド}\\インスタンスごとに異なる値を保
+       持できるプロパティ
+ \item {\bfseries インスタンスメソッド}\\
+クラスのすべてのインスタンスで共有されるメソッド
+ \item {\bfseries クラスフィールド}\\クラスに関連付けられたプロパティ
+ \item {\bfseries クラスメソッド}\\
+クラスに関連付けられたメソッド
+\end{itemize}
+JavaScriptでは関数もデータなのでフィールドとメソッドに厳密な区別はないの
+でフィールドとメソッドは同一視できる。また、\texttt{prototype}を用いるれ
+ばクラスフィールドなども作成できる。
+
+通常、オブジェクト指向の言語ではフィールドをかってに操作され
+ないようにするために、フィールドを直接操作できなくして、値を設定や取
+得するメソッドを用意する。そのために、フィールドにアクセスするため
+記述が面倒になるという欠点もある。
+
+一方、プロパティの代入の
+形をとっても実際はゲッターやセッター関数を呼ぶ形になっている言語も存在す
+る。JavaScriptの最新版1.8.1以降ではそれが可能となっている。
+\subsection{プロパティ属性}
+JavaScript は Ecma International が定義している ECMAScript の仕様に基づ
+いている。2014年現在、最新バージョンの ECMAScript\Correct{7} の仕
+様は
+ECMA-262\footnote{\texttt{http://www.ecma-international.org/publications/files/ECMA-ST/Ecma-262.pdf}}
+で公開されている。
+
+このバージョンではオブジェクトのプロパティやメソッドにプロパティ属性とい
+う機能が追加された。オブジェクトのプロパティの属性には表
+\ref{PropAttribute}のようなものがある。
+\begin{table}[ht]
+ \caption{プロパティの属性のリスト}\label{PropAttribute}
+\begin{center}
+ \begin{tabular}{|c|m{6zw}|m{20zw}|c|}\hline
+ 属性名 & \multicolumn{1}{c|}{値の型}& \multicolumn{1}{c|}{説明}&
+デフォルト値\\\hline
+  \texttt{value}& 任意のデータ&プロパティの値&\texttt{undefined}\\ \hline
+  \texttt{writable}&\texttt{Boolean}& \texttt{false}のときは
+	  \texttt{value}の変更ができない&\texttt{true}\\ \hline
+  \texttt{enumerable}&\texttt{Boolean}& \texttt{true}のときは
+	  \texttt{for-in}ループでプロパティが現れる。&\texttt{false}\\ \hline
+  \texttt{configurable}&\texttt{Boolean}&\texttt{false}のときはプロパティ
+	  を消去したり、\texttt{value}以外の値の変化ができない&\texttt{false}\\ \hline
+ \end{tabular}
+\end{center}
+\end{table}
+
+これにより作成したオブジェクトのプロパティのアクセス方法に制限
+をかけることが可能となる。
+
+また、メソッドに関しては表\ref{MethodAttribute}のものがある。
+\begin{table}[ht]
+ \caption{メソッドの属性のリスト}\label{MethodAttribute}
+\begin{center}
+ \begin{tabular}{|c|m{6zw}|m{20zw}|c|}\hline
+ 属性名 & \multicolumn{1}{c|}{値の型}& \multicolumn{1}{c|}{説明}& デフォルト値 \\\hline
+  \texttt{get}& オブジェクトまたは未定義&関数オブジェクトでなければなら
+	  ない。プロパティの値が読みだされるときに呼び出される&\texttt{undefined}\\ \hline
+  \texttt{set}&オブジェクトまたは未定義& 関数オブジェクトでなければなら
+	  ない。プロパティの値を設定するときに呼び出される&\texttt{undefined}\\ \hline
+  \texttt{enumerable}&\texttt{Boolean}& \texttt{true}のときは
+	  \texttt{for-in}ループでメソッドが現れる。&\texttt{false}\\ \hline
+  \texttt{configurable}&\texttt{Boolean}&\texttt{false}のときはプロパティ
+	  を消去したり、\texttt{value}以外の値の変化ができない&\texttt{false}\\ \hline
+ \end{tabular}
+\end{center}
+\end{table}
+
+これらの属性のうち、\texttt{get}や\texttt{set}を使うとオブジェクトのプロ
+パティの呼び出しや変更に関して、いわゆるゲッター関数やセッター関数を意識
+しないで呼び出すことが可能となる。
+
+これらの属性は\texttt{Object.defineProperty()}や
+\texttt{Object.defineProperties()}関数を用いて設定する。
+%
+\newpage
+ \begin{Exec}\upshape\label{OP}
+	次の例は今までの例にオブジェクト属性を付けてその効果を確認するためのも
+	のである。
+\begin{Verbatim}[numbers=left]
+var Person = (function (){
+  var ID = 0;
+  return function(name, year, month, day, hometown){
+    this.name = name;
+    var getID = (function(x) {
+      return function(){ return x;}
+    })(ID++);
+    this.birthday = {};
+    this.birthday.year = year;
+    this.birthday.month = month;
+    this.birthday.day = day;
+    this.name = name;
+    Object.defineProperty(this, "ID",
+      {get: getID,
+       enumerable:true,
+       configurable:false
+      });
+    Object.defineProperties(this.birthday,
+      {year  : {enumerable : true},
+       month : {enumerable : true},
+       day   : {enumerable : false, writable : false}
+    });
+  }
+})();
+\end{Verbatim}
+	\begin{itemize}
+	 \item 3行目から23行目までが、\texttt{Person()}で定義されるコンストラ
+				 クタ関数である。
+	 \item このコンストラクタ関数は今まではデフォルトで与えられていたオブ
+				 ジェクトのメンバーを、コンストラクタ関数の引数で定義できるよう
+				 に変更している。
+	 \item 5行目から7行目で呼び出されたときの\texttt{ID}の値を保存し、参照
+				 するためのローカルな関数\texttt{getID()}を定義している。
+	 \item 8行目では\texttt{this.birthday}をオブジェクトとして初期化し、9
+				 行目から10行目でそのオブジェクトに値を設定している。
+	 \item 13行目から22行目で、このオブジェクトの\texttt{ID}を設定している。
+				 \begin{itemize}\upshape
+					\item \texttt{get}で参照される関数を5行目で定義された
+								\texttt{getID}設定している(14行目)。
+					\item 15行目で\texttt{for in} ループで表示されるように、15行目
+								ではプロパティに変更ができないように
+								\ElmJ{defineProperty}メソッドで設定している。
+
+								\ElmJ{defineProperty}メソッドの3番目の引数は設定しようと
+								するプロパティを列挙したオブジェクトになっている。
+				 \end{itemize}
+	 \item 18行目から22行目ではプロパティ\texttt{birthday}の各項目に必要な
+				 設定をしている。
+	\end{itemize}
+ \end{Exec}
+ \begin{itemize}
+	\item 
+ \texttt{ID}のプロパティでは\texttt{set}が設定されていないので、呼び出し
+ の処理は行われない。
+\begin{Verbatim}
+>p = new Person("foo",2001,4,1,"Japan");
+Object {name: "foo", birthday: Object}
+>p.ID;
+0
+>p.ID = 5;
+5
+>p.ID;
+0
+\end{Verbatim}
+\texttt{p.ID}に値を代入してもエラーは起きていないので値が設定できたよう
+に見える。しかし、値を参照してみると変化がないことがわかる。
+	\item また、\texttt{p.ID}は消去できない。
+\begin{Verbatim}
+>	delete p.ID
+false
+\end{Verbatim}
+	\item \texttt{p}のプロパティを列挙してみると、3つが表示されることがわかる。
+\begin{Verbatim}
+>for(c in p) console.log(c+":"+p[c]);
+ name:foo
+ birthday:[object Object]
+ ID:0
+undefined
+\end{Verbatim}
+	\item しかし、\texttt{p.birthday}のプロパティでは\texttt{day}が表示されない。
+\begin{Verbatim}
+>for(c in p.birthday) console.log(c+":"+p.birthday[c]);
+ year:2001
+ month:4
+undefined
+\end{Verbatim}
+これは21行目で\texttt{enumerable}を\texttt{false}に設定して
+いるためである。
+	\item \texttt{p.birthday.year}の値は変更できる。
+\begin{Verbatim}
+>p.birthday.year = 2010
+2010
+>p.birthday.year;
+2010
+\end{Verbatim}
+	\item \texttt{p.birthday.day}の値は\texttt{writable}が\texttt{false}に設定
+されているために変更できない。
+\begin{Verbatim}
+>p.birthday.day = 20;
+20
+>p.birthday.day;
+1
+\end{Verbatim}
+	\item \texttt{p.birthday.day}は\texttt{configurable}が設定
+されていないので消去できる。
+\begin{Verbatim}
+>delete p.birthday.day;
+true
+>p.birthday.day;
+undefined
+\end{Verbatim}
+	\item \texttt{p.ID}は\texttt{configurable}が\texttt{false}に設定
+されているので消去できない。
+\begin{Verbatim}
+>delete p.ID;
+false
+>p.ID;
+0
+\end{Verbatim}
+				\ElmJ{delete} の結果が\texttt{false}となっている。
+\end{itemize}
+%\begin{Verbatim}
+ %\end{Verbatim}
+ \begin{Prob}\upshape
+	実行例\ref{OP}について次の問いに答えよ。
+	\begin{enumerate}
+	 \item \texttt{ID}プロパティの\texttt{get}のローカルで定義
+	された関数名を与えているが、ここは無名関数でも動くことを確認しなさい。
+	 \item 残りの属性にも適当な属性を付けて意図したとおりに動作することを
+				 確認しなさい。
+	 \item \texttt{this.birthday}の属性の一つ(以上)に\texttt{configurable}
+				 を\texttt{false} に設定したとき、\texttt{birthday}属性が
+				 \texttt{delete}できるかどうか確認しなさい。
+	\end{enumerate}
+ \end{Prob}
+\iffalse
+次の例は\cite{JS6}9章の例9.2の \texttt{Range} を改良した例9.18と9.21をま
+とめたものである。
+\begin{Exec}\label{ExRange2}\upshape
+この例は実行例\ref{ExRange}を改良してコンストラクタやセッター
+ のところで不適切な値が設定されないようにチェックを加えたものである。
+\begin{listing}{1}
+function Range(from, to) {
+  if(from > to ) throw Error("Range: from must be <= to");
+  function getF() { return from;};
+  function setF(v) {
+    if(v <= to ) from = v;
+    else throw Error("Range: from must be <= to");
+  };
+  function getT() {return to;};
+  function setT(v) {
+    if(v >= from ) to = v;
+    else throw Error("Range: from must be <= to");
+  }
+  Object.defineProperty(this, "from",
+    {get: getF, set: setF, enumerable:true, configurable:false});
+  Object.defineProperty(this, "to",
+    {get: getT, set: setT, enumerable:true, configurable:false});
+}
+\end{listing}
+\begin{itemize}
+ \item 前と同様に、二つの引数を持つ \texttt{Range} 関数を作成する。
+ \item 2行目では下限の値が上限の値より大きくなったらエラーを発生させてい
+       る。
+ \item 3行目から12行目では下限(\texttt{from})と上限(\texttt{to})のゲッター
+       とセッターを定義している。各セッターではコンストラクタと同様に値
+       に矛盾が起きていたらエラーを発生させるようにしている。
+ \item 13行目から14行目で作成するインスタンスのプロパティ \texttt{from}
+       のオブジェクト属性を \texttt{defineProperty()} を用いて定義してい
+       る。この関数の引数は次のとおりである。
+ \begin{itemize}
+  \item 一番目の引数はプロパティを設定するオブジェクト
+  \item 2番目の引数はプロパティの名前。ここでは文字列で与えている。
+  \item 3番のの引数は設定するプロパティ属性。ここではゲッター関数とセッ
+	ター関数を指定し、\texttt{for-in}ループで列挙可能にし、関数の置
+	き換えや再設定ができないように設定している。
+ \end{itemize} 
+ \item 15行目から16行目では同様に作成するインスタンスのプロパティ \texttt{from}
+       のオブジェクト属性を設定している。
+\end{itemize}
+\begin{listingcont}
+Range.prototype = {
+  includes : function(v) {
+    return this.from <= v && v <= this.to;
+  },
+  foreach : function(f) {
+    for(var k = Math.ceil(this.from); k<= this.to; k++) f(k);
+  },
+  toString : function() { return "[" + this.from+",...,"+this.to+"]";}
+};
+Object.defineProperties(Range.prototype, 
+  { includes : {enumerable : false},
+    foreach  : {enumerable : false},
+    toString : {enumerable : true}
+  });
+\end{listingcont}
+\begin{itemize}
+ \item 18行目から26行目までは前と同じく \texttt{prototype} にクラスメソッ
+       ドを定義している。
+ \item これらのクラスメソッドの一部を列挙可能にしないために
+       \texttt{definePropaties()} を用いて設定している。この関数は
+       \texttt{definePropaty()} が一つのプロパティごとに設定するのに対し、
+       複数のプロパティに対して設定が可能である。なお、ここでは機能を確
+       かめるため設定の値を変えている。
+\begin{itemize}
+ \item 一番目の引数は設定するオブジェクト
+ \item 2ア番目の引数は設定するプロパティをキーとし、設定する属性のリスト
+       を表すオブジェクトを値とする。
+\end{itemize}
+\end{itemize}
+これらの設定が正しく動作しているか検証する。
+\begin{itemize}
+ \item オブジェクトを作成し、プロパティを列挙する。
+\begin{Verbatim}
+>r = new Range(1,5);
+Range {from: (...), to: (...), toString: function}
+>for(key in r) console.log(key+":"+r[key]);
+from:1
+to:5
+toString:function () { return "[" + this.from+",...,"+this.to+"]";}
+undefined
+>r.includes;
+function (v) {
+    return this.from <= v && v <= this.to;
+  } 
+\end{Verbatim}
+\begin{itemize}
+ \item \texttt{include} と \texttt{foraeach} の \texttt{enumerable} のプロパティ
+       を \texttt{false} 、\texttt{toString} の \texttt{enumerable} のプロパティ
+       を \texttt{true} に設定したので、メソッドは \texttt{toString} し
+       か表示されていない。
+ \item 関数が存在することは確認できる。
+\end{itemize}
+ \item 各メソッドが正しく動作するか確認する。
+\begin{Verbatim}
+>r.includes(3);
+true
+>r.includes(10);
+false
+\end{Verbatim}
+以前と同じ動作をしている。
+ \item プロパティに代入する。
+\begin{Verbatim}
+>r.from = 10;
+Uncaught Error: Range: from must be <= to 
+>r.from = -5;
+-5
+>r.from;
+-5
+\end{Verbatim}
+\begin{itemize}
+ \item 上限より大きな値を下限に設定するとエラーが起こる。\texttt{get} で
+       指定した関数が動作していることがわかる。
+ \item 条件を満たす値を設定すれば、正しく設定される。
+\end{itemize}
+念のため、オブジェクトの値がどうなっているか確認する。
+\begin{Verbatim}
+>for(key in r) console.log(key+":"+r[key]);
+from:-5
+to:5
+toString:function () { return "[" + this.from+",...,"+this.to+"]";}
+undefined
+\end{Verbatim}
+ \item プロパティが削除できるか確認する。
+\begin{Verbatim}
+>delete r.from;
+false
+>r.from
+-5
+\end{Verbatim}
+\texttt{delete} の結果が \texttt{false} なので、取り除きに失敗している。
+       値は元の値のままである。
+\end{itemize}
+\end{Exec}
+\begin{Prob}
+実行例\ref{ExRange2}に対して次のことをしなさい。
+\begin{enumerate}\upshape
+ \item 実行例\ref{ExRange}にならって、各メソッドが正しく動くことを確認せ
+       よ。
+ \item 13行目から16行目にある2つの \texttt{Object.defineProperty()} 関数
+       を \texttt{Object.defineProperties()} 関数で置き換えよ。
+ \item 3行目から12行目で定義されている関数はグローバルな関数か答えよ。ま
+       た、13行目から16行目の部分は関数 \texttt{Range()} の外に記述して
+       もよいか答えよ。
+ \item 3行目から12行目で定義されている関数を無銘関数にしてゲッターとセッ
+       ターを定義せよ。
+ \item 関数 \texttt{Range()} 内にある変数 \texttt{from} と \texttt{to}
+       はどどこで定義されているか答えよ。
+ \item 関数 \texttt{Range()} 内にある変数 \texttt{from} と \texttt{to}
+       と \texttt{this.from}、\texttt{this.to} は同じオブジェクトを指す
+       か答えよ。たとえば、3行目の \texttt{from} を \texttt{this.from}
+       としたら何が起こるか確認せよ。
+ \item 上記の実行例で \texttt{delete r.from} が失敗する理由を説明せよ。
+\end{enumerate}
+\end{Prob}
+\fi

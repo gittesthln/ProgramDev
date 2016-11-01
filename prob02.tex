@@ -1,0 +1,56 @@
+%-*- coding: utf-8 -*-
+
+\newcommand{\Rule}{\ifAnswer\else\rule[-2ex]{0em}{5ex}\fi}
+\ifAnswer
+\newcommand{\AnsShow}[3]{\texttt{#1}&#2&#3\\\hline}
+\else
+\newcommand{\AnsShow}[3]{\texttt{#1}&&\\\hline}
+\fi
+次の式の評価結果を求めなさい。\\[0.1em]
+ \begin{tabular}{|>{\Rule}c|c|m{26zw}|}\hline
+  \multicolumn{1}{|c|}{式}&\multicolumn{1}{c|}{結果}
+  &\multicolumn{1}{c|}{理由}  \\\hline
+  \AnsShow{5\%3}{$2$}{$5$を$3$で割った余り}
+  \AnsShow{4+"5"}{\texttt{"45"}}{右のオペランドが文字列なので左の数は文字列
+	  に変換され、それらが連接される。}
+  \AnsShow{4-"5"}{$-1$}{演算子が\texttt{-}なので右の文字列が数に変換される。}
+  \AnsShow{4+"ff"}{\texttt{"4ff"}}{前と同様}
+  \AnsShow{4+"0xff"}{\texttt{"40xff"}}{前と同様}
+  \AnsShow{4+parseInt("ff")}{\texttt{NaN}}{文字列内に数として正しく変換され
+	  るものがないので\texttt{parseInt()}の戻り値が \texttt{NaN}となり、
+	  これ以降の数の演算は\texttt{NaN}となる。}
+  \AnsShow{4+parseInt("0xff")}{$259$}{\texttt{parseInt()}は正しく16進数とし
+	  て解釈するので$4+255=259$となる。}
+  \AnsShow{4+parseInt("ff",16)}{$259$}{基数を$16$と指定しているので、正しく$255$と解
+	  釈される。}
+  \AnsShow{4+"1e1"}{\texttt{"4+1e1"}}{2番目と同じ}
+\AnsShow{4+parseInt("1e1")}{$5$}{"1e1" は数値リテラルとしては
+	  $1\times10^1=10$を表すが、\texttt{parseInt()}は整数リテラル表記
+  しか扱わないので、数の変換は\texttt{e}の前で終わる。 $1$の値が
+	  戻り値となる。}
+  \AnsShow{4+parseFloat("1e1")}{$14$}{\texttt{parseInt()}と異なり、
+	  \texttt{parseFloat()}の戻り値は $10$。}
+  \AnsShow{"4"*"5"}{$20$}{文字列の間では\texttt{*}の演算が定義されていないの
+	  で両方とも数に変換されて計算される。}
+  \AnsShow{"4"/"5"}{$0.8$}{上と同様}
+  \AnsShow{[].length}{$0$}{配列の要素がないので長さは$0$となる。}
+  \AnsShow{[[]].length}{$1$}{長さを求める配列は空の配列一つを要素に持つ。}
+  \AnsShow{0 == "0"}{\texttt{true}}{文字列\texttt{"0"}が数$0$に変換されて比較
+	  される。}
+  \AnsShow{0 == []}{\texttt{true}}{空の配列が空文字\texttt{""}に変換されたのち、
+	  数との比較なので数 $0$ に変換される。}
+  \AnsShow{"0" == []}{\texttt{false}}{空の配列が空文字\texttt{""}に変換され、
+	  文字列の比較となる。}
+  \AnsShow{![]}{\texttt{false}}{空の配列はオブジェクトとして存在するので\texttt{true}と解釈され、否定
+	  演算子で\texttt{false}になる。}
+  \AnsShow{false == []}{\texttt{true}}{\texttt{[]}が空文字\texttt{""}に変換されたのち、\texttt{0}に変換される。}
+  \AnsShow{"false" == []}{\texttt{false}}{文字列\texttt{"false"}は空文字ではな
+	  いので\texttt{true}に変換される。}
+  \AnsShow{[] == []}{\texttt{false}}{配列はオブジェクトであり、二つの空の配
+	  列は別物とみなされる。}
+  \AnsShow{typeof []}{\texttt{"object"}}{配列はオブジェクトである。}
+  \AnsShow{null == undefined}{\texttt{true}}{両方とも\texttt{false}に変換され
+	  てから比較される。}
+  \AnsShow{a=[], b=a, a==b;}{\texttt{true}}{同じメモリーにあるオブジェクトを参
+  照している。}
+ \end{tabular}

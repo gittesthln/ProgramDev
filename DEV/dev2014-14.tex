@@ -1,0 +1,594 @@
+%-*- coding: utf-8 -*-
+\documentclass[dvipsk]{beamer}
+\usepackage{pgfpages}
+\usepackage{moreverb,array}
+%\usetheme{Malmoe}
+%\usetheme{Goettingen} %7 8 9
+%\usetheme{Darmstadt}% 1, 2, 3
+%\usetheme{Boadilla}
+%\usetheme{CambridgeUS}%4, 5 6 
+%
+\usetheme{AnnArbor} %10
+%\usetheme{Marburg}
+\iffalse\else
+\renewcommand{\familydefault}{\sfdefault}
+\renewcommand{\kanjifamilydefault}{\gtdefault}
+\setbeamerfont{title}{size=\Large,series=\bfseries}%,color=white}
+\setbeamerfont{frametitle}{size=\large,series=\bfseries}
+\setbeamerfont{beamergotobutton}{size=\Large}
+%\setbeamercolor{frametitle}{fg=yellow}
+\setbeamertemplate{frametitle}[default][center]
+%\addtobeamertemplate{footline}{}{\insertframenumber/\inserttotalframenumber}
+\usefonttheme{professionalfonts}
+\fi
+%\iftrue
+\title{ソフトウェア開発\\第14回目授業}
+\author{平野 照比古}
+\institute{}
+\date{2015/11/16}
+\newtheorem{Prob}{解説}
+\newcommand{\Elm}[1]{\texttt{<#1>}}
+\setbeamercovered{transparent}
+
+\newcommand{\DOMM}{\texttt}
+\newcommand{\Event}{\texttt}
+\newcommand{\DOMP}{\texttt}
+\newcommand{\DOM}{\texttt{DOM}}
+\newcommand{\keyitem}{\relax}
+\newcommand{\HTML}{HTML文書}
+\begin{document}
+\frame{\maketitle}
+\section{Google Maps入門}
+\subsection{Google Mapsとは}
+\begin{frame}[containsverbatim]
+\frametitle{Google Mapsとは}
+Google Maps は Google が提供する地図サービスである。Google Maps
+JaaScript APIのページ\footnote{
+\texttt{https://developers.google.com/maps/documentation/javascript/?hl=ja}}
+には次のような記述がある。
+\begin{quotation}
+ Google Maps JavaScript API を使用すると、Google マップをウェブページに埋
+ め込むことができます。この API のバージョン 3 は、従来のパソコン用ブラ
+ ウザ アプリケーションとしてだけでなく、携帯端末でも快適に動作するように
+ 設計されています。 
+
+この API では http://maps.google.co.jp サイトで使用できるような地図を操
+ 作し、さまざまなサービスを介してコンテンツを地図に追加するための多数の
+ ユーティリティを提供しています。これを利用して、ウェブサイトにパワフル
+ な地図アプリケーションを作成できます。 
+
+JavaScript Maps API V3 は、誰でも自由にアクセスできるウェブサイトであれ
+ ば、無料で利用できるサービスです。詳細については、利用規約をご覧くださ
+ い。
+\end{quotation}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{}
+\begin{itemize}
+ \item このAPIを用いて地図を表示する例を与えている。
+ \item APIの仕様はデヴェロッパーガイドやAPIリファレンス（英語です）コー
+       ドサンプルが参考になる。
+\end{itemize}
+\end{frame}
+\subsection{Google Maps のオブジェクト}
+\begin{frame}[containsverbatim]
+\frametitle{Google Maps のオブジェクト}
+Google Mapsで提供されるものの代表的なもの
+\begin{itemize}
+ \item Map
+
+       地図を表示するためのオブジェクトである。
+ \item Controls
+
+       地図をコントロールするオブジェクトである。ズームや、地図の移動を
+       可能にするコントロールが含まれる。
+ \item Overlays
+
+       地図上に表示されるオブジェクトである。折れ線、多角形、マーカーな
+       どが含まれる。
+ \item サービス
+
+       地図を利用する際に必要となるサービスである。緯度経度からその位置
+       の情報（建物や住所）を得るGeocoder、ルート検索をするDirectionサー
+       ビスなどを含む。
+\end{itemize}
+\end{frame}
+\subsection{GPSログを表示する}
+
+\begin{frame}[containsverbatim]
+\frametitle{GPS機器で記録された移動記録をGoogle Maps 上に表示するサンプル}
+\begin{itemize}
+ \item GPSのログデータのリストを記述したファイルを読み込む
+ \item その内容に基づいてルートを表示
+ \item GPSのログデータのファイルの内容は各行に一つファ
+イル名が書かれている。
+\begin{verbatim}
+20140412.gpx
+20140922.gpx
+20141128.gpx
+20141128-plan.gpx
+\end{verbatim}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[containsverbatim]
+\frametitle{地図を表示するページのリスト(1)}
+URLで指定したオプションパラメーターの処理を行う関数を二つ定義
+{\small
+\begin{listing}{1}
+<?php
+function setParam($name, $default, $min) {
+  $val = $default;
+  if(array_key_exists($name,$_GET)) {
+    $val = $_GET[$name];
+    if($val <$min) $val = $min;
+  }
+  return $val;
+}
+function setParamS($name, $default) {
+  $val =$default;
+  if(array_key_exists($name,$_GET)) {
+    $val = $_GET[$name];
+  }
+  return $val;
+ }
+\end{listing}
+}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{地図を表示するページのリスト(1)--解説}
+\begin{itemize}
+ \item 関数\verb+function setParam($name, $default, $min)+はパラメータ
+       が数値の場合を取り扱う。この関数は次の3つの引数をとる。
+\begin{itemize}
+ \item 一番目の引数\verb+$name+はパラメータの名称
+ \item 2番目の引数\verb+$default+はパラメータの値がなかった場合のデフォル
+       ト値
+ \item 3番目の引数\verb+$min+は設定するパラメータの最小値
+\end{itemize}
+値をデフォルト値に設定したのち(3行目)、URLに指定した引数があるかチェック
+       し(4行目)、あった場合にはその値が指定された最小値より大きいか調べ、
+       小さい場合には指定された最小値に設定する(5行目から6行目)。
+ \item 関数\verb+setParamS($name, $default)+は文字列のパラメータを設定す
+       るための関数である。この関数には設定される値のチェックはしない。
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{地図を表示するページのリスト(2)}
+\begin{listingcont}
+$w = setParam("w",1000,200);
+$h = setParam("h",800,200);
+$hl =setParamS("hl","ja");
+\end{listingcont}
+ここでは地図の横幅(\verb+$w+)、高さ(\verb+$h+)、
+%ズームレベルの補正(\verb+$zoom+)、
+表示に使用する言語(\verb+$hl+)などの値を設定している。
+\end{frame}
+
+\begin{frame}[containsverbatim]
+\frametitle{地図を表示するページのリスト(3)}
+{\footnotesize
+\begin{listingcont}
+$latMaxG=$latminG=35.486210;
+$lonMaxG=$lonminG=139.341443;
+
+$filenames = file("history.dat",FILE_IGNORE_NEW_LINES|FILE_SKIP_EMPTY_LINES);
+Print <<<_EOL_
+<!DOCTYPE html>
+<html>
+<head>
+<title>My Trace</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<link rel="stylesheet" type="text/css" href="map.css"/>
+<script src="http://maps.google.com/maps/api/js?sensor=false" 
+        type="text/javascript" charset="UTF-8"></script>
+<script src="jquery-1.11.2.min.js" type="text/javascript" 
+        charset="UTF-8"></script>
+<script src="map4.js" type="text/ecmascript"></script>
+\end{listingcont}
+}
+\end{frame}
+
+\begin{frame}[containsverbatim]
+\frametitle{}
+\begin{itemize}
+ \item 21行目と22行目ではデフォルト地点の緯度(\verb+$latminG+)、経度
+       (\verb+latminG+)を定義(この値は神奈川工科大学のもの)
+ \item 24行目では読み込むGPSファイルのリストが入ったファイルを行単位で配
+       列に格納
+ \item 関数\texttt{file()}の2番目の引数の定数は、行末
+       の改行文字を取り除き(\verb+FILE_IGNORE_NEW_LINES+)、かつ空行を
+       読み飛ばす(\verb+FILE_IGNORE_NEW_LINES+)を論理和(\texttt{|})で
+       つないでいる。
+ \item 25行目から46行目では出力するHTML文書の先頭部分をヒアドキュメント
+       の形式で記述し、出力
+\item 32行目から33行目ではGoogle Maps のライブラリーを、34行目か
+      ら35行目ではjQuery のライブラリーを読み込んでいる。
+\item 36行目では39行目で呼び出される関数\texttt{initialize()}な
+      どが定義されていいるJavaScriptのファイルを読み込んでいる。
+\end{itemize}
+\end{frame}
+
+\begin{frame}[containsverbatim]
+\frametitle{地図を表示するページのリスト(4)}
+\begin{listingcont}
+<script type="text/ecmascript">
+window.onload = function() {
+  initialize($latMaxG,$lonMaxG,$latminG,$lonminG);
+}
+</script>
+  </head>
+ <body>
+<div id="map_canvas" style="width:{$w}px; height:{$h}px"></div>
+  <form id="filenames">
+_EOL_;
+\end{listingcont}
+\begin{itemize}
+ \item 38行目から40行目ではこのHTML文書での処理が終わった後の関数
+	      を定義。単純に\texttt{initialize()}を呼び出し。
+ \item 44行目では地図を表示するための\texttt{<div>}要素を定義して
+	      いる。この中ではPHPの変数\verb+\w+と\verb+$h+の値が展開さ
+	      れて埋め込まれるる。
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{地図を表示するページのリスト(5)}
+{\footnotesize
+\begin{listingcont}
+for($i=0;$i<count($filenames); $i++) {
+  print '<div class="fn"><div><input type="checkbox" id="file'.$i.
+      '"/></div><div>'. $filenames[$i]. '</div><div> </div></div>';
+}
+print '</form></div></body> </html>'
+?>
+\end{listingcont}
+}
+47行目から50行目では表示するGPXデータを一覧できる、チェックボック
+       ス、ファイル名とこのパスの全体距離の3つが一つになった\texttt{<div>}要素を、
+       ファイルの数だけ表示するようにしている。
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{地図を表示するページのリスト(6)---CSSファイル}
+ {\tiny
+\listinginput{1}{DEV/cycling-club/map.css}
+ }
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{地図を表示するページのリスト(6)---CSSファイル--解説}
+\begin{itemize}
+ \item 6行目のセレクタは、\texttt{id}が\texttt{filename}である要素の直下
+       の\texttt{<div>}要素を意味する。この中にはGPXデータの情報などを示
+       す3つの\texttt{<div>}要素が含まれる。
+ \item 10行目のセレクタはチェックボックスを選択する。
+ \item 14行目のセレクタはファイル名を示す\texttt{<div>}要素を選択する。
+ \item 19行目のセレクタはGPXデータの全体の距離を示す\texttt{<div>}要素を選択する。
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{地図を表示するページのリスト(7)}
+ 地図を表示するページで呼ばれるJavaScriptファイル
+
+ Ajaxを用いてルートのデータをサーバーに要求し、順にルートを表示するようになっ
+ている。
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{地図を表示するページのリスト(8)}
+ 地図を表示するための準備の部分
+ {\footnotesize
+\begin{listing}{1}
+function initialize(latMax,lonMax,latmin,lonmin) {
+  var Clrs = [[255,0,0],[63,63,63],
+              [0,0,255],[127,127,0],[127,0,127],[0,127,127]];
+  var GMap = google.maps;
+  var Routes =[];
+  var map = new GMap.Map($("#map_canvas")[0],
+        {center: new GMap.LatLng((latMax+latmin)/2,(lonMax+lonmin)/2),
+         mapTypeId: google.maps.MapTypeId.ROADMAP,
+         scaleControl:true,
+         scaleControlOptions:google.maps.ControlPosition.BOTTOM_LEFT
+        });
+  var latLngBounds = new GMap.LatLngBounds(
+        new GMap.LatLng(latmin,lonmin),
+        new GMap.LatLng(latMax,lonMax));
+  map.fitBounds(latLngBounds);
+  }
+\end{listing}
+ }
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{地図を表示するページのリスト(8)---解説}
+\begin{itemize}
+ \item 関数\texttt{initialize()}の引数は表示すべき地図の範囲の南西部の緯
+       度と経度、北東部の緯度と経度
+ \item 2行目から3行目では、GPSログを示すルートの色の種類を与えている。数
+       が増えたときは、この要素の数で割った余りの色となる。
+ \item 6行目から11行目で地図を表示している。なお、ここではjQuery関数で
+       HTML文書内の要素を得ている。jQueryオブジェクトに対してGoogle Maps の地図
+       を割り当てる要素として使えないので引数を与えて、HTML要素を得てい
+       る。
+ \item 12行目から15行目で13行目と14行目で与えられた緯度経度の地点を含む
+       範囲(\texttt{LatLngBounds})を構成
+ \item 15行目でこの範囲を含むような最大のズームレベルにするメソッド
+       \texttt{fitBounds()}を呼び出している。
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{地図を表示するページのリスト(9)}
+ {\small
+\begin{listingcont}
+  var InfoWindow = InfoWindow = new google.maps.InfoWindow({});
+    var Colors =[],C2 =[], i, j;
+  for(i=0;i<Clrs.length;i++) {
+    Colors[i] = "rgb("+Clrs[i].join(",")+")";
+    C2[i] = "rgb("+Math.floor((Clrs[i][0]+255*2)/3,1)+","+
+                   Math.floor((Clrs[i][1]+255*2)/3,1)+","+
+                   Math.floor((Clrs[i][2]+255*2)/3,1)+")";
+\end{listingcont}
+ }
+\begin{itemize}
+ \item 16行目では地図上に情報を表示するための\texttt{InfoWindow()}を作成
+ \item 18行目から23行目ではGPSログのルートの一覧部分の背景色の設定をしてい
+       る。パスの表示は重なった場合に備えて不透明度を$0.5$にしている(52
+       行目)ので、定義の色より明るくしている。
+\end{itemize} \end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{地図を表示するページのリスト(9)--GPSログを地図上に表示する}
+ ページがすぐに開かないことを避けるためにAjaxを用いてデータを得ている。
+
+\begin{listingcont}
+  var Files = $(".fn");
+  for(j = 0;j<Files.length;j++){
+    (function(j) {
+      jQuery.ajax({
+        type:"GET",
+        url: "./getData.php",
+        data:"file="+$($("div",Files[j])[1]).text(),
+        dataType:"json",
+        error: function(){alert("error");},
+\end{listingcont}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{地図を表示するページのリスト(9)--解説}
+\begin{itemize}
+ \item 24行目でHTML内に表示されているルートを表示している要素を得る。
+ \item 25行目からそのファイル名をサーバーに渡して、GPSログのデータを得
+       て、地図上に表示する。
+ \item 26行目では関数を定義してその場で実行することで、Ajaxの処理を行っ
+       ている。これは、ループの制御変数\texttt{j}(30行目)がAjaxの通信が終了した
+       段階(47行目など)で変化しているかもしれないことに対処するためである。
+ \item 27行目から72行目でjQueryによるAjax関数の呼び出しを行っている。
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{地図を表示するページのリスト(10)}
+ 通信終了後に呼び出される関数
+ \begin{listingcont}
+        success: function(Data){
+          var ps, length, PP, P, LL, point, i,k;
+          ps = [];
+          length =0;
+          for(k=0;k<Data.route.length;k++){
+            P = Data.route[k];
+            LL = P.length;
+            ps.push(new GMap.LatLng(P[0][0], P[0][1]));
+            for(i=1;i<LL;i+=1) {
+              point = new GMap.LatLng(P[i][0], P[i][1]);
+              length += getDistance(P[i-1],P[i]);
+              ps.push(point);
+            }
+          }
+ \end{listingcont}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{地図を表示するページのリスト(9)--解説}
+\begin{itemize}
+ \item サーバーから得たデータはすでにJavaScriptのオブジェクトとなってい
+       るので、その\texttt{position}プロパティに緯度と経度の配列を要素と
+       する配列が設定されている。
+ \item 37行目から46行目でルートを示す\texttt{PolyLine}オブジェクトに渡す
+       配列に変換している。さらに、ルートの長さも計算している。
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{地図を表示するページのリスト(10)}
+ 表示すべき\texttt{PolyLine} を配列に格納
+ {\footnotesize
+\begin{listingcont}
+          Routes[j] = [
+            new GMap.Polyline({
+              path:ps,
+              strokeColor:Colors[j % Colors.length],
+              strokeWeight:4,
+              strokeOpacity:0.5,
+              map:map
+            }),true];
+\end{listingcont}
+}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{地図を表示するページのリスト(11)}
+{\small
+\begin{listingcont}
+          $($("div",Files[j])[2]).text((length/1000).toFixed(2)+ "km");
+          $(Files[j]).css("backgroundColor",C2[j % Colors.length]);
+          $("input",Files[j]).attr("checked",true);
+          var showId = (function(No){return function(E){
+              InfoWindow.setOptions({
+                 content: "<div>"+ No+"</div>",
+                 position: E.latLng});
+               InfoWindow.open(map);
+             };
+           })($($("div",Files[j])[1]).text());
+           latLngBounds.extend(
+             new GMap.LatLng(Data.position[0],Data.position[2]));
+           latLngBounds.extend(
+               new GMap.LatLng(Data.position[1], Data.position[3]));
+           map.fitBounds(latLngBounds);
+           GMap.event.addListener(Routes[j][0],"click", showId) ;
+        }
+      });
+    })(j);
+  }
+\end{listingcont}
+ }
+\end{frame}
+\begin{frame}
+\frametitle{地図を表示するページのリスト(10)--解説}
+\begin{itemize}
+ \item 55行目では計算された距離をリスト内に表示し、背景色を定義
+ \item 57行目では対応するチェックボックスをにチェックを入れる。
+ \item 58行目から64行目では、ルート上をクリックしたときにそのファイル名
+       を\texttt{InfoWindow}に表示する関数を定義。70行目でイベン
+       トの登録を\texttt{addListener()}メソッドを用いてしている。
+ \item サーバーからはルートが含まれる範囲の緯度経度が渡されているの
+       でそれをもとに今までの範囲を\texttt{extend()}メソッドで拡大
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{地図を表示するページのリスト(11)}
+ファイルのリストのチェックボックスの値が変化したとき
+ に、ルートを表示のオンオフをする処理
+ \begin{listingcont}
+  document.getElementById("filenames").addEventListener("change",
+    function (E) {
+      var i =  $(E.target).attr("id").substring(4)-0;
+      if(E.target.checked && !Routes[i][1]) {
+        Routes[i][0].setMap(map);
+        Routes[i][1] = true;
+      }
+      if(!E.target.checked && Routes[i][1]) {
+        Routes[i][0].setMap(null);
+        Routes[i][1] = false;
+      }
+    },false);
+}
+ \end{listingcont}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{地図を表示するページのリスト(12)}
+ 緯度と経度で与えられた2点間の距離を求める関数
+ {\footnotesize
+ \begin{listingcont}
+function getDistance(P1, P2) {
+    var R = 6378137;
+    var P1LatRad = P1[0]*Math.PI/180;
+    var P1LngRad = P1[1]*Math.PI/180;
+    var P2LatRad = P2[0]*Math.PI/180;
+    var P2LngRad = P2[1]*Math.PI/180;
+    var P1LatCos = Math.cos(P1LatRad);
+    var P2LatCos = Math.cos(P2LatRad);
+    var Xdiff = R*(P1LatCos*Math.cos(P1LngRad) - P2LatCos*Math.cos(P2LngRad));
+    var Ydiff = R*(P1LatCos*Math.sin(P1LngRad) - P2LatCos*Math.sin(P2LngRad));
+    var Zdiff = R*(Math.sin(P1LatRad) - Math.sin(P2LatRad));
+    return Math.sqrt(Xdiff*Xdiff+Ydiff*Ydiff+Zdiff*Zdiff);
+}
+ \end{listingcont}
+ }
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{地図を表示するページのリスト(13)}
+GPSデータの各地点の緯度と経 度のリストをJSON形式で返す
+ {\footnotesize
+\begin{listing}{1}
+<?php
+function SetDatafromFile($fin,$folder) {
+  $fn = "$folder$fin";
+  if(!file_exists($fn)) return;
+
+  $data = new DOMDocument();
+  $data->load($fn);
+  $trks = $data->getElementsByTagName("trk");
+\end{listing}
+ }
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{地図を表示するページのリスト(13)--解説}
+ \begin{itemize}
+  \item GPXファイルはXML形式のファイルなので、構造を保持したままデータを
+	扱うためにはPHPの\texttt{DOMDocument}オブジェクトに読み込むのが
+	簡単である。
+  \item 6行目で\texttt{DOMDocument}オブジェクトを作成し、7行目でファイル
+	を読み込んでいる。
+  \item 残りの捜査はDOMの扱いと同様に\texttt{getElementsByTagName()}など
+	を用いてデータを処理すればよい。
+  \item GPXには複数の\texttt{<trk>}要素があり、その中に位置情報を示す
+	\texttt{trkpt}がある。
+ \end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{地図を表示するページのリスト(14)}
+ {\small
+\begin{listingcont}
+  $len = $trks->length;
+  $trackdata = array();
+  $lonMax = -181;
+  $lonmin =  181;
+  $latMax =  -91;
+  $latmin =   91;
+\end{listingcont}
+ }
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{地図を表示するページのリスト(15)}
+ {\tiny
+\begin{listingcont}
+  $cnt=0;
+  for($i=0;$i<$len;$i++){
+    $trk = $trks->item($i);
+    $trksegs = $trk->getElementsByTagName("trkpt");
+    $len2 = $trksegs->length;
+    if($len2 <10) continue;
+    $newtrk = array();
+    for($j = 0;$j<$len2;$j++) {
+      $trkseg = $trksegs->item($j);
+      $lat = $trkseg->getAttribute("lat");
+      $lon = $trkseg->getAttribute("lon");
+      if($lat > $latMax) $latMax = $lat;
+      if($lat < $latmin) $latmin = $lat;
+      if($lon > $lonMax) $lonMax = $lon;
+      if($lon < $lonmin) $lonmin = $lon;
+      array_push($newtrk,"[$lat,$lon]");
+    }
+    if($lonMax - $lonmin >0.001 ||$latMax - $latmin > 0.001) {
+      $cnt++;
+      array_push($trackdata,"[".implode(",",$newtrk)."]");
+    }
+  }
+  print "{\"position\":[$latMax,$latmin,$lonMax,$lonmin],\"route\":[".
+      implode(",",$trackdata)."]}";
+}
+SetDatafromFile($_GET["file"],"");
+?>
+}
+\end{listingcont}
+ }
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{地図を表示するページのリスト(14)--解説}
+\begin{itemize}
+  \item \texttt{trkpt}要素の属性に緯度(\texttt{lat})と経度(\texttt{lng})
+	があるので、それを組み合わせたJSON形式の配列（の文字列）を配列に
+	追加する(30行目)。
+  \item 途中でルート全体を含む緯度経度の範囲を求めている(26行目から29行
+	目)。
+  \item これらのデータをまとめて出力する(37目から38行目)
+ \end{itemize}
+\end{frame}
+\section{来週の試験}
+\begin{frame}[containsverbatim]
+ \frametitle{試験の内容}
+ \begin{itemize}
+  \item 授業で行った簡単なプログラムやCSSの設定に関するもの
+  \item プログラムを組む問題はなし
+  \item いくつかの項目について論述する。
+\begin{itemize}
+ \item JavaScriptの言語の特性に関する考察
+ \item jQueryのライブラリーを使うメリットとデメリット
+ \item Google Maps のライブラリの設計思想に関する意見
+ \item そのほか、この授業を通じて理解したことについての論述(各自が設定し
+       てよい)
+\end{itemize}
+ \end{itemize}
+ \end{frame}
+
+\end{document}

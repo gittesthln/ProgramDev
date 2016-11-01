@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <script tyoe="text/ecmascript">
+      var p={
+      x:1.0,
+      y:1.0,
+      get r() {return Math.sqrt(this.x**2+this.y**2)},
+      set r(newvalue) {
+      var oldvalue = Math.sqrt(this.x**2+this.y**2);
+      var ratio =newvalue/oldvalue;
+      this.x *=ratio;
+      this.x *=ratio;
+      },
+      toString: function() {return "("+this.x+","+this.y+")";}
+      };
+    </script>
+  </head>
+  <body>
+  </body>
+</html>

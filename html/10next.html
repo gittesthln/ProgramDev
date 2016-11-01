@@ -1,0 +1,30 @@
+<script type="text/javascript">
+//<![CDATA[
+//var Storage = window.localStorage;
+var Storage = window.sessionStorage;
+window.onload = function() {
+  var AccessList, Message = document.getElementById("message");
+  appendMessage(Message, "新しいページです");
+  if(Storage["access"]) {
+    AccessList = JSON.parse(Storage["access"]);
+  } else {
+    AccessList = [];
+    appendMessage(Message, "初めてのアクセスです");
+  }
+  appendMessage(Message, "今までのアクセス時間です");
+  AccessList.forEach(function(D, index, A) {
+    if(index < 3) appendMessage(Message, new Date(D-0));
+  });
+}
+function appendMessage(P, Mess) {
+  var div = document.createElement("div");
+  P.appendChild(div);
+  div.appendChild(document.createTextNode(Mess));
+}
+//]]
+</script>
+</head>
+<body>
+  <div  id="message"/>
+</body>
+</html>

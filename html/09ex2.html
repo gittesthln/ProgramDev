@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<head>
+<meta charset="UTF-8"/>
+<title>イベント処理</title>
+<style type="text/css">
+.blockC {
+  display : inline-block;
+  vertical-align : middle;
+}
+.block {
+  width : 200px;
+  display : inline-block;
+}
+#left {
+  background: red;
+  height : 200px;
+  left : 0px;
+}
+#center {
+  background: yellow;
+  height : 200px;
+  text-align : center;
+}
+#right {
+  background : blue;
+  height : 200px;
+  text-align : right;
+}
+form {
+  display : inline-block;
+  vertical-align : middle;
+}
+input, select{
+  font-size:20px;
+}
+</style>
+<script type="text/ecmascript">
+//<![CDATA[
+  window.onload = function() {
+    var Left = document.getElementById("left");
+    var Center = document.getElementById("center");
+    var Right = document.getElementById("right");
+    var Select = document.getElementById("select");
+    var ColorName = document.getElementById("colorName");
+    var Radio = document.getElementById("radio");
+    var Set = document.getElementById("Set");
+
+    Select.addEventListener("change", function(){
+        Left.style.background = Select.value;
+      },false);
+    Radio.addEventListener("change", function(E){
+        var Inputs = document.getElementsByName("color");
+        var i;
+        for(i=0;i<Inputs.length;i++) {
+          if(Inputs[i].checked) {
+            Center.style.background = Inputs[i].value;
+            break;
+          }
+        }
+      },false);
+    Set.addEventListener("click", function(){
+        Right.style.background = ColorName.value;
+      }, false);
+  }
+//]]>
+</script>
+</head>
+<body>
+  <div class="blockC">
+  <div class="block" id="left">左</div>
+  <div class="block" id="center">中央</div>
+  <div class="block" id="right">右</div>
+  </div>
+  <form>
+    <select id="select">
+      <option value="red">赤</option>
+      <option value="yellow">黄色</option>
+      <option value="blue">青</option>
+    </select>
+    <div id="radio">
+      <div><input type="radio" value="red" name="color"></input><span>赤</span></div>
+      <div><input type="radio" value="orange" name="color"></input><span>オレンジ</span></div>
+      <div><input type="radio" value="yellow" name="color"></input><span>黄</span></div>
+      <div><input type="radio" value="green" name="color"></input><span>緑</span></div>
+      <div><input type="radio" value="blue" name="color"></input><span>青</span></div>
+    </div>
+    <div>
+      色名<input type="text" size="20" id="colorName"></input>
+      <input type="button" value="設定" id="Set"></input>
+    </div>
+  </form>
+</body>
+</html>

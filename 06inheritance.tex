@@ -1,0 +1,376 @@
+%-*- coding: utf-8 -*-
+\chapter{継承}
+\section{プロトタイプに関する注意}
+\texttt{prototype} を取り扱ううえで考慮すべき点を解説する。
+\begin{itemize}
+ \item プロトタイプチェインはプロトタイプオブジェクトを完全に置き換えた
+       場合を除き、常に変化する。
+ \item \texttt{prototype.constructor}は信頼できない。
+\end{itemize}
+これを確かめるため、次の実行例を見てみる。
+\begin{Exec}\upshape
+簡単なコンストラクタを作成し、その挙動を調べる。
+\begin{itemize}
+ \item \texttt{Dog()} というコンストラクタを定義し、そのオブジェクト
+ \texttt{benji}を作成する。
+\begin{verbatim}
+>function Dog(){this.tail=true;};
+undefined
+>var benji = new Dog();
+undefined
+\end{verbatim}
+ \item \texttt{prototype}に関数を定義する。この前に作成したオブジェクト
+       はこのメソッドを利用できる。
+\begin{verbatim}
+>Dog.prototype.say = function(){return 'Woo!';}
+function (){return 'Woo!';}
+>benji.say();
+"Woo!"
+\end{verbatim}
+ \item このオブジェクトとその\texttt{prototype}のコンストラクタを調べる。
+\begin{verbatim}
+>benji.constructor;
+function Dog(){this.tail=true;}
+>benji.constructor.prototype.constructor;
+function Dog(){this.tail=true;}
+>typeof benji.constructor.prototype.tail;
+"undefined"
+\end{verbatim}
+どちらも\texttt{Dog()}となっているが、
+       \texttt{benji.constructor.prototype.constructor}は厳密に言えば
+       \texttt{Object}になるべきである。\texttt{Dog()}であるのならば
+       \texttt{typeof benji.constructor.prototype.tail}が\texttt{undefined}
+       になるのはおかしい。
+ \item ここで\texttt{Dog.prototype}を別のオブジェクトに置き換える。
+\begin{verbatim}
+>Dog.prototype = {paws:4,hair:true};
+Object {paws: 4, hair: true}
+>typeof benji.paws;
+"undefined"
+>benji.paws;
+undefined
+>benji.say();
+"Woo!"
+>Object.getPrototypeOf(benji);
+Dog {say: function}
+\end{verbatim}
+置き換えた\texttt{prototype}のプロパティが、置き換え前に作成したオブジェ
+       クトから見えない。また、その前のメソッドも使用可能である。
+ \item 新しく、オブジェクトを作成すると、そこからは新しく定義した
+       \texttt{prototype}が見える。
+\begin{verbatim}
+>var lucy = new Dog();
+undefined
+>lucy.say();
+Uncaught TypeError: undefined is not a function
+>lucy.paws;
+4
+>Object.getPrototypeOf(lucy);
+Object {paws: 4, hair: true}
+>lucy.constructor;
+function Object() { [native code] }
+>lucy.constructor.prototype.paws;
+undefined
+>benji.constructor.prototype.paws;
+4
+\end{verbatim}
+このオブジェクトでは初めに定義した\texttt{say()}メソッドが呼び出せない。
+ \item これを解決するためには\texttt{Dog.prototype.constructor} を
+       \texttt{Dog} に置き換えることである。
+\begin{verbatim}
+>Dog.prototype.constructor = Dog;
+function Dog(){this.tail=true;}
+>lucy.constructor.prototype.paws;
+4
+\end{verbatim}
+\end{itemize}
+\end{Exec}
+%\section{オブジェクト指向言語の特徴}
+%
+%オブジェクト指向の説明
+%サブクラスなど
+\section{継承の方法}
+継承はあるオブジェクトに対して、機能をついかしたり、改変したりして新しい
+オブジェクトを作成する方法である。JavaScriptではいくつかの方法がある。
+\subsection{\protect\texttt{prototype}による継承}
+プロトタイプチェインは JavaScript で継承を実現す基本的な方法であり、
+ECMAScript　の規格書でも定義されている。
+\begin{Exec}\label{Proto6-1}\upshape
+階層構造を実現するために3つのコンストラクタ関数を定義する。
+\begin{listing}{1}
+ function Shape() {
+  this.name = "shape";
+  this.toString = function() {return this.name;};
+}
+function TwoDShape(){
+  this.name = "2D shape";
+}
+function Triangle(side, height) {
+  this.name = "Triangle";
+  this.side = side;
+  this.height = height;
+  this.getArea = function(){
+    return this.side * this.height /2;};
+};
+\end{listing}
+ここでは3つのコンストラクタ関数 \texttt{Shape()}, \texttt{TwoDShape()}
+ と \texttt{Triangle()} を定義している。
+\begin{listingcont}
+TwoDShape.prototype = new Shape();
+Triangle.prototype = new TwoDShape();
+TwoDShape.prototype.constructor = TwoDShape;
+Triangle.prototype.constructor = Triangle;
+\end{listingcont}
+\begin{itemize}
+ \item \texttt{TwoDShape} に \texttt{Shape} を継承させるために
+       \texttt{TwoDShape.prototype} に \texttt{Shape} オブジェクトを代入
+       している。
+ \item \texttt{constructor}
+ の副作用を避けるために、\texttt{TwoDShape.prototype.constructor} を元に
+ 戻している。
+ \item \texttt{Traiangle} に対しても同様のことを行っている。
+\end{itemize}
+実際にうまく動いていることを確認する。
+\begin{verbatim}
+>var fig = new Triangle(10,5);
+undefined
+>fig.getArea();
+25
+>fig.toString();
+"Triangle"
+>fig+"";
+"Triangle"
+\end{verbatim}
+\texttt{Triangle} オブジェクトを作成し、それぞれのメソッドが期待したよう
+ に動いている。
+\begin{verbatim}
+>Object.getPrototypeOf(fig);
+TwoDShape {name: "2D shape", constructor: function, toString: function}
+>fig.constructor;
+function Triangle(side, height) {
+  this.name = "Triangle";
+  this.side = side;
+  this.height = height;
+  this.getArea = function(){
+    return this.side * this.height /2;};
+} 
+\end{verbatim}
+作成した\texttt{Triangle}オブジェクトのプロトタイプは継承もとのオブジェ
+ クトを指している。また、コンストラクタも \texttt{Traingle} になっている。
+\begin{verbatim}
+>fig instanceof Shape;
+true
+>fig instanceof TwoDShape
+true
+>fig instanceof Triangle
+true
+>fig instanceof Object
+true
+\end{verbatim}
+インスタンスのチェックも正しく動いている。
+\begin{verbatim}
+>Shape.prototype.isPrototypeOf(fig);
+true
+>TwoDShape.prototype.isPrototypeOf(fig);
+true
+>Object.prototype.isPrototypeOf(fig);
+true
+\end{verbatim}
+\iffalse
+fig;
+Triangle {name: "Triangle", side: 10, height: 5, getArea: function, constructor: function…}
+>figProto=Object.getPrototypeOf(fig);
+TwoDShape {name: "2D shape", constructor: function, toString: function}
+\fi
+\end{Exec}
+前の例では同じコンストラクタから生成されるオブジェクトで変化しないものが
+それぞれのオブジェクトに含まれている。そのようなものはプロトタイプに移動
+する方がメモリーや実行の面で有利である。
+\begin{Exec}\label{Proto6-2}\upshape
+ 実行例\ref{Proto6-1}で共通する部分をプロトタイプに移動したものである。
+\begin{listing}{1}
+function Shape() {};
+Shape.prototype.name = "shape";
+Shape.prototype.toString = function() {return this.name;};
+\end{listing}
+\texttt{Shape()} 関数では \texttt{name} と \texttt{toString()} は共通な
+ ので、\texttt{prototype} に入れて構わない。その結果、\texttt{Shape()} の
+ 中身は全くなくなる。
+\begin{listingcont}
+function TwoDShape(){};
+TwoDShape.prototype = new Shape();
+TwoDShape.prototype.constructor = TwoDShape;
+TwoDShape.prototype.name = "2D shape";
+\end{listingcont}
+\texttt{TwoDShape()} でも同様である。
+\begin{listingcont}
+function Triangle(side, height) {
+  this.side = side;
+  this.height = height;
+}
+Triangle.prototype = new TwoDShape();
+Triangle.prototype.constructor = Triangle;
+Triangle.prototype.name = "Triangle";
+Triangle.prototype.getArea = function(){
+    return this.side * this.height /2;};
+\end{listingcont}
+\texttt{Triangle} オブジェクトは底辺と高さはそれぞれのオブジェクトで異な
+ る可能性があるので、\texttt{prototype} には定義しない。
+
+これらのコードでも前と同じテストコードが同じように動作する。
+\end{Exec}
+\subsection{プロトタイプだけの継承}
+再利用可能なコードは通常はプロトタイプに置かれている。したがって、
+\verb+new+ を用いて作成されたオブジェクトを継承するのではなく、元のプロ
+トタイプを直接継承する方法もある。
+\begin{Exec}
+\upshape
+次の例は、実行例\ref{Proto6-2}においてプロトタイプを直接継承するように直
+ したものである。変更した部分には\texttt{//Changed}のコメントをつけてあ
+ る。
+\listinginput{1}{6-3.js}
+
+この例では6行目と14行目が以前のものと違っている。
+実行すると前と同じように動くことがわかる。
+\begin{verbatim}
+>var fig = new Triangle(5,10);
+undefined
+>fig.getArea();
+25
+fig.toString();
+"Triangle"
+\end{verbatim}
+しかしながら、6行目や14行目で行っている代入は参照のコピーであるので15行
+ 目の代入は\texttt{Shape.prototype.name}に行っていることになる。
+実際に新しく\texttt{Shape}オブジェクトを作るとその\texttt{name}が
+ \texttt{Triangle}になっていることがわかる。
+\begin{verbatim}
+>var a = new Shape();
+undefined
+>a.toString();
+"Triangle"
+\end{verbatim}
+\end{Exec}
+\subsection{一時的なコンストラクタの使用}
+前節の実行例\ref{Proto6-2}ではすべてのプロトタイプが同じオブジェクトを参
+照しているために、継承されたオブジェクトのプロパティの変更が継承元にまで
+影響を及ぼすことを避けるためにはプロトタイプチェインを壊すために中間段階
+を経ることが重要である。
+\begin{Exec}\upshape\label{Exec6-3}
+次のリストは、各継承段階で空の関数\texttt{F()}を作成して、その
+ \texttt{prototype} に継承元のコンストラクタのプロトタイプをセットしてい
+ る。
+\listinginput{1}{6-4.js}
+\begin{verbatim}
+>var fig = new Triangle(5,10);
+undefined
+>fig.getArea();
+25
+>fig.toString();
+"Triangle"
+\end{verbatim}
+\begin{verbatim}
+var a = new Shape();
+undefined
+a.toString();
+"shape"
+\end{verbatim}
+\end{Exec}
+\begin{Prob}\upshape
+実行例\ref{Exec6-3}において次のことを行え。
+\begin{enumerate}
+ \item 9行目または10行目を8行目の上に移動させたとき、正しく動作するか答えよ。
+ \item 同様なことを19行目から22行目にも行え。
+\iffalse
+ \item 6行目から9行目と16行目から20行目までは同様の作業をしている。この
+       部分を関数にしなさい。
+\fi
+\end{enumerate}
+\end{Prob}
+\subsection{継承部分を関数にする}
+\begin{Exec}\upshape\label{Exec6-4}
+実行例\ref{Exec6-3}においては6行目から9行目と16行目から20行目までは同様
+ の作業をしている。したがって、これらの部分を関数にすれば処理が見通しよ
+ くなる。次のリストはその部分を関数化した部分である。
+\begin{verbatim}
+function Inherit(Child, Parent) {
+  var F = function(){};
+  F.prototype = Parent.prototype;
+  Child.prototype = new F(); 
+  Child.prototype.constructor = Child;
+}
+\end{verbatim}
+これにより\texttt{TwoDShape}を設定する部分は次のようになる。
+\begin{verbatim}
+function TwoDShape(){};
+Inherit(TwoDShape, Shape);
+TwoDShape.prototype.name = "2D shape";
+\end{verbatim}
+\end{Exec}
+\begin{Prob}\upshape
+ オブジェクト\texttt{Triangle}を設定する部分も関数\texttt{Inherite}を用
+ いて書き直せ。
+\end{Prob}
+\section{子オブジェクトから親オブジェクトにアクセスする}
+クラスを用いたオブジェクト指向の言語は親クラス(スーパークラスとも呼ばれ
+る)にアクセスする特別な文法を用意している。子クラスのメソッドかが親クラ
+スのメソッドを行う処理を行った後で、追加の処理を子クラスで行いたい場合に
+便利である。その場合には、子クラスは親クラスと同じメソッドを呼び出して、
+その結果を用いて追加の処理を行う。
+
+JavaScript にはそのような文法は存在しないが、同様の機能を実現すること
+は可能である。
+
+\begin{Exec}\upshape\label{Exec6-5}
+次の例は\texttt{totring()}を修正して、継承元のオブジェクト名をすべて列挙
+するものである。
+ \listinginput{1}{6-5.js}
+\begin{itemize}
+ \item 実行例\ref{Exec6-4}で定義した関数\texttt{Inherit()}に、継承先のプ
+       ロパティ\texttt{uber}に継承元の\texttt{prototype}を代入している(6
+       行目)。
+ \item これまでの\texttt{toString()}に代えて、新しい\texttt{toString()}
+       では
+       \texttt{this.constructor.uber} が存在するか調べる(13行目)。
+ \item 存在すればその\texttt{toString()}を呼び出している(14行目)。
+ \item \texttt{this.constructor.uber}は親の\texttt{prototype}を指して
+       いるのでプロトタイプチェインのすべての\texttt{toString()}が呼び出
+       されることになる。
+ \item 戻り値の配列\texttt{result}の最後に自分の\texttt{name}を付け加え
+       る(16行目)。
+ \item このときの動作を確認するために17行目にメッセージを出力している。
+ \item 戻り値は得られた結果の配列をカンマ区切りの文字列に直している(18行目)。
+ \item \texttt{uber}の名称の由来は教科書192ページを参照のこと。
+\end{itemize}
+実行例は次のとおりである。
+\begin{verbatim}
+>var fig = new Triangle(5,10);
+undefined
+>fig.toString();
+shape:1
+2D shape:2 
+Triangle:2 
+"shape,2D shape,Triangle"
+\end{verbatim}
+\begin{itemize}
+ \item 一番初めに実行が終了するのは\texttt{Shape}オブジェクトである。
+ \item 12行目から16行目の処理で利用している配列の大きさは高々2にしかなら
+       ないことに注意すること。
+ \item これは\texttt{toString()}の戻り値が18行目で文字列になっているた
+       めである。
+\end{itemize}
+\end{Exec}
+\begin{Prob}
+\upshape
+実行例\ref{Exec6-5}のように戻り値が文字列ではなく、
+(\texttt{toString()}の名前からはあっ
+ ていないが、)戻り値が配列となるように
+ \texttt{toString()}を書き換えなさい。
+\begin{verbatim}
+>fig.toString();
+shape:1 
+2D shape:2
+Triangle:3
+["shape", "2D shape", "Triangle"]
+\end{verbatim}
+\end{Prob}

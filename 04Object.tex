@@ -1,0 +1,423 @@
+%-*- coding: utf-8 -*-
+\chapter{オブジェクト}
+\section{配列とオブジェクト}
+配列はいくつかのデータをまとめて一つの変数に格納している。各データを利用
+するためには \verb+foo[1]+ のように数による添え字を使う。これにたいし、
+オブジェクトでは添え字に任意の文字列を使うことができる。
+\begin{Exec}\label{Execconstructor}\upshape
+次の例はあるオブジェクトを定義してそれの各データにアクセスする方法を示している。
+\begin{Verbatim}
+var person = {
+  name : "foo",
+  birthday :{
+    year : 2001,
+    month : 4,
+    day : 1
+  },
+  "hometown" : "神奈川",
+}
+\end{Verbatim}
+\begin{itemize}
+ \item オブジェクトは全体を \verb+{}+ で囲む。
+ \item 各要素はキーと値の組で表される。両者の間は \verb+:+ で区切る。
+ \item キーは任意の文字列でよい。
+ \item キーの文字列が変数名の約束事に合わないときはキー全体を \verb+""+
+			 で囲う必要がある。
+ \item 値はJavaScriptで取り扱えるデータなあらば何でもよい。上の例ではキー
+       \verb+birthday+ の値がまたオブジェクトとなっている。
+ \item 各要素の値を取り出す方法は2通りある。
+\begin{itemize}
+ \item \verb+.+演算子を用いてオブジェクトのキーをそのあとに書く。
+\begin{Verbatim}
+>person.name;
+"foo"
+\end{Verbatim}
+ \item 配列と同様に\verb+[]+内にキーを文字列として指定する。
+\begin{Verbatim}
+>person["name"];
+"foo"
+\end{Verbatim}
+\end{itemize}
+
+ \item オブジェクトの中にあるキーをすべて網羅するようなループを書く場合や変数名
+       として利用できないキーを参照する場合には後者
+       の方法が利用される。
+ \item キーの値が再びオブジェクトであれば、前と同様の方法で値を取り出せ
+       る。
+\begin{Verbatim}
+>person.birthday;
+Object {year: 2001, month: 4, day: 1}
+>person.birthday.year;
+2001
+>person.birthday["year"];
+2001
+\end{Verbatim}
+この例のように取り出し方は混在してもよい。
+ \item キーの値は代入して変更できる。
+\begin{Verbatim}
+>person.hometown;
+"神奈川"
+>person.hometown="北海道";
+"北海道"
+>person.hometown;
+"北海道"
+\end{Verbatim}
+ \item 存在しないキーを指定すると値として\verb+undefined+が返る。
+\begin{Verbatim}
+>person.mother;
+undefined
+\end{Verbatim}
+ \item 存在しないキーに値を代入すると、キーが自動で生成される。
+\begin{Verbatim}
+>person.mother = "aaa";
+"aaa"
+>person.mother;
+"aaa"
+\end{Verbatim}
+ \item オブジェクトのキーをすべて渡るループは \verb+for-in+で実現できる。
+\begin{itemize}
+ \item \verb+for( v in obj)+ の形で使用する。変数 \verb+v+ はループ内で
+       キーの値が代入される変数、\verb+obj+ はキーが走査されるオブジェク
+       トである。
+ \item キーの値は \verb+obj[v]+ で得られる。
+\end{itemize}
+\begin{Verbatim}
+>for(i in person) { console.log(i+" "+person[i]);};
+name foo
+birthday [object Object]
+hometown 北海道
+mother aaa
+undefined
+\end{Verbatim}
+最後の\verb+undefined+は\verb+for+ループの戻り値である。
+\end{itemize}
+\end{Exec}
+オブジェクトを\verb+{}+の形式で表したものを\ElmJ{オブジェクトリテラル}と
+よぶ。
+\section{コンストラクタ関数}
+オブジェクトを定義する方法としてはコンストラクタ関数を使う方法がある。
+\begin{Exec}\label{constructor}\upshape
+次の例はコンストラクタ関数を用いて、前の例と同じオブジェクト(インスタン
+ ス)を構成している。
+\begin{Verbatim}
+function Person(){
+  this.name = "foo";
+  this.birthday = {
+    year : 2001,
+    month : 4,
+    day : 1
+  };
+  this["hometown"] = "神奈川";
+}
+\end{Verbatim}
+\begin{itemize}
+ \item 通常、コンストラクタ関数は大文字で始まる名前を付ける。
+ \item そのオブジェクト内にメンバーを定義するために、\verb+this+をつけて
+       定義する。ここでは、前の例と同じメンバー名で同じ値を設定してい
+       る。
+ \item この関数には\verb+return+がないことに注意すること。
+ \item この関数を用いてオブジェクトを作成するためには、\verb+new+ をつけ
+       て関数を呼び出す。
+\begin{Verbatim}
+>var person = new Person();
+undefined
+\end{Verbatim}
+ \item 元来、戻り値がないので\verb+undefined+が表示されているが、オブジェ
+       クトは作成されている。
+ \item 前と同じ文を実行すれば同じ結果が得られる。
+\end{itemize}
+\end{Exec}
+ここの例はコンストラクタ関数に引数がないが、引数を持つコンストラクタ関数
+ も定義が可能である。これにより同じメンバーを持つオブジェクトをいくつか
+ 作る必要がある場合にプログラムが簡単になる。
+
+\begin{Exec}\upshape
+次の例はコンストラクタ関数を \verb+new+ を用いないで実行した場合である。
+\begin{Verbatim}
+>p = Person();
+undefined
+>p.name
+VM88:2 Uncaught TypeError: Cannot read property 'name' of undefined(…)
+>p;
+undefined
+>name;
+"foo"
+>window.name;
+"foo"
+>name === window.name
+true
+\end{Verbatim}
+\begin{itemize}\upshape
+ \item この関数は戻り値がないので、\verb+undefined+ が変数 \verb+p+ に代
+       入される。
+ \item したがって、\texttt{p.name} も当然定義されていない。
+ \item このとき、キーワード \verb+this+ が指すのはグローバルオブジェクト
+       となる。
+ \item 現在の実行環境はブラウザ上なので、このときのグローバルオブジェク
+       トは \verb+window+ である。
+ \begin{itemize}
+  \item このとき、グローバル変数はすべてグローバルオブジェクトのメンバー
+	としてアクセス可能である。この例では \verb+this.name+ に値を代入
+	した時点で変数 \verb+name+ が定義されている。
+  \item 最後の例からも、\verb+name+ と \verb+window.name+ が同じものであ
+	ることがわかる。
+ \end{itemize}
+\end{itemize}
+\end{Exec}
+\begin{Prob}\upshape
+\verb+window+ オブジェクトにはどのようなプロパティがあるか調べよ。2つ以
+ 上のブラウザで実行し、比較すること。
+\end{Prob}
+\iffalse
+\begin{Prob}
+実行例\ref{constructor}を次のように変える。
+\begin{Verbatim}
+function Person(D){
+  this.name = "foo";
+  this.birthday = {
+    year : 2001,
+    month : 4,
+    day : 1
+  };
+  this["hometown"] = "神奈川";
+  return D;
+}
+\end{Verbatim}
+これに対して次のように実行したとき、作成されるオブジェクトは
+ 何か答えよ。
+\begin{enumerate}
+ \item \verb+p = new Person(1);+
+%Person {name: "foo", birthday: Object, hometown: "神奈川"}
+ \item \verb+p = new Person([1,2,3]);+
+%[1, 2, 3]
+ \item \verb+p = new Person({o:"1"});+
+%Object {o: "1"}
+%p.o;
+%"1" 
+ \item \verb+p = new Person(function(){return 2;});+
+%function (){return 2;}
+%p;
+%function (){return 2;}
+%p();
+%2
+% \item \verb+p = new Person(new function(){return 2;});+
+%Object {}
+%p;
+%Object {}
+ \item \verb+p = new Person(new function(){this.a = "a"});+
+%Object {a: "a"}
+%p.a
+%"a"
+\end{enumerate}
+\end{Prob}
+\fi
+\subsection{\protect\texttt{constructor}プロパティ}\label{constructorProp}
+オブジェクトが作成されると、\verb+constructor+ プロパティとよばれる特殊
+なプロパティも設定される。
+\begin{itemize}
+ \item このプロパティはオブジェクトを作成したときに使
+われたコンストラクタ関数を返す。実行例\ref{constructor}で確認すると次の
+       ようになる。
+\begin{Verbatim}
+>var p = new Person();
+undefined
+>p.name;
+"foo"
+>p.constructor;
+function Person(){
+  this.name = "foo";
+  this.birthday = {
+    year : 2001,
+    month : 4,
+    day : 1
+  };
+  this["hometown"] = "神奈川";
+}
+\end{Verbatim}
+Opera では定義全体が表示される。
+ \item このプロパティに含まれるものは関数なので、コンストラクタの名前を
+       知らなくても、元と同じオブジェクトのコピーが作成できる。
+\begin{Verbatim}
+>np = new p.constructor();
+Person {name: "foo", birthday: Object, hometown: "神奈川"}
+>np.constructor;
+function Person(){
+  this.name = "foo";
+  this.birthday = {
+    year : 2001,
+    month : 4,
+    day : 1
+  };
+  this["hometown"] = "神奈川";
+}
+\end{Verbatim}
+ \item オブジェクトリテラルを使ってオブジェクトを作ると、組み込み関数の
+       \verb+Object()+ コンストラクタ関数がセットされる。
+\begin{Verbatim}
+>o = {}
+Object {}
+>o.constructor;
+function Object() { [native code] }
+\end{Verbatim}
+ \item なお、実行例\ref{Execconstructor}でみたように、このプロパティは
+       \verb+for-in+ループ内では表示されない。
+\end{itemize}
+\subsection{\protect\texttt{instanceof}演算子}
+\texttt{instanceof}演算子はオブジェクトを生成したコンストラクタ関数が指
+定されたものかを判定できる。
+\begin{Exec}\upshape
+次の結果はOpera で 実行例\ref{Execconstructor}をもとに、\ref{constructorProp}を実
+ 行した後にさらに実行したものである。
+\begin{Verbatim}
+>p instanceof Person
+true
+>p instanceof Object;
+true
+>o instanceof Object;
+true
+>o instanceof Person
+false
+\end{Verbatim}
+ \iffalse
+ \verb+p instanceof Object+ の結果が教科書と違い、\verb+true+ になってい
+ る。
+ \fi
+  \verb+Person+ オブジェクトが \verb+Object+ を継承している
+ ために\texttt{o instanceof Object} が\texttt{true}となっている。
+ 継承については後の授業で解説する。
+ \end{Exec}
+\iffalse
+\section{\protect\texttt{Function}オブジェクト}
+\paragraph{\protect\texttt{Function}オブジェクトのプロパティ}
+関数は \texttt{function} を用いるほかに \texttt{Function()} コンストラク
+タ関数を用いても作成できます。ほとんどメリットがないので、ここでは省略す
+る。代表的なプロパティとして、コンストラクタ関数を表す
+\texttt{constructor} と定義された関数の仮引数の個数を示す
+\texttt{length} がある。
+\begin{Verbatim}
+>Person.constructor;
+function Function() { [native code] }
+>Person.length
+0
+\end{Verbatim}
+このほかに重要な\texttt{prototype} プロパティがある。これについては次回
+の授業で解説をする。
+%\paragraph{\protect\texttt{Function}オブジェクトのメソッド}
+\fi
+\subsection{同じコンストラクタ関数からの生成されたオブジェクトに連番号を付ける}\label{SetID}
+オブジェクト指向言語では同じコンストラクタ関数(クラス)から生成されたオブ
+ジェクトに重複のない番号を付けることがある。\JS でそのようなことを実現す
+るためには工夫が必要である。
+
+次のように単純にメンバーを追加しても、コンストラクタ関数が呼ばれるごとに、
+変数\texttt{ID}が初期化されてしまい、目的を果たすことができない。
+\begin{Verbatim}
+function Person(){
+  var ID = 0;
+  this.ID = ID++;
+  this.name = "foo";
+}
+\end{Verbatim}
+これから2つオブジェクトを作成しても、\texttt{ID} がともに \texttt{0} となって
+いることがわかる。
+\begin{Verbatim}
+>p1 = new Person();
+Person {ID: 0, name: "foo"}
+>p2 = new Person();
+Person {ID: 0, name: "foo"}
+\end{Verbatim}
+
+クロージャを用いて関数ににすると一見、うまくいくように見える。
+\begin{Verbatim}
+var Person2 = (function (){
+  var ID = 0;
+  return function(){
+    this.ID = ID++;
+    this.name = "foo";
+  }
+})();
+\end{Verbatim}
+これを実行すると次のようになる。
+\begin{Verbatim}
+>p1 = new Person2();
+Object {ID: 0, name: "foo"}
+>p2 = new Person2();
+Object {ID: 1, name: "foo"}
+>p1.ID;
+0
+>p2.ID;
+1
+\end{Verbatim}
+しかし、このプロパティは外部から変更が可能となってしまっている。
+\begin{Verbatim}
+>p1.ID=10;
+10
+>p1.ID
+10
+\end{Verbatim}
+これを避けるためにはクロージャ内の変数を参照するようなメソッドに変更すれ
+ばよい。
+\begin{Verbatim}
+var Person3 = (function (){
+  var ID = 0;
+  return function(){
+    this.getID = function() {
+      return ID++;
+    }
+    this.name = "foo";
+  }
+})();
+\end{Verbatim}
+このコードでは\texttt{getID()}メソッドを実行するごとに、クロージャ内の変
+数\texttt{ID}が増加してしまい、失敗である。
+\begin{Verbatim}
+>p1 = new Person3();
+Object {name: "foo"}
+>p1.getID();
+0
+>p2 = new Person3();
+Object {name: "foo"}
+>p2.getID();
+1
+>p1.getID();
+2
+>p1.getID();
+3
+\end{Verbatim}
+呼ばれた時点での\texttt{ID}の値を保存するためには、いったん、スコープチェ
+インを切る必要がある。
+\begin{Verbatim}
+var Person4 = (function (){
+  var ID = 0;
+  return function(){
+    this.getID = (function(x) {
+      return function(){ return x;}
+    })(ID++);
+    this.name = "foo";
+  }
+})();
+\end{Verbatim}
+これで目的は達成されている。
+\begin{Verbatim}
+>p1 = new Person4();
+Object {name: "foo"}
+>p1.getID();
+0
+>p2 = new Person4();
+Object {name: "foo"}
+>p2.getID();
+1
+>p1.getID();
+0
+\end{Verbatim}
+しかし、これでも\texttt{getID()}メソッドは書き直すことが可能である。
+\begin{Prob}\upshape
+ \texttt{p1.getID()}が設定しなおせることを確認しなさい。
+\end{Prob}
+\input ObjectProperty.tex
+\begin{Prob}\upshape
+ \ref{SetID}項の\texttt{Person2}の\texttt{ID}プロパティにプロパティ属性
+ を付けて、外部から変更できないようにしなさい。(ヒント:\texttt{ID}の値を
+ 参照するために別の変数が必要になるかもしれない。)
+\end{Prob}
+\input JSON.tex

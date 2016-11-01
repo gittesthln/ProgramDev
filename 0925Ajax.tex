@@ -1,0 +1,161 @@
+%-*- coding: utf-8 -*-
+\section{Ajax}
+Ajax とは Asynchronous Javascript+XML の略で、非同期(Asynchronous)でWeb
+ページとサーバーでデータの交換を行い、クライアント側で得られたデータをも
+とにそのWebページを書き直す手法である\footnote{Ajaxの名称を提案したブロ
+グ
+\texttt{http://www.adaptivepath.com/publications/essays/archives/000385.php}
+は2014年12月8日現在アクセスできないようである。}。
+Google Maps がこの技術を利用したことで一気に認知度が高まった。検索サイト
+では検索する用語の一部を入力していると検索用語の候補が出てくる。これも
+Ajaxを使用している(と考えられる)。
+
+Ajax の機能は \texttt{XMLHTTPRequest}という機能を用いて実現されている。
+\begin{Exec}\upshape\label{WhatDay}
+次の例は実行例\ref{pulldownDate}で日付が変わったときに、その日の記念日を
+ メニューの下部に示すものである。記念日のデータは
+ \texttt{http://ja.wikipedia.org/wiki/日本の記念日一覧}の表示画面からコ
+ ピーして作成した。
+\LISTN{09-01whatday.html}{1}{last}{\normalsize}
+\begin{itemize}
+ \item 以前のものとは46行目以降が異なっている。イベントハンドラーを関数とし
+       て定義している。
+ \item 47行目から52行目は以前と同じプルダウンメニューの処理である。
+ \item 53行目から63行目は裏でサーバーと通信をするための
+       \texttt{XMLHttpRequest}オブジェクトを作成している。
+\begin{itemize}
+ \item 古いバージョンのIEは別のオブジェクトで通信をするので、ブラウザが
+       \texttt{XMLHttpRequest}メソッドを持つか確認し(54行目)、持っている
+       場合はそのオブジェクトを新規作成する(55行目)。
+ \item 56行目から62行目は古いIEのためのコードである。
+ \item このようにブラウザの機能の違いで処理を変えることをクロスブラウザ
+       対策という。通常はブラウザがその機能を持つかどうかで判断する。
+\end{itemize}
+ \item \texttt{XMLHttpRequest}が生成できたら(65行目)、このオブジェクトが
+       生成する\texttt{onreadystatechange}イベントのイベントハンドラーを
+       登録する(66行目から71行目)。
+ \begin{itemize}
+  \item \texttt{XMLHttpRequest}の\texttt{readyState}は通信の状態を表す。
+	$4$ は通信終了を意味する。これらの値については表\ref{XMLHttpRequestRes}を参照
+				のこと。
+  \item 通信が終了しても正しくデータが得られたかを調べる必要がある。
+	$200$ は正しくデータが得られたことを意味する\footnote{Http通信の終了
+				コードについては
+				\texttt{http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html}
+				を参照のこと}。
+  \item 得られたデータは\texttt{responseText}で得られる。この場合、得ら
+	れたデータは文字列となる。このほかに\texttt{responXML}でXMLデー
+	タが得られる。
+ \end{itemize}
+ \item 72行目から73行目が通信の開始する。ここでは、\texttt{GET}で行うので、
+       URLの後に必要なデータを付ける。
+ \item \texttt{GET}では送るデータ本体がないので、通信の終了をのため
+       \texttt{null}を送信する。\texttt{POST}のときはここでデータ本体を
+       送る。
+ \item プルダウンメニューが変化したときのイベントハンドラーを登録し(77行
+       目)、最後に現在の日付データをサーバーに要求する。、
+ \item 得られたデータは85行目の\texttt{p}要素の中に入れる(68行目から69行
+       目)。この要素の\texttt{firstChild}を指定しているので85行目には
+       \texttt{<p>}と\texttt{</p>}の間に空白を設けて、テキストノードが存
+       在するようにしている。
+
+\end{itemize}
+ \begin{table}
+	\caption{XMLHttpRequestの通信の状態
+\protect\footnote{\protect\texttt{https://developer.mozilla.org/ja/docs/Web/API/XMLHttpRequest}
+	より引用}} \label{XMLHttpRequestRes}
+		\begin{tabular}{|c|c|m{30zw}|}\hline
+		 値&状態&\multicolumn{1}{c|}{詳細}\\\hline
+		 0&\Verb+UNSENT+&\Verb+open()+ がまだ呼び出されていない。\\\hline
+1&\Verb+OPENED+&\Verb+send()+ がまだ呼び出されていない。\\\hline
+2&\Verb+HEADERS_RECEIVED+&\Verb+send()+ が呼び出され、ヘッダーとステータ
+						 スが通った。\\\hline 
+3&\Verb+LOADING+&ダウンロード中；\Verb+responseText+ は断片的なデータ
+						 を保持している。\\\hline 
+4&\Verb+DONE+&一連の動作が完了した。\\\hline
+		\end{tabular}
+ \end{table}
+\begin{Prob}\upshape
+ 表\ref{XMLHttpRequestRes}の状態は\texttt{XMLHttpRequest}オブジェクトの
+ プロパティである。\\たとえば、\texttt{XMLHttpRequest.DONE}で利用できる。
+ 残りのものについてもこの方法で利用できることを確認しなさい。
+\end{Prob}
+次のリストはAjaxで呼び出されるPHPのプログラムである。
+\LISTN{aniversary.php}{1}{last}{\normalsize}
+\begin{itemize}
+ \item 2行目で内部で処理をするエンコーディングを\texttt{UTF8}にしている。
+       関数、\texttt{mb\_internal\_encoding}関数を引数なしで呼び出すと
+       現在採用されているエンコーディングを得ることができる。
+ \item 4行目と5行目では月(\Verb+$m+)と日(\Verb+$d+)の値をそれぞれの変数
+       に設定している。
+\begin{itemize}
+ \item ここではコマンドプロンプトからもデバッグで
+       きるように、スーパーグローバル\Verb+$_GET+内に値があれば
+       (\Verb+isset()+)が\Verb+true+になれば、その値を、そうでなければコ
+       マンドからの引数を設定している。
+ \item スーパーグローバル\Verb+$argv+はの先頭は呼び出したファイル名であ
+       り、その後に引数が順に入る\footnote{C言語の\texttt{main}関数は通
+       常、\texttt{int main(int argc, char* argv[])}と宣言される。%
+       \texttt{argc}は\texttt{argv}の配列の大きさを表し、渡された引数の
+       リストが\texttt{argv[]}に入っている。このとき、\texttt{argv[0]}は実行
+       したときのファイル名が入る。}。
+\end{itemize}
+ \item 6行目の\texttt{file}関数は指定されたファイルを行末文字で区切って配
+       列として返す関数である。この引数にはURLも指定できる。
+\begin{itemize}
+ \item この関数は2番目の引数をとることができる。次の定数を組み合わせて使
+       う。
+\begin{center}
+ \begin{tabular}{|c|c|}\hline
+ \Verb+FILE_USE_INCLUDE_PATH+ & \Verb+include_path+ のファイルを探す\\\hline
+ \Verb+FILE_IGNORE_NEW_LINES+ & 配列の各要素の最後に改行文字を追加しない
+      \\ \hline
+  \Verb+FILE_SKIP_EMPTY_LINES+&空行を読み飛ばす \\ \hline
+ \end{tabular}
+\end{center}
+ \item \Verb+file_get_contents()+はファイルの内容を一つの文字列として
+       読み込む。Webページの解析にはこちらの関数を使うとよい。
+\end{itemize}
+ \item 読み込むファイルの一部を次に記す。
+\begin{Verbatim}
+1月[編集]
+1日 - 鉄腕アトムの日
+2日 - 月ロケットの日
+[中略]
+31日 - 生命保険の日、愛妻家の日
+2月[編集]
+1日 - テレビ放送記念日、ニオイの日
+2日 - 頭痛の日
+[以下略]
+\end{Verbatim}
+\begin{itemize}
+ \item 月の部分の後には\texttt{[}がある。
+ \item 日の情報は\Verb*+ - +で区切られている(\Verb*+ +は空白を表す)。
+ \item すべての日の情報が入っている。
+\end{itemize}
+ \item 7行目から13行目までは指定された月の行を見つける。
+\begin{itemize}
+ \item 8行目で念のためコードを\texttt{UTF8}に変更している。
+ \item 関数\Verb+mb_split()+関数は第1引数に指定された文字列パターンで第2
+       引数で指定された文字列を分割して配列として返す関数である。
+ \item 分割を指定する文字列には正規表現が使えるので、文字\Verb+[+で分割
+       するために、\Verb+"\["+としている(9行目)。
+ \item 指定された文字列があれば配列の大きさが1より大きくなる。その行に対
+       して求める月と一致しているか判定し、等しければループを抜ける(11行
+       目)。
+\end{itemize}
+ \item 14行目から18行目までは指定された月での指定された日の情報を探して
+       いる。日を決定する方法も月と同じである。文字列の分割は
+       \Verb+"\s-\s"+となっている\footnote{これは\texttt{"\textbackslash
+       s"}ではうまく行かなかっ
+       たためである。}。
+ \item 20行目で得られた情報をストリームに出力している。
+\end{itemize}
+\end{Exec}
+\begin{Prob}\upshape
+上のHTMLのリストの85行目の\texttt{<p>}と\texttt{</p>}の空白を取り除い
+ たら正しく動かなくなることを確認せよ。
+\end{Prob}
+なお、構造化されたデータとしてはXML形式でもよいが、より軽量なJSONで与え
+ることも可能である。このときは、\texttt{JSON.parse()}でJavaScriptのオブ
+ジェクトに直せばよい。

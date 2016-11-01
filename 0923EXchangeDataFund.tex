@@ -1,0 +1,164 @@
+%-*- coding: utf-8 -*-
+%￥section{}
+\section{サーバーとのデータ交換の基本}
+Webページにおいてサーバーにデータを送る方法には\texttt{POST}と
+\texttt{PUT}の2通りの方法がある。
+\begin{Exec}\upshape\label{dataexchange}
+ 次のリストは実行例\ref{EventInput}のリストに\texttt{form}のデータを
+ \texttt{POST}で送るようにしたものである。JavaScriptの部分だけ異なるので
+ そこだけのリストになっている。
+
+\texttt{windows.onload =function()}内に次のコードを追加する。
+\begin{Verbatim}
+    var Form = document.getElementsByTagName("form")[0];
+    Form.setAttribute("method","POST");
+    Form.setAttribute("action","09sendData.php");
+\end{Verbatim}
+HTMLの要素に対しては次のことを行う。
+\begin{itemize}
+ \item \texttt{<select>}要素の属性に\Verb+name="select"+ を追加する。
+ \item \texttt{id}が\Verb+"colorName"+であるテキストボックスに
+       \Verb+name="colorName"+ を追加する。
+ \item 「設定」ボタンの要素の後に次の要素を追加する。
+\begin{center}
+\Verb+<input type="submit" value="送信" id="Send"></input>+ 
+\end{center}
+\end{itemize}
+このページでは「送信」ボタンを押すと\texttt{<form>}の
+\texttt{action}属性で指定されたプログラムが呼び出される。ここではWebペー
+ ジと同じ場所にある\texttt{09sendData.php}が呼び出される。このファイル
+ のリストは次の通りである。
+\LISTN{09sendData.php}{1}{last}{\normalsize}
+\begin{itemize}
+ \item 2行目から10行目の間はヒアドキュメント形式でHTML文書の初めの部分を
+       出力させている。
+ \item \Verb+method="POST"+で呼び出されたときには\texttt{form}要素内の
+       \texttt{name}属性が指定されたものの値がスーパーグローバル
+       \Verb+$_POST+内の連想配列としてアクセスができる。
+ \item 11行目から13行目でそれらの値を\texttt{table}要素内の要素として出
+       力している。
+\end{itemize}
+出力された結果は次のようになる。
+\VerbatimInput{09sendData.res}
+\end{Exec}
+なお、\Verb+method="PUT"+で呼び出した場合にはスーパーグローバル
+\Verb+$_GET+を用いる。また、スーパーグローバル\Verb+$_REQUEST+は
+\Verb+method="POST"+でも\Verb+method="PUT"+で呼び出された場合の
+\Verb+$_POST+や\Verb+$_GET+の代わりに使用できる。
+
+\Verb+type="submit"+の\texttt{input}要素は、ボタンが押されたときに直ちに、
+\texttt{action}属性で指定された処理が呼び出される。通常は、サーバーにデー
+タを送る前に最低限のエラーチェックを行い、エラーがない場合にだけサーバー
+と通信するのが良い。
+\begin{Prob}\upshape
+ \texttt{PUT}と\texttt{GET}を用いたHTMLファイルで実行後のURLがどうなって
+ いるか確認しなさい。
+ さらに、実行例\ref{dataexchange}のPHPのプログラムを直接URLに記述して呼び出した
+ らどうなるか。また、
+   \Verb+Form.setAttribute("method","POST");+
+ の部分を\Verb+Form.setAttribute("method","PUT");+に変更して\texttt{PUT}
+ による通信の場合について調べよ。
+\end{Prob}
+\section{スパーグローバルの補足}
+スパーグローバルのうち、これまでに説明してこなかったものについて解説をす
+る。
+\paragraph{\texttt{\$\_SERVER}}
+この変数はサーバーにアクセスしたときのクライ
+アントの情報などを提供する。具体的な内容はクライアントごとに異なる。
+\begin{Prob}\upshape
+ \texttt{foreach}構文を用いて\Verb+$_SERVER+の内容を表示し、どのようなも
+ のが送られている確認にせよ。
+\end{Prob}
+\paragraph{\texttt{\$\_COOKIE}}
+COOKIE とはWebサーバー側からクライアント側に一時的にデータを保存させる仕
+組みである。サーバーと通信するたびに、これらのデータがクライアント側から
+サーバー側に送られる。これにより、すでに訪問したことがあるサイトに対して
+情報を開始時に補填する機能などを実現できる。
+\paragraph{\texttt{\$\_SESSION}}
+セッションとはある作業の一連の流れを指す。たとえば会員制のサイトではログイ
+ン後でなければページを見ることができない。情報のページに直接行くことがで
+きないような仕組みが必要である。
+
+HTTP通信はセッションレスな通信である（各ページが独立して存在し、ページ間
+のデータを直接渡せない）。
+セッションを確立するために、クライアント側から情報を送り、それに基づい
+てサーバー側が状況を判断するなどの操作を意識的にする必要がある。
+
+初期のころはページ間のデータを受け渡すために表
+示しない\texttt{<input>}要素の中に受け渡すデータを入れていた。これはセキュ
+リティ上問題が生ずるので、COOKIEによる認証が行われるようになった。
+
+PHPではセッションを開始するための関数\texttt{session\_start()}とセッショ
+ンを終了させるための関数\texttt{session\_destroy()}が用意されている。セッションを
+通じで保存させておきたい情報はこの連想配列に保存する。セッションの管理は
+サーバーが管理することとなる。
+なお、この機能はCOOKIEの機能を利用して実現されている。
+\section{Web Storage}
+HTML5から独立した Web Storage は localStoarage と sessionStorage の2種類
+がある。localStorage は文字列をキーに、文字列の値を持つ Storage オブジェクト
+である。同一の出身(プロトコルやポート番号も含む)のすべてのドキュメント
+がおなじlocalStorageを共有する。このデータは意識的に消さない限り存在する。
+
+これに対し、sessionStorageはウインドウやブラウザが閉じられると消滅する。
+これにより、セッション間の情報の移動や以前の訪れたことのあるページの情報
+の保存を可能にしている。
+
+\begin{Exec}\upshape
+次の例は \texttt{localStorage} を用いて、ページのアクセス時間を保存し、他のページ
+ に移動してもそのデータが利用できることを示すものである。
+
+ページのアクセス時間を記録するページのリストは次のとおりである。
+ \LISTN{10storage.html}{1}{last}{\normalsize}
+ \begin{itemize}
+	\item 8行目で記述を簡単にするためと後で\texttt{localStorage}を
+				\texttt{sessionStorage}に簡単に修正できるように変数
+				\texttt{Storage}を導入している。
+	\item 11行目で結果を表示するための\texttt{<div>}要素の得ている。
+	\item 12行目ではアクセスされた時間を求めている。
+	\item WebStorageに\texttt{access}の要素が存在するかを調べ、存在する場
+				合には変数\texttt{accessList}に配列のデータとして復元する
+				(13行目から14行目)。これは、今までのアクセス時間を新しい順に並べ
+				た配列である。
+	\item 存在しない場合には、変数\texttt{accessList}を初期化し(16行目)、
+				初回のアクセスである旨の表示を行う(17行目)。テキストを表示すある
+				関数は26行目から30行目に定義してある。
+	\item 新しい順に並べてあるアクセス時間の先頭に今回のアクセス時間
+				(1970年1月1日0時(GMT)からのミリ秒単位の時間)を挿入
+				し(19行目の\texttt{unshift()}は配列の先頭に引数のデータを挿入す
+				る配列のメソッドである)、WebStorageにJSON形式で保存する(20行目))。
+	\item 以下のデータがアクセス時間のリストであるメッセージを表示した(21
+				行目)後、アクセス時間をすべて表示している(22行目から24行目)。
+\begin{itemize}
+ \item 配列の\texttt{forEach}メソッドは、配列の個々の要素に対して引数で
+				与えられた関数を実行する。
+ \item このメソッドの戻り値はない。
+ \item 引数で渡される関数の引数
+				は3つあり、処理する配列の現在の値(\texttt{D})、配列の位置
+			 (\texttt{i})と処理する配列(\texttt{A})である。したがって、
+			 \texttt{A[i]}と\texttt{D}は同じ値である。
+ \item 処理結果を配列に戻したければ\texttt{A[i]}に値を代入すればよい。
+\end{itemize}
+	\item 26行目から30行目がWebページ上にデータを表示する関数を定義してい
+				る部分である。
+				\begin{itemize}
+				 \item 引数は、表示するための親要素(\texttt{P})と表示する文字列
+							 (\texttt{Mess})である。
+				 \item \texttt{<div>}要素を作成し(27行目)、与えられた親要素の子要素にす
+							 る(28行目)。
+				 \item さらに作成した子要素に与えられた文字列を表示するテキスト
+							 要素を子要素に付け加える(29行目)
+				\end{itemize}
+				
+ \end{itemize}
+前のページで「次のページ」ボタンを押したとき、移動先のページのリストは次
+ のとおりである。
+ \LISTN{10next.html}{1}{last}{\normalsize}
+\end{Exec}
+すでに、いくつかのサイトではこ
+の機能を用いており、その開発者ツールで見ることが可能である。これらのデー
+タの形式は文字列である。構造化されたデータはJSON形式で保存するのがよいで
+あろう。
+\begin{Prob}\upshape
+いくつかのサイトにおいてStorageが利用されているか、どのようなデータ
+ が保存されているか調べよ。
+\end{Prob}

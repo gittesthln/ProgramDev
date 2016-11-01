@@ -1,0 +1,13 @@
+\beamer@endinputifotherversion {3.36pt}
+\beamer@sectionintoc {1}{レポート課題について}{2}{0}{1}
+\beamer@sectionintoc {2}{オブジェクト属性}{5}{0}{2}
+\beamer@subsectionintoc {2}{1}{関数オブジェクトの属性}{5}{0}{2}
+\beamer@subsectionintoc {2}{2}{\ElmJ {class}属性}{6}{0}{2}
+\beamer@subsectionintoc {2}{3}{\ElmJ {extensible}属性}{10}{0}{2}
+\beamer@subsectionintoc {2}{4}{\ElmJ {prototye}属性}{19}{0}{2}
+\beamer@subsectionintoc {2}{5}{\texttt {prototype}の使用例}{21}{0}{2}
+\beamer@subsectionintoc {2}{6}{継承}{30}{0}{2}
+\beamer@sectionintoc {3}{エラーオブジェクトについて}{34}{0}{3}
+\beamer@subsectionintoc {3}{1}{エラーオブジェクトの概要}{34}{0}{3}
+\beamer@subsectionintoc {3}{2}{エラー処理の例}{35}{0}{3}
+\beamer@subsectionintoc {3}{3}{エラーからの復帰}{45}{0}{3}

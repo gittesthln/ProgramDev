@@ -1,0 +1,103 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<title>エラーオブジェクト</title>
+<script type="text/ecmascript">
+//<![CDATA[
+function Person(name, y, m, d){
+  if(name === "") throw new Error("名前がありません");
+  this.name = name;
+  this.year = y;
+  if(m<1 || m>12) throw new Error("月が不正です");
+  var date = new Date(y,m,0);
+  if(d<1 || d>date.getDate()) throw new Error("日が不正です");
+  this.month = m,
+  this.day = d
+}
+Person.prototype = {
+  toString : function(){
+      return "私の名前は"+this.name+"です";
+    },
+  get age(){
+      var Now = new Date();
+      var Age = Now.getFullYear() - this.year;
+      if((Now.getMonth()+1) < this.month) {
+        Age--;
+      } else {
+        if((Now.getMonth()+1) == this.month &&
+           Now.getDate() < this.day) Age--;
+      }
+      return Age;
+    },
+  get birthday() {
+      return this.year+"年"+this.month+"月"+this.day+"日";
+    }
+}
+function Person2(name, y, m, d){
+  this.checkDate(y, m, d);
+  this.checkName(name);
+  this.name = name;
+  this.year = y;
+  this.month = m,
+  this.day = d
+}
+Person2.prototype = {
+  toString : function(){
+      return "私の名前は"+this.name+"です";
+    },
+  checkDate : function(y, m, d) {
+      var date = new Date(y,m,0);
+      if(m<1 || m>12) throw new Error("月が不正です");
+      if(d<1 || d>date.getDate()) throw new Error("日が不正です");
+    },
+  checkName : function(name) {
+      if(name === "") throw new Error("名前がありません");
+    },
+  get age(){
+      var Now = new Date();
+      var Age = Now.getFullYear() - this.year;
+      if((Now.getMonth()+1) < this.month) {
+        Age--;
+      } else {
+        if((Now.getMonth()+1) == this.month &&
+           Now.getDate() < this.day) Age--;
+      }
+      return Age;
+    },
+  get birthday() {
+      return this.year+"年"+this.month+"月"+this.day+"日";
+    }
+}
+function Student(n, id, y, m, d){
+  this.checkDate(y, m, d);
+  this.checkName(n);
+  this.name   = n;
+  this.year  = y;
+  this.month = m;
+  this.day   = d;
+  this.id    = id;
+}
+Student.prototype = new Person2();
+Student.prototype.constructor = Student;
+
+function test() {
+  var y, m, d;
+  for(;;) {
+    try {
+      y = Number(prompt("生まれた年を西暦で入力してください"));
+      m = Number(prompt("生まれた月を入力してください"));
+      d = Number(prompt("生まれた日を入力してください"));
+      return new Person2("foo", y, m, d);
+    } catch(e) {
+      console.log(e.name+":"+e.message);
+    } finally{
+      console.log("finnally");
+    }
+  }
+}
+  
+//]]>
+</script>
+</head>
+</html>

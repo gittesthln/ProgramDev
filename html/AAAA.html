@@ -1,0 +1,116 @@
+<!DOCTYPE html><!-- ref="XML" -->
+<html xmlns:svg="http://www.w3.org/2000/svg" ref="SVGS"
+      xmlns:xlink="http://www.w3.org/1999/xlink">
+<head>
+<meta charset="UTF-8"/><!-- ref="CHARSET" -->
+<script type="text/ecmascript">
+//<![CDATA[
+  var Circle, X, Y, XP, YP, SetColor, oT, oL, B;//// ref="InitS"
+  function init() {
+    var Colors = {"red":"赤", "yellow":"黄色","green":"緑", //// ref="InitOptS"
+                       "blue":"青","gray":"灰色","black":"黒"};
+    var tmp, tmpText, Color;
+    SetColor = document.getElementById("SetColor");//// ref="Setcolor"
+    for( Color in Colors) {//// ref="makeOptS"
+      tmp = document.createElement("option");//// ref="createOption"
+      tmp.setAttribute("value", Color);//// ref="setValue"
+      tmpText = document.createTextNode(Colors[Color]);//// ref="createTextNode"
+      tmp.appendChild(tmpText);//// ref="appendTextNode"
+      SetColor.appendChild(tmp);//// ref="appendChild"
+    }//// ref="InitOptE"
+    XP = document.getElementById("XP");//// ref="getObjectS"
+    YP = document.getElementById("YP");
+    Circle = document.getElementById("Circle");
+    X = document.getElementById("X");
+    Y = document.getElementById("Y");//// ref="getObjectE"
+    XP.value = Circle.getAttribute("cx");//// ref="GetX"
+    YP.value = Circle.getAttribute("cy");//// ref="GetY"
+    B = document.getElementById("canvas");
+    document.getElementById("field").addEventListener("click",click, false);//// ref="setEventListner"
+    oT = B.offsetTop+5;//// ref="CorrectS"
+    oL = B.offsetLeft+5;
+    while(B.offsetParent) {//// ref="offsetP"
+      B = B.offsetParent;
+      oT += B.offsetTop;
+      oL += B.offsetLeft;
+    }//// ref="CorrectE"
+    refresh();
+  }
+  function click(event) {
+    XP.value = event.pageX-oL;
+    YP.value = event.pageY-oT;
+    refresh();
+  }
+function refresh() {
+  SetText(X,"cx", XP.value);
+  SetText(Y,"cy", YP.value);
+  Circle.setAttribute("fill", SetColor.value);
+}
+
+function SetText(Element, attrib, Value) {
+  var txtNode = document.createTextNode(Value);
+  if( Element.firstChild) {
+     Element.replaceChild(txtNode, Element.firstChild);
+  } else {
+     Element.appendChild(txtNode);
+  }
+  Circle.setAttribute(attrib, Value);
+}
+
+//]]>  </script>
+<style type="text/css">
+.display { font-size:30px;}
+.displayL { font-size:35px;}
+.textStyle { font-size:20px; text-anchor:end;}
+</style>
+<title>HTMLとSVGの間でデータを交換させる</title>
+</head>
+<body onload="init()" ><!-- ref="bodyS" -->
+  <table>
+    <tr><td colspan="2" align="center" class="displayL">
+        クリック位置をHTML内に表示、HTMLから移動させる</td>
+    </tr>
+    <tr>
+      <td>
+        <svg class="svg" height="410" width="410"  id="canvas">
+          <g transform="translate(5,5)" ref="Transform">
+            <rect x="0" y="0" width="400" height="400" fill="lightgray"/>
+            <text class="textStyle" x="50" y="50"> X</text>
+            <text class="textStyle" id="X" x="100" y="50"></text>
+            <text class="textStyle" x="50" y="100"> Y</text>
+            <text class="textStyle" id="Y" x="100" y="100"></text>
+            <circle id="Circle" cx="200" cy="50" r="20" fill="red"/>
+            <path fill="blue"
+              d="M-5,-5 405,-5 405,405 -5,405z M0,0 0,400 400,400 400,0z" />
+            <rect x="0" y="0" width="400" height="400" 
+              fill="lightgray" opacity="0" id="field"/>
+           </g>
+        </svg><!-- ref="SVGE" -->
+      </td>
+      <td align="right">
+        <form name="Test">
+          <table>
+            <tr>
+              <td class="display">x=</td>
+              <td><input class="display" type="text" id="XP" name="XP" size="3" /></td>
+            </tr>
+            <tr>
+              <td class="display">y=</td>
+              <td><input class="display" type="text" id="YP" name="YP" size="3" /></td>
+            </tr>
+            <tr>
+              <td class="display">色</td>
+              <td><select class="display" id="SetColor" name="SetColor"/></td>
+            </tr>
+            <tr>
+              <td align="center" colspan="2">
+                <button class="display" onclick="refresh(); return false;">設定</button>
+              </td>
+            </tr>
+          </table>
+        </form>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

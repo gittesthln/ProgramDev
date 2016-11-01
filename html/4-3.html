@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<title>returnのあるコンストラクタ</title>
+<script type="text/ecmascript">
+//<![CDATA[
+function Person(D){
+  this.name = "foo";
+  this.birthday = {
+    year : 2001,
+    month : 4,
+    day : 1
+  };
+  this["hometown"] = "神奈川";
+  return D;
+}
+//]]>
+</script>
+</head>
+</html>

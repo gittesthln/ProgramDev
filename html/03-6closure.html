@@ -1,0 +1,83 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<title>クロージャについて</title>
+<script type="text/ecmascript">
+//<![CDATA[
+function f1() {
+  var n=0;
+  return function() {
+    return n++;
+  };
+}
+
+var foo = (function () {
+  var n=0;
+  return function() {
+    return n++;
+  };
+})();
+
+function f2() {
+  var a = [];
+  var i;
+  for(i=0; i<3; i++) {
+    a[i] = function() {
+      return i;
+    };
+  }
+  return a;
+}
+
+function f3() {
+  var a = [];
+  var i;
+  for(i=0; i<3; i++) {
+    a[i] = (function(x){
+      return function() {
+        return x;
+      }
+    })(i);
+  };
+  return a;
+}
+function f4() {
+  var a = [];
+  var i;
+  for(i=0; i<3; i++) {
+    a[i] = (function(x){
+      return function() {
+        return x;
+      }
+    })([i]);
+  };
+  return a;
+}
+function f5() {
+  var a = [], b;
+  var i;
+  for(i=0; i<3; i++) {
+    b=[i];
+    a[i] = function() {
+      return b;
+    };
+  }
+  return a;
+}
+function f6() {
+  var a = [], b=[];
+  var i;
+  for(i=0; i<3; i++) {
+    b[i]=i;
+    a[i] = function() {
+      return b[i];
+    };
+  }
+  return a;
+}
+
+//]]>
+</script>
+</head>
+</html>

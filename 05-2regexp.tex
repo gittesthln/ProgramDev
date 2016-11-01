@@ -1,0 +1,461 @@
+%-*- coding: utf-8 -*-
+\chapter{正規表現}
+正規表現とは、一定の規則にあてはまる文字列のパターンを記述する文字列のこ
+とである
+\iffalse%\else\footnote{元来は正則言語と呼ばれる形式言語を記述するためのものと
+同等のものであったが、最近の計算機言語で取り扱う正則言語は機能が拡張され、
+正則言語より広い範囲の形式言語を記述することが可能となっている。}
+\fi
+。
+正則表現とも呼ばれる。JavaScriptでは
+\texttt{RegExp}クラスが正規表現を表す。
+%JavaScript の正規表現は Perl 5の書式に近いものになっている。
+\section{正規表現オブジェクトの記述方法}
+正規表現のオブジェクトは \texttt{RegExp()}コンストラクタで生成できるが、
+正規表現リテラルを使って記述することもできる。正規表現リテラルは文字
+列をスラッシュ(\texttt{/})で囲んで記述する。
+
+次の正規表現はどちらも\texttt{s}で始まる文字列を表す。これを
+\texttt{s}で始まる文字列にマッチするという。
+\begin{verbatim}
+var pattern = new RegExp("^s");
+var pattern = /^s/;
+\end{verbatim}
+\iffalse%\else
+正規表現内の文字には通常の文
+字(ここでは\texttt{s})を表すものと、特別な意味を持つ文字(ここでは
+\verb+^+)がある。特別な意味を持つ文字はメタ文字と呼ばれる。
+\fi
+\paragraph{リテラル文字}
+
+正規表現では次の文字は特別な意味を持つ。これらはメタ文字と呼ばれる。
+\begin{verbatim}
+^ $ . * + ? = ! | \ / ( ) [ ] { }
+\end{verbatim}
+これらの文字をそのまま文字として使いたい場合はその前にバックスラッシュ
+(\verb+\+)を付ける。英数字の前にバックスラッシュを付けると別な意味になる
+場合がある(表\ref{character})。
+\begin{table}[ht]
+ \caption{正規表現のリテラル文字}\label{character}
+\begin{center}
+ \begin{tabular}{|c|l|}\hline
+  文字&\multicolumn{1}{c|}{意味}\\\hline
+  英数字&通常の文字 \\\hline
+  \verb+\0+&NULL 文字(\verb+\u0000+) \\ \hline
+  \verb+\t+& タブ(\verb+\u0009+)\\ \hline
+  \verb+\n+& 改行(\verb+\u000A+)\\ \hline
+  \verb+\v+& 垂直タブ(\verb+\u000B+)\\ \hline
+  \verb+\f+& 改ページ(\verb+\u000C+)\\ \hline
+  \verb+\r+& 復帰(\verb+\u000D+)\\ \hline
+  \verb+\xnn+& 16進数 \texttt{nn} で指定されたASCII文字(\verb+\x0A+ は
+      \verb+\n+と同じ)\\ \hline
+  \verb+\uxxxx+&16進数 \texttt{xxxx} で指定されたUnicode 文字
+      (\verb+\u000D+は\verb+\r+と同じ)\\ \hline
+  \verb+\cX+& 制御文字(\verb+\cC+ は\verb+\u0003+と同じ)\\ \hline
+ \end{tabular}
+\end{center}
+\end{table}
+%\newpage
+\paragraph{文字クラス}
+個々のリテラル文字を\texttt{[]}で囲むことでそれぞれの文字の一つにマッチ
+する。このほかにもよく使われる文字クラスには特別なエスケープシークエンス
+がある(表\ref{characterclass})。
+\begin{table}[ht]
+ \caption{文字クラス}\label{characterclass}
+\begin{center}
+ \begin{tabular}{|c|l|}\hline
+  文字&\multicolumn{1}{c|}{意味}\\\hline
+  \texttt{[...]}&\texttt{[]}内の任意の1文字\\\hline
+  \verb+[^...]+& \texttt{[]}内以外の任意の1文字\\ \hline
+  \verb+.+& 改行(Unicodeの行末文字)以外の任意の1文字\verb+[^\n]+と同じ\\ \hline
+  \verb+\w+& 任意の単語文字。\verb+[A-Za-z0-9]+と同じ\\ \hline
+  \verb+\W+& 任意の単語文字以外の文字。\verb+[^A-Za-z0-9]+と同じ\\ \hline
+  \verb+\s+& 任意のUnicode空白文字\\ \hline
+  \verb+\S+& 任意のUnicode空白文字以外の文字\\ \hline
+  \verb+\d+& 任意の数字。\verb+[0-9]+ と同じ\\ \hline
+  \verb+\D+&任意の数字以外の文字。\verb+[^0-9]+ と同じ\\\hline
+  \verb+\[\b]+& リテラルバックスペース\\ \hline
+ \end{tabular}
+\end{center}
+\end{table}
+
+たとえば、 \verb+\d\d+は2桁の10進数にマッチする。先頭に\verb+0+が来てもよい。
+       先頭に\verb+0+が来る場合を除くのであれば\verb+[1-9]\d+となる。
+一般には、同じパターンの繰り返しが必要になることが多い。
+\paragraph{繰り返し}
+正規表現の文字の繰り返しを指定できる(表\ref{repeat})。
+\begin{table}[ht]
+\caption{繰り返しの指定}\label{repeat}
+\begin{center}
+ \begin{tabular}{|c|l|}\hline
+  文字&\multicolumn{1}{c|}{意味}\\\hline
+\verb+{m,n}+&直前の項目の\texttt{m}回から\texttt{n}回までの繰り返し\\\hline
+\verb+{m,}+&直前の項目の\texttt{m}回以上の繰り返し\\\hline
+\verb+{m}+&直前の項目の\texttt{m}回の繰り返し\\\hline
+\verb+?+&直前の項目の0回(なし)か1回の繰り返し。\verb+{0,1}+と同じ\\\hline
+\verb-+-&直前の項目の1回以上の繰り返し。\verb+{1,}+と同じ\\\hline
+\verb+*+&直前の項目の0回以上の繰り返し。\verb+{0,}+と同じ\\\hline
+\end{tabular}
+\end{center}
+\end{table}
+\begin{itemize}
+ \item 4桁の10進数のパターンは\verb+\d\d\d\d+で表されるが、繰り返しを
+       使うと\verb+\d{4}+で表される。
+ \item 1桁以上の10進数は\verb-\d+-で表される。先頭が\texttt{0}でないよう
+       にすると、\verb+[1-9]\d*+と表される。
+\end{itemize}
+\paragraph{非貪欲な繰り返し}
+通常、正規表現において繰り返しはできるだけ長く一致するように繰り返しが行
+われる。これを貪欲な繰り返しという。たとえば、\verb+"aaaaab"+という文字
+列に対し、正規表現 \verb-/\a+/- がマッチする部分は \verb+aaaaa+ の長さ5
+の文字列になる(もっともここではこのパターンが含まれることしかわからない)。
+
+これに対し、できるだけ短い文字列のマッチで済ませる繰り返しを、非貪欲な繰
+り返しという。これを指定するには繰り返し指定の後に\verb+?+を付ける。
+つまり、\verb-??-、\verb-+?-、\verb-*?-、\verb-{1,5}?- などのように記述する。
+
+したがって、\verb+"aaaaab"+という文字
+列に対し、正規表現 \verb-/\a+?/- がマッチする部分は \verb+a+ の長さ1
+の文字列になる。しかし、正規表現 \verb-/\a+?b/- がマッチする部分は全体の
+\verb+"aaaaab"+ になる。これはマッチが開始する位置が、この文字列の先頭か
+ら始まるためである。詳しくは実行例\ref{greedy}を参照のこと。
+
+%\newpage
+\paragraph{選択、グループ化、参照}
+正規表現にはいくつかのパターンの選択や、表現のグループ化ができる。また、
+グループ化したところに一致した文字列を後で参照する(前方参照)ことができる(表
+\ref{select})\footnote{元来の正規表現では前方参照ができない。この機能は
+正則言語のより広い範囲の言語であることを示している}。
+\begin{table}[ht]
+\caption{選択、グループ化、参照の指定}\label{select}
+\begin{center}
+ \begin{tabular}{|c|m{30zw}|}\hline
+  文字&\multicolumn{1}{c|}{意味}\\\hline
+\verb+|+&この記号の左右のどちらかを選択する\\\hline
+\verb+(...)+&正規表現のグループ化をする。これにより、
+      \verb-*-,\verb-+-,\verb-|-などの対象がグループ化されたものにな
+      る。また、グループに一致した文字列を記憶して後で参照できる。\\\hline
+\verb+(?:..)+&グループ化しか行わない。一致した文字列を記憶しない。\\\hline
+\verb+\n+&グループ番号\verb+n+で指定された部分表現に一致する。グループ番
+      号は左から数えた\verb+(+の数である。ただし、\verb+(?+は数えない。\\\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+JavaScript では文字列は\verb+"+%"
+ではさむものか\verb+'+ではさむことになっている。グループ番号を使うと文
+字列のパターンのチェックができる。
+\begin{Exec}
+選択、グループ化の例を挙げる。
+\begin{itemize}\upshape
+ \item \verb-(J|j)ava(S|s)cript- は 
+\verb-JavaScript-, 
+\verb-Javascript-,
+\verb-javaScript-,
+\verb-javascript- の4つにマッチする。
+ \item \verb/[+-]?\d+/ は符号つき(なくてもよい)10進数とマッチする。
+\verb/[+-]?/により、符号がなくてもよいことに注意すること。
+\end{itemize}
+\end{Exec}
+\paragraph{一致位置の指定}
+正規表現には文字列が現れる位置を指定することができる(表\ref{position})。
+\begin{table}[ht]
+\caption{一致位置の指定}\label{position}
+\begin{center}
+ \begin{tabular}{|c|l|}\hline
+  文字&\multicolumn{1}{c|}{意味}\\\hline
+\verb+^+&文字列の先頭\\\hline
+\verb+$+&文字列の最後\\\hline
+\verb+\b+&単語境界。\verb+\w+と\verb+\W+の間の位置。\verb+[\b]+との違い
+      に注意\\\hline
+\verb+\B+&単語境界以外\\\hline
+\verb+(?=p)+&後に続く文字列が\verb+p+に一致することが必要。\\\hline
+\verb+(?!p)+&後に続く文字列が\verb+p+に一致しないことが必要。\\\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+最後の2つは \verb+Java+ にはマッチさせたいが \verb+JavaScript+ にはマッ
+チさせたくないときなどに使用できる。
+\paragraph{フラグ}
+正規表現にはいくつかのフラグを指定できる(表\ref{flag})。
+フラグを書く位置は正規表現リテラルを表す\verb+/..../+ の後に書く。
+\begin{table}[ht]
+\caption{フラグの指定}\label{flag}
+\begin{center}
+ \begin{tabular}{|c|m{30zw}|}\hline
+  文字&\multicolumn{1}{c|}{意味}\\\hline
+\verb+i+&大文字と小文字を区別しない\\\hline
+\verb+g+&グローバル検索をする。初めに一致したものだけでなくすべてを検索
+      する。\\\hline
+\verb+m+&複数行モードにする。\verb+^+は文字列の先頭だけでなく、行の先頭
+      に。\verb+$+は文字列の末尾と行の末尾に一致する。\\\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\verb+g+のフラグはパターンマッチした部分文字列を置き換えるメソッド内でし
+か意味を持たない。
+
+たとえ
+ば、\verb+/javascript/ig+ である。これは \verb+JaVaSCRipt+ などにマッチ
+する。
+\begin{Prob}\upshape
+次の文字列にマッチする正規表現を作れ。
+\begin{enumerate}
+ \item C言語の変数名の命名規則に合う文字列
+ \item 符号付小数。符号はなくてもよい。整数の場合は小数点はなくてもよい。また、小数
+       点はあっても小数部はなくてもよい。整数部分には数字が少なくとも一
+       つはあること。たとえば\verb+-1.+にはマッチするが、\verb+-.0+には
+       整数部分がないのでマッチしない。\verb+.+のエスケープを忘
+       れないようにすること。
+ \item 前問の正規表現を拡張して、指数部が付いた浮動小数にマッチするもの
+       を作れ。指数部は\verb+E+または\verb+e+で始まり、符号付き(なくても
+       よい)整数とする。
+ \item 24時間生の時刻の表し方。時、分、秒はすべて2桁とし、それらの区切り
+       は\verb+:+とする。たとえば午後1時10分6秒は\verb+13:10:06+である。
+  また、\verb+13:10:66+ は秒数が60以上になっているのでマッチしてはいけない。
+\end{enumerate}
+\end{Prob}
+\section{文字列のパターンマッチングメソッド}
+表\ref{RegMwthod}は正規表現による文字列のパターンマッチングが使用できる \verb+String+
+オブジェクトのメソッドの一覧である。
+\begin{table}[ht]
+\caption{文字列で正規表現が使えるメソッド}\label{RegMwthod}
+\begin{center}
+ \begin{tabular}{|c|c|m{25zw}|}\hline
+  文字&\multicolumn{1}{c|}{引数}&\multicolumn{1}{c|}{意味}\\\hline
+\verb+match()+&正規表現&引数の正規表現にマッチした部分を文字列の配列で返
+	  す。見つからない場合は\verb+null+が変える。
+          \verb+g+フラグがない場合の補足は下の例を参照。\\\hline
+\verb+replace()+&正規表現、\newline 置換テキスト&\verb+g+フラグがあれば一致した部
+	  分すべてを、ない場合は、はじめのところだ
+	  け置換した文字列を返す。\newline
+          置換文字列の中でグループ化した部分文字列を
+	  \verb+$1+,\verb+$2+,...で参照できる。\\\hline
+\verb+search()+&正規表現&正規表現に一致した位置を返す。見つからない場合
+	  は$-1$を返す。\verb+g+フラグは無視される。\\\hline
+\verb+split()+&正規表現、\newline 分割最大数&正規表現のある位置で文字列を分割する。
+	  2番目の引数はオプション\\\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+これらをまとめた実行例を示す。
+\begin{Exec}
+４桁の数字にマッチする正規表現オブジェクトを作成する。
+\begin{verbatim}
+var ex = /\d\d\d\d/;
+undefined
+\end{verbatim}
+この正規表現に対し、それぞれのメソッドを適用させる。
+\begin{verbatim}
+>"20144567".search(ex);
+0
+>"20144567".match(ex);
+["2014"]
+>"20144567".replace(ex,"AA");
+"AA4567"
+\end{verbatim}
+\begin{itemize}
+ \item 検索対象の文字列はすべて数字からなるのでこの正規表現にマッチする
+       位置は$0$である。
+ \item マッチした文字列は先頭から4文字となる。
+ \item \verb+"AA"+で置き換えると先頭の４文字が置き換えられる。
+\end{itemize}
+正規表現に\verb+g+フラグをつけて同じようなことをする。
+\begin{verbatim}
+>var exg = /\d\d\d\d/g;
+undefined
+>"20144567".search(exg);
+0
+>"20144567".match(exg);
+["2014", "4567"]
+>"20144567".replace(exg,"AA");
+"AAAA"
+\end{verbatim}
+\verb+g+フラグがあるので\verb+match()+や\verb+replace()+が複数回実行されているこ
+ とがわかる。
+\end{Exec}
+\begin{Exec}\upshape
+次の例はマッチした文字列を置換する。
+\begin{verbatim}
+>"aaa bbb".replace(/(\w*)\s*(\w*)/,"$2,$1");
+"bbb,aaa"
+\end{verbatim}
+英数字からなる2つの文字列(\verb+(\w*)+)の順序を入れ替えて、その間に
+ \verb+,+を挿入する。
+\verb+$1+ は文字列 \verb+aaa+に、
+\verb+$2+ は文字列 \verb+bbb+にマッチしている。
+\end{Exec}
+\begin{Exec}
+次の例は文中の \verb+Java+ を \verb+JavaScript+ に変える。
+ここでは\verb+JavaScript+ を \verb+JavaJavaScript+ にしないために
+\verb+(?!p)+を用いる。
+\begin{verbatim}
+>"JavaとJavaScriptは全く違う言語です。".replace(/Java(?!Script)/,"JavaScript");
+"JavaScriptとJavaScriptは全く違う言語です。"
+\end{verbatim}
+\end{Exec}
+\begin{Exec}\label{greedy}
+ 貪欲さと非貪欲さの確認を行う。
+\begin{verbatim}
+>"aaaaab".match(/a+/);
+["aaaaa"]
+>"aaaaab".match(/a+?/);
+["a"]
+\end{verbatim}
+上の例は貪欲なので\verb+a+の繰り返しの部分を最大限の位置でマッチしている。
+下の例は非貪欲なので最小限の長さの部分にしかマッチしていない。
+\begin{verbatim}
+>"aaaaab".match(/a+?b/);
+["aaaaab"]
+\end{verbatim}
+この例では、\verb+ab+ にマッチしていないことに注意すること。初めに先頭の
+ \verb+a+にマッチしたので\verb+b+が来るところまでマッチする。
+\end{Exec}
+\begin{Exec}\upshape
+次の例は前方参照を行っている。
+\begin{verbatim}
+>"abcdbcc".search(/((.)\2).*\1/);
+-1
+\end{verbatim}
+\begin{itemize}
+ \item \verb+(.)+の部分は左かっこが２番目にあるので、\verb+\2+で参照でき
+       る。したがって、\verb+(.)\2+は同じ文字が２つ続いていることを意味
+       する。この部分全体が再び\verb+()+でくくられているので、その部分は
+       \verb+\1+で参照できる。
+ \item したがってこの正規表現は、同じ文字の繰り返しが２回現れる文字列に
+       マッチする。
+ \item 文字列\verb+"abcdbcc"+には同じ文字が連続して現れるのが末尾の
+       \verb+"cc"+しかないので、この文字列にはマッチしない(戻り値が$-1$
+       である)。
+\end{itemize}
+\begin{verbatim}
+>"abccbcc".search(/((.)\2).*\1/);
+2
+>"abccbcc".match(/((.)\2).*\1/);
+["ccbcc", "cc", "c"]
+\end{verbatim}
+\begin{itemize}
+ \item この文字列では\verb+cc+という同じ文字を繰り返した部分が2か所ある
+       のでマッチする。はじめの\verb+cc+の位置が先頭から$2$番目なので戻
+       り値が$2$となっている。
+ \item \verb+match()+を行うと、\verb+cc+ではさまれた部分文字列が戻り値の
+       配列の先頭に、以下、\verb+\1+と\verb+\2+にマッチした部分文字列が
+       配列に入っている。
+\end{itemize}
+\begin{verbatim}
+>"abccbcckkccaaMMaa".match(/((.)\2).*\1/);
+["ccbcckkcc", "cc", "c"]
+\end{verbatim}
+\begin{itemize}
+ \item この例では\verb+cc+が部分文字列に3か所現れている。
+ \item 貪欲なマッチのため、マッチした部分は1番目と3番目の\verb+cc+にはさ
+       まれた部分である。
+ % \item
+       この文字列には\verb+aa+ではさまれた部分文字列も存在するが、
+       \verb+g+フラグが付いていないのではじめにマッチしたものだけ戻っ
+       てこない。
+ \item そのあとの配列には\verb+\1+と\verb+\2+が入っている。
+\end{itemize}
+\begin{verbatim}
+>"abccbcckkccaaMMaa".match(/((.)\2).*\1/g);
+["ccbcckkcc", "aaMMaa"]
+\end{verbatim}
+ \verb+g+フラグを付けるとマッチした部分文字列の配列が戻ってくるが、
+ %フラグがなかったときのように
+ \verb+\1+などの情報は得られない。
+\begin{verbatim}
+"abccbcckkccaaMMaa".match(/((.)\2).*?\1/g);
+["ccbcc", "aaMMaa"]
+\end{verbatim}
+この例は非貪欲でグローバルなマッチである。非貪欲にすると一番目と2番目の
+ \verb+cc+ にはさまれた部分と \verb+aa+ ではさまれた部分がそれぞれマッチする。
+
+\iffalse\else
+次の例は前方参照を利用してデータなどに含まれる文字列の引用符が対応してい
+ る(シングルクオート同士、ダブルクオート同士)かを確認している。
+\begin{verbatim}
+>'\'abcd"df"\''.search(^/(['"]).*\1$/);
+0
+>'\'abcd"df"\''.match(/^(['"]).*\1$/);
+["'abcd"df"'", "'"]
+\end{verbatim}
+\begin{itemize}
+ \item \verb+\'+は文字列データとして与えられたことを仮定している。
+ \item 文字クラス\verb+['"]+%"
+       が\verb+()+で囲まれているのでここで一致した文字が\verb+\1+で参照
+       できる。
+ \item したがって、文字列の先頭と最後に同じ引用符が来る場合に文字は見つ
+       かる。
+ \item \verb+match()+の戻り値は配列で、正規表現に\verb+g+フラグがないと
+       きは、初めがマッチした文字列、以下順に\verb+\1+,\verb+\2+...にマッ
+       チした文字列が入っている。
+\end{itemize}
+\fi
+\end{Exec}
+\begin{Exec}\upshape
+ 文字列を指定した文字列で分割する \verb+split()+ の分割する文字列にも正規表現が使える。
+\begin{verbatim}
+>" 1, 2 , 3   ,  4".split(/\s*,\s*/);
+[" 1", "2", "3", "4"]
+\end{verbatim}
+$0$個以上の空白、\verb+,+、$0$個以上の空白の部分で分割している。\verb+1+の前にあ
+ る空白が除去できていない。
+\begin{verbatim}
+>" 1, 2 , 3   ,  4".split(/\W+/);
+["", "1", "2", "3", "4"]
+\end{verbatim}
+非単語文字の1個以上の並びで分割している。先頭の空白で分割されているので、
+ 分割された初めの文字列は空文字列\verb+""+となっている。
+\begin{verbatim}
+>" 1, 2 , 3   ,  4".replace(/\s/,"").split(/\W+/);
+["1", "2", "3", "4"]
+\end{verbatim}
+先頭の分割文字列が空文字になるのを防ぐために、初めに空白文字を空文字に置
+ き換えて(取り除いて)いる。その文字列に対し非単語文字列で分割しているの
+ で空文字が分割結果に表れない。
+
+この様に文字列に対してメソッドを順に続けて記述することができる。
+\end{Exec}
+\begin{Prob}\upshape
+次の実行結果がどうなるか答えよ。
+\begin{enumerate}
+ \item \texttt{"aaaabaaabb".match(/.*b/);}
+%["aaaabaaabb"]
+ \item \texttt{"aaaabaaabb".match(/.*b/g);}
+%["aaaabaaabb"]
+ \item \texttt{"aaaabaaabb".match(/.*?b/);}
+%["aaaab"]
+ \item \texttt{"aaaabaaabb".match(/.*?b/g);}
+ \item \verb+"abccbcckkccaaMMaacc".match(/((.)\2).*\1/);+
+%["ccbcckkccaaMMaacc", "cc", "c"]
+ \item \verb+"abccbcckkccaaMMaacc".match(/((.)\2).*\1/g);+
+%["ccbcckkccaaMMaacc"]
+ \item \verb+"abccbcckkccaaMMaacc".match(/((.)\2).*?\1/);+
+%["ccbcc", "cc", "c"]
+ \item \verb+"abccbcckkccaaMMaacc".match(/((.)\2).*?\1/g);+
+%["ccbcc", "ccaaMMaacc"]
+ \item \verb+"abccbcckkccaaMMaa".match(/((.)\2).*\1/);+
+%["ccbcckkcc", "cc", "c"]
+ \item \verb+"abccbcckkccaaMMaa".match(/((.)\2).*\1/g);+
+%["ccbcckkcc", "aaMMaa"]
+ \item \verb+"abccbcckkccaaMMccaa".match(/((.)\2).*\1/g);+
+%["ccbcckkccaaMMcc"]
+ \item \verb+"abccbcckkccaaMMccaa".match(/((.)\2).*?\1/g);+
+%["ccbcc", "ccaaMMcc"]
+% \item \verb++
+%
+\end{enumerate}
+\end{Prob}
+\iffalse
+"abccbcckkccaaMMaacc".match(/((.)\2).*\1/g);
+["ccbcckkccaaMMaacc"]
+"abccbcckkccaaMMaacc".match(/((.)\2).*?\1/g);
+["ccbcc", "ccaaMMaacc"]
+"abccbcckkccaaMMccaa".match(/((.)\2).*\1/g);
+["ccbcckkccaaMMcc"]
+"abccbcckkccaaMMccaa".match(/((.)\2).*?\1/g);
+["ccbcc", "ccaaMMcc"]
+\fi

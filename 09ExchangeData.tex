@@ -1,0 +1,35 @@
+%-*- coding: utf-8 -*-
+%\subsection{}
+\section{サーバーとのデータのやり取り}
+\input 0923EXchangeDataFund.tex
+\subsection{サーバーとのデータ交換の基本}
+Webページにおいてサーバーにデータを送る方法には\texttt{POST}と
+\texttt{PUT}の2通りの方法がある。
+\begin{Exec}\upshape
+ 次のリストは実行例\ref{EventInput}のリストに\texttt{form}のデータを
+ \texttt{POST}で送るようにしたものである。JavaScriptの部分だけ異なるので
+ そこだけのリストになっている。
+
+\texttt{windows.onload =function()}内に次のコードを追加する。
+\begin{verbatim}
+    var Form = document.getElementsByTagName("form")[0];
+    Form.setAttribute("method","POST");
+    Form.setAttribute("action","09sendData.php");
+\end{verbatim}
+HTMLの要素に対しては次のことを行う。
+\begin{itemize}
+ \item \texttt{<select>}要素の属性に\verb+name="select"+ を追加する。
+ \item \texttt{id}が\verb+"colorName"+であるテキストボックスに
+       \verb+name="colorName"+ を追加する。
+ \item 「設定」ボタンの要素の後に次の要素を追加する。
+\begin{center}
+\verb+<input type="submit" value="送信" id="Send"></input>+ 
+\end{center}
+\end{itemize}
+このページでは「送信」ボタンを押すと\texttt{<form>}の
+\texttt{action}属性で指定されたプログラムが呼び出される。ここではWebペー
+ ジと同じ場所にある\texttt{09sendData.php}が呼び出される。このファイル
+ のリストは次の通りである。
+\listinginput{1}{09sendData.php}
+\verbatiminput{09sendData.res}
+\end{Exec}

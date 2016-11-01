@@ -1,0 +1,99 @@
+%-*- coding: utf-8 -*-
+\documentclass[a4j,12pt]{jarticle}
+\newif\ifHMSol
+\newcommand{\LecName}{ソフトウェア開発}
+\input enshuuhead.tex
+\input softdevhead.tex
+\HMSolfalse%%%
+%\input automatonrev.tex
+\begin{document}
+\pagestyle{enshuu}
+\iffalse
+\ProblemREP{
+\begin{Prob}\upshape
+ コンソールに次のような九九の表を出力するJavaScriptのプログラムを作成し
+ なさい。
+ \input 04res
+\end{Prob}
+%
+\begin{Prob}
+ \upshape
+\verb+window+ オブジェクトにはどのようなプロパティがあるか調べよ。2つ以
+ 上のブラウザで実行し、比較すること。(課題4.1)
+ {\bfseries 考察を必ずつけること。}
+\end{Prob}
+}
+\fi
+%\end{document}
+\Problem{
+\begin{Prob}
+\upshape
+次の文字列にマッチする正規表現を作れ。(細かい仕様は配布資料課題6.1を見よ)。
+\begin{enumerate}
+ \item C言語の変数名の命名規則に合う文字列\vspace{\baselineskip}
+ \item 符号付小数。符号はなくてもよい。小数点はなくてもよい。また、小数
+       点はあっても小数部はなくてもよい。整数部分には数字が少なくても一
+       つはあること。\vspace{\baselineskip}
+ \item 前問の正規表現を拡張して、指数部が付いた浮動小数にマッチするもの
+       を作れ。\vspace{\baselineskip}
+ \item 24時間生の時刻の表し方。時、分、秒はすべて2桁とし、それらの区切り
+       は\texttt{:}とする。
+\vspace{\baselineskip}
+\end{enumerate}
+\end{Prob}
+\Newpage
+\begin{Prob}
+次の実行結果がどうなるか答えよ。
+\begin{enumerate}\upshape
+ \item \texttt{"aaaabaaabb".match(/.*b/);}\vspace{\baselineskip}
+%["aaaabaaabb"]
+ \item \texttt{"aaaabaaabb".match(/.*b/g);}\vspace{\baselineskip}
+%["aaaabaaabb"]
+ \item \texttt{"aaaabaaabb".match(/.*?b/);}\vspace{\baselineskip}
+%["aaaab"]
+ \item \texttt{"aaaabaaabb".match(/.*?b/g);}\vspace{\baselineskip}
+%["aaaab", "aaab", "b"]
+ \item \texttt{"aaaabaaabb".match(/.*?b\textbackslash B/);}\vspace{\baselineskip}
+%["aaaab"]
+ \item \texttt{"aaaabaaabb".match(/.*?b\textbackslash B/g);}\vspace{\baselineskip}
+%["aaaab", "aaab"]
+ \item \texttt{"aaaabaaabb".match(/.*(?=b)/);}\vspace{\baselineskip}
+%["aaaabaaab"]\vspace{\baselineskip}
+ \item \texttt{"aaaabaaabb".match(/.*?(?=b)/);}
+\vspace{\baselineskip}
+%["aaaa"]
+ \item \texttt{"aaaabaaabb".match(/.*?(?=b)/g);}
+\vspace{\baselineskip}
+%\Newpage
+%["aaaa", "", "aaa", "", ""]
+%"aaaabaaabb".match(/.*?(?!b)/);
+%[""]
+%"aaaabaaabb".match(/.*?(?!b)/g);
+%["", "", "", "", "b", "", "", "", "bb", ""]
+ \item \texttt{"abccbcckkccaaMMaacc".match(/((.)\textbackslash2).*\textbackslash1/);}\vspace{\baselineskip}
+%["ccbcckkccaaMMaacc", "cc", "c"]
+ \item \texttt{"abccbcckkccaaMMaacc".match(/((.)\textbackslash2).*\textbackslash1/g);}\vspace{\baselineskip}
+%["ccbcckkccaaMMaacc"]
+ \item \texttt{"abccbcckkccaaMMaacc".match(/((.)\textbackslash2).*?\textbackslash1/);}\vspace{\baselineskip}
+%["ccbcc", "cc", "c"]
+ \item \texttt{"abccbcckkccaaMMaacc".match(/((.)\textbackslash2).*?\textbackslash1/g);}\vspace{\baselineskip}
+%["ccbcc", "ccaaMMaacc"]
+ \item \texttt{"abccbcckkccaaMMaa".match(/((.)\textbackslash2).*\textbackslash1/);}\vspace{\baselineskip}
+%["ccbcckkcc", "cc", "c"]
+ \item \texttt{"abccbcckkccaaMMaa".match(/((.)\textbackslash2).*\textbackslash1/g);}\vspace{\baselineskip}
+%["ccbcckkcc", "aaMMaa"]
+ \item \texttt{"abccbcckkccaaMMccaa".match(/((.)\textbackslash2).*\textbackslash1/g);}\vspace{\baselineskip}
+%["ccbcckkccaaMMcc"]
+ \item \texttt{"abccbcckkccaaMMccaa".match(/((.)\textbackslash2).*?\textbackslash1/g);}\vspace{\baselineskip}
+%["ccbcc", "ccaaMMcc"]
+% \item \texttt{+
+%
+\end{enumerate}
+\end{Prob}
+}
+\end{document}
+\Problem{
+\begin{Problem}
+ 課題8.1、8.2を行いなさい。\vspace*{5cm}
+\end{Problem}
+}

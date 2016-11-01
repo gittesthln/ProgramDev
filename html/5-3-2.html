@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<title>エラー処理</title>
+<script type="text/ecmascript">
+//<![CDATA[
+function Range(from, to) {
+  if(from > to ) throw Error("Range: from must be <= to");
+  function getF() { return from;};
+  function setF(v) {
+    if(v <= to ) from = v;
+    else throw Error("Range: from must be <= to");
+  };
+  function getT() {return to;};
+  function setT(v) {
+    if(v >= from ) to = v;
+    else throw Error("Range: from must be <= to");
+  }
+  Object.defineProperty(this, "from",
+    {get: getF, set: setF, enumerable:true, configurable:false});
+  Object.defineProperty(this, "to",
+    {get: getT, set: setT, enumerable:true, configurable:false});
+}
+Range.prototype = {
+  includes : function(v) {
+    return this.from <= v && v <= this.to;
+  },
+  foreach : function(f) {
+    for(var k = Math.ceil(this.from); k<= this.to; k++) f(k);
+  },
+  toString : function() { return "[" + this.from+",...,"+this.to+"]";}
+};
+Object.defineProperties(Range.prototype, 
+  { includes : {enumerable : false},
+    foreach  : {enumerable : false},
+    toString : {enumerable : true}
+  });
+function checkInput(Message) {
+  var In = prompt(Message);
+  if( In.match(/^[+-]?((\d+(\.\d*)?)|(\.\d+))((E|e)[+-]?\d+)?$/)) return In;
+  throw Error("Input Error");
+}
+function test() {
+  var f, t;
+  for(;;) {
+    try {
+      f = Number(checkInput("区間の下限の値を入力してください"));
+      t = Number(checkInput("区間の上限の値を入力してください"));
+      return new Range(f,t);
+    } catch(e) {
+      console.log(e.name+":"+e.message);
+      console.log("from:"+f+", to:"+t);
+    }
+  }
+}
+//]]>
+</script>
+</head>
+</html>

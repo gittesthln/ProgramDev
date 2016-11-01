@@ -1,0 +1,759 @@
+\input devHeadMalmoe.tex
+%\input devHeadGoettingen.tex
+\title{ソフトウェア開発\\第4回目授業}
+\author{平野 照比古}
+\institute{}
+\date{2016/10/14}
+\begin{document}
+\frame{\maketitle}
+%\frame{\tableofcontents}
+\section{オブジェクト}
+\subsection{配列とオブジェクト}
+\begin{frame}[containsverbatim]
+\frametitle{配列とオブジェクトの特徴}
+配列
+\begin{itemize}
+ \item 配列はいくつかのデータをまとめて一つの変数に格納
+ \item 各データを利用
+するためには \Verb+foo[1]+ のように数による添え字を使用
+\end{itemize}
+オブジェクト
+\begin{itemize}
+ \item オブジェクトでは添え字に任意の文字列を使うことができる
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{オブジェクトの例}
+\begin{Verbatim}
+var person = {
+  name : "foo",
+  birthday :{
+    year : 2001,
+    month : 4,
+    day : 1
+  },
+  "hometown" : "神奈川",
+}
+\end{Verbatim}
+この形式で表したデータをオブジェクトリテラルという。
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{コードの解説}
+\begin{itemize}
+ \item オブジェクトは全体を \Verb+{}+ で囲む。
+ \item 各要素はキーと値の組で表される。両者の間は \Verb+:+ で区切る。
+ \item キーは任意の文字列でよい。キー全体を \Verb+""+ で囲わなくてもよい。
+ \item 値はJavaScriptで取り扱えるデータなあらば何でもよい。上の例ではキー
+       \Verb+birthday+ の値がまたオブジェクトとなっている。
+ \item 各要素の値を取り出す方法は2通りある。
+
+一つは\Verb+.+演算子を用いてオブジェクトのキーをそのあとに書く。もう一つ
+       は配列と同様に\Verb+[]+内にキーを文字列として指定する方法である。
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{データへのアクセスの例}
+\begin{Verbatim}
+>person.name;
+"foo"
+>person["name"];
+"foo"
+\end{Verbatim}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{データへのアクセスの例--解説}
+\begin{itemize}
+ \item 
+オブジェクトの中にあるキーをすべて網羅するようなループを書く場合や変数名
+       として利用できないキーを参照する場合には後者
+       の方法が利用される。
+ \item キーの値が再びオブジェクトであれば、前と同様の方法で値を取り出せ
+       る。
+\begin{Verbatim}
+>person.birthday;
+Object {year: 2001, month: 4, day: 1}
+>person.birthday.year;
+2001
+\end{Verbatim}
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{データへのアクセスの例--解説}
+\begin{itemize}
+ \item 取り出し方は混在してもよい。
+\begin{Verbatim}
+>person.birthday["year"];
+2001
+\end{Verbatim}
+ \item キーの値は代入して変更できる。
+\begin{Verbatim}
+>person.hometown;
+"神奈川"
+>person.hometown="北海道";
+"北海道"
+>person.hometown;
+"北海道"
+\end{Verbatim}
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{データへのアクセスの例--解説}
+\begin{itemize}
+ \item 存在しないキーを指定すると値として\Verb+undefined+が
+       返る。
+\begin{Verbatim}
+>person.mother;
+undefined
+\end{Verbatim}
+ \item 存在しないキーに値を代入すると、キーが自動で生成される。
+\begin{Verbatim}
+>person.mother = "aaa";
+"aaa"
+>person.mother;
+"aaa"
+\end{Verbatim}
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{オブジェクトのキーをすべて渡るループ}
+\begin{itemize}
+ \item オブジェクトのキーをすべて渡るループは \Verb+for-in+で実現できる。
+\begin{itemize}
+ \item \Verb+for( v in obj)+ の形で使用する。変数 \Verb+v+ はループ内で
+       キーの値が代入される変数、\Verb+obj+ はキーが走査されるオブジェク
+       トである。
+ \item キーの値は \Verb+obj[v]+ で得られる。
+\end{itemize}
+\begin{Verbatim}
+>for(i in person) { console.log(i+" "+person[i]);};
+name foo
+birthday [object Object]
+hometown 北海道
+mother aaa
+undefined
+\end{Verbatim}
+最後の\Verb+undefined+は\Verb+for+ループの戻り値である。
+\end{itemize}
+\end{frame}
+\subsection{コンストラクタ関数}
+\begin{frame}[containsverbatim]
+\frametitle{コンストラクタ関数の定義}
+コンストラクタ関数を用いて、前の例と同じオブジェクト(インスタン
+ ス)を構成している。
+\begin{Verbatim}
+function Person(){
+  this.name = "foo";
+  this.birthday = {
+    year : 2001,
+    month : 4,
+    day : 1
+  };
+  this["hometown"] = "神奈川";
+}
+\end{Verbatim}
+
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{コンストラクタ関数の定義--解説}
+\begin{itemize}
+ \item 通常、コンストラクタ関数は大文字で始まる名前を付ける。
+ \item そのオブジェクト内にメンバーを定義するために、\Verb+this+をつけて
+       定義する。ここでは、前の例と同じメンバー名で同じ値を設定してい
+       る。
+ \item この関数には\Verb+return+がないことに注意すること。
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{コンストラクタ関数を用いたオブジェクトの生成}
+\begin{itemize}
+ \item この関数を用いてオブジェクトを作成するためには、\Verb+new+ をつけ
+       て関数を呼び出す。
+\begin{Verbatim}
+>var person = new Person();
+undefined
+\end{Verbatim}
+ \item 元来、戻り値がないので\Verb+undefined+が表示されているが、オブジェ
+       クトは作成されている。
+ \item 前と同じ文を実行すれば同じ結果が得られる。
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{引数を持つコンストラクタ関数}
+\begin{itemize}
+ \item 引数を持つコンストラクタ関数も定義が可能
+ \item 同じメンバーを持つオブジェクトをいくつか
+ 作る必要がある場合にプログラムが簡単になる
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{\protect\texttt{new}を用いないで実行すると\dots}
+ {\small
+\begin{Verbatim}
+>p = Person();
+undefined
+>p.name
+VM88:2 Uncaught TypeError: Cannot read property 'name' of undefined(…)
+>p;
+undefined
+>name;
+"foo"
+>window.name;
+"foo"
+>name === window.name
+true
+\end{Verbatim}
+ }
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{\protect\texttt{new}を用いないで実行すると\dots--解説}
+\begin{itemize}
+ \item この関数は戻り値がないので、\Verb+undefined+ が変数 \Verb+p+ に代
+       入される。
+ \item このとき、キーワード \Verb+this+ が指すのは非\Strict では
+       グローバルオブジェクト
+ \item 現在の実行環境はブラウザ上なので、このときのグローバルオブジェク
+       トは \Verb+window+ である(非\Strict)。
+ \item \Strict では指すものがない。
+ \begin{itemize}
+  \item このとき、グローバル変数はすべてグローバルオブジェクトのメンバー
+	としてアクセス可能である。この例では \Verb+this.name+ に値を代入
+	した時点で変数 \Verb+name+ が定義されている。
+  \item 最後の例からも、\Verb+name+ と \Verb+window.name+ が同じものであ
+	ることがわかる。
+ \end{itemize}
+\end{itemize}
+\end{frame}
+\subsubsection{\protect\texttt{constructor}プロパティ}
+\begin{frame}[containsverbatim]
+\frametitle{\protect\texttt{constructor}プロパティ}
+オブジェクトが作成されると、\Verb+constructor+というプロパティも設定
+
+これはオブジェクトを作成したときに使われたコンストラクタ関数を返す。
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{\protect\texttt{constructor}プロパティの確認}
+%前の例で確認する。
+\begin{Verbatim}
+>var p = new Person();
+undefined
+>p.name;
+"foo"
+>p.constructor;
+function Person(){
+  this.name = "foo";
+  this.birthday = {
+    year : 2001,
+    month : 4,
+    day : 1
+  };
+  this["hometown"] = "神奈川";
+}
+\end{Verbatim}
+Opera では定義全体が表示される。
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{オブジェクトのコンストラクタが呼び出せる}
+このプロパティに含まれるものは関数なので、コンストラクタの名前を
+       知らなくても、元と同じオブジェクトのコピーが作成できる。
+\begin{Verbatim}
+>np = new p.constructor();
+Person {name: "foo", birthday: Object, hometown: "神奈川"}
+>np.constructor;
+function Person(){
+  this.name = "foo";
+  this.birthday = {
+    year : 2001,
+    month : 4,
+    day : 1
+  };
+  this["hometown"] = "神奈川";
+}
+\end{Verbatim}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{オブジェクトリテラルのコンストラクタ}
+\begin{itemize}
+ \item オブジェクトリテラルを使ってオブジェクトを作ると、組み込み関数の
+       \Verb+Object()+ コンストラクタ関数がセット
+\item このプロパティは \Verb+for-in+ループ内では表示されない。
+\begin{Verbatim}
+>o = {}
+Object {}
+>o.constructor;
+function Object() { [native code] }
+\end{Verbatim}
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{\protect\texttt{instanceof}演算子}
+\texttt{instanceof}演算でオブジェクトを生成したコンストラクタ関数が指
+定されたものかを判定できる。
+
+次の結果は Opera で実行例
+\begin{Verbatim}
+>p instanceof Person
+true
+>p instanceof Object;
+true
+>o instanceof Object;
+true
+>o instanceof Person
+false
+\end{Verbatim}
+%\Verb+p instanceof Object+ の結果が教科書と違う
+\end{frame}
+\iffalse
+\subsection{\protect\texttt{Function}オブジェクト}
+\begin{frame}[containsverbatim]
+\frametitle{\protect\texttt{Function}オブジェクトのプロパティ}
+\begin{itemize}
+ \item コンストラクタ関数を表す\texttt{constructor}
+ \item 定義された関数の仮引数の個数を示す\texttt{length} 
+\end{itemize}
+\begin{Verbatim}
+>p instanceof Person
+true
+>p instanceof Object;
+true
+>o instanceof Object;
+true
+>o instanceof Person
+false
+\end{Verbatim}
+ \iffalse
+重要な\texttt{prototype} プロパティがある。
+ これについては次回の授業で解説をする。
+ \fi
+\end{frame}
+\fi
+\subsection[オブジェクトに連番号を付ける]{同じコンストラクタ関数からの生成されたオブジェクトに連番号を付ける}
+\begin{frame}[containsverbatim]
+\frametitle{コンストラクタ関数で共通の変数を持つ}
+オブジェクト指向言語では同じコンストラクタ関数(クラス)から生成されたオブ
+ジェクトに重複のない番号を付けることがある。JavaScript でそのようなことを実現す
+るためには工夫が必要である。
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{失敗例(1)}
+次のように単純にメンバーを追加しても、コンストラクタ関数が呼ばれるごとに、
+変数\texttt{ID}が初期化されてしまい、目的を果たすことができない。
+\begin{Verbatim}
+function Person(){
+  var ID = 0;
+  this.ID = ID++;
+  this.name = "foo";
+}
+\end{Verbatim}
+\begin{Verbatim}
+>p1 = new Person();
+Person {ID: 0, name: "foo"}
+>p2 = new Person();
+Person {ID: 0, name: "foo"}
+\end{Verbatim}
+これから2つオブジェクトを作成しても、\texttt{ID} がともに \texttt{0} となって
+ いる
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{失敗例(2)}
+クロージャを用いて関数ににすると一見、うまくいくように見える。
+\begin{Verbatim}
+var Person2 = (function (){
+  var ID = 0;
+  return function(){
+    this.ID = ID++;
+    this.name = "foo";
+  }
+})();
+\end{Verbatim}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{失敗例(2)--実行結果}
+これを実行すると次のようになる。
+\begin{Verbatim}
+>p1 = new Person2();
+Object {ID: 0, name: "foo"}
+>p2 = new Person2();
+Object {ID: 1, name: "foo"}
+>p1.ID;
+0
+>p2.ID;
+1
+\end{Verbatim}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{失敗とする理由}
+このプロパティは外部から変更が可能となってしまっている。
+\begin{Verbatim}
+>p1.ID=10;
+10
+>p1.ID
+10
+\end{Verbatim}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{改良版}
+ クロージャ内の変数を参照するようなメソッドに変更
+\begin{Verbatim}
+var Person3 = (function (){
+  var ID = 0;
+  return function(){
+    this.getID = function() {
+      return ID++;
+    }
+    this.name = "foo";
+  }
+})();
+\end{Verbatim}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{改良版も失敗}
+このコードでは\texttt{getID()}メソッドを実行するごとに、クロージャ内の変
+数\texttt{ID}が増加してしまい、失敗である。
+\begin{Verbatim}
+>p1 = new Person3();
+Object {name: "foo"}
+>p1.getID();
+0
+>p2 = new Person3();
+Object {name: "foo"}
+>p2.getID();
+1
+>p1.getID();
+2
+>p1.getID();
+3
+\end{Verbatim}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{改良版の完成}
+呼ばれた時点での\texttt{ID}の値を保存するためには、いったん、スコープチェ
+インを切る必要がある。
+\begin{Verbatim}
+var Person4 = (function (){
+  var ID = 0;
+  return function(){
+    this.getID = (function(x) {
+      return function(){ return x;}
+    })(ID++);
+    this.name = "foo";
+  }
+})();
+\end{Verbatim}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{改良版の問題点}
+\begin{Verbatim}
+>p1 = new Person4();
+Object {name: "foo"}
+>p1.getID();
+0
+>p2 = new Person4();
+Object {name: "foo"}
+>p2.getID();
+1
+>p1.getID();
+0
+\end{Verbatim}
+しかし、これでも\texttt{getID()}メソッドは書き直すことが可能である。
+\end{frame}
+\section{ECMAScript5のオブジェクト属性}
+\subsection{オブジェクト指向言語におけるプロパティとメソッドの属性}
+\begin{frame}[containsverbatim]
+ \frametitle{オブジェクトのプロパティやメソッドの分類}
+\begin{itemize}
+ \item {\bfseries インスタンスフィールド}\\インスタンスごとに異なる値を保
+       持できるプロパティ
+ \item {\bfseries インスタンスメソッド}\\
+クラスのすべてのインスタンスで共有されるメソッド
+ \item {\bfseries クラスフィールド}\\クラスに関連付けられたプロパティ
+ \item {\bfseries クラスメソッド}\\
+クラスに関連付けられたメソッド
+\end{itemize}
+JavaScriptでは関数もデータなのでフィールドとメソッドに厳密な区別はないの
+でフィールドとメソッドは同一視する。
+
+\texttt{prototype}を用いるれ
+ばクラスフィールドなども作成可能(次回、解説)
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{プライベートプロパティとゲッター、セッター}
+\begin{itemize}
+ \item オブジェクト指向の言語ではフィールドをかってに操作され
+ないようにするために、フィールドを直接操作できなくする
+ \item 値を設定や取得するメソッドを用意
+ \item フィールドにアクセスするため記述が面倒になる
+ \item プロパティの代入の形をとっても実際はゲッターやセッター関数を呼ぶ
+       形になっている言語も存在
+ \item JavaScriptの最新版1.8.1以降ではそれが可能
+\end{itemize}
+\end{frame}
+\subsection{プロパティ属性}
+\begin{frame}[containsverbatim]
+ \frametitle{ECMAScript}
+\begin{itemize}
+ \item JavaScript は Ecma International が定義している ECMAScript の仕様
+       に基づく
+ \item 2016年現在、最新バージョンの ECMAScript7 の仕
+様はECMA-262 としてで公開
+ \item オブジェクトのプロパティやメソッドにプロパティ属性とい
+う機能が追加
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{オブジェクトのプロパティの属性}
+\begin{center}\setlength{\tabcolsep}{0.2em}
+ \begin{tabular}{|c|c|m{10zw}|c|}\hline
+ 属性名 & {値の型}& \multicolumn{1}{c|}{説明}&
+デフォルト値\\\hline
+  \texttt{value}& 任意のデータ&プロパティの値&\texttt{undefined}\\ \hline
+  \texttt{writable}&\texttt{Boolean}& \texttt{false}のときは
+	  \texttt{value}の変更ができない&\texttt{true}\\ \hline
+  \texttt{enumerable}&\texttt{Boolean}& \texttt{true}のときは
+	  \texttt{for-in}ループでプロパティが現れる。&\texttt{false}\\ \hline
+  \texttt{configurable}&\texttt{Boolean}&\texttt{false}のときはプロパティ
+	  を消去したり、\texttt{value}以外の値の変化ができない&\texttt{false}\\ \hline
+ \end{tabular}
+\end{center}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{メソッドのプロパティ属性}
+\begin{center}\setlength{\tabcolsep}{0.2em}
+ \begin{tabular}{|c|m{6zw}|m{11zw}|c|}\hline
+ 属性名 & \multicolumn{1}{c|}{値の型}& \multicolumn{1}{c|}{説明}& デフォルト値 \\\hline
+  \texttt{get}& オブジェクトまたは未定義&関数オブジェクトだけ
+	  。プロパティの値が読みだし時に呼び出される&\texttt{undefined}\\ \hline
+  \texttt{set}&オブジェクトまたは未定義& 関数オブジェクトだけ。プロパティ
+	  の値を設定時に呼び出される&\texttt{undefined}\\ \hline 
+  \texttt{enumerable}&\texttt{Boolean}& \texttt{true}のときは
+	  \texttt{for-in}ループでメソッドが現れる。&\texttt{false}\\ \hline
+  \texttt{configurable}&\texttt{Boolean}&\texttt{false}のときは
+					{\color{red}メソッド}を消去したり、\texttt{value}以外の値の変
+					化が不可&\texttt{false}\\ \hline
+ \end{tabular}
+\end{center}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{プロパティ属性の利用目的}
+これらの属性のうち、\texttt{get}や\texttt{set}を使うとオブジェクトのプロ
+ パティの呼び出しや変更に関して、いわゆるゲッター関数やセッター関数を意
+ 識しないで呼び出すことが可能
+
+これらの属性は\texttt{Object.defineProperty()}や
+\texttt{Object.defineProperties()}関数を用いて設定する。
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{オブジェクト属性の例}
+ {\renewcommand{\theFancyVerbLine}{\tiny\arabic{FancyVerbLine}}
+ \begin{Verbatim}[numbers=left,fontsize=\scriptsize,baselinestretch=0.9]
+var Person = (function (){
+  var ID = 0;
+  return function(name, year, month, day, hometown){
+    this.name = name;
+    var getID = (function(x) {
+      return function(){ return x;}
+    })(ID++);
+    this.birthday = {};
+    this.birthday.year = year;
+    this.birthday.month = month;
+    this.birthday.day = day;
+    this.name = name;
+    Object.defineProperty(this, "ID",
+      {get: getID,
+       enumerable:true,
+       configurable:false
+      });
+    Object.defineProperties(this.birthday,
+      {year  : {enumerable : true},
+       month : {enumerable : true},
+       day   : {enumerable : false, writable : false}
+    });
+  }
+})();
+ \end{Verbatim}
+ }
+ \end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{コードの解説}
+	\begin{itemize}
+	 \item 3行目から23行目までが、\texttt{Person()}のコンストラ
+				 クタ関数
+	 \item オブジェクトのメンバーを、コンストラクタ関数の引数で定義できる
+	 \item 5行目から7行目で呼び出されたときの\texttt{ID}の値を保存し、参照
+				 するためのローカルな関数\texttt{getID()}を定義
+	 \item 8行目では\texttt{this.birthday}をオブジェクトとして初期化し、9
+				 行目から10行目でそのオブジェクトに値を設定
+	 \item 13行目から22行目で、このオブジェクトの\texttt{ID}を設定
+				 \begin{itemize}\upshape
+					\item \texttt{get}で参照される関数を5行目で定義された
+								\texttt{getID}設定している(14行目)。
+					\item 15行目で\texttt{for in} ループで表示されるように、15行目
+								ではプロパティを変更不可に
+								\texttt{defineProperty}メソッドで設定
+
+								\texttt{defineProperty}メソッドの3番目の引数は設定しようと
+								するプロパティを列挙したオブジェクトになっている。
+				 \end{itemize}
+	 \item 18行目から22行目でプロパティ\texttt{birthday}の各項目に必要な
+				 設定をしている
+	\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{実行例}
+ \texttt{ID}のプロパティでは\texttt{set}が設定されていないので、呼び出し
+ の処理は行われない。
+\begin{Verbatim}
+>p = new Person("foo",2001,4,1,"Japan");
+Object {name: "foo", birthday: Object}
+>p.ID;
+0
+>p.ID = 5;
+5
+>p.ID;
+0
+\end{Verbatim}
+\texttt{p.ID}に値を代入してもエラーは起きていないので値が設定できたよう
+に見える。しかし、値を参照してみると変化がないことがわかる。
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{\protect\texttt{p.ID}の消去}
+ \texttt{p.ID}は消去できない。
+\begin{Verbatim}
+>	delete p.ID
+false
+\end{Verbatim}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{\protect\texttt{p}のプロパティを列挙}
+3つが表示されることがわかる。
+\begin{Verbatim}
+>for(c in p) console.log(c+":"+p[c]);
+ name:foo
+ birthday:[object Object]
+ ID:0
+undefined
+\end{Verbatim}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{\protect\texttt{p.birthday}のプロパティ}
+\texttt{p.birthday}のプロパティでは\texttt{day}が表示されない。
+\begin{Verbatim}
+>for(c in p.birthday) console.log(c+":"+p.birthday[c]);
+ year:2001
+ month:4
+undefined
+\end{Verbatim}
+これは21行目で\texttt{enumerable}を\texttt{false}に設定して
+ いるため
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{\protect\texttt{p.birthday.year}の値の変更}
+\texttt{p.birthday.year}の値は変更できる。
+\begin{Verbatim}
+>p.birthday.year = 2010
+2010
+>p.birthday.year;
+2010
+\end{Verbatim}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{\protect\texttt{p.birthday.day}の値の変更}
+\texttt{p.birthday.day}の値は\texttt{writable}が\texttt{false}に設定
+されているために変更できない。
+\begin{Verbatim}
+>p.birthday.day = 20;
+20
+>p.birthday.day;
+1
+\end{Verbatim}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{プロパティの消去}
+\texttt{p.birthday.day}は\texttt{configurable}が設定
+されていないので消去できる。
+\begin{Verbatim}
+>delete p.birthday.day;
+true
+>p.birthday.day;
+undefined
+\end{Verbatim}
+\texttt{p.ID}は\texttt{configurable}が\texttt{false}に設定
+されているので消去できない。
+\begin{Verbatim}
+>delete p.ID;
+false
+>p.ID;
+0
+\end{Verbatim}
+\end{frame}
+\subsection{オブジェクトリテラルとJSON}
+\begin{frame}[containsverbatim]
+\frametitle{JSONとは}
+\begin{itemize}
+ \item JSON(JavaScript Object Notation)はデータ交換のための軽量なフォー
+       マット
+ \item 形式はJavaScriptのオブジェクトリテラルの記述法と全く同じ
+ \item JavaScript内で、JSONフォーマットの文字列をJavaScriptのオブジェク
+       トに変換できる。
+\item JavaScript内で、JSONフォーマットの文字列をJavaScriptのオブジェク
+       トに変換できる。
+ \item JavaScript内のオブジェクトをJSON形式の文字列に変換できる。
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{\protect\texttt{JSON}オブジェクト}
+JavaScriptのオブジェクトとJSONフォーマットの文字列の相互変換の手段を提供
+する。
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{変換対象のJavaScriptオブジェクト}
+次の例は2つの同じ形式からなるオブジェクトを通常の配列に入れたものを定義
+ している。
+\begin{Verbatim}
+var persons = [{
+  name : "foo",
+  birthday :{ year : 2001, month : 4, day : 1},
+  "hometown" : "神奈川",
+},
+{
+  name : "Foo",
+  birthday :{ year : 2010, month : 5, day : 5},
+  "hometown" : "北海道",
+}];
+\end{Verbatim}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{\protect\texttt{JSON}の処理の例}
+\begin{Verbatim}
+>s = JSON.stringify(persons);
+"[{"name":"foo","birthday":{"year":2001,"month":4,"day":1},
+"hometown":"神奈川"},
+{"name":"Foo","birthday":{"year":2010,"month":5,"day":5},
+"hometown":"北海道"}]"
+>s2 = JSON.stringify(persons,["name","hometown"]);
+"[{"name":"foo","hometown":"神奈川"},{"name":"Foo","hometown":"北海道"}]"
+>o = JSON.parse(s2);
+[Object, Object]
+>o[0];
+Object {name: "foo", hometown: "神奈川"}
+\end{Verbatim}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{\protect\texttt{JSON}の処理の例--解説}
+\begin{itemize}
+ \item JavaScriptのオブジェクトを文字列に変更する方法は
+       \texttt{JSON.stringigy()}を用いる。このまま見ると\Verb+"+がおかし
+       いように見えるが表示の関係でそうなっているだけである。%"
+なお、結果は途中で改行を入れているが実際は一つの文字列となっている。
+ \item \texttt{JSON.stringigy()}の二つ目の引数として対象のオブジェクトの
+       キーの配列を与えることができる。このときは、指定されたキーのみが
+       文字列に変換される。
+ \item ここでは、\Verb+"name"+ と \Verb+"hometown"+が指定されているので
+\Verb+"birthday"+のデータは変換されていない。
+ \item JSONデータをJavaScriptのオブジェクトに変換するための方法は
+       \texttt{JSON.parse()}を用いる。
+ \item ここではオブジェクトの配列に変換されたことがわかる。
+ \item 各配列の要素が正しく変換されていることがわかる。
+\end{itemize}
+\end{frame}
+\end{document}
+

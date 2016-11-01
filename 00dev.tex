@@ -1,0 +1,151 @@
+%-*- coding: utf-8 -*-
+\input ProgramDevHead.tex
+\Textfalse
+\renewcommand{\postchaptername}{回}
+\begin{document}
+\frontmatter
+\maketitle
+\tableofcontents
+\mainmatter
+\chapter{ガイダンス}
+\section{受講に関する注意}
+この授業に関する注意は次の通りである。
+\begin{itemize}
+ \item JavaScript を通常の計算機言語として利用するための解説を行う。
+ \item 進度が今までのプログラミングの授業より早いので復習をよくすること。
+ \item 演習は原則行わない。出された課題は自宅で行うこと。また、レポート
+       の提出を必ずすること。
+ \item パソコンを授業に持参する必要がある場合はその旨、前回の授業で指示
+       する。
+ \item 11年度以前の学生に対しては「アルゴリズムとデータ構造」の読み替え
+       科目となっている。
+  \item 復習用の課題を必ず行うこと。次回の授業の開始時に確認の小テストを
+       行うことがある。
+\item 最終的な成績は試験を行う。
+ \item 配布資料等は\texttt{http://www.hilano.org/hilano-lab}で公開する予
+       定
+% \item jQuery のコードの解説は別のAPIの解説に変えるかもしれない。たとえ
+%       ば、Goole Maps API を考えている。
+\end{itemize}
+\section{参考図書}
+\begin{enumerate}
+ \item D. Crockford, JavaScript: The Good Parts 「良いパー
+	 ツ」によるベストプラ クティス, オライリージャパン
+ \item David Flanagan, JavaScript 第6 版, オライリージャパン\label{JS6}
+ \item David Flanagan, JavaScript クイックリファレンス第6 版, オ
+	 ライリージャパン
+ \item Nicholas C. Zakas, ハイパフォーマンスJavaScript, オライリー
+	 ジャパン
+ \item Nicholas C. Zakas, メンテナブルJavaScript 　読みやすく保守しやすいJavaScript 
+コードの作法, オライリージャパン
+\end{enumerate}
+\section{シラバス}
+この授業のシラバスは次のように予定している。
+\begin{center}
+\begin{tabular}{|c|m{25zw}|}\hline
+ 授業回数&\multicolumn{1}{c|}{内容}\\\hline
+ 第1回&授業のガイダンスとブラウザの開発者モードについて \newline
+     JavaScriptの実行環境の確認\\\hline
+ 第2回&JavaScript が取り扱うデータ\newline
+     データの型と演算子に関する注意など\\\hline
+ 第3回& 関数の定義方法と変数のスコープ\\\hline
+ 第4回& オブジェクトの定義方法\\\hline
+ 第5回&オブジェクト属性と継承\newline
+     プロトタイプによる継承など\\\hline
+ 第6回&正規表現と文字列の処理  \\\hline
+ 第7回&正規表現の利用例 \\\hline
+ 第8回&DOMの利用\newline
+     HTML文書の例、CSSと DOM の基礎\\\hline
+ 第9回&イベント処理 \newline
+     イベントモデルとイベント処理の例\\\hline
+ 第10回&PHP超入門\newline
+       PHPに関する簡単なプログラムの例\\\hline
+ 第11回&サーバーとのデータの交換(1)\newline
+     PHP入門の続きとサーバーとのデータ交換の基礎\\\hline
+ 第12回&サーバーとのデータの交換(2)\newline
+     サーバーとのデータの交換とAjaxの基礎\\\hline
+ 第13回&jQuery \newline
+     DOMの処理を簡単にするライブラリーの紹介\\   \hline
+ 第14回&jQueryのコード\newline
+     jQueryのコードの短縮化についての解説 \\\hline
+ 第15回&最終試験と解説\\ \hline
+\end{tabular}
+\end{center}
+%\newpage
+\section{JavaScriptの実行環境}
+\input 00prefice.tex
+\section{strict モードについて}
+ECMAScript の最新版では\Strict と呼ばれる厳密な解釈をするモー
+ドが導入されている。このモードでは従来見つけにくい単純なバグがエラーとな
+る。主な違いは次のとおりである。
+\begin{center}
+  \begin{tabular}{|m{20zw}|c|c|}\hline
+   &非\Strict & {\Strict}\\\hline
+   変数の宣言&必要ではない&必要\\ \hline
+   書き込み不可なプロパティへの代入&エラーが発生しない&エラーが発生\\
+   \hline
+   関数の\Verb+arguments+オブジェクトの値の変更&可能&不可能 \\ \hline
+   関数の\Verb+arguments.caller+&参照可能&エラーが発生 \\ \hline
+   関数の\Verb+arguments.callee+&参照可能&エラーが発生 \\ \hline
+   8進リテラル(\Verb+0+で始まる数)&使用可能&エラーが発生 \\ \hline
+ \end{tabular}
+\end{center}
+プログラムを\Strict にするためには先頭に\Verb+"use strict;"+
+を記述する。
+\section{第1回目復習課題}
+\begin{Prob}\upshape
+ 各自が使用しているブラウザにおいてJavaScriptの文が直接実行できるコンソール
+ が開けることを確認しなさい。また、コンソールで「\texttt{1+2}」と入力すると、計算結果が
+ 表示されることを確認すること。
+\end{Prob}
+\begin{Prob}\label{FisatJS}\upshape
+ 次のコードを拡張子が\Verb+html+のファイルで作成する。それ
+ をブラウザで開き、デベロッパーツールのコンソールから\Verb+foo();+と入力
+ したときと、その後、コンソールで\texttt{i}と入力したときの結果を確認す
+ ること。\Correct{同様のことを９行目の\Verb+i+の宣言を省いて行うこと}
+
+ また、\Strict に変更し(7行目の後に「\Verb+"use strict";+」を追
+ 加する)、9行目の変数の宣言の行を取り除
+ くとエラーが発生することを確認すること。
+\LISTN{01example.html}{1}{last}{\normalsize}
+\end{Prob}
+コードの簡単な説明
+\begin{itemize}
+ \item 1行目 HTML5におけるHTML文書の宣言
+ \item 4行目 このファイルの文字コード(エンコーディング)を UTF-8 に指定。
+ \item 6行目 スクリプトの開始の要素。プログラミング言語がECMAScriptであ
+       ることを宣言している。
+ \item 7行目 \texttt{//}は行末までの部分をコメントにするJavaScriptの記法。
+残りの部分はこれ以降12行目までは通常の文字として解釈することを指定
+       (\texttt{CDATA}セクションの開始)。
+
+      7行目と13行目を消去したらどうなるのか確認すること
+またその理由も考えること\footnote{最近のブラウザではエラーが起きないかも
+       しれない。}。
+ \item 8行目は関数\Verb+foo()+の宣言。13行目までがこの関数の定義範囲
+ \item 9行目は変数 \texttt{i}の宣言
+ \item 10行目 C言語などでおなじみの繰り返しの指定
+ \item 11行目 引数内の式をコンソールに出力
+ \item 14行目はメッセージボックスにコンソールを開くことを指示。
+\end{itemize}
+
+\input 02datatype.tex
+
+\input 03function.tex
+\input 04Object.tex
+\input 05Prototype.tex
+\input 06regexp.tex
+
+%\input 06inheritance.tex
+
+\input 07DOM.tex
+\input 08event.tex
+\input 09Server.tex
+\input 10jQuery.tex
+\end{document}
+
+
+\input 11GoogleMaps.tex
+\appendix
+\input howtogetGooleMapsAPIkey.tex
+\end{document}
