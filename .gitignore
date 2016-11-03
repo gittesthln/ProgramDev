@@ -1,0 +1,5 @@
+*~
+*.log
+*.bmc
+pdfs/*.ps
+pdfs/*.dvi
