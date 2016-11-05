@@ -76,6 +76,11 @@ git はローカルにリポジトリを持つのでそれを処理する環境�
 「Git Bash」、「GitCMD」と「Git GUI」の3つがインストールされる。
 Unix 風のコマンドプロンプトが起動する Git Bash がおすすめである。
 
+Git の解説はWebを検索すればいくつか見ることができる。公式の解説書は
+
+\Verb+https://git-scm.com/book/ja/v2+
+
+にある。1章と2章を参考に使い始めるのがよいであろう。
 \subsection{初期設定}
 ローカルでいくつかの準備が必要となる。
 
@@ -108,17 +113,48 @@ GitHub との接続には SSH による通信で行います。このは公開�
 \subsection{リポジトリの作成と運用}
 リポジトリの初期のブランチ名は\Verb+master+となっている。
 
-\begin{tabular}{|c|c|c|}\hline
+表\ref{Gitfundamental}は Git の基本操作をまとめたものである。
+\begin{table}
+\caption{Git の基本的なコマンド}\label{Gitfundamental}
+\begin{center}
+ \begin{tabular}{|c|c|c|}\hline
 コマンド&パラメータ&説明\\\hline
 \Verb+git init+ & &プロジェクトの初期化\\\hline
-\Verb+git add+ & ファイルリスト&プロジェクトへのファイルの登録 \\\hline
+\Verb+git status+ &(\Verb+-s+) &プロジェクトの状態表示\\\hline
+\Verb+git add+ & ファイルリスト&次回の\Verb+commit+へのファイルの登録 \\\hline
 \Verb+git commit+& \Verb+-m+ コメント& リポジトリへの変更の登録\\ \hline
 \Verb+git remote add+ &短縮名 リポジトリ & リポジトリの短縮名の登録\\
  \hline
+\Verb+git rm+ & &リポジトリからファイルを削除することの登録 \\ \hline
 \Verb+git push+ &\Verb+-u+ 短縮名 ブランチ名 &ブランチへの変更の登録 \\ \hline
 \Verb+git clone+ &リポジトリ名 &リモートのリポジトリのコピーを作成\\ \hline
 \Verb+git pull+ &リポジトリ名 ブランチ名 &リモートのリポジトリのコピーを作成\\ \hline
-\end{tabular}
+ \end{tabular}
+\end{center}
+\end{table}
 
-
-\Verb+git add+ 
+通常は次の手順で新しいプロジェクトを構成する。
+\begin{enumerate}
+ \item \Verb+git init+ で新たにリポジトリを作成する。または、
+			 \Verb+git clone+でGitHubからリポジトリのコピーを取得する。
+ \item ファイルを編集する。
+ \item 編集したファイルを\Verb+git add+ でステージする。
+ \item \Verb+git commit+ でその時点での変更を登録する。\Verb+-m+オプショ
+			 ンで簡単なコメントをつけることを忘れないこと。このオプションをつ
+			 けないと\Verb+vim+というテキストエディタが立ち上がり、コメントの
+			 編集を行うこととなる。
+ \item \Verb+git push+ リモート名 ブランチ名 で変更をリモートのリポジト
+			 リに反映される。これが拒否された場合には誰かが\Verb+push+している
+			 のでその変更を\Verb+pull+してから調整して再度\Verb+push+する。
+\end{enumerate}
+ファイルの状態については次のことに注意する必要がある。
+\begin{itemize}
+ \item リポジトリ内のファイルは追跡されている(tracked)ものと追跡されていない
+(untracked)に分けられる。
+ \item ファイルの状態として変更されていない
+(unmodified)、変更されている(modified)とステージされている(staged)の3つ
+の状態がある。
+ \item modified から staged にするコマンドが \Verb+git add+ であ
+る。このコマンドを新規にリポジトリに追加するという意味にとらえないことが
+必要である。
+\end{itemize}
