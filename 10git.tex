@@ -79,6 +79,11 @@ git はローカルにリポジトリを持つのでそれを処理する環境�
 「Git Bash」、「GitCMD」と「Git GUI」の3つがインストールされる。
 Unix 風のコマンドプロンプトが起動する Git Bash がおすすめである。
 
+Git の解説はWebを検索すればいくつか見ることができる。公式の解説書は
+
+\Verb+https://git-scm.com/book/ja/v2+
+
+にある。1章と2章を参考に使い始めるのがよいであろう。
 \subsection{初期設定}
 ローカルでいくつかの準備が必要となる。
 
@@ -122,17 +127,29 @@ GitHub との接続には SSH による通信で行う。この通信はは公�
 \subsection{リポジトリの作成と運用}
 リポジトリの初期のブランチ名は\Verb+master+となっている。
 
-\begin{tabular}{|c|c|c|}\hline
+表\ref{Gitfundamental}は Git の基本操作をまとめたものである。
+\begin{table}
+\caption{Git の基本的なコマンド}\label{Gitfundamental}
+\begin{center}
+ \begin{tabular}{|c|c|c|}\hline
 コマンド&パラメータ&説明\\\hline
 \Verb+git init+ & &プロジェクトの初期化\\\hline
-\Verb+git add+ & ファイルリスト&プロジェクトへのファイルの登録 \\\hline
+\Verb+git status+ &(\Verb+-s+) &プロジェクトの状態表示\\\hline
+\Verb+git add+ & ファイルリスト&次回の\Verb+commit+へのファイルの登録 \\\hline
 \Verb+git commit+& \Verb+-m+ コメント& リポジトリへの変更の登録\\ \hline
 \Verb+git remote add+ &短縮名 リポジトリ & リポジトリの短縮名の登録\\
  \hline
+\Verb+git rm+ & &リポジトリからファイルを削除することの登録 \\ \hline
 \Verb+git push+ &\Verb+-u+ 短縮名 ブランチ名 &ブランチへの変更の登録 \\ \hline
 \Verb+git clone+ &リポジトリ名 &リモートのリポジトリのコピーを作成\\ \hline
 \Verb+git pull+ &リポジトリ名 ブランチ名 &リモートのリポジトリのコピーを作成\\ \hline
+<<<<<<< HEAD
 \end{tabular}
+=======
+ \end{tabular}
+\end{center}
+\end{table}
+>>>>>>> 633900ecab35a23903a23cbc53fec545fea977fd
 
 通常は次の手順で新しいプロジェクトを構成する。
 \begin{enumerate}
