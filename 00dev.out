@@ -112,18 +112,19 @@
 \BOOKMARK [1][-]{section.11.4}{イベントハンドラーの取り扱い}{chapter.11}% 112
 \BOOKMARK [1][-]{section.11.5}{Ajaxの処理}{chapter.11}% 113
 \BOOKMARK [1][-]{section.11.6}{jQuery のサンプル}{chapter.11}% 114
-\BOOKMARK [1][-]{section.11.7}{jQueryのコードを読む}{chapter.11}% 115
-\BOOKMARK [1][-]{section.11.8}{JavaScriptファイルの短縮化}{chapter.11}% 116
-\BOOKMARK [2][-]{subsection.11.8.1}{JavaScriptファイルの短縮化について}{section.11.8}% 117
-\BOOKMARK [2][-]{subsection.11.8.2}{短縮化の例}{section.11.8}% 118
-\BOOKMARK [0][-]{chapter.12}{バージョン管理}{}% 119
-\BOOKMARK [1][-]{section.12.1}{バージョン管理とは}{chapter.12}% 120
-\BOOKMARK [2][-]{subsection.12.1.1}{複数でシステム開発をするときの問題点}{section.12.1}% 121
-\BOOKMARK [2][-]{subsection.12.1.2}{バージョン管理の概念}{section.12.1}% 122
-\BOOKMARK [2][-]{subsection.12.1.3}{バージョン管理ソフトの概要}{section.12.1}% 123
-\BOOKMARK [1][-]{section.12.2}{gitの使い方}{chapter.12}% 124
-\BOOKMARK [2][-]{subsection.12.2.1}{git の特徴}{section.12.2}% 125
-\BOOKMARK [2][-]{subsection.12.2.2}{git のインストール}{section.12.2}% 126
-\BOOKMARK [2][-]{subsection.12.2.3}{初期設定}{section.12.2}% 127
-\BOOKMARK [2][-]{subsection.12.2.4}{GitHub ‘のアカウントの取得}{section.12.2}% 128
-\BOOKMARK [2][-]{subsection.12.2.5}{リポジトリの作成と運用}{section.12.2}% 129
+\BOOKMARK [0][-]{chapter.12}{JavaScriptライブラリーの配布}{}% 115
+\BOOKMARK [1][-]{section.12.1}{jQueryのコードを読む}{chapter.12}% 116
+\BOOKMARK [1][-]{section.12.2}{JavaScriptファイルの短縮化}{chapter.12}% 117
+\BOOKMARK [2][-]{subsection.12.2.1}{JavaScriptファイルの短縮化について}{section.12.2}% 118
+\BOOKMARK [2][-]{subsection.12.2.2}{短縮化の例}{section.12.2}% 119
+\BOOKMARK [0][-]{chapter.13}{バージョン管理}{}% 120
+\BOOKMARK [1][-]{section.13.1}{バージョン管理とは}{chapter.13}% 121
+\BOOKMARK [2][-]{subsection.13.1.1}{複数でシステム開発をするときの問題点}{section.13.1}% 122
+\BOOKMARK [2][-]{subsection.13.1.2}{バージョン管理の概念}{section.13.1}% 123
+\BOOKMARK [2][-]{subsection.13.1.3}{バージョン管理ソフトの概要}{section.13.1}% 124
+\BOOKMARK [1][-]{section.13.2}{gitの使い方}{chapter.13}% 125
+\BOOKMARK [2][-]{subsection.13.2.1}{git の特徴}{section.13.2}% 126
+\BOOKMARK [2][-]{subsection.13.2.2}{git のインストール}{section.13.2}% 127
+\BOOKMARK [2][-]{subsection.13.2.3}{初期設定}{section.13.2}% 128
+\BOOKMARK [2][-]{subsection.13.2.4}{GitHub のアカウントの取得}{section.13.2}% 129
+\BOOKMARK [2][-]{subsection.13.2.5}{リポジトリの作成と運用}{section.13.2}% 130

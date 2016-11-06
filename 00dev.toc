@@ -136,21 +136,22 @@
 \contentsline {section}{\numberline {11.4}イベントハンドラーの取り扱い}{115}{section.11.4}
 \contentsline {section}{\numberline {11.5}Ajaxの処理}{116}{section.11.5}
 \contentsline {section}{\numberline {11.6}jQuery のサンプル}{116}{section.11.6}
-\contentsline {section}{\numberline {11.7}jQueryのコードを読む}{119}{section.11.7}
-\contentsline {section}{\numberline {11.8}JavaScriptファイルの短縮化}{121}{section.11.8}
-\contentsline {subsection}{\numberline {11.8.1}JavaScriptファイルの短縮化について}{121}{subsection.11.8.1}
-\contentsline {subsection}{\numberline {11.8.2}短縮化の例}{122}{subsection.11.8.2}
-\contentsline {chapter}{\numberline {第12回}バージョン管理}{127}{chapter.12}
-\contentsline {section}{\numberline {12.1}バージョン管理とは}{127}{section.12.1}
-\contentsline {subsection}{\numberline {12.1.1}複数でシステム開発をするときの問題点}{127}{subsection.12.1.1}
-\contentsline {subsection}{\numberline {12.1.2}バージョン管理の概念}{127}{subsection.12.1.2}
-\contentsline {subsection}{\numberline {12.1.3}バージョン管理ソフトの概要}{128}{subsection.12.1.3}
-\contentsline {section}{\numberline {12.2}gitの使い方}{128}{section.12.2}
-\contentsline {subsection}{\numberline {12.2.1}git の特徴}{128}{subsection.12.2.1}
-\contentsline {subsection}{\numberline {12.2.2}git のインストール}{128}{subsection.12.2.2}
-\contentsline {subsection}{\numberline {12.2.3}初期設定}{128}{subsection.12.2.3}
-\contentsline {subsubsection}{ユーザーネームの登録}{129}{section*.26}
-\contentsline {subsubsection}{メールアドレスの登録}{129}{section*.27}
-\contentsline {subsubsection}{SSH Keyの登録}{129}{section*.28}
-\contentsline {subsection}{\numberline {12.2.4}GitHub ‘のアカウントの取得}{129}{subsection.12.2.4}
-\contentsline {subsection}{\numberline {12.2.5}リポジトリの作成と運用}{129}{subsection.12.2.5}
+\contentsline {chapter}{\numberline {第12回}JavaScriptライブラリーの配布}{119}{chapter.12}
+\contentsline {section}{\numberline {12.1}jQueryのコードを読む}{119}{section.12.1}
+\contentsline {section}{\numberline {12.2}JavaScriptファイルの短縮化}{121}{section.12.2}
+\contentsline {subsection}{\numberline {12.2.1}JavaScriptファイルの短縮化について}{121}{subsection.12.2.1}
+\contentsline {subsection}{\numberline {12.2.2}短縮化の例}{122}{subsection.12.2.2}
+\contentsline {chapter}{\numberline {第13回}バージョン管理}{127}{chapter.13}
+\contentsline {section}{\numberline {13.1}バージョン管理とは}{127}{section.13.1}
+\contentsline {subsection}{\numberline {13.1.1}複数でシステム開発をするときの問題点}{127}{subsection.13.1.1}
+\contentsline {subsection}{\numberline {13.1.2}バージョン管理の概念}{127}{subsection.13.1.2}
+\contentsline {subsection}{\numberline {13.1.3}バージョン管理ソフトの概要}{128}{subsection.13.1.3}
+\contentsline {section}{\numberline {13.2}gitの使い方}{128}{section.13.2}
+\contentsline {subsection}{\numberline {13.2.1}git の特徴}{128}{subsection.13.2.1}
+\contentsline {subsection}{\numberline {13.2.2}git のインストール}{128}{subsection.13.2.2}
+\contentsline {subsection}{\numberline {13.2.3}初期設定}{128}{subsection.13.2.3}
+\contentsline {paragraph}{ユーザーネームの登録}{129}{section*.26}
+\contentsline {paragraph}{メールアドレスの登録}{129}{section*.27}
+\contentsline {paragraph}{SSH Keyの登録}{129}{section*.28}
+\contentsline {subsection}{\numberline {13.2.4}GitHub のアカウントの取得}{129}{subsection.13.2.4}
+\contentsline {subsection}{\numberline {13.2.5}リポジトリの作成と運用}{129}{subsection.13.2.5}
