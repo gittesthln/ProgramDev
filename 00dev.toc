@@ -100,9 +100,10 @@
 \contentsline {section}{\numberline {9.4}データの型}{87}{section.9.4}
 \contentsline {section}{\numberline {9.5}変数}{87}{section.9.5}
 \contentsline {subsection}{\numberline {9.5.1}可変変数}{89}{subsection.9.5.1}
-\contentsline {subsection}{\numberline {9.5.2}変数のスコープ}{90}{subsection.9.5.2}
-\contentsline {subsection}{\numberline {9.5.3}定義済み変数}{90}{subsection.9.5.3}
+\contentsline {subsection}{\numberline {9.5.2}定義済み変数}{90}{subsection.9.5.2}
 \contentsline {section}{\numberline {9.6}文字列}{90}{section.9.6}
+\contentsline {subsection}{\numberline {9.6.1}文字列の定義方法}{90}{subsection.9.6.1}
+\contentsline {subsection}{\numberline {9.6.2}文字列を取り扱う関数}{92}{subsection.9.6.2}
 \contentsline {section}{\numberline {9.7}式と文}{92}{section.9.7}
 \contentsline {section}{\numberline {9.8}配列}{93}{section.9.8}
 \contentsline {subsection}{\numberline {9.8.1}配列に関する制御構造}{93}{subsection.9.8.1}
@@ -110,69 +111,50 @@
 \contentsline {paragraph}{\texttt {list()}}{96}{section*.13}
 \contentsline {paragraph}{\texttt {array\textunderscore pop()}と\texttt {array\textunderscore push()}}{96}{section*.14}
 \contentsline {paragraph}{配列のキーと値に関する操作}{96}{section*.15}
-\contentsline {paragraph}{並べ替え}{96}{section*.16}
-\contentsline {paragraph}{配列からランダムな値を取り出す}{96}{section*.17}
+\contentsline {paragraph}{並べ替え}{97}{section*.16}
+\contentsline {paragraph}{配列からランダムな値を取り出す}{97}{section*.17}
 \contentsline {paragraph}{配列の切り出しと追加}{97}{section*.18}
 \contentsline {section}{\numberline {9.9}関数}{97}{section.9.9}
-\contentsline {subsection}{\numberline {9.9.1}可変関数}{100}{subsection.9.9.1}
-\contentsline {chapter}{\numberline {第10回}サーバーとのデータのやり取り}{101}{chapter.10}
-\contentsline {section}{\numberline {10.1}サーバーとのデータ交換の基本}{101}{section.10.1}
-\contentsline {section}{\numberline {10.2}スパーグローバルの補足}{103}{section.10.2}
-\contentsline {paragraph}{\texttt {\$\_SERVER}}{103}{section*.19}
-\contentsline {paragraph}{\texttt {\$\_COOKIE}}{103}{section*.20}
-\contentsline {paragraph}{\texttt {\$\_SESSION}}{103}{section*.21}
-\contentsline {section}{\numberline {10.3}Web Storage}{103}{section.10.3}
-\contentsline {section}{\numberline {10.4}Ajax}{106}{section.10.4}
-\contentsline {chapter}{\numberline {第11回}jQuery}{113}{chapter.11}
-\contentsline {section}{\numberline {11.1}jQueryとは}{113}{section.11.1}
-\contentsline {section}{\numberline {11.2}jQueryの基本}{113}{section.11.2}
-\contentsline {subsection}{\numberline {11.2.1}jQuery()関数とjQueryオブジェクト}{113}{subsection.11.2.1}
-\contentsline {subsection}{\numberline {11.2.2}jQueryオブジェクトのメソッド}{114}{subsection.11.2.2}
-\contentsline {paragraph}{HTML属性の取得と設定}{114}{section*.22}
-\contentsline {paragraph}{CSS属性の取得と設定}{115}{section*.23}
-\contentsline {paragraph}{HTMLフォーム要素の値の取得と設定}{115}{section*.24}
-\contentsline {paragraph}{要素のコンテンツの取得と設定}{115}{section*.25}
-\contentsline {section}{\numberline {11.3}ドキュメントの構造の変更}{115}{section.11.3}
-\contentsline {section}{\numberline {11.4}イベントハンドラーの取り扱い}{115}{section.11.4}
-\contentsline {section}{\numberline {11.5}Ajaxの処理}{116}{section.11.5}
-\contentsline {section}{\numberline {11.6}jQuery のサンプル}{116}{section.11.6}
-<<<<<<< HEAD
-\contentsline {chapter}{\numberline {第12回}JavaScriptライブラリーの配布}{119}{chapter.12}
-\contentsline {section}{\numberline {12.1}jQueryのコードを読む}{119}{section.12.1}
-\contentsline {section}{\numberline {12.2}JavaScriptファイルの短縮化}{121}{section.12.2}
-\contentsline {subsection}{\numberline {12.2.1}JavaScriptファイルの短縮化について}{121}{subsection.12.2.1}
-\contentsline {subsection}{\numberline {12.2.2}短縮化の例}{122}{subsection.12.2.2}
-\contentsline {chapter}{\numberline {第13回}バージョン管理}{127}{chapter.13}
-\contentsline {section}{\numberline {13.1}バージョン管理とは}{127}{section.13.1}
-\contentsline {subsection}{\numberline {13.1.1}複数でシステム開発をするときの問題点}{127}{subsection.13.1.1}
-\contentsline {subsection}{\numberline {13.1.2}バージョン管理の概念}{127}{subsection.13.1.2}
-\contentsline {subsection}{\numberline {13.1.3}バージョン管理ソフトの概要}{128}{subsection.13.1.3}
-\contentsline {section}{\numberline {13.2}gitの使い方}{128}{section.13.2}
-\contentsline {subsection}{\numberline {13.2.1}git の特徴}{128}{subsection.13.2.1}
-\contentsline {subsection}{\numberline {13.2.2}git のインストール}{128}{subsection.13.2.2}
-\contentsline {subsection}{\numberline {13.2.3}初期設定}{128}{subsection.13.2.3}
-\contentsline {paragraph}{ユーザーネームの登録}{129}{section*.26}
-\contentsline {paragraph}{メールアドレスの登録}{129}{section*.27}
-\contentsline {paragraph}{SSH Keyの登録}{129}{section*.28}
-\contentsline {subsection}{\numberline {13.2.4}GitHub のアカウントの取得}{129}{subsection.13.2.4}
-\contentsline {subsection}{\numberline {13.2.5}リポジトリの作成と運用}{129}{subsection.13.2.5}
-=======
-\contentsline {section}{\numberline {11.7}jQueryのコードを読む}{119}{section.11.7}
-\contentsline {section}{\numberline {11.8}JavaScriptファイルの短縮化}{121}{section.11.8}
-\contentsline {subsection}{\numberline {11.8.1}JavaScriptファイルの短縮化について}{121}{subsection.11.8.1}
-\contentsline {subsection}{\numberline {11.8.2}短縮化の例}{122}{subsection.11.8.2}
-\contentsline {chapter}{\numberline {第12回}バージョン管理}{127}{chapter.12}
-\contentsline {section}{\numberline {12.1}バージョン管理とは}{127}{section.12.1}
-\contentsline {subsection}{\numberline {12.1.1}複数でシステム開発をするときの問題点}{127}{subsection.12.1.1}
-\contentsline {subsection}{\numberline {12.1.2}バージョン管理の概念}{127}{subsection.12.1.2}
-\contentsline {subsection}{\numberline {12.1.3}バージョン管理ソフトの概要}{128}{subsection.12.1.3}
-\contentsline {section}{\numberline {12.2}gitの使い方}{128}{section.12.2}
-\contentsline {subsection}{\numberline {12.2.1}git の特徴}{128}{subsection.12.2.1}
-\contentsline {subsection}{\numberline {12.2.2}git のインストール}{128}{subsection.12.2.2}
-\contentsline {subsection}{\numberline {12.2.3}初期設定}{129}{subsection.12.2.3}
-\contentsline {subsubsection}{ユーザーネームの登録}{129}{section*.26}
-\contentsline {subsubsection}{メールアドレスの登録}{129}{section*.27}
-\contentsline {subsubsection}{SSH Keyの登録}{129}{section*.28}
-\contentsline {subsection}{\numberline {12.2.4}GitHub ‘のアカウントの取得}{129}{subsection.12.2.4}
-\contentsline {subsection}{\numberline {12.2.5}リポジトリの作成と運用}{129}{subsection.12.2.5}
->>>>>>> 633900ecab35a23903a23cbc53fec545fea977fd
+\contentsline {subsection}{\numberline {9.9.1}PHPの関数の特徴}{97}{subsection.9.9.1}
+\contentsline {subsection}{\numberline {9.9.2}関数の定義の例}{98}{subsection.9.9.2}
+\contentsline {subsection}{\numberline {9.9.3}可変関数}{100}{subsection.9.9.3}
+\contentsline {chapter}{\numberline {第10回}サーバーとのデータのやり取り}{103}{chapter.10}
+\contentsline {section}{\numberline {10.1}サーバーとのデータ交換の基本}{103}{section.10.1}
+\contentsline {section}{\numberline {10.2}スパーグローバルの補足}{105}{section.10.2}
+\contentsline {paragraph}{\texttt {\$\_SERVER}}{105}{section*.19}
+\contentsline {paragraph}{\texttt {\$\_COOKIE}}{105}{section*.20}
+\contentsline {paragraph}{\texttt {\$\_SESSION}}{105}{section*.21}
+\contentsline {section}{\numberline {10.3}Web Storage}{105}{section.10.3}
+\contentsline {section}{\numberline {10.4}Ajax}{108}{section.10.4}
+\contentsline {chapter}{\numberline {第11回}jQuery}{115}{chapter.11}
+\contentsline {section}{\numberline {11.1}jQueryとは}{115}{section.11.1}
+\contentsline {section}{\numberline {11.2}jQueryの基本}{115}{section.11.2}
+\contentsline {subsection}{\numberline {11.2.1}jQuery()関数とjQueryオブジェクト}{115}{subsection.11.2.1}
+\contentsline {subsection}{\numberline {11.2.2}jQueryオブジェクトのメソッド}{116}{subsection.11.2.2}
+\contentsline {paragraph}{HTML属性の取得と設定}{116}{section*.22}
+\contentsline {paragraph}{CSS属性の取得と設定}{117}{section*.23}
+\contentsline {paragraph}{HTMLフォーム要素の値の取得と設定}{117}{section*.24}
+\contentsline {paragraph}{要素のコンテンツの取得と設定}{117}{section*.25}
+\contentsline {section}{\numberline {11.3}ドキュメントの構造の変更}{117}{section.11.3}
+\contentsline {section}{\numberline {11.4}イベントハンドラーの取り扱い}{117}{section.11.4}
+\contentsline {section}{\numberline {11.5}Ajaxの処理}{118}{section.11.5}
+\contentsline {section}{\numberline {11.6}jQuery のサンプル}{118}{section.11.6}
+\contentsline {chapter}{\numberline {第12回}JavaScriptライブラリーの配布}{121}{chapter.12}
+\contentsline {section}{\numberline {12.1}jQueryのコードを読む}{121}{section.12.1}
+\contentsline {section}{\numberline {12.2}JavaScriptファイルの短縮化}{123}{section.12.2}
+\contentsline {subsection}{\numberline {12.2.1}JavaScriptファイルの短縮化について}{123}{subsection.12.2.1}
+\contentsline {subsection}{\numberline {12.2.2}短縮化の例}{124}{subsection.12.2.2}
+\contentsline {chapter}{\numberline {第13回}バージョン管理}{129}{chapter.13}
+\contentsline {section}{\numberline {13.1}バージョン管理とは}{129}{section.13.1}
+\contentsline {subsection}{\numberline {13.1.1}複数でシステム開発をするときの問題点}{129}{subsection.13.1.1}
+\contentsline {subsection}{\numberline {13.1.2}バージョン管理の概念}{129}{subsection.13.1.2}
+\contentsline {subsection}{\numberline {13.1.3}バージョン管理ソフトの概要}{130}{subsection.13.1.3}
+\contentsline {section}{\numberline {13.2}gitの使い方}{130}{section.13.2}
+\contentsline {subsection}{\numberline {13.2.1}git の特徴}{130}{subsection.13.2.1}
+\contentsline {subsection}{\numberline {13.2.2}git のインストール}{130}{subsection.13.2.2}
+\contentsline {subsection}{\numberline {13.2.3}初期設定}{130}{subsection.13.2.3}
+\contentsline {paragraph}{ユーザーネームの登録}{131}{section*.26}
+\contentsline {paragraph}{メールアドレスの登録}{131}{section*.27}
+\contentsline {paragraph}{SSH Keyの登録}{131}{section*.28}
+\contentsline {subsection}{\numberline {13.2.4}GitHub のアカウントの取得}{131}{subsection.13.2.4}
+\contentsline {subsection}{\numberline {13.2.5}リポジトリの作成と運用}{131}{subsection.13.2.5}
