@@ -6,6 +6,13 @@
 \VerbatimInput[numbers=left,fontsize=#4,
 numbersep=4pt,firstline=#2,lastline=#3]{../html/#1} 
 }
+\newcommand{\LISTNN}[4]{%
+\renewcommand{\theFancyVerbLine}{#4\arabic{FancyVerbLine}}
+\hspace{0.02\textwidth}%
+\begin{minipage}[t]{0.98\textwidth}
+\VerbatimInput[numbers=left,fontsize=#4,
+numbersep=4pt,firstline=#2,lastline=#3]{../html/#1} 
+\end{minipage}}
 \newcommand{\Strict}{\Verb+strict+モード}
 \renewcommand{\theFancyVerbLine}{\normalsize\arabic{FancyVerbLine}}
 \newcommand{\SetTheme}[1]{

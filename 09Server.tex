@@ -1,26 +1,5 @@
 %-*- coding: utf-8 -*-
 \chapter{PHPの超入門}
-\section{PHPとは}
-日本PHPユーザー会のホームページ\footnote{http://www.php.gr.jp}には次のよ
-うに書かれている。
-\begin{quotation}
-PHP は、オープンソースの汎用スクリプト言語です。 特に、サーバサイドで動
- 作する Web アプリケーションの開発に適しています。 言語構造は簡単で理解
- しやすく、C 言語の基本構文に多くを拠っています。 手続き型のプログラミン
- グに加え、（完全ではありませんが）オブジェクト指向のプログラミングも行
- うことができます。
-\end{quotation}
-なお、PHPは Web アプリケーションのためではなく、通常
-のプログラミング言語としても使用できる。通常のプログラミング言語として使
-用するためには、コマンドプロンプトから PHP が実行できるように、環境変数
-\texttt{PATH}に \texttt{php.exe} があるフォルダを追記しておくとよい。
-
-なお、このテキストのPHPの仕様に関する説明は日本PHPユーザー会から多
-く引用している。
-
-%PHP はサーバーサイドで利用されることが多いので、サーバーに関する基礎知識
-%を紹介する。
-%\chapter{サーバーとのデータ－の交換}
 \section{Web サーバーの基礎知識}
 \subsection{サーバーの重要な設定項目}
 Web サーバーは hypertext transfer protocol(HTTP) を利用して、クライアン
@@ -29,8 +8,8 @@ Web サーバーは hypertext transfer protocol(HTTP) を利用して、クラ�
 イル \texttt{httpd.conf} の中で設定される重要な項目は
 次のとおりである。
 \begin{itemize}
- \item ポート番号：TCP/IP におけるサービスを識別するための
-       ポート番号は大別して次の3種類に分けられる
+ \item ポート番号：TCP/IP のサービスを識別するための
+       番号で、次の3種類に分けられる
 \footnote{\texttt{https://tools.ietf.org/html/rfc6335\#section-6}}。
 \begin{center}\vspace{-\baselineskip}
  \begin{tabular}{|c|r@{番$\sim$}r<{番}|c|}
@@ -45,19 +24,20 @@ Web サーバーは hypertext transfer protocol(HTTP) を利用して、クラ�
 IANA(Internet Assigned Numbers Authority)は DNS Root, IPアドレスやインター
        ネットプロトコルのポート番号などを管理している団体である。
 
-       なお、HTTPのSystem ポート番号は80番となっている
-\footnote{ポート番号の一覧は次のところにある。\\
-%
- \texttt{https://www.iana.org/assignments/}\texttt{service-names-port-numbers/service-names-port-numbers.xhtml}}。
-
 
  \item ドキュメントルート：Apache では Webサーバーに直接要求できるファイルはこのフォルダ
        (ディレクトリ)の下にあるものだけである。
 \end{itemize}
+ なお、HTTPのSystem ポート番号は80番となっている\footnote{ポート番号の一覧は次のところにある。\\
+%
+ \texttt{https://www.iana.org/assignments/}\texttt{service-names-port-numbers/service-names-port-numbers.xhtml}}。
+
 \subsection{CGI}
-Common Gateway Interface(CGI)とはWebコンテンツをダイナミックに生成する標
-準の方法である。Webサーバー上ではWebサーバーとWebコンテンツを生成するた
-めのインターフェイスを与える。この授業ではCGIのプログラムはPHP(PHP:
+Common Gateway Interface(CGI)とはWebコンテンツを動的に生成する標
+準の方法で、Webサーバー上ではWebサーバーとWebコンテンツを生成するた
+めのインターフェイスを与える。
+この授業ではCGIのプログラムはPHP(PHP:
+%
 Hypertext Preprocessor)を使用する。
 
 \subsection{Webサーバーのインストール}
