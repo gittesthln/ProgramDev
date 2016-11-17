@@ -99,18 +99,19 @@
 \contentsline {section}{\numberline {9.3}PHPプログラムの書き方}{86}{section.9.3}
 \contentsline {section}{\numberline {9.4}データの型}{86}{section.9.4}
 \contentsline {section}{\numberline {9.5}変数}{87}{section.9.5}
-\contentsline {subsection}{\numberline {9.5.1}可変変数}{89}{subsection.9.5.1}
-\contentsline {subsection}{\numberline {9.5.2}定義済み変数}{90}{subsection.9.5.2}
-\contentsline {section}{\numberline {9.6}文字列}{90}{section.9.6}
-\contentsline {subsection}{\numberline {9.6.1}文字列の定義方法}{90}{subsection.9.6.1}
-\contentsline {subsection}{\numberline {9.6.2}文字列を取り扱う関数}{91}{subsection.9.6.2}
-\contentsline {section}{\numberline {9.7}式と文}{92}{section.9.7}
-\contentsline {section}{\numberline {9.8}配列}{93}{section.9.8}
-\contentsline {subsection}{\numberline {9.8.1}配列に関する制御構造}{93}{subsection.9.8.1}
-\contentsline {subsection}{\numberline {9.8.2}配列に関する関数}{95}{subsection.9.8.2}
-\contentsline {paragraph}{\texttt {list()}}{96}{section*.13}
+\contentsline {subsection}{\numberline {9.5.1}可変変数}{88}{subsection.9.5.1}
+\contentsline {subsection}{\numberline {9.5.2}定義済み変数}{88}{subsection.9.5.2}
+\contentsline {section}{\numberline {9.6}文字列}{89}{section.9.6}
+\contentsline {subsection}{\numberline {9.6.1}文字列の定義方法}{89}{subsection.9.6.1}
+\contentsline {subsection}{\numberline {9.6.2}文字列を取り扱う関数}{90}{subsection.9.6.2}
+\contentsline {section}{\numberline {9.7}式と文}{91}{section.9.7}
+\contentsline {section}{\numberline {9.8}配列}{92}{section.9.8}
+\contentsline {subsection}{\numberline {9.8.1}配列の基礎}{92}{subsection.9.8.1}
+\contentsline {subsection}{\numberline {9.8.2}配列に関する制御構造}{94}{subsection.9.8.2}
+\contentsline {subsection}{\numberline {9.8.3}配列に関する関数}{95}{subsection.9.8.3}
+\contentsline {paragraph}{\texttt {list()}}{95}{section*.13}
 \contentsline {paragraph}{\texttt {array\textunderscore pop()}と\texttt {array\textunderscore push()}}{96}{section*.14}
-\contentsline {paragraph}{配列のキーと値に関する操作}{96}{section*.15}
+\contentsline {paragraph}{配列のキーと値の存在の判定}{96}{section*.15}
 \contentsline {paragraph}{並べ替え}{96}{section*.16}
 \contentsline {paragraph}{配列からランダムな値を取り出す}{96}{section*.17}
 \contentsline {paragraph}{配列の切り出しと追加}{96}{section*.18}

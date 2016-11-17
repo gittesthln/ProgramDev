@@ -66,5 +66,11 @@
 \VerbatimInput[numbers=left,fontsize=#4,
 numbersep=4pt,firstline=#2,lastline=#3]{html/#1} 
 }
+\newcommand{\LISTNN}[4]{%
+\renewcommand{\theFancyVerbLine}{#4\arabic{FancyVerbLine}}
+%\setcounter{FancyVerbLine}{-1}
+\VerbatimInput[numbers=left,fontsize=#4,
+numbersep=4pt,firstline=#2,lastline=#3,firstnumber=1]{html/#1} 
+}
 \newcommand{\Strict}{\texttt{strict}モード}
 \newcommand{\Correct}[1]{{\color{red}#1}}

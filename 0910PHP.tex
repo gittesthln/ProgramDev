@@ -100,6 +100,8 @@ print "4:\$a=$a, \$b=$b\n";// 4:$a=10, $b=10
         は変数 \Verb+$a+ の値を変更すると(9行目)変数 \Verb+$b+ の値も変
         更される(10行目)。
  \end{itemize}
+ \end{Exec}
+ \iffalse
  次の例は配列に対して同様のことをしている。
 \begin{Verbatim}[numbers=left]
 <?php
@@ -154,6 +156,8 @@ Array
   実行例\ref{PHPsubstitute}で \Verb+print_r()+ 関数の代わりに
    \Verb+var_dump()+ 関数を用いて出力がどのように変わるか確認しなさい。
  \end{Prob}
+ \fi
+ \iffalse\else
  \subsection{可変変数}
  ある変数の値が文字列のとき、その前に\Verb+$+をつけると、その文字列が変
  数名として使える。
@@ -179,7 +183,8 @@ print "\$\$c = " . $$c . "\n"; // $$c = 2
    \item 同様に、変数\Verb+$c+に文字列\Verb+"b"+を代入して、\Verb+$$c+を出力させ
          ると\Verb+$b+の値が表示される(8行目と9行目)。
   \end{itemize}
-\end{Exec}
+ \end{Exec}
+ \fi
 \subsection{定義済み変数}
 PHP にはいくつかの定義済みの変数が存在する。そのうち、スーパーグローバル
 と呼ばれる変数はグローバルスコープを持つ定義済みの変数である(表\ref{superglobal})。
@@ -309,6 +314,45 @@ PHPでは分岐、繰り返しなどの制御構造はC言語と同じように\
 \texttt{for}文、\texttt{while}文と\texttt{switch}文などがある。
 
 \section{配列}
+\subsection{配列の基礎}
+PHPの配列は \texttt{array()}関数で作成する。配列にはC言語などのような数
+字を添え字とするものとキーと値の組み合わせであるものがある。
+\begin{Exec}
+ \upshape
+ 次のリストは配列の取り扱いに関する簡単な例である。
+\LISTNN{09DefArray.php}{2}{6}{\normalsize}
+\begin{itemize}
+ \item 1行目で４つの値を持つ配列を定義
+ \item ２行目で別の変数に値を代入
+ \item ３行目で初めの配列の先頭の値を変更
+ \item ４行目と５行目で配列の内容を出力するために\Verb+print_r()+関数を
+			 用いている。
+\end{itemize}
+出力結果は次のとおりである。
+\begin{Verbatim}
+Array
+(
+    [0] => 5
+    [1] => 10
+    [2] => 20
+    [3] => 30
+)
+Array
+(
+    [0] => 0
+    [1] => 10
+    [2] => 20
+    [3] => 30
+)
+\end{Verbatim}
+\Verb+$b=$a+で代入された変数\Verb+$b+は\Verb+$a+とは別の領域が割り当てら
+れていることがわかる。
+\end{Exec}
+ \begin{Prob}\upshape
+  実行例\ref{PHPsubstitute}で \Verb+print_r()+ 関数の代わりに
+   \Verb+var_dump()+ 関数を用いて出力がどのように変わるか確認しなさい。
+ \end{Prob}
+キーと値を組み合わせた配列については次の項で解説をする。
 \subsection{配列に関する制御構造}
 JavaScriptのオブジェクトのプロパティを列挙するのに利用した
 \texttt{for(... in ...)}に相当する\texttt{foreach}がある。
@@ -321,19 +365,9 @@ JavaScriptのオブジェクトのプロパティを列挙するのに利用し�
 \begin{Exec}\upshape
  次の例は\texttt{foreach}の使用例である。
 %\listinginput{1}{09Exforeach.php}
-\begin{Verbatim}[numbers=left]
- <?php
-$a = array("red","yellow","blue");
-foreach($a as $val) {
-  print "$val\n";
-}
-foreach($a as $key=>$val) {
-  print "$key:$val\n";
- }
- ?>
-\end{Verbatim}
- 2行目で単純な配列を定義して、
- 3行目から5行目と6行目から8行目でこの配列の要素をすべて表示させて
+\LISTNN{09Exforeach.php}{2}{8}{\normalsize}
+ 1行目で単純な配列を定義して、
+ 2行目から4行目と5行目から7行目でこの配列の要素をすべて表示させて
        いる。
 この部分の出力は次のとおりである。
 \begin{verbatim}
@@ -347,20 +381,9 @@ blue
  単純な配列のときは「キー」の値は $0,1,2,\dots$ を順にとる(出力4行
        目から6行目)。ここでは\Verb+$a[$key]=$val+の関係が成立しているこ
        とに注意すること。
- \begin{Verbatim}[numbers=left]
-<?php
-$a = array("red"=>"赤","yellow"=>"黄","blue"=>"青");
-foreach($a as $val) {
-  print "$val\n";
-}
-foreach($a as $key=>$val) {
-  print "$key:$val\n";
-  }
-?>
-\end{Verbatim}
-%"
+\LISTNN{09Exforeach.php}{9}{15}{\normalsize}
  1行目ではJavaScriptにおけるオブジェクトリテラルの形式に似た連想配
-       列を定義して、 2行目から4行目と5行目から7行目で以前とと同じ形で配列の内容を
+       列を定義して、2行目から4行目と5行目から7行目で以前とと同じ形で配列の内容を
        表示している。
 この出力は次のようになる。
 \begin{Verbatim}
@@ -374,28 +397,13 @@ blue:青
 \end{Exec}%"
 \begin{Exec}\upshape
 次の例はPHPの配列に関する特別な状況を説明するためのものである。
-\begin{Verbatim}[numbers=left]
-<?php
-$b = array();
-$b[3] = "3rd";
-$b[0] = "0";
-print count($b)."\n";
-foreach($b as $key=>$val) {
-  print "$key:$val\n";
-}
-for($i=0;$i<count($b);$i++) {
-  if(isset($b[$i])) {
-    print "$i:$b[$i]\n";
-  }
-}
-?>
-\end{Verbatim}
+\LISTNN{09Exforeach.php}{16}{27}{\normalsize}
 この出力は次のようになる。%"
 \begin{Verbatim}
 2       //5行目の出力
 3:3rd   //６行目の出力 １回目
 0:0     //６行目の出力 2回目
-0:0     //１１行目の$i=0のときの値
+0:0     //1０行目の$i=0のときの値
 \end{Verbatim}
 \begin{itemize}\upshape
  \item 1行目で配列を初期化し、その後、$3$番目と先頭の要素に値を代入して
@@ -433,13 +441,15 @@ array_push($a,10,20); //$a は array(1,2,3,10,20)となる
 \end{Verbatim}
 配列の先頭に対して要素を取り出したり(\Verb+array_shift()+)、追加する
 (\Verb+array_unshift()+)することもできる。
-\paragraph{配列のキーと値に関する操作}
+\paragraph{配列のキーと値の存在の判定}
 \Verb+in_array($needle, $array)+は与えられた配列(\Verb+$array+)内に指定
 した値(\Verb+$needle+)が存在するかを調べる関数である。値の型まで比較する
-ためには省略可能な3番目の引数を\Verb+TRUE+にすればよい。
+ためには省略可能な3番目の引数を\Verb+TRUE+にすればよい。存在すれば
+\Verb+TRUE+が返る。
 
 \Verb+array_key_exists($needle, $array)+は与えられた配列(\Verb+$array+)内に指定
-したキー(\Verb+$needle+)が存在するかを調べる関数である。
+したキー(\Verb+$needle+)が存在するかを調べる関数である。存在すれば
+\Verb+TRUE+が返る。
 \paragraph{並べ替え}
 PHPには配列を並べ替える関数がいくつか用意されている。\Verb+sort()+は各要
 素を昇順に並べかえる。降順に並べ替えるには\Verb+rsort()+関数を用いる。
@@ -687,6 +697,7 @@ $x = defined in function
 $resa = 20
 \end{Verbatim}
 \end{Exec}
+\iffalse\else
 \subsection{可変関数}
 文字列が代入された変数を用いて、その文字列を変数名にできる可変変数と同様
 に、文字列が代入された変数の後に\texttt{()}をつけると、その文字列の関数
@@ -718,4 +729,5 @@ print "$f($a,$b) = " . $f($a,$b) ."\n";// sub(5,2) = 3
        かる。
 \end{itemize}
 \end{Exec}
+\fi
 %\subsection{}

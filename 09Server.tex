@@ -55,7 +55,8 @@ XAMPPをインストールしたときに注意する点は次のとおりであ
  \item 標準の文字コードはISO-8859-1である。
  \item PHPの設定でタイムゾーンがヨーロッパ大陸になっている。タイムスタン
        プを利用するプログラムがうまく動かない場合あがあるので注意するこ
-       と。
+       と\footnote{\Verb+date\_default\_timezone\_get()+関数で調べることが
+       できる。}。
 \end{itemize}
 
 \input 0910PHP.tex
