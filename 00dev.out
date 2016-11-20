@@ -80,39 +80,55 @@
 \BOOKMARK [2][-]{subsection.8.4.2}{マウスイベント}{section.8.4}% 80
 \BOOKMARK [1][-]{section.8.5}{イベント処理の例}{chapter.8}% 81
 \BOOKMARK [0][-]{chapter.9}{PHPの超入門}{}% 82
-\BOOKMARK [1][-]{section.9.1}{PHPとは}{chapter.9}% 83
-\BOOKMARK [1][-]{section.9.2}{Web サーバーの基礎知識}{chapter.9}% 84
-\BOOKMARK [2][-]{subsection.9.2.1}{サーバーの重要な設定項目}{section.9.2}% 85
-\BOOKMARK [2][-]{subsection.9.2.2}{CGI}{section.9.2}% 86
-\BOOKMARK [2][-]{subsection.9.2.3}{Webサーバーのインストール}{section.9.2}% 87
+\BOOKMARK [1][-]{section.9.1}{Web サーバーの基礎知識}{chapter.9}% 83
+\BOOKMARK [2][-]{subsection.9.1.1}{サーバーの重要な設定項目}{section.9.1}% 84
+\BOOKMARK [2][-]{subsection.9.1.2}{CGI}{section.9.1}% 85
+\BOOKMARK [2][-]{subsection.9.1.3}{Webサーバーのインストール}{section.9.1}% 86
+\BOOKMARK [1][-]{section.9.2}{PHPとは}{chapter.9}% 87
 \BOOKMARK [1][-]{section.9.3}{PHPプログラムの書き方}{chapter.9}% 88
 \BOOKMARK [1][-]{section.9.4}{データの型}{chapter.9}% 89
 \BOOKMARK [1][-]{section.9.5}{変数}{chapter.9}% 90
 \BOOKMARK [2][-]{subsection.9.5.1}{可変変数}{section.9.5}% 91
-\BOOKMARK [2][-]{subsection.9.5.2}{変数のスコープ}{section.9.5}% 92
-\BOOKMARK [2][-]{subsection.9.5.3}{定義済み変数}{section.9.5}% 93
-\BOOKMARK [1][-]{section.9.6}{文字列}{chapter.9}% 94
-\BOOKMARK [1][-]{section.9.7}{式と文}{chapter.9}% 95
-\BOOKMARK [1][-]{section.9.8}{配列}{chapter.9}% 96
-\BOOKMARK [2][-]{subsection.9.8.1}{配列に関する制御構造}{section.9.8}% 97
-\BOOKMARK [2][-]{subsection.9.8.2}{配列に関する関数}{section.9.8}% 98
-\BOOKMARK [1][-]{section.9.9}{関数}{chapter.9}% 99
-\BOOKMARK [2][-]{subsection.9.9.1}{可変関数}{section.9.9}% 100
-\BOOKMARK [0][-]{chapter.10}{サーバーとのデータのやり取り}{}% 101
-\BOOKMARK [1][-]{section.10.1}{サーバーとのデータ交換の基本}{chapter.10}% 102
-\BOOKMARK [1][-]{section.10.2}{スパーグローバルの補足}{chapter.10}% 103
-\BOOKMARK [1][-]{section.10.3}{Web Storage}{chapter.10}% 104
-\BOOKMARK [1][-]{section.10.4}{Ajax}{chapter.10}% 105
-\BOOKMARK [0][-]{chapter.11}{jQuery}{}% 106
-\BOOKMARK [1][-]{section.11.1}{jQueryとは}{chapter.11}% 107
-\BOOKMARK [1][-]{section.11.2}{jQueryの基本}{chapter.11}% 108
-\BOOKMARK [2][-]{subsection.11.2.1}{jQuery\(\)関数とjQueryオブジェクト}{section.11.2}% 109
-\BOOKMARK [2][-]{subsection.11.2.2}{jQueryオブジェクトのメソッド}{section.11.2}% 110
-\BOOKMARK [1][-]{section.11.3}{ドキュメントの構造の変更}{chapter.11}% 111
-\BOOKMARK [1][-]{section.11.4}{イベントハンドラーの取り扱い}{chapter.11}% 112
-\BOOKMARK [1][-]{section.11.5}{Ajaxの処理}{chapter.11}% 113
-\BOOKMARK [1][-]{section.11.6}{jQuery のサンプル}{chapter.11}% 114
-\BOOKMARK [1][-]{section.11.7}{jQueryのコードを読む}{chapter.11}% 115
-\BOOKMARK [1][-]{section.11.8}{JavaScriptファイルの短縮化}{chapter.11}% 116
-\BOOKMARK [2][-]{subsection.11.8.1}{JavaScriptファイルの短縮化について}{section.11.8}% 117
-\BOOKMARK [2][-]{subsection.11.8.2}{短縮化の例}{section.11.8}% 118
+\BOOKMARK [2][-]{subsection.9.5.2}{定義済み変数}{section.9.5}% 92
+\BOOKMARK [1][-]{section.9.6}{文字列}{chapter.9}% 93
+\BOOKMARK [2][-]{subsection.9.6.1}{文字列の定義方法}{section.9.6}% 94
+\BOOKMARK [2][-]{subsection.9.6.2}{文字列を取り扱う関数}{section.9.6}% 95
+\BOOKMARK [1][-]{section.9.7}{式と文}{chapter.9}% 96
+\BOOKMARK [1][-]{section.9.8}{配列}{chapter.9}% 97
+\BOOKMARK [2][-]{subsection.9.8.1}{配列の基礎}{section.9.8}% 98
+\BOOKMARK [2][-]{subsection.9.8.2}{配列に関する制御構造}{section.9.8}% 99
+\BOOKMARK [2][-]{subsection.9.8.3}{配列に関する関数}{section.9.8}% 100
+\BOOKMARK [1][-]{section.9.9}{関数}{chapter.9}% 101
+\BOOKMARK [2][-]{subsection.9.9.1}{PHPの関数の特徴}{section.9.9}% 102
+\BOOKMARK [2][-]{subsection.9.9.2}{関数の定義の例}{section.9.9}% 103
+\BOOKMARK [2][-]{subsection.9.9.3}{可変関数}{section.9.9}% 104
+\BOOKMARK [0][-]{chapter.10}{サーバーとのデータのやり取り}{}% 105
+\BOOKMARK [1][-]{section.10.1}{サーバーとのデータ交換の基本}{chapter.10}% 106
+\BOOKMARK [1][-]{section.10.2}{スパーグローバルの補足}{chapter.10}% 107
+\BOOKMARK [1][-]{section.10.3}{Web Storage}{chapter.10}% 108
+\BOOKMARK [1][-]{section.10.4}{Ajax}{chapter.10}% 109
+\BOOKMARK [0][-]{chapter.11}{jQuery}{}% 110
+\BOOKMARK [1][-]{section.11.1}{jQueryとは}{chapter.11}% 111
+\BOOKMARK [1][-]{section.11.2}{jQueryの基本}{chapter.11}% 112
+\BOOKMARK [2][-]{subsection.11.2.1}{jQuery\(\)関数とjQueryオブジェクト}{section.11.2}% 113
+\BOOKMARK [2][-]{subsection.11.2.2}{jQueryオブジェクトのメソッド}{section.11.2}% 114
+\BOOKMARK [1][-]{section.11.3}{ドキュメントの構造の変更}{chapter.11}% 115
+\BOOKMARK [1][-]{section.11.4}{イベントハンドラーの取り扱い}{chapter.11}% 116
+\BOOKMARK [1][-]{section.11.5}{Ajaxの処理}{chapter.11}% 117
+\BOOKMARK [1][-]{section.11.6}{jQuery のサンプル}{chapter.11}% 118
+\BOOKMARK [0][-]{chapter.12}{JavaScriptライブラリーの配布}{}% 119
+\BOOKMARK [1][-]{section.12.1}{jQueryのコードを読む}{chapter.12}% 120
+\BOOKMARK [1][-]{section.12.2}{JavaScriptファイルの短縮化}{chapter.12}% 121
+\BOOKMARK [2][-]{subsection.12.2.1}{JavaScriptファイルの短縮化について}{section.12.2}% 122
+\BOOKMARK [2][-]{subsection.12.2.2}{短縮化の例}{section.12.2}% 123
+\BOOKMARK [0][-]{chapter.13}{バージョン管理}{}% 124
+\BOOKMARK [1][-]{section.13.1}{バージョン管理とは}{chapter.13}% 125
+\BOOKMARK [2][-]{subsection.13.1.1}{複数でシステム開発をするときの問題点}{section.13.1}% 126
+\BOOKMARK [2][-]{subsection.13.1.2}{バージョン管理の概念}{section.13.1}% 127
+\BOOKMARK [2][-]{subsection.13.1.3}{バージョン管理ソフトの概要}{section.13.1}% 128
+\BOOKMARK [1][-]{section.13.2}{gitの使い方}{chapter.13}% 129
+\BOOKMARK [2][-]{subsection.13.2.1}{git の特徴}{section.13.2}% 130
+\BOOKMARK [2][-]{subsection.13.2.2}{git のインストール}{section.13.2}% 131
+\BOOKMARK [2][-]{subsection.13.2.3}{初期設定}{section.13.2}% 132
+\BOOKMARK [2][-]{subsection.13.2.4}{GitHub のアカウントの取得}{section.13.2}% 133
+\BOOKMARK [2][-]{subsection.13.2.5}{リポジトリの作成と運用}{section.13.2}% 134

@@ -43,7 +43,7 @@
     Form.addEventListener("change", function(){
       var d2 = Form.children[2].value
       d = new Date(Year.value, Month.value, 0).getDate();
-      if( d != Form.children[2].children.length) {//alert(d+" "+Form.children[2].children.length);
+      if( d != Form.children[2].children.length) {
         Form.replaceChild(Days[d],Form.children[2]);
         Form.children[2].value = Math.min(Form.children[2].length, d2);
       }

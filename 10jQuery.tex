@@ -1,7 +1,7 @@
-%-*- coding: utf-8 -*-
 \chapter{jQuery}
 \section{jQueryとは}
-jQuery の開発元\footnote{\texttt{jQuery.com}}には次のように書かれている。
+jQuery の開発元\footnote{\texttt{https://jQuery.com}参照日:2016/11/19}に
+は次のように書かれている。
 \begin{quotation}
 jQuery is a fast, small, and feature-rich JavaScript library. It makes
  things like HTML document traversal and manipulation, event handling,
@@ -9,31 +9,13 @@ jQuery is a fast, small, and feature-rich JavaScript library. It makes
  across a multitude of browsers. With a combination of versatility and
  extensibility, jQuery has changed the way that millions of people write
  JavaScript.
-\end{quotation}
+ \end{quotation}
 jQuery はJavaScriptのライブラリーであり、これまでに解説してきた
-JavaScriptの使い方を簡単にすることを目的としている。現在のところ jQuery
-には ver. 1 のものと ver. 2 の系列が提供されている。大きな違いについては
-次のように解説されている。
-\iffalse
-Query 1.x
-
-The jQuery 1.x line had major changes as of jQuery 1.9.0. We strongly
-recommend that you also use the jQuery Migrate plugin if you are
-upgrading from pre-1.9 versions of jQuery or need to use plugins that
-haven't yet been updated. Read the jQuery 1.9 Upgrade Guide and the
-jQuery 1.9 　
-\fi
-\begin{quotation}
-jQuery 2.x
-
-jQuery 2.x has the same API as jQuery 1.x, but does not support Internet
-Explorer 6, 7, or 8. All the notes in the jQuery 1.9 Upgrade Guide apply
-here as well. Since IE 8 is still relatively common, we recommend using
-the 1.x version unless you are certain no IE 6/7/8 users are visiting
-the site. Please read the 2.0 release notes carefully. 
-\end{quotation}
-一番大きな違いは ver. 2 では古い Internet Explorer の対応を打ち切った
-ところである。
+JavaScriptの使い方を簡単にすることを目的としている。2016年11月19日現在、
+jQuery は ver. 3.1.1 が最新のものとなっている。ver. 3.0 は2016年6月9日に
+リリースされた。それまで提供されていた ver. 1(最終は 1.12.4) と
+ver. 2(最終は2.2.4)は重大な訂正(critical support patch)しか行わないと記さ
+れている。
 
 また、配布されているライブラリーはコメントなどがそのまま入っているものと、
 コメントを取り除き、変数名などを短いものに置き換えて、ファイルサイズを小
@@ -47,7 +29,7 @@ jQueryライブラリーは\texttt{jQuery()}というグローバル関数を一
 する。この関数の短縮形として、\texttt{\$}というグローバル関数も定義する。
 jQuery() 関数はコンストラクタではない。
 jQuery関数は引数の与え方により動作が異なるが、戻り値としてjQuery
-オブジェクトとと呼ばれるDOMの要素群を返す。このオブジェクトには多数のメ
+オブジェクトとと呼ばれるDOMの要素を拡張した集まりを返す。このオブジェクトには多数のメ
 ソッドが定義されていて、これらの要素群を操作できる。
 
 jQuery() 関数の呼び出し方は引数の型により返される要素群が異なる。
@@ -219,7 +201,4 @@ jQueryではAjaxの処理に関するいろいろな方法を提供している�
 	\end{itemize}
  \end{itemize}
  \end{Exec}
-\section{jQueryのコードを読む}
-\input 10-02jQuerySource.tex
-\section{JavaScriptファイルの短縮化}
-\input 10-10minimize.tex
+

@@ -1,7 +1,7 @@
 -q
 -dNOPAUSE
 -sDEVICE=bmp16m
--sOUTPUTFILE=C:/tmp/tmpps1.bmp
+-sOUTPUTFILE=C:/tmp/tmpps28.bmp
 -r600x600
 tmp$$.ps
 quit.ps

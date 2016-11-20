@@ -1,38 +1,17 @@
 %-*- coding: utf-8 -*-
 \chapter{PHPの超入門}
-\section{PHPとは}
-日本PHPユーザー会のホームページ\footnote{http://www.php.gr.jp}には次のよ
-うに書かれている。
-\begin{quotation}
-PHP は、オープンソースの汎用スクリプト言語です。 特に、サーバサイドで動
- 作する Web アプリケーションの開発に適しています。 言語構造は簡単で理解
- しやすく、C 言語の基本構文に多くを拠っています。 手続き型のプログラミン
- グに加え、（完全ではありませんが）オブジェクト指向のプログラミングも行
- うことができます。
-\end{quotation}
-ここにあるように、PHPは Web アプリケーションのためではなく、通常
-のプログラミング言語としても使用できる。通常のプログラミング言語として使
-用するためには、コマンドプロンプトから PHP が実行できるように、環境変数
-\texttt{PATH}に \texttt{php.exe} があるフォルダを追記しておくとよい。
-
-なお、このテキストにおけるPHPの使用に関する説明は日本PHPユーザー会から多
-く引用している。
-
-%PHP はサーバーサイドで利用されることが多いので、サーバーに関する基礎知識
-%を紹介する。
-%\chapter{サーバーとのデータ－の交換}
 \section{Web サーバーの基礎知識}
 \subsection{サーバーの重要な設定項目}
-Web サーバーは　hypertext transfer protocol(HTTP) を利用して、クライアン
-トプログラム(Webブラウザなど)からの要求を処理する。このサービスを提供す
-るプログラムとしては Apache が有名である。Apache によるサービスの設定ファ
-イルは \texttt{httpd.conf} である。この中で設定される重要な項目は
+Web サーバーは hypertext transfer protocol(HTTP) を利用して、クライアン
+トプログラム(Webブラウザなど)からの要求を処理する。Apache はこのサービスを提供す
+るものとして有名である。Apache の設定ファ
+イル \texttt{httpd.conf} の中で設定される重要な項目は
 次のとおりである。
 \begin{itemize}
- \item ポート番号：TCP/IP におけるサービスを識別するための
-       ポート番号は大別して次の3種類に分けられる
+ \item ポート番号：TCP/IP のサービスを識別するための
+       番号で、次の3種類に分けられる
 \footnote{\texttt{https://tools.ietf.org/html/rfc6335\#section-6}}。
-\begin{center}
+\begin{center}\vspace{-\baselineskip}
  \begin{tabular}{|c|r@{番$\sim$}r<{番}|c|}
 \hline
 種類 &\multicolumn{2}{c|}{範囲} &内容 \\\hline
@@ -45,36 +24,39 @@ Web サーバーは　hypertext transfer protocol(HTTP) を利用して、クラ
 IANA(Internet Assigned Numbers Authority)は DNS Root, IPアドレスやインター
        ネットプロトコルのポート番号などを管理している団体である。
 
-       HTTPのSystem ポート番号は80番となっている
-\footnote{ポート番号の一覧は次のところにある。\\
-%
- \texttt{https://www.iana.org/assignments/}\texttt{service-names-port-numbers/service-names-port-numbers.xhtml}}。
-
 
  \item ドキュメントルート：Apache では Webサーバーに直接要求できるファイルはこのフォルダ
        (ディレクトリ)の下にあるものだけである。
 \end{itemize}
+ なお、HTTPのSystem ポート番号は80番となっている\footnote{ポート番号の一覧は次のところにある。\\
+%
+ \texttt{https://www.iana.org/assignments/}\texttt{service-names-port-numbers/service-names-port-numbers.xhtml}}。
+
 \subsection{CGI}
-Common Gateway Interface(CGI)とはWebコンテンツをダイナミックに生成する標
-準の方法である。Webサーバー上ではWebサーバーとWebコンテンツを生成するた
-めのインターフェイスを与える。この授業ではCGIのプログラムはPHP(PHP:
+Common Gateway Interface(CGI)とはWebコンテンツを動的に生成する標
+準の方法で、Webサーバー上ではWebサーバーとWebコンテンツを生成するた
+めのインターフェイスを与える。
+この授業ではCGIのプログラムはPHP(PHP:
+%
 Hypertext Preprocessor)を使用する。
 
 \subsection{Webサーバーのインストール}
-Webサーバーをインストールし、HTTPのサーバーを動かすためにはApacheやPHPを
-インストールした後、いくつかの設定をする必要がある。これらのインストール
+Webサーバー(Apache)やPHPをインストールし、HTTPのサーバー上でPHPと連携さ
+せるためにはいくつかの設定をする必要がある。これらのインストール
 を一括で行うことができるパッケージも存在する。
 \paragraph{XAMPP}XAMPPは Apache、MySQL、PerlとPHPを一括してインストール
 するパッケージである。インストール時にはいくつかのパッケージをインストー
-ルしない選択も可能である。なお、先頭の X はクロスプラットフォームを意味
-する。XAMPPをインストールしたときに注意する点は次のとおりである。
+ルしない選択も可能である。%なお、先頭の X はクロスプラットフォームを意味
+													%する。
+XAMPPをインストールしたときに注意する点は次のとおりである。
 \begin{itemize}
  \item インストール時に Apache をサービスとして実行するとパソコンを立ち
        上げた時にApacheを起動させる手間が省ける。
  \item 標準の文字コードはISO-8859-1である。
  \item PHPの設定でタイムゾーンがヨーロッパ大陸になっている。タイムスタン
        プを利用するプログラムがうまく動かない場合あがあるので注意するこ
-       と。
+       と\footnote{\Verb+date\_default\_timezone\_get()+関数で調べることが
+       できる。}。
 \end{itemize}
 
 \input 0910PHP.tex
