@@ -126,7 +126,7 @@
 \contentsline {paragraph}{\texttt {\$\_COOKIE}}{103}{section*.20}
 \contentsline {paragraph}{\texttt {\$\_SESSION}}{103}{section*.21}
 \contentsline {section}{\numberline {10.3}Web Storage}{103}{section.10.3}
-\contentsline {section}{\numberline {10.4}Ajax}{106}{section.10.4}
+\contentsline {section}{\numberline {10.4}Ajax}{107}{section.10.4}
 \contentsline {chapter}{\numberline {‘æ11‰ñ}jQuery}{113}{chapter.11}
 \contentsline {section}{\numberline {11.1}jQuery‚Æ‚Í}{113}{section.11.1}
 \contentsline {section}{\numberline {11.2}jQuery‚ÌŠî–{}{113}{section.11.2}

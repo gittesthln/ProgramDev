@@ -1,7 +1,7 @@
 <script type="text/javascript">
 //<![CDATA[
-//var Storage = window.localStorage;
-var Storage = window.sessionStorage;
+var Storage = window.localStorage;
+//var Storage = window.sessionStorage;
 window.onload = function() {
   var AccessList, Message = document.getElementById("message");
   appendMessage(Message, "新しいページです");
@@ -12,8 +12,9 @@ window.onload = function() {
     appendMessage(Message, "初めてのアクセスです");
   }
   appendMessage(Message, "今までのアクセス時間です");
-  AccessList.forEach(function(D, index, A) {
-    if(index < 3) appendMessage(Message, new Date(D-0));
+  AccessList.every(function(D, index, A) {
+    appendMessage(Message, new Date(D-0));
+    return index < 3;
   });
 }
 function appendMessage(P, Mess) {

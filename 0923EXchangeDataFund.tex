@@ -1,5 +1,3 @@
-%-*- coding: utf-8 -*-
-%￥section{}
 \section{サーバーとのデータ交換の基本}
 Webページにおいてサーバーにデータを送る方法には\texttt{POST}と
 \texttt{PUT}の2通りの方法がある。
@@ -67,7 +65,7 @@ HTMLの要素に対しては次のことを行う。
 アントの情報などを提供する。具体的な内容はクライアントごとに異なる。
 \begin{Prob}\upshape
  \texttt{foreach}構文を用いて\Verb+$_SERVER+の内容を表示し、どのようなも
- のが送られている確認にせよ。
+ のが送られている確認せよ。
 \end{Prob}
 \paragraph{\texttt{\$\_COOKIE}}
 COOKIE とはWebサーバー側からクライアント側に一時的にデータを保存させる仕
@@ -76,7 +74,7 @@ COOKIE とはWebサーバー側からクライアント側に一時的にデー�
 情報を開始時に補填する機能などを実現できる。
 \paragraph{\texttt{\$\_SESSION}}
 セッションとはある作業の一連の流れを指す。たとえば会員制のサイトではログイ
-ン後でなければページを見ることができない。情報のページに直接行くことがで
+ン後でなければ会員専用のページを見ることができない。情報のページに直接行くことがで
 きないような仕組みが必要である。
 
 HTTP通信はセッションレスな通信である（各ページが独立して存在し、ページ間
@@ -94,12 +92,14 @@ PHPではセッションを開始するための関数\texttt{session\_start()}�
 サーバーが管理することとなる。
 なお、この機能はCOOKIEの機能を利用して実現されている。
 \section{Web Storage}
-HTML5から独立した Web Storage は localStoarage と sessionStorage の2種類
-がある。localStorage は文字列をキーに、文字列の値を持つ Storage オブジェクト
+HTML5から独立した規格である Web Storage には localStoarage と sessionStorage の2種類
+のオブジェクトがある。これらのオブジェクトは文字列をキーに、文字列の値を持つ Storage オブジェクト
 である。同一の出身(プロトコルやポート番号も含む)のすべてのドキュメント
-がおなじlocalStorageを共有する。このデータは意識的に消さない限り存在する。
-
+が同じ localStorage と sessionStorage を共有する。sessionStorage のデー
+タは意識的に消さない限り存在する。
+%
 これに対し、sessionStorageはウインドウやブラウザが閉じられると消滅する。
+
 これにより、セッション間の情報の移動や以前の訪れたことのあるページの情報
 の保存を可能にしている。
 
@@ -154,6 +154,23 @@ HTML5から独立した Web Storage は localStoarage と sessionStorage の2種
  のとおりである。
  \LISTN{10next.html}{1}{last}{\normalsize}
 \end{Exec}
+このリストは呼び出す前のページのものとほとんど変わらないが、アクセス時間
+の表示が今回のものを含めて４つだけ表示されるようになっている
+(15行目から１８行目)。
+\begin{itemize}
+ \item 前のリストの22行目で\Verb+AccessList.forEach+となっている部分が
+			 \Verb+AccessList.every+となっている。
+ \item この配列のメソッドは引き渡された関数をすべての要素を順に適用し、
+			 戻り値の論理積を返す。
+ \item どこかのところで\Verb+false+となれば全体の論理積は\Verb+false+と
+			 なるので実行はそこで打ち切られる。
+ \item 論理和を求める\Verb+some+という配列のメソッドもある。
+\end{itemize}
+ \begin{Prob}\upshape
+	このリストで、\Verb+AccessList.every+となっている部分を
+	\Verb+AccessList.some+でも正しく実行できるようにしなさい。
+\end{Prob}
+
 すでに、いくつかのサイトではこ
 の機能を用いており、その開発者ツールで見ることが可能である。これらのデー
 タの形式は文字列である。構造化されたデータはJSON形式で保存するのがよいで
