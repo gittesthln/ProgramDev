@@ -142,9 +142,12 @@
 \contentsline {section}{\numberline {11.6}jQuery のサンプル}{116}{section.11.6}
 \contentsline {chapter}{\numberline {第12回}JavaScriptライブラリーの配布}{119}{chapter.12}
 \contentsline {section}{\numberline {12.1}jQueryのコードを読む}{119}{section.12.1}
-\contentsline {section}{\numberline {12.2}JavaScriptファイルの短縮化}{121}{section.12.2}
-\contentsline {subsection}{\numberline {12.2.1}JavaScriptファイルの短縮化について}{121}{subsection.12.2.1}
+\contentsline {section}{\numberline {12.2}JavaScriptファイルの短縮化}{120}{section.12.2}
+\contentsline {subsection}{\numberline {12.2.1}JavaScriptファイルの短縮化について}{120}{subsection.12.2.1}
 \contentsline {subsection}{\numberline {12.2.2}短縮化の例}{122}{subsection.12.2.2}
+\contentsline {section}{\numberline {12.3}Webサイトの効率化}{125}{section.12.3}
+\contentsline {subsection}{\numberline {12.3.1}Contents Deliverly Network(CDN)}{125}{subsection.12.3.1}
+\contentsline {subsection}{\numberline {12.3.2}CSS Sprite}{126}{subsection.12.3.2}
 \contentsline {chapter}{\numberline {第13回}バージョン管理}{127}{chapter.13}
 \contentsline {section}{\numberline {13.1}バージョン管理とは}{127}{section.13.1}
 \contentsline {subsection}{\numberline {13.1.1}複数でシステム開発をするときの問題点}{127}{subsection.13.1.1}

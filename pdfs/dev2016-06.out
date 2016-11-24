@@ -1,0 +1,9 @@
+\BOOKMARK [2][]{Outline0.1}{正規表現}{}% 1
+\BOOKMARK [3][]{Outline0.1.1.2}{正規表現の定義}{Outline0.1}% 2
+\BOOKMARK [3][]{Outline0.1.2.5}{リテラル文字}{Outline0.1}% 3
+\BOOKMARK [3][]{Outline0.1.3.7}{文字クラス}{Outline0.1}% 4
+\BOOKMARK [3][]{Outline0.1.4.9}{繰り返しの指定}{Outline0.1}% 5
+\BOOKMARK [3][]{Outline0.1.5.13}{グループ化と参照}{Outline0.1}% 6
+\BOOKMARK [2][]{Outline0.2}{文字列のパターンマッチングとその利用}{}% 7
+\BOOKMARK [3][]{Outline0.2.1.17}{Stringオブジェクトのメソッド}{Outline0.2}% 8
+\BOOKMARK [3][]{Outline0.2.2.18}{メソッドの実行例}{Outline0.2}% 9

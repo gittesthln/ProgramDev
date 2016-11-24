@@ -1,4 +1,0 @@
-\beamer@endinputifotherversion {3.36pt}
-\beamer@sectionintoc {1}{サーバーとのデータ－の交換}{2}{0}{1}
-\beamer@subsectionintoc {1}{1}{サーバーとのデータのやり取り}{2}{0}{1}
-\beamer@subsectionintoc {1}{2}{Ajax}{12}{0}{1}

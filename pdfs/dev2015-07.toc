@@ -1,6 +1,0 @@
-\beamer@endinputifotherversion {3.36pt}
-\beamer@sectionintoc {1}{レポートについて}{2}{0}{1}
-\beamer@sectionintoc {2}{前回の演習}{6}{0}{2}
-\beamer@subsectionintoc {2}{1}{正規表現を作る}{6}{0}{2}
-\beamer@subsectionintoc {2}{2}{正規表現のマッチを確認する}{12}{0}{2}
-\beamer@subsectionintoc {2}{3}{正規表現の利用}{29}{0}{2}

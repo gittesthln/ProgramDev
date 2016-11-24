@@ -1,5 +1,0 @@
-\beamer@endinputifotherversion {3.36pt}
-\beamer@sectionintoc {1}{正規表現}{2}{0}{1}
-\beamer@subsectionintoc {1}{1}{正規表現の定義}{2}{0}{1}
-\beamer@subsectionintoc {1}{2}{リテラル文字}{5}{0}{1}
-\beamer@sectionintoc {2}{文字列のパターンマッチングメソッド}{17}{0}{2}

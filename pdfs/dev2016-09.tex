@@ -3,7 +3,7 @@
 \title{ソフトウェア開発\\第9回目授業}
 \author{平野 照比古}
 \institute{}
-\date{2015/11/25}
+\date{2016/11/25}
 \newtheorem{Prob}{解説}
 \newcommand{\Elm}[1]{\texttt{<#1>}}
 \setbeamercovered{transparent}
@@ -26,7 +26,7 @@
  \item このサービスを提供するプログラムとしては Apache が有名
  \item Apache によるサービスの設定ファイルは
        {\texttt{httpd.conf}}
-\begin{itemize}
+a\begin{itemize}
  \item ポート番号(HTTPのポート番号は80番)
  \item ドキュメントルート：Apache では Webサーバーに直接要求できるファイ
        ルはこのフォルダ(ディレクトリ)の下にあるものだけ
@@ -78,7 +78,7 @@
 \begin{itemize}
   \item インストール時に Apache をサービスとして実行するとパソコンを立ち
        上げた時にApacheを起動させる手間が省ける。
- \item 標準の文字コードは{ISO-8859-1}である。
+ \item 標準の文字コードは{\color{red}UTF-8}である。
  \item PHPの初期設定でタイムゾーンがヨーロッパ大陸になっている。
  \item タイムスタンプを利用するプログラムの動作に注意すること。
 \end{itemize}
@@ -98,6 +98,31 @@ PHP は、オープンソースの汎用スクリプト言語です。 特に、
 \end{quotation}
 PHPの使用に関する説明は日本PHPユーザー会から多く引用
 \end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{PHPプログラムの実行方法}
+\begin{itemize}
+ \item XAMPP で指定されたドキュメントルートの下にファイルを作成してブラ
+       ウザから実行
+ \item コマンドプロンプトから実行
+       \begin{itemize}
+        \item そのままではXAMPPの下にある\texttt{php.exe}が実行できないので環境
+       変数\texttt{PATH}に追加
+        \item コントロールパネル$\Rightarrow$システム$\Rightarrow$システ
+              ムの詳細設定を開き、下方にある「環境変数」ボタンを押す
+        \item 上方部のユーザーの環境変数にある環境変数「PATH」にXAMPPの
+              フォルダを追加
+        \item コマンドプロンプトで\Verb+php <ファイル名>+
+              で実行。漢字コードが化ける可能性あり。
+       \end{itemize}
+ \item 実行したいファイルがあるところでコマンドプロンプトから
+
+       \Verb+php -S localhost:8080+
+
+       を実行。ブラウザから\Verb+localhost:8080/ファイル名+で実行可能と
+       なる。
+
+\end{itemize}
+ \end{frame}
 \begin{frame}[containsverbatim]
 \frametitle{PHPプログラムの書き方}
 \begin{itemize}
@@ -156,7 +181,8 @@ JavaScriptと同様に文字列の型はあるが、文字の型はない。
 \subsection{変数の概要}
 \begin{frame}[containsverbatim]
 \frametitle{変数}
-i\begin{itemize}
+\begin{itemize}
+ \item 変数は宣言なしで使用できる(宣言する方法すらない)。
   \item 変数名は \texttt{\$}で始まる。
   \item 変数に値を代入すればその値はすべてコピーされる。
   \item コピーではなく参照にしたい場合には変数の前に \texttt{\&}を付
@@ -165,7 +191,7 @@ i\begin{itemize}
 \end{frame}
 \begin{frame}[containsverbatim]
 \frametitle{変数 --- 例(1)}
-\begin{verbatim}
+\begin{Verbatim}[numbers=left]
 <?php
 $a = 1;
 $b = $a;
@@ -177,7 +203,7 @@ print "3:\$a=$a, \$b=$b\n";// 3:$a=2, $b=2
 $a = 10;
 print "4:\$a=$a, \$b=$b\n";// 4:$a=10, $b=10
 ?>
-\end{verbatim}
+\end{Verbatim}
 \end{frame}
 \begin{frame}[containsverbatim]
  \frametitle{例(1)解説}
@@ -194,7 +220,7 @@ print "4:\$a=$a, \$b=$b\n";// 4:$a=10, $b=10
 \begin{frame}[containsverbatim]
  \frametitle{変数--- 配列の場合}
 
-\begin{verbatim}
+\begin{Verbatim}[numbers=left]
 <?php
 $a = array(1,2);
 $b = $a;
@@ -211,13 +237,11 @@ $a[1] = 30;
 print "3:\$b=";
 print_r($b);
 ?>
-\end{verbatim}
+\end{Verbatim}
 \end{frame}
 \begin{frame}[containsverbatim]
  \frametitle{変数--- 配列の場合(実行結果)}
- {\small
-\begin{verbatim}
-1
+\begin{Verbatim}
 Array
 (
     [0] => 1
@@ -234,8 +258,7 @@ Array
     [0] => 20
     [1] => 30
 )
-\end{verbatim}
- }
+\end{Verbatim}
 \end{frame}
  \begin{frame}[containsverbatim]
   \frametitle{例(2)--解説}
@@ -255,7 +278,7 @@ Array
   \frametitle{可変変数}
 ある変数の値が文字列のとき、その前に\verb+$+をつけると、その文字列が変
   数名として使える。
-\begin{verbatim}
+\begin{Verbatim}[numbers=left, fontsize=\small]
 <?php
 $a = 1;
 $b = 2;
@@ -266,7 +289,7 @@ print "\$\$c = " . $$c ."\n";  // $$c = 1
 $c = "b";
 print "\$\$c = " . $$c . "\n"; // $$c = 2
 ?>
-\end{verbatim}
+\end{Verbatim}
  \end{frame}
  \begin{frame}[containsverbatim]
   \frametitle{可変変数－-解説}
@@ -312,7 +335,7 @@ print "\$\$c = " . $$c . "\n"; // $$c = 2
       スト\\\hline
 \end{tabular}
 \end{center}
-これらの変数のうち、\verb+$GLOBALS+、\verb+$_ENV+、\verb+$argc+ と
+これらの変数のうち、\verb+$_ENV+、\verb+$argc+ と
 \verb+$argv+  以外はCGIで使用
 \end{frame}
 \subsection{文字列}
@@ -332,8 +355,7 @@ print "\$\$c = " . $$c . "\n"; // $$c = 2
 \end{frame}
 \begin{frame}[containsverbatim]
 \frametitle{文字列---実行例}
-{\scriptsize
-\begin{verbatim}
+\begin{Verbatim}[numbers=left,fontsize=\scriptsize]
 <?php
 print 'string1 \':abcd\n';
 print "string2 \":abcd\n";    // string1 ':abcd\nstring2 ":abcd
@@ -356,8 +378,7 @@ _EOL_;          //string8:
                 //  aa
                 //  $a = 1
 ?>
-\end{verbatim}
-}XS
+\end{Verbatim}
 \end{frame}
 \begin{frame}[containsverbatim]
 \frametitle{文字列---実行結果 解説}
@@ -393,7 +414,7 @@ _EOL_;          //string8:
 \end{frame}
 \begin{frame}[containsverbatim]
 \frametitle{文字列の演算子の確認}
-\begin{verbatim}
+\begin{Verbatim}[numbers=left]
 <?php
 print  1  + "2" . "\n";    // 3
 print "1" + "2" . "\n";    // 3
@@ -403,7 +424,7 @@ print 1 . 2 . "\n";        // 12
 print "1a" + "2" . "\n";  // 3
 print "a1" + "2" . "\n";  // 2
 print "0x1a" + "2" . "\n";// 28
-\end{verbatim}
+\end{Verbatim}
 \end{frame}
 \begin{frame}[containsverbatim]
 \frametitle{文字列の演算子の確認---解説}
@@ -430,7 +451,8 @@ print "0x1a" + "2" . "\n";// 28
 \end{frame}
 \begin{frame}[containsverbatim]
 \frametitle{PHP 関数による \protect\texttt{\$x} の比較}\footnotesize
-\begin{center}
+\setlength{\tabcolsep}{0.2em}
+\begin{center}\scriptsize
   \begin{tabular}{|*{6}{c|}}\hline
 式&\verb+gettype()+&\verb+empty()+&\verb+is_null()+&\verb+isset()+&\verb+boolean : if($x)+\\\hline
 \verb+$x = "";+&\verb+string+&\verb+TRUE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+\\\hline
@@ -494,8 +516,7 @@ print "0x1a" + "2" . "\n";// 28
 \end{frame}
 \begin{frame}[containsverbatim]
 \frametitle{\texttt{foreach}の使用例(1)}
-{\small
-\begin{listing}{1}
+\begin{Verbatim}[fontsize=\small,numbers=left]
  <?php
 $a = array("red","yellow","blue");
 foreach($a as $val) {
@@ -504,26 +525,24 @@ foreach($a as $val) {
 foreach($a as $key=>$val) {
   print "$key:$val\n";
 }
-\end{listing}
-}
+\end{Verbatim}
+
 この部分の出力は次のとおりである。
-{\small
-\begin{verbatim}
+\begin{Verbatim}[fontsize=\small,numbers=left]
 red
 yellow
 blue
 0:red
 1:yellow
 2:blue
-\end{verbatim}
-}
+\end{Verbatim}
+
 単純な配列のときは「キー」の値は $0,1,2,\dots$ を順にとる(出力4行
        目から6行目)。
 \end{frame}
 \begin{frame}[containsverbatim]
 \frametitle{\texttt{foreach}の使用例(2)}
-{\small
-\begin{listingcont}
+\begin{Verbatim}[fontsize=\small,numbers=left]
 $a = array("red"=>"赤","yellow"=>"黄","blue"=>"青");
 foreach($a as $val) {
   print "$val\n";
@@ -531,12 +550,11 @@ foreach($a as $val) {
 foreach($a as $key=>$val) {
   print "$key:$val\n";
 }
-\end{listingcont}
-}
+\end{Verbatim}
 \begin{itemize}
- \item 9行目ではJavaScriptのオブジェクトリテラルに似た連想配
+ \item 1行目ではJavaScriptのオブジェクトリテラルに似た連想配
        列を定義
- \item 10行目から12行目と13行目から15行目で以前と同じ形で配列の内容を
+ \item 2行目から4行目と5行目から7行目で以前と同じ形で配列の内容を
        表示
 \end{itemize}
 この部分の出力は次のようになる。
@@ -554,8 +572,7 @@ blue:青
 \subsection{PHPの配列}
 \begin{frame}[containsverbatim]
 \frametitle{PHPの配列に関する注意}
-{\small
-\begin{listingcont}
+\begin{Verbatim}[fontsize=\small,numbers=left]
 $b = array();
 $b[3] = "3rd";
 $b[0] = "0";
@@ -570,21 +587,19 @@ for($i=0;$i<count($b);$i++) {
 }
 ?>
 }
-\end{listingcont}
+\end{Verbatim}
 この部分の出力は次のようになる。
-{\small
-}\begin{verbatim}
+\begin{Verbatim}[fontsize=\small,numbers=left]
 2
 3:3rd
 0:0
 0:0
-\end{verbatim}
-}
+\end{Verbatim}
 \end{frame}%"
 \begin{frame}[containsverbatim]
 \frametitle{PHPの配列に関する注意(解説)}
 \begin{itemize}
- \item 16行目で配列を初期化し、その後、$3$番目と先頭の要素に値を代入
+ \item 1行目で配列を初期化し、その後、$4$番目と先頭の要素に値を代入
  \item 関数\texttt{count()}は配列の大きさ(正確には配列にある要素の数)を
        求めるものである。2つの値しか定義していないので $2$ となる。
  \item \texttt{foreach}で配列の要素を渡るときは定義した順に値が設定
@@ -631,8 +646,7 @@ for($i=0;$i<count($b);$i++) {
 \end{frame}
 \begin{frame}[containsverbatim]
 \frametitle{ユーザー定義関数の使用例}
-{\small
-\begin{listing}{1}
+\begin{Verbatim}[fontsize=\small,numbers=left]
 <?php
 function example($a, $as, &$b, $f=false) {
   print "\$a = $a\n";
@@ -648,8 +662,7 @@ function example($a, $as, &$b, $f=false) {
   $b = $b*2;
   return array($a,$as);
 }
-\end{listing}
-}
+\end{Verbatim}
 \end{frame}
 \begin{frame}[containsverbatim]
 \frametitle{ユーザー定義関数の使用例---解説}
@@ -670,24 +683,24 @@ function example($a, $as, &$b, $f=false) {
 \end{frame}
 \begin{frame}[containsverbatim]
 \frametitle{関数の動作チェック}
-\begin{listingcont}
+\begin{Verbatim}
 $a = 10;
 $as = array(1,2);
 $b = 15;
 $x = "\$x is defined at top level";
-\end{listingcont}
+\end{Verbatim}
 ここでは、関数に渡す引数の値を設定している。
-\begin{listingcont}
+\begin{Verbatim}
 example($a, $as, $b, true);
 print "\$a = $a\n";
 print_r($as);
 print "\$b = $b\n";
-\end{listingcont}
+\end{Verbatim}
 \end{frame}
 \begin{frame}[containsverbatim]
  \frametitle{実行結果}
  20行目で呼び出した関数内での出力結果は次のようになる。
-\begin{verbatim}
+\begin{Verbatim}
 $a = 10
 Array
 (
@@ -697,7 +710,7 @@ Array
 $b = 15
 $x = defined in function
 $GLOBALS['x'] = $x is defined at top level
-\end{verbatim}
+\end{Verbatim}
 \end{frame}
 \begin{frame}[containsverbatim]
 \frametitle{関数の動作チェック---解説}
@@ -714,7 +727,7 @@ $GLOBALS['x'] = $x is defined at top level
 \begin{frame}[containsverbatim]
 \frametitle{関数の動作チェック---続き}
 21行目から23行目の出力は次のようになる。
-\begin{verbatim}
+\begin{Verbatim}
 $a = 10
 Array
 (
@@ -722,7 +735,7 @@ Array
     [1] => 2
 )
 $b = 30
-\end{verbatim}
+\end{Verbatim}
 \end{frame}
 \begin{frame}[containsverbatim]
 \frametitle{関数の動作チェック---続き(解説)}
@@ -734,11 +747,11 @@ $b = 30
 \end{frame}
 \begin{frame}[containsverbatim]
 \frametitle{関数の動作チェック---続き}
-\begin{listingcont}
+\begin{Verbatim}
 list($resa) = example($a, $as, $b);
 print "\$resa = $resa\n";
 ?>
-\end{listingcont}
+\end{Verbatim}
 \begin{itemize}
  \item 24行目の関数呼び出しはデフォルトの引数がない。
  \item したがって、引数\verb+$f+の値が\texttt{false}に設定され、9行目は
@@ -750,7 +763,7 @@ print "\$resa = $resa\n";
 \end{frame}
 \begin{frame}[containsverbatim]
 \frametitle{関数の動作チェック---続き}
-\begin{verbatim}
+\begin{Verbatim}
 $a = 10
 Array
 (
@@ -760,14 +773,13 @@ Array
 $b = 30
 $x = defined in function
 $resa = 20
-\end{verbatim}
+\end{Verbatim}
 \end{frame}
  \begin{frame}[containsverbatim]
   \frametitle{可変関数}
  文字列が代入された変数の後に\texttt{()}をつけると、その文字列の関数
   を呼び出すことができる。
-  {\small
-\begin{verbatim}
+\begin{Verbatim}[fontsize=\small,numbers=left]
 <?php
 function add($a, $b) { return $a+$b;}
 function sub($a, $b) { return $a-$b;}
@@ -780,25 +792,20 @@ print "$f($a,$b) = " . $f($a,$b) ."\n";// add(5,2) = 7
 $f = "sub";
 print "$f($a,$b) = " . $f($a,$b) ."\n";// sub(5,2) = 3
 ?>
-\end{verbatim}
-  }
+\end{Verbatim}
  \end{frame}
   \begin{frame}[containsverbatim]
   \frametitle{可変関数--解説}
 \begin{itemize}
 \item 2行目と3行目で2つの関数\texttt{add()}と
        \texttt{sub()}を定義
- \item 7行目で変数\verb+$f+に文字列\verb+"add"+を代入して、8行目で可変
+ \item 7行目で変数\Verb+$f+に文字列\Verb+"add"+を代入して、8行目で可変
        関数として呼び出すと、関数\texttt{add}が呼び出されている。
- \item 同様に、変数\verb+$f+に文字列\verb+"sub"+を代入して、可変
+ \item 同様に、変数\Verb+$f+に文字列\Verb+"sub"+を代入して、可変
        関数として呼び出すと、関数\texttt{sub}が呼び出されている。
 \end{itemize}
 \end{frame}
 \end{document}
-%-*- coding: utf-8 -*-
-%\subsubsection{}
 
-
-\input 0925Ajax.tex
 
 
