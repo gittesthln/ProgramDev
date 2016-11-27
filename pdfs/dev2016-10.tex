@@ -16,235 +16,11 @@
 \newcommand{\HTML}{HTML文書}
 \begin{document}
 \frame{\maketitle}
-\frame{\tableofcontents}
+%\frame{\tableofcontents}
 \section{PHP入門--続き}
-\subsection{配列に関する関数}
-\begin{frame}[containsverbatim]
-\frametitle{\texttt{list()}}
-
-  配列の個々の要素をいくつかの変数にまとめて代入できる。
-       これは関数ではなく、言語構造
-\begin{Verbatim}
-list($first,$second, $third) = array(1,2,3,4,5);
-  //$first = 1, $second+2, $third=3
-list($first, , $third) = array(1,2,3,4,5);
-  //$second に値が代入されない以外は同じ
-\end{Verbatim}
-\end{frame}
-\begin{frame}[containsverbatim]
-\frametitle{\texttt{array\textunderscore pop()}と\texttt{array\textunderscore
-       push()}}
-\begin{Verbatim}
-$a = array(1,2,3,4);
-array_pop($a)// 戻り値は 4, $a=array(1,2,3);
-array_push($a,10,20); //$a は array(1,2,3,10,20)
-\end{Verbatim}
-配列の先頭に対して要素を取り出したり(\verb+array_shift()+)、追加する
- (\verb+array_unshift()+)することもできる。
-\begin{verbatim}
-$a = array(1,2,3,4);
-array_shift($a)// 戻り値は 1, $a=array(2,3,4);
-array_unshift($a,10,20); //$a は array(10,20,2,3)
-\end{verbatim}
- \end{frame}
- \begin{frame}[containsverbatim]
-  \frametitle{その他の関数}
-  \begin{itemize}
-   \item \texttt{in\textunderscore array(\$needle, \$array)}\\
-与えられた配列(\verb+$array+)内に指定した値(\verb+$needle+)が存在するか
-         を調べる
- \item \verb+shuffle()+\\
-与えられた配列の要素をランダムに並べ替える
- \item 配列の切り出しと追加\\
-\verb+array_slice()+, \verb+array_splice()+
-  \end{itemize}
- \end{frame}
-\subsection{関数}
-\begin{frame}[containsverbatim]
-\frametitle{関数の特徴}
-\begin{itemize}
- \item 関数はキーワード\texttt{function} に引き続いて\texttt{()}内に、仮
-       引数のリストを書く。そのあとに\texttt{\{\}}内にプログラム本体を書
-       く。
- \item 引数は値渡しである。参照渡しをするときは仮引数の前に\texttt{\&}を
-       付ける。
- \item 関数のオーバーロードはサポートされない。
- \item 関数の宣言を取り消せない。
- \item 仮引数の後に値を書くことができる。この値は引数がなかった場合のデ
-       フォルトの値となる。デフォルトの値を与えた仮引数の後にデフォルト
-       の値がない仮引数を置くことはできない。
- \item 関数は使用される前に定義する必要はない。
- \item 関数内で関数を定義できる。関数内で定義された関数はグローバルスコー
-       プに存在する。ただし、外側の関数が実行されないと定義はされない。
- \item 関数の戻り値は \texttt{return}文の後の式の値。複数の値を関
-       数の戻り値にしたいときは配列にして返す。
-\end{itemize}
-\end{frame}
-\begin{frame}[containsverbatim]
-\frametitle{ユーザー定義関数の使用例}
-\begin{Verbatim}[fontsize=\small,numbers=left]
-<?php
-function example($a, $as, &$b, $f=false) {
-  print "\$a = $a\n";
-  print_r($as);
-  print "\$b = $b\n";
-  if(!isset($x)) $x = "defined in function";
-  print "\$x = $x\n";
-  if($f) {
-    print "\$GLOBALS['x'] = ". $GLOBALS['x']."\n";
-  }
-  $a = $a*2;
-  $as[0] += 10;
-  $b = $b*2;
-  return array($a,$as);
-}
-\end{Verbatim}
-\end{frame}
-\begin{frame}[containsverbatim]
-\frametitle{ユーザー定義関数の使用例---解説}
-\begin{itemize}
- \item 1行目での関数では3番目の引数が参照渡し、4番目の引数がデフォルトの値
-       が設定されている。
- \item 6行目の関数\texttt{isset()}は与えられた変数に値がセットされている
-       かどうかを確かめるものである。
- \item ここでは\verb+$x+は仮引数ではないのでローカルな変数となり、
-       \verb+isset($x)+は\texttt{false}となる。\verb+!isset($x)+は
-       \texttt{true}となるので変数\verb+$x+には
-       \verb+"defined in function"+が代入される。
- \item 9行目ではデフォルトの引数のチェックのための部分である。
- \item 11行目から13行目までは変数に値を代入して、呼び出し元の変数が変わ
-       るかどうかのチェックをする。
- \item 14行目は初めの二つの仮引数を配列にして戻り値としている。
-\end{itemize}
-\end{frame}
-\begin{frame}[containsverbatim]
-\frametitle{関数の動作チェック}
-\begin{Verbatim}
-$a = 10;
-$as = array(1,2);
-$b = 15;
-$x = "\$x is defined at top level";
-\end{Verbatim}
-ここでは、関数に渡す引数の値を設定している。
-\begin{Verbatim}
-example($a, $as, $b, true);
-print "\$a = $a\n";
-print_r($as);
-print "\$b = $b\n";
-\end{Verbatim}
-\end{frame}
-\begin{frame}[containsverbatim]
- \frametitle{実行結果}
- 20行目で呼び出した関数内での出力結果は次のようになる。
-\begin{Verbatim}
-$a = 10
-Array
-(
-    [0] => 1
-    [1] => 2
-)
-$b = 15
-$x = defined in function
-$GLOBALS['x'] = $x is defined at top level
-\end{Verbatim}
-\end{frame}
-\begin{frame}[containsverbatim]
-\frametitle{関数の動作チェック---解説}
-\begin{itemize}
- \item 仮引数の値は正しく渡されている。
- \item 6行目は判定が\texttt{true}になるのでここで新たに値が設定され、そ
-       れが7行目で出力される。
- \item デフォルトの仮引数に対して\texttt{true}が渡されているので、9行目
-       が実行される。スーパーグローバル\verb+$GLOBAL+にはグローバルスコー
-       プ内の変数が格納されている。ここでは19行目に現れる変数の値が表示
-       される。
-\end{itemize}
-\end{frame}
-\begin{frame}[containsverbatim]
-\frametitle{関数の動作チェック---続き}
-21行目から23行目の出力は次のようになる。
-\begin{Verbatim}
-$a = 10
-Array
-(
-    [0] => 1
-    [1] => 2
-)
-$b = 30
-\end{Verbatim}
-\end{frame}
-\begin{frame}[containsverbatim]
-\frametitle{関数の動作チェック---続き(解説)}
-\begin{itemize}
- \item 初めの2つの引数は配列であっても書き直されていない。11行目と12行目
-       の設定は戻り値にしか反映されない。
- \item 参照渡しの変数\verb+$b+は書き直されている。
-\end{itemize}
-\end{frame}
-\begin{frame}[containsverbatim]
-\frametitle{関数の動作チェック---続き}
-\begin{Verbatim}
-list($resa) = example($a, $as, $b);
-print "\$resa = $resa\n";
-?>
-\end{Verbatim}
-\begin{itemize}
- \item 24行目の関数呼び出しはデフォルトの引数がない。
- \item したがって、引数\verb+$f+の値が\texttt{false}に設定され、9行目は
-       実行されない。
- \item \texttt{list()}は配列である右辺の値のうち先頭から順に指定された変
-       数に代入
- \item ここでは関数内の11行目で計算された値を変数\verb+$resa+に代入
-\end{itemize}
-\end{frame}
-\begin{frame}[containsverbatim]
-\frametitle{関数の動作チェック---続き}
-\begin{Verbatim}
-$a = 10
-Array
-(
-    [0] => 1
-    [1] => 2
-)
-$b = 30
-$x = defined in function
-$resa = 20
-\end{Verbatim}
-\end{frame}
- \begin{frame}[containsverbatim]
-  \frametitle{可変関数}
- 文字列が代入された変数の後に\texttt{()}をつけると、その文字列の関数
-  を呼び出すことができる。
-  {\small
-\begin{Verbatim}
-<?php
-function add($a, $b) { return $a+$b;}
-function sub($a, $b) { return $a-$b;}
-
-$a = 5;
-$b = 2;
-$f = "add";
-print "$f($a,$b) = " . $f($a,$b) ."\n";// add(5,2) = 7
-
-$f = "sub";
-print "$f($a,$b) = " . $f($a,$b) ."\n";// sub(5,2) = 3
-?>
-\end{Verbatim}
-  }
- \end{frame}
-  \begin{frame}[containsverbatim]
-  \frametitle{可変関数--解説}
-\begin{itemize}
-\item 2行目と3行目で2つの関数\texttt{add()}と
-       \texttt{sub()}を定義
- \item 7行目で変数\Verb+$F+に文字列\verb+"add"+を代入して、8行目で可変
-       関数として呼び出すと、関数\texttt{add}が呼び出されている。
- \item 同様に、変数\Verb+$f+に文字列\Verb+"sub"+を代入して、可変
-       関数として呼び出すと、関数\texttt{sub}が呼び出されている。
-\end{itemize}
-\end{frame}
- \section{サーバーとのデータ－の交換(1)}
- \subsection{サーバーとのデータのやり取り}
+ \input dev2016-09php2.tex
+\section{サーバーとのデータ－の交換(1)}
+% \subsection{サーバーとのデータのやり取り}
  \begin{frame}[containsverbatim]
  \frametitle{サーバーとのデータ交換の基本}
  Webページにおいてサーバーにデータを送る方法には\texttt{POST}と
@@ -382,6 +158,7 @@ print "$f($a,$b) = " . $f($a,$b) ."\n";// sub(5,2) = 3
  \item この機能はCOOKIEの機能を利用して実現
  \end{itemize}
  \end{frame}
+ \section{Web Storage}
 \begin{frame}[containsverbatim]
  \frametitle{Web Storage}
  \begin{itemize}
@@ -462,5 +239,8 @@ function appendMessage(P, Mess) {
 </body>
 </html>
 \end{Verbatim}
+\end{frame}
+\begin{frame}
+ \frametitle{レポート問題}
 \end{frame}
 \end{document}

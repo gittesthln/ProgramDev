@@ -1,0 +1,539 @@
+\subsection{PHPのプログラムの書き方}
+\begin{frame}[containsverbatim]
+\frametitle{PHPとは}
+日本PHPユーザー会のホームページより
+
+\begin{quotation}
+PHP は、オープンソースの汎用スクリプト言語です。 特に、サーバサイドで動
+ 作する Web アプリケーションの開発に適しています。 言語構造は簡単で理解
+ しやすく、C 言語の基本構文に多くを拠っています。 手続き型のプログラミン
+ グに加え、（完全ではありませんが）オブジェクト指向のプログラミングも行
+ うことができます。
+\end{quotation}
+PHPの使用に関する説明は日本PHPユーザー会から多く引用
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{PHPプログラムの実行方法}
+\begin{itemize}
+ \item XAMPP で指定されたドキュメントルートの下にファイルを作成してブラ
+       ウザから実行
+ \item コマンドプロンプトから実行
+       \begin{itemize}
+        \item そのままではXAMPPの下にある\texttt{php.exe}が実行できないので環境
+       変数\texttt{PATH}に追加
+        \item コントロールパネル$\Rightarrow$システム$\Rightarrow$システ
+              ムの詳細設定を開き、下方にある「環境変数」ボタンを押す
+        \item 上方部のユーザーの環境変数にある環境変数「PATH」にXAMPPの
+              フォルダを追加
+        \item コマンドプロンプトで\Verb+php <ファイル名>+
+              で実行。漢字コードが化ける可能性あり。
+       \end{itemize}
+ \item 実行したいファイルがあるところでコマンドプロンプトから
+
+       \Verb+php -S localhost:8080+
+
+       を実行。ブラウザから\Verb+localhost:8080/ファイル名+で実行可能と
+       なる。
+
+\end{itemize}
+ \end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{PHPプログラムの書き方}
+\begin{itemize}
+ \item PHPのプログラムの拡張子は\texttt{php}
+ \item クライアントからの要求で拡張子が\texttt{php}のファイルが要求されると、PHP
+のプログラムはサーバー側で処理
+ \item その出力がクライアント側に送られる
+ \item サーバー側で処理すべきPHPプログラムの部分は\texttt{<?php}と\texttt{?>}の
+間に記述
+ \item それ以外の部分はそのままクライアント側に送られる。
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{本日の授業の注意}
+ \begin{itemize}
+  \item 本日の授業ではPHPのプログラムを対話型で実行する。
+  \item XAMPPに含まれるPHPではこの方法では実行できない。
+  \item Windows上でUnixの環境を実現するCygwinのPHPを用いる。
+  \item 配布資料のPHPのプログラムの右のコメントは実行結果を示している。
+ \end{itemize}
+\end{frame}
+\subsection{データの型}
+\begin{frame}[containsverbatim]
+\frametitle{データの型 ---4 種類のスカラー型}
+ \begin{itemize}
+  \item 論理値 (boolean)\\\texttt{TRUE} と \texttt{FALSE} の値をとる。小
+	文字で書いてもよい。
+  \item 整数 (integer)\\整数の割り算はない。つまり $1/2$ は $0$ ではなく
+	$0.5$ となる。
+  \item 浮動小数点数 (float, double も同じ)
+  \item 文字列 (string)\\
+JavaScriptと同様に文字列の型はあるが、文字の型はない。
+ \end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{データ型---2 種類の複合型}
+ \begin{itemize}
+  \item 配列 (array)\\
+\texttt{array()}を用いて作成する。引数にはカンマで区切られた
+	\texttt{key=>value}の形で定義する。\texttt{key=>}の部分はなくて
+	もよい。このときは\texttt{key}として\texttt{0,1,2,...}が順に与え
+	られる。
+  \item オブジェクト (object)
+ \end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{データ型---2 種類の特別な型:}
+\begin{itemize}
+ \item リソース (resource)\\
+オープンされたファイル、データベースへの接続、イメージなど特殊なハンドル
+       を保持する。
+ \item ヌル (NULL)\\
+ある変数が値を持たないことを示す。
+\end{itemize}
+\end{frame}
+\subsection{変数の概要}
+\begin{frame}[containsverbatim]
+\frametitle{変数}
+\begin{itemize}
+ \item 変数は宣言なしで使用できる(宣言する方法すらない)。
+  \item 変数名は \texttt{\$}で始まる。
+  \item 変数に値を代入すればその値はすべてコピーされる。
+  \item コピーではなく参照にしたい場合には変数の前に \texttt{\&}を付
+ける。
+ \end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{変数 --- 例(1)}
+\begin{Verbatim}[numbers=left]
+<?php
+$a = 1;
+$b = $a;
+print "1:\$a=$a, \$b=$b\n";// 1:$a=1, $b=1
+$a = 2;
+print "2:\$a=$a, \$b=$b\n";// 2:$a=2, $b=1
+$b = &$a;
+print "3:\$a=$a, \$b=$b\n";// 3:$a=2, $b=2
+$a = 10;
+print "4:\$a=$a, \$b=$b\n";// 4:$a=10, $b=10
+?>
+\end{Verbatim}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{例(1)解説}
+ \begin{itemize}
+  \item 3行目で変数 \verb+$a+ の値を変数 \verb+$b+ の代入。\\
+        両者の値は同じである。
+  \item 5行目で \verb+$a+ の値を変更しても、変数 \verb+$b+ の値は変化し
+        ない(6行目)
+  \item 7行目では変数 \verb+$b+ に変数の参照を代入している。この場合に
+        は変数 \verb+$a+ の値を変更すると(9行目)変数 \verb+$b+ の値も変
+        更される(10行目)。
+ \end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{変数--- 配列の場合}
+
+\begin{Verbatim}[numbers=left]
+<?php
+$a = array(1,2);
+$b = $a;
+
+print "1\n";
+print_r($a);
+print_r($b);
+
+$a[0] = 20;
+print "2:\$b[0]=$b[0]\n";
+
+$b = &$a;
+$a[1] = 30;
+print "3:\$b=";
+print_r($b);
+?>
+\end{Verbatim}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{変数--- 配列の場合(実行結果)}
+\begin{Verbatim}
+Array
+(
+    [0] => 1
+    [1] => 2
+)
+Array
+(
+    [0] => 1
+    [1] => 2
+)
+2:$b[0]=1
+3:$b=Array
+(
+    [0] => 20
+    [1] => 30
+)
+\end{Verbatim}
+\end{frame}
+ \begin{frame}[containsverbatim]
+  \frametitle{例(2)--解説}
+ \begin{itemize}
+ \item 2行目で配列の成分が\texttt{1}と\texttt{2}である配列を作成\\
+       3行目でこの配列を別の変数に代入
+ \item 9行目では配列の一部分の値を変えているが、3行目で代入された変数の
+       値には変化がない(10行目)。
+
+       これから単純な配列の代入は配列全体がコピーされている
+ \item 関数\texttt{print\_r()}は配列などの構造を持つ変数の内容をわかりや
+ すく表示する関数。\\より詳しい情報を知りたい場合には関数
+       \verb+var_dump()+ を利用。
+\end{itemize}
+ \end{frame}
+ \begin{frame}[containsverbatim]
+  \frametitle{可変変数}
+ある変数の値が文字列のとき、その前に\verb+$+をつけると、その文字列が変
+  数名として使える。
+\begin{Verbatim}[numbers=left, fontsize=\small]
+<?php
+$a = 1;
+$b = 2;
+
+$c = "a";
+print "\$\$c = " . $$c ."\n";  // $$c = 1
+
+$c = "b";
+print "\$\$c = " . $$c . "\n"; // $$c = 2
+?>
+\end{Verbatim}
+ \end{frame}
+ \begin{frame}[containsverbatim]
+  \frametitle{可変変数－-解説}
+  \begin{itemize}\upshape
+   \item 変数\verb+$a+ と \verb+$b+ にそれぞれ$1$と$2$を代入(1行
+         目と2行目)。
+   \item 変数\verb+$c+に文字列\verb+"a"+を代入し、\verb+$$c+を出力させ
+         ると\verb+$a+の値が表示(5行目と6行目)。
+   \item 同様に、変数\verb+$c+に文字列\verb+"b"+を代入して、\verb+$$c+を出力させ
+         ると\verb+$b+の値が表示(8行目と9行目)。
+  \end{itemize}
+ \end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{変数のスコープ}
+\begin{itemize}
+ \item 変数は特に宣言しなくても使用できる。
+ \item 指定しない限りローカルなスコープしか持たない。
+ \item 関数外で定義された変数も、関数内から参照できない。
+ \item 参照するためにはスーパーグローバル\verb+$GLOBAL+を利用する。
+ \item 関数内での変数は外部からの参照できない。
+ \item PHPには外部ファイルを読み込むための関数\texttt{include()}と一度だけ指定
+されたファイルを読み込む\texttt{require\_once()}がある。このファイルの中
+で定義された変数は、読み込むテキストを直接記述したときと同じ
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{定義済み変数}
+スーパーグローバルと呼ばれるグローバルスコープを持つ定義済みの変数
+\begin{center}\small
+ \begin{tabular}{|c|c|}\hline
+  変数名& 意味\\\hline
+\verb+$GLOBALS+ & グローバルスコープで使用可能なすべての変数への参照\\\hline
+\verb+$_SERVER+ & サーバー情報および実行時の環境情報\\\hline
+\verb+$_GET+ & HTTP GET 変数\\\hline
+\verb+$_POST+ & HTTP POST 変数\\\hline
+\verb+$_FILES+ & HTTP ファイルアップロード変数\\\hline
+\verb+$_COOKIE+ & HTTP クッキー\\\hline
+\verb+$_SESSION+ &セッション変数 \\\hline
+\verb+$_REQUEST+ & HTTP リクエスト変数\\\hline
+\verb+$_ENV+  &  環境変数\\\hline
+\verb+$argc+  &  コマンドプロンプトから実行したときに与えられた引数の数\\\hline
+\verb+$argv+  &  コマンドプロンプトから実行したときに与えられた引数のリ
+      スト\\\hline
+\end{tabular}
+\end{center}
+これらの変数のうち、\verb+$_ENV+、\verb+$argc+ と
+\verb+$argv+  以外はCGIで使用
+\end{frame}
+\subsection{文字列}
+\begin{frame}[containsverbatim]
+\frametitle{文字列について}
+\begin{itemize}
+ \item シングルクオート(\texttt{'})ではさむ。\\
+   中に書かれた文字がそのまま定義される。
+ \item ダブルクオート(\verb+"+)ではさむ。\\%"
+       改行などの制御文字が有効になる。また、変数はその値で置き換えら
+       れる。これを変数が展開されるという。
+ \item ヒアドキュメント形式\\
+   複数行にわたる文字列を定義できる。\texttt{<<<}の後に識別子を置く。文
+       字列の最後は行の先頭に初めの識別子を置き、そのあとに文の終了を表
+       す\texttt{;}を置く。{\bfseries 識別子の前に空白などを入れてはいけない。}
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{文字列---実行例}
+\begin{Verbatim}[numbers=left,fontsize=\scriptsize]
+<?php
+print 'string1 \':abcd\n';
+print "string2 \":abcd\n";    // string1 ':abcd\nstring2 ":abcd
+
+$a = 1;
+print 'string3 \':$a bcd\n';
+print "string4 \":$a bcd\n"; //string3 ':$a bcd\nstring4 ":1 bcd
+print "string5 \":{$a}bcd\n";//string5 ":1bcd
+
+$b = array(1,2,3);
+print "string6:$b\n";        //string6:Array
+print "string7:$b[1]aa\n";  //string7:2aa
+print "string7:$b[$a]aa\n"; //string7:2aa
+
+print <<<_EOL_
+string8:
+  aa
+  \$a = $a
+_EOL_;          //string8:
+                //  aa
+                //  $a = 1
+?>
+\end{Verbatim}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{文字列---実行結果 解説}
+\begin{itemize}
+ \item シングルクオートの文字列では改行を意味する\texttt{\textbackslash
+       n}がそのまま
+       出力されているのに対し、ダブルクオートの文字列では改行に変換され
+       ている(1行目)。
+ \item シングルクオートの文字列では変数名がそのまま出力
+ \item ダブルクオートの文字列では変数の値に変換
+       。これを変数で展開されるという。
+\item 変数と
+       して解釈されるのは変数名の区切りとなる文字(空白など)。その
+       ためプログラムの7行目では変数の後に空白を入れている。
+ \item 空白を入れたくない場合などは変数名全体を\texttt{\{}と\texttt{\}}
+       で囲む。
+ \item 変数が配列の場合には個々に指定しなくてはいけない。指定にはべつの
+       変数が使用できる(5行目と6行目)
+ \item ヒアドキュメントでは途中の改行もそのまま出力される。また、変数は
+       展開される。
+\end{itemize}
+\end{frame}
+\subsection{式と文}
+\begin{frame}[containsverbatim]
+\frametitle{式と文}
+\begin{itemize}
+ \item 文の最後には必ず\texttt{;}が必要である。
+ \item その他はほとんどC言語と同じ構文が使える。
+ \item 演算子\texttt{+}はJavaScriptと異なり、通常の数の演算となる。
+ \item 文字列に対して\texttt{+}を用いると数に直されて計算される。
+ \item 文字列の連接には\texttt{.}を用いる。
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{文字列の演算子の確認}
+\begin{Verbatim}[numbers=left]
+<?php
+print  1  + "2" . "\n";    // 3
+print "1" + "2" . "\n";    // 3
+print "1" . "2" . "\n";    // 12
+print 1 . 2 . "\n";        // 12
+
+print "1a" + "2" . "\n";  // 3
+print "a1" + "2" . "\n";  // 2
+print "0x1a" + "2" . "\n";// 28
+\end{Verbatim}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{文字列の演算子の確認---解説}
+\begin{itemize}
+ \item \texttt{+}演算子は常に数としての加法として扱われ、
+ \texttt{.}は文字列の連接として扱われる
+ \item 文字列が数として不正な文字を含むとその直前まで解釈した値を返す(
+       7 行目と8行目)。
+ \item 16進リテラルも正しく解釈される(9行目)。
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{比較演算子}
+変数の状態を調べる関数が引数の値によりどのようになるか、ま
+た、論理値が必要なところでどのようになるかを表している。
+\begin{itemize}
+ \item \texttt{gettype()} 変数の型を調べる
+ \item \texttt{isempty()} 変数が空であることを調べる
+ \item \texttt{is\_null()} 変数の値が\texttt{NULL}であるかを調べる
+ \item \texttt{isset()} 変数の値がセットされていて、その値が
+       \texttt{NULL}でないことを調べる
+ \item \texttt{if(変数)}としたときに\texttt{TRUE}となるかどうか
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{PHP 関数による \protect\texttt{\$x} の比較}\footnotesize
+\setlength{\tabcolsep}{0.2em}
+\begin{center}\scriptsize
+  \begin{tabular}{|*{6}{c|}}\hline
+式&\verb+gettype()+&\verb+empty()+&\verb+is_null()+&\verb+isset()+&\verb+boolean : if($x)+\\\hline
+\verb+$x = "";+&\verb+string+&\verb+TRUE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+\\\hline
+\verb+$x = null;+&\verb+NULL+&\verb+TRUE+&\verb+TRUE+&\verb+FALSE+&\verb+FALSE+\\\hline
+\verb+var $x;+&\verb+NULL+&\verb+TRUE+&\verb+TRUE+&\verb+FALSE+&\verb+FALSE+\\\hline
+\verb+$x が未定義+&\verb+NULL+&\verb+TRUE+&\verb+TRUE+&\verb+FALSE+&\verb+FALSE+\\\hline
+\verb+$x = array();+&\verb+array+&\verb+TRUE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+\\\hline
+\verb+$x = false;+&\verb+boolean+&\verb+TRUE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+\\\hline
+\verb+$x = true;+&\verb+boolean+&\verb+FALSE+&\verb+FALSE+&\verb+TRUE+&\verb+TRUE+\\\hline
+\verb+$x = 1;+&\verb+integer+&\verb+FALSE+&\verb+FALSE+&\verb+TRUE+&\verb+TRUE+\\\hline
+\verb+$x = 42;+&\verb+integer+&\verb+FALSE+&\verb+FALSE+&\verb+TRUE+&\verb+TRUE+\\\hline
+\verb+$x = 0;+&\verb+integer+&\verb+TRUE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+\\\hline
+\verb+$x = -1;+&\verb+integer+&\verb+FALSE+&\verb+FALSE+&\verb+TRUE+&\verb+TRUE+\\\hline
+\verb+$x = "1";+&\verb+string+&\verb+FALSE+&\verb+FALSE+&\verb+TRUE+&\verb+TRUE+\\\hline
+\verb+$x = "0";+&\verb+string+&\verb+TRUE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+\\\hline
+\verb+$x = "-1";+&\verb+string+&\verb+FALSE+&\verb+FALSE+&\verb+TRUE+&\verb+TRUE+\\\hline
+\verb+$x = "php";+&\verb+string+&\verb+FALSE+&\verb+FALSE+&\verb+TRUE+&\verb+TRUE+\\\hline
+\verb+$x = "true";+&\verb+string+&\verb+FALSE+&\verb+FALSE+&\verb+TRUE+&\verb+TRUE+\\\hline
+\verb+$x = "false";+&\verb+string+&\verb+FALSE+&\verb+FALSE+&\verb+TRUE+&\verb+TRUE+\\\hline
+  \end{tabular}
+\end{center}
+いろいろな値を論理値として評価した結果がJavaScriptと異なる場合があるので
+注意が必要である。
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{比較演算子\texttt{==}}\tiny
+\setlength{\tabcolsep}{0.2em}
+\begin{center}
+  \begin{tabular}{|*{13}{c|}}\hline
+ &\verb+TRUE+&\verb+FALSE+&\verb+1+&\verb+0+&\verb+-1+&\verb+"1"+&\verb+"0"+&\verb+"-1"+&\verb+NULL+&\verb+array()+&\verb+"php"+&\verb+""+\\\hline
+\verb+TRUE+&\verb+TRUE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+TRUE+&\verb+TRUE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+\\\hline
+\verb+FALSE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+TRUE+&\verb+TRUE+&\verb+FALSE+&\verb+TRUE+\\\hline
+\verb+1+&\verb+TRUE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+\\\hline
+\verb+0+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+TRUE+&\verb+TRUE+\\\hline
+\verb+-1+&\verb+TRUE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+\\\hline
+\verb+"1"+&\verb+TRUE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+\\\hline
+\verb+"0"+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+\\\hline
+\verb+"-1"+&\verb+TRUE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+\\\hline
+\verb+NULL+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+TRUE+&\verb+TRUE+&\verb+FALSE+&\verb+TRUE+\\\hline
+\verb+array()+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+TRUE+&\verb+TRUE+&\verb+FALSE+&\verb+FALSE+\\\hline
+\verb+"php"+&\verb+TRUE+&\verb+FALSE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+\\\hline
+\verb+""+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+FALSE+&\verb+TRUE+&\verb+FALSE+&\verb+FALSE+&\verb+TRUE+\\\hline
+  \end{tabular}
+\end{center}
+\end{frame}
+\subsection{制御構造}
+\begin{frame}[containsverbatim]
+\frametitle{制御構造}
+\begin{itemize}
+ \item PHPの分岐、繰り返しなどの制御構造はC言語と同じである。
+ \item JavaScriptのオブジェクトのプロパティを列挙するのに利用した
+\texttt{for(... in ...)}に相当する\texttt{foreach}がある。
+
+この構文は形をとる。
+
+\texttt{foreach(「配列名」 as [キー ＝>] 値)}
+
+「キー」と「値」のところは単純な変数を置くことができる。
+「キー」の部分は省略可能である。
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{\texttt{foreach}の使用例(1)}
+\begin{Verbatim}[fontsize=\small,numbers=left]
+ <?php
+$a = array("red","yellow","blue");
+foreach($a as $val) {
+  print "$val\n";
+}
+foreach($a as $key=>$val) {
+  print "$key:$val\n";
+}
+\end{Verbatim}
+
+この部分の出力は次のとおりである。
+\begin{Verbatim}[fontsize=\small,numbers=left]
+red
+yellow
+blue
+0:red
+1:yellow
+2:blue
+\end{Verbatim}
+
+単純な配列のときは「キー」の値は $0,1,2,\dots$ を順にとる(出力4行
+       目から6行目)。
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{\texttt{foreach}の使用例(2)}
+\begin{Verbatim}[fontsize=\small,numbers=left]
+$a = array("red"=>"赤","yellow"=>"黄","blue"=>"青");
+foreach($a as $val) {
+  print "$val\n";
+}
+foreach($a as $key=>$val) {
+  print "$key:$val\n";
+}
+\end{Verbatim}
+\begin{itemize}
+ \item 1行目ではJavaScriptのオブジェクトリテラルに似た連想配
+       列を定義
+ \item 2行目から4行目と5行目から7行目で以前と同じ形で配列の内容を
+       表示
+\end{itemize}
+この部分の出力は次のようになる。
+{\scriptsize
+\begin{verbatim}
+赤
+黄
+青
+red:赤
+yellow:黄
+blue:青
+\end{verbatim}
+}
+\end{frame}
+\subsection{PHPの配列}
+\begin{frame}[containsverbatim]
+\frametitle{PHPの配列に関する注意}
+\begin{Verbatim}[fontsize=\small,numbers=left]
+$b = array();
+$b[3] = "3rd";
+$b[0] = "0";
+print count($b)."\n";
+foreach($b as $key=>$val) {
+  print "$key:$val\n";
+}
+for($i=0;$i<count($b);$i++) {
+  if(isset($b[$i])) {
+    print "$i:$b[$i]\n";
+  }
+}
+?>
+}
+\end{Verbatim}
+この部分の出力は次のようになる。
+\begin{Verbatim}[fontsize=\small,numbers=left]
+2
+3:3rd
+0:0
+0:0
+\end{Verbatim}
+\end{frame}%"
+\begin{frame}[containsverbatim]
+\frametitle{PHPの配列に関する注意(解説)}
+\begin{itemize}
+ \item 1行目で配列を初期化し、その後、$4$番目と先頭の要素に値を代入
+ \item 関数\texttt{count()}は配列の大きさ(正確には配列にある要素の数)を
+       求めるものである。2つの値しか定義していないので $2$ となる。
+ \item \texttt{foreach}で配列の要素を渡るときは定義した順に値が設定
+\end{itemize}
+\verb+$a[$key]=$val+の関係が成立
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{配列に関する関数}
+\begin{itemize}
+ \item \texttt{list()}\\
+  配列の個々の要素をいくつかの変数にまとめて代入できる。
+これは関数ではなく、言語構造
+ \item \texttt{array\textunderscore pop()}と\texttt{array\textunderscore
+       push()}\\
+
+ \item \verb+in_array($needle, $array)+\\
+与えられた配列(\verb+$array+)内に指定した値(\verb+$needle+)が存在するかを調べる
+ \item \verb+shuffle()+\\
+与えられた配列の要素をランダムに並べ替える
+ \item 配列の切り出しと追加\\
+\verb+array_slice()+, \verb+array_splice()+
+\end{itemize}
+\end{frame}

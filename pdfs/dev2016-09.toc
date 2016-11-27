@@ -10,4 +10,3 @@
 \beamer@subsectionintoc {1}{8}{®‚Æ•¶}{26}{0}{1}
 \beamer@subsectionintoc {1}{9}{§Œä\‘¢}{32}{0}{1}
 \beamer@subsectionintoc {1}{10}{PHP‚Ì”z—ñ}{35}{0}{1}
-\beamer@subsectionintoc {1}{11}{ŠÖ”}{38}{0}{1}

@@ -16,175 +16,12 @@
 \newcommand{\HTML}{HTML文書}
 \begin{document}
 \frame{\maketitle}
-\section{サーバーとのデータ－の交換}
-\subsection{サーバーとのデータのやり取り}
-\begin{frame}[containsverbatim]
-\frametitle{サーバーとのデータ交換の基本}
-Webページにおいてサーバーにデータを送る方法には\texttt{POST}と
-\texttt{PUT}の2通りの方法がある。
-\end{frame}
-\begin{frame}[containsverbatim]
-\frametitle{\texttt{POST}による送信}
-\texttt{windows.onload =function()}内に次のコードを追加する。
-\begin{verbatim}
-    var Form = document.getElementsByTagName("form")[0];
-    Form.setAttribute("method","POST");
-    Form.setAttribute("action","09sendData.php");
-\end{verbatim}
-HTMLの要素に対しては次のことを行う。
-\begin{itemize}
- \item \texttt{<select>}要素の属性に\verb+name="select"+ を追加する。
- \item \texttt{id}が\verb+"colorName"+であるテキストボックスに
-       \verb+name="colorName"+ を追加する。
- \item 「設定」ボタンの要素の後に次の要素を追加する。
-\begin{center}
-\verb+<input type="submit" value="送信" id="Send"></input>+ 
-\end{center}
-\end{itemize}
-一時期は\texttt{name}属性を指定しておくと、\texttt{id}属性を兼ねていた時
- 期もあったが、最近では両者は厳密に区別されている。
-\end{frame}
-\begin{frame}[containsverbatim]
-\frametitle{\texttt{POST}による送信(解説)}
-\begin{itemize}
- \item このページでは「送信」ボタンを押すと\texttt{<form>}の
-\texttt{action}属性で指定されたプログラムが呼び出される。
-\item ここではWebペー ジと同じ場所にある\texttt{09sendData.php}が呼び出
-      される。
-\end{itemize}
-\end{frame}
-\begin{frame}[containsverbatim]
-\frametitle{サーバープログラムのリスト}
-\begin{Verbatim}[numbers=left, fontsize=\scriptsize]
- <?php
-print <<<_EOL_
-<!DOCTYPE html>
-<head>
-<meta charset="UTF-8"/>
-<title>サーバーに送られたデータ</title>
-</head>
-<body>
-<table>
-_EOL_;
-foreach($_POST as $key=>$value) {
-  print "<tr><td>$key</td><td>$value</td></tr>\n";
-}
-print <<<_EOL_
-</table>
-</body>
-</html>
-_EOL_;
-?>
-\end{Verbatim}
-\end{frame}
-\begin{frame}[containsverbatim]
-\frametitle{サーバープログラムのリスト(解説)}
-\begin{itemize}
- \item 2行目から10行目の間はヒアドキュメント形式でHTML文書の初めの部分を
-       出力させている。
- \item \verb+method="POST"+で呼び出されたときには\texttt{form}要素内の
-       \texttt{name}属性が指定されたものの値がスーパーグローバル
-       \verb+$_POST+内の連想配列としてアクセスができる。
- \item 11行目から13行目でそれらの値を\texttt{table}要素内の要素として出
-       力している。
-\end{itemize}
-\end{frame}
-\begin{frame}[containsverbatim]
-\frametitle{サーバープログラムのリスト(ソース)}
-\begin{Verbatim}
-<!DOCTYPE html>
-<head>
-<meta charset="UTF-8"/>
-<title>サーバーに送られたデータ</title>
-</head>
-<body>
-<table><tr><td>select</td><td>yellow</td></tr>
-<tr><td>color</td><td>green</td></tr>
-<tr><td>colorName</td><td>gray</td></tr>
-</table>
-</body>
-</html>
-\end{Verbatim}
-\end{frame}
-\begin{frame}[containsverbatim]
-\frametitle{\texttt{GET}による通信}
-\begin{itemize}
- \item \Verb+method="PUT"+で呼び出した場合にはスーパーグローバル
-\Verb+$_GET+を用いる。
- \item スーパーグローバル\Verb+$_REQUEST+は
-\Verb+method="POST"+でも\Verb+method="PUT"+で呼び出された場合の
-\Verb+$_POST+や\Verb+$_GET+の代わりに使用できる。
-\end{itemize}
-\end{frame}
-\begin{frame}[containsverbatim]
-\frametitle{通信に関する注意}
-\begin{itemize}
- \item \Verb+type="submit"+の\texttt{input}要素は、ボタンが押されたときに直ちに、
-\texttt{action}属性で指定された処理が呼び出される。
- \item サーバーにデータを送る前に最低限のエラーチェックを行い、エラーが
-       ない場合にだけサーバーと通信するのが良い。
-\end{itemize}
-\end{frame}
-\begin{frame}[containsverbatim]
-\frametitle{スパーグローバルの補足}
-\begin{itemize}
- \item {\texttt{\$\_SERVER}}\\
-サーバーにアクセスしたときのクライ
-アントの情報などを提供。具体的な内容はクライアントごとに異なる。
- \item \texttt{\$\_COOKIE}\\
-COOKIE とはWebサーバー側からクライアント側に一時的にデータを保存させる仕
-組み。すでに訪問したことがあるサイトに対して情報を開始
-時に補填する機能などを実現できる。
- \item \texttt{\$\_SESSION}\\
-セッションとはある作業の一連の流れを指す。たとえば会員制のサイトではログイ
-ン後でなければページを見ることができない。情報のページに直接行くことがで
-       きないような仕組みが必要
-
-  セッションの間で受け渡すデータはこの変数の連想配列内に格納する。
-\end{itemize}
-\end{frame}
-\begin{frame}[containsverbatim]
-\frametitle{セッション}
-\begin{itemize}
- \item HTTP通信はセッションレスな通信である（各ページが独立して存在し、ページ間
-のデータを直接渡せない）
- \item セッションを確立するためには、クライアント側から情報を送り、それに基づい
-てサーバー側が状況を判断するなどの操作を意識的にする必要
- \item PHPではセッションを開始するための関数\texttt{session\_start()}とセッショ
-ンを終了させる\texttt{session\_destroy()}が用意されている。
- \item セッションを通じで保存させておきたい情報はこの連想配列に保存
- \item セッションの管理はサーバーが管理
- \item この機能はCOOKIEの機能を利用して実現
-\end{itemize}
-\end{frame}
- \iffalse\else
-\begin{frame}[containsverbatim]
- \frametitle{Web Storage}
-\begin{itemize}
- \item localStoarage と sessionStorage の2種類
- \item localStorage は文字列をキーに、文字列の値を持つStorageオブジェク
-ト
- \item 同一の出身(プロトコルやポート番号も含む)のすべてのドキュメント
-がおなじlocalStorageを共有
- \item このデータは意識的に消さない限り存在
- \item sessionStorageはウインドウやブラウザが閉じられると消滅
- \item セッション間の情報の移動を可能にしている。
-\end{itemize}
-\end{frame}
-\begin{frame}[containsverbatim]
-\frametitle{Web Storageの補足}
-\begin{itemize}
- \item いくつかのサイトではこの機能を用いており、その開発者ツールで見る
-       ことが可能
- \item データの形式は文字列である。構造化されたデータはJSON形式で保存するのがよい
-\end{itemize}
-\end{frame}
-\fi
+\section{サーバーとのデータ－の交換--Ajax}
 \subsection{Ajax}
 \begin{frame}[containsverbatim]
 \frametitle{Ajax\footnote{Ajaxの名称を提案したブログ
- \texttt{http://www.adaptivepath.com/publications/essays/archives/000385.php} 
-は2014年12月8日現在アクセスできないようである。} とは}
+ \texttt{http://adaptivepath.org/ideas/ajax-new-approach-web-applications/}}
+ とは}
 \begin{itemize}
  \item Asynchronous Javascript+XML の略
  \item 非同期(Asynchronous)でWeb
@@ -213,16 +50,7 @@ Ajax の機能はこのオブジェクトを用いて実現
 \end{frame}
 \begin{frame}[containsverbatim]
 \frametitle{リスト(1)}
-\begin{listing}{46}
-    var changePulldown = function(){
-      var d2 = Form.children[2].value
-      d = new Date(Year.value, Month.value, 0).getDate();
-      if( d != Form.children[2].children.length) {
-        Form.replaceChild(Days[d],Form.children[2]);
-        d2 = Math.min(Form.children[2].length, d2);
-        Form.children[2].value = d2;
-      }
-\end{listing} 
+\LISTNN{09-01whatday.html}{46}{53}{\normalsize}
 \end{frame}
 \begin{frame}[containsverbatim]
 \frametitle{リスト---概要}
@@ -234,61 +62,28 @@ Ajax の機能はこのオブジェクトを用いて実現
 \end{frame}
 \begin{frame}[containsverbatim]
 \frametitle{リスト(2)--- XMLHttpRequestオブジェクトの生成}
-\begin{listingcont}
-  var xmlHttpObj = null;
-  if(window.XMLHttpRequest) {
-    xmlHttpObj = new XMLHttpRequest();
-  } else if(window.ActiveXObject ) {
-    xmlHttpObj = new ActiveXObject("Msxml2.XMLHTTP");//IE6
-  } else {
-    try {
-      xmlHttpObj = new ActiveXObject("Microsoft.XMLHTTP");//IE5
-    } catch(e) {
-    }
-  }
-\end{listingcont}
+\LISTNN{09-01whatday.html}{54}{63}{\small}
 \end{frame}
 \begin{frame}[containsverbatim]
 \frametitle{\texttt{XMLHttpRequest}の作成}
-53行目から63行目は裏でサーバーと通信をするための
+54行目から63行目は裏でサーバーと通信をするための
 \texttt{XMLHttpRequest}オブジェクトを作成している。
 \begin{itemize}
  \item 古いバージョンのIEは別のオブジェクトで通信をするので、ブラウザが
-       \texttt{XMLHttpRequest}メソッドを持つか確認し(54行目)、持っている
-       場合はそのオブジェクトを新規作成する(55行目)。
- \item 56行目から62行目は古いIEのためのコードである。
+       \texttt{XMLHttpRequest}メソッドを持つか確認し(55行目)、持っている
+       場合はそのオブジェクトを新規作成する(56行目)。
+ \item 57行目から63行目は古いIEのためのコードである。
  \item このようにブラウザの機能の違いで処理を変えることをクロスブラウザ
        対策という。通常はブラウザがその機能を持つかどうかで判断する。
 \end{itemize}
 \end{frame}
 \begin{frame}[containsverbatim]
 \frametitle{リスト(3)--- コールバック関数の登録}
-{\scriptsize
-\begin{listingcont}
-  if(xmlHttpObj) {
-    xmlHttpObj.onreadystatechange = function(){
-      if(xmlHttpObj.readyState == 4 && xmlHttpObj.status == 200) {
-        document.getElementById("details").firstChild.nodeValue = 
-            xmlHttpObj.responseText;
-      } 
-    }
-    xmlHttpObj.open("GET",
-      "./aniversary.php?month=" + Month.value+ "&day="+d2,true);
-    xmlHttpObj.send(null);
-  }
- }
- Form.addEventListener("change", changePulldown,false);
- changePulldown();
-}
-//]]>
-</script>
-</head>
-\end{listingcont}
-}
+\LISTNN{09-01whatday.html}{65}{80}{\scriptsize}
 \end{frame}
 \begin{frame}[containsverbatim]
 \frametitle{イベントハンドラーの説明}
-\texttt{XMLHttRequest}が生成できたら(65行目)、このオブジェクトが
+\texttt{XMLHttRequest}が生成できていたら(65行目)、このオブジェクトが
        生成する\texttt{onreadystatechange}イベントのイベントハンドラーを
        登録する(66行目から71行目)。
  \begin{itemize}
@@ -315,13 +110,7 @@ Ajax の機能はこのオブジェクトを用いて実現
 \end{frame}
 \begin{frame}[containsverbatim]
 \frametitle{リスト(4)---HTML文書}
-\begin{listingcont}
-<body>
-  <form id="menu"></form>
-  <p id="details"> </p>
-</body>
-</html>
-\end{listingcont}
+\LISTNN{09-01whatday.html}{83}{86}{\normalsize}
 \end{frame}
 \begin{frame}[containsverbatim]
 \frametitle{送られてきたデータの処理}
@@ -334,31 +123,7 @@ Ajax の機能はこのオブジェクトを用いて実現
 \end{itemize}\end{frame}
 \begin{frame}[containsverbatim]
 \frametitle{Ajaxで呼び出されるPHPのプログラム}
-{\small
-\begin{listing}{1}
-<?php
-mb_internal_encoding("UTF8");
-//print mb_internal_encoding();
-$m = isset($_GET["month"])?$_GET["month"]: $argv[1];
-$d = isset($_GET["day"])?$_GET["day"]:$argv[2];
-$data = file("aniversary.txt",FILE_IGNORE_NEW_LINES);
-for($i=0;$i<count($data);$i++) {
-  $data[$i] = mb_convert_encoding($data[$i],"UTF8");
-  $mm = mb_split("\[",$data[$i]);
-  if(count($mm) >1) {
-    if(mb_convert_encoding($m."月","UTF8") === $mm[0]) break;
-  }
-}
-for($i++;$i<count($data);$i++) {
-  $data[$i] = mb_convert_encoding($data[$i],"UTF8");
-  $dd = mb_split("\s-\s",$data[$i]);
-  if(($d."日") === $dd[0]) break;
-}
-//  print mb_convert_encoding($dd[1],"SJIS");
-print $dd[1]; 
-?>
-\end{listing}
-}
+\LISTNN{aniversary.php}{1}{last}{\scriptsize}
 \end{frame}
 \begin{frame}[containsverbatim]
 \frametitle{Ajaxで呼び出されるPHPのプログラム--解説}
@@ -371,7 +136,7 @@ print $dd[1];
 \begin{itemize}
  \item ここではコマンドプロンプトからもデバッグで
        きるように、スーパーグローバル\verb+$_GET+内に値があれば
-       (\verb+isset()+)が\verb+true+になれば、その値を、そうでなければコ
+       (\Verb+isset()+)が\Verb+true+になれば、その値を、そうでなければコ
        マンドからの引数を設定している。
  \item スーパーグローバル\verb+$argv+はの先頭は呼び出したファイル名であ
        り、その後に引数が順に入る\footnote{C言語の\texttt{main}関数は通
@@ -389,11 +154,11 @@ print $dd[1];
 \item 引数にはURLも指定できる。
 \item この関数は2番目の引数をとることができる。
 \begin{center}
- \begin{tabular}{|c|c|}\hline
- \verb+FILE_USE_INCLUDE_PATH+ & \verb+include_path+ のファイルを探す\\\hline
- \verb+FILE_IGNORE_NEW_LINES+ & 配列の各要素の最後に改行文字を追加しない
+ \begin{tabular}{|c|m{15zw}|}\hline
+ \Verb+FILE_USE_INCLUDE_PATH+ & \Verb+include_path+ のファイルを探す\\\hline
+ \Verb+FILE_IGNORE_NEW_LINES+ & 配列の各要素の最後に改行文字を追加しない
       \\ \hline
-  \verb+FILE_SKIP_EMPTY_LINES+&空行を読み飛ばす \\ \hline
+  \Verb+FILE_SKIP_EMPTY_LINES+&空行を読み飛ばす \\ \hline
  \end{tabular}
 \end{center}
  \item \verb+file_get_contents()+はファイルの内容を一つの文字列として
@@ -402,7 +167,7 @@ print $dd[1];
 \end{frame}
 \begin{frame}[containsverbatim]
 \frametitle{読み込むファイルの一部}
-\begin{verbatim}
+\begin{Verbatim}
 1月[編集]
 1日 - 鉄腕アトムの日
 2日 - 月ロケットの日
@@ -412,7 +177,7 @@ print $dd[1];
 1日 - テレビ放送記念日、ニオイの日
 2日 - 頭痛の日
 [以下略]
-\end{verbatim}
+\end{Verbatim}
 \end{frame}
 \begin{frame}[containsverbatim]
 \frametitle{}
@@ -426,10 +191,10 @@ print $dd[1];
 \frametitle{データの処理---月を探す}
 \begin{itemize}
  \item 8行目で念のためコードを\texttt{UTF8}に変更
- \item 関数\verb+mb_split()+関数は第1引数に指定された文字列パターンで第2
+ \item 関数\Verb+mb_split()+関数は第1引数に指定された文字列パターンで第2
        引数で指定された文字列を分割して配列として返す関数
- \item 分割を指定する文字列には正規表現が使えるので、文字\verb+[+で分割
-       するために、\verb+"\["+としている(9行目)。
+ \item 分割を指定する文字列には正規表現が使えるので、文字\Verb+[+で分割
+       するために、\Verb+"\["+としている(9行目)。
  \item 指定された文字列があれば配列の大きさが1より大きくなる。その行に対
        して求める月と一致しているか判定し、等しければループを抜ける(11行
        目)。

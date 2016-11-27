@@ -1,6 +1,5 @@
 \beamer@endinputifotherversion {3.36pt}
-\beamer@sectionintoc {1}{PHP入門--続き}{3}{0}{1}
-\beamer@subsectionintoc {1}{1}{配列に関する関数}{3}{0}{1}
-\beamer@subsectionintoc {1}{2}{関数}{6}{0}{1}
-\beamer@sectionintoc {2}{サーバーとのデータ－の交換(1)}{18}{0}{2}
-\beamer@subsectionintoc {2}{1}{サーバーとのデータのやり取り}{18}{0}{2}
+\beamer@sectionintoc {1}{PHP入門--続き}{2}{0}{1}
+\beamer@subsectionintoc {1}{1}{関数}{2}{0}{1}
+\beamer@sectionintoc {2}{サーバーとのデータ－の交換(1)}{14}{0}{2}
+\beamer@sectionintoc {3}{Web Storage}{24}{0}{3}
