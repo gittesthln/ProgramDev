@@ -1,3 +1,11 @@
 \beamer@endinputifotherversion {3.36pt}
-\beamer@sectionintoc {1}{サーバーとのデータ－の交換--Ajax}{2}{0}{1}
-\beamer@subsectionintoc {1}{1}{Ajax}{2}{0}{1}
+\beamer@sectionintoc {1}{jQuery}{2}{0}{1}
+\beamer@subsectionintoc {1}{1}{jQueryとは}{2}{0}{1}
+\beamer@sectionintoc {2}{jQueryの基本}{4}{0}{2}
+\beamer@subsectionintoc {2}{1}{jQuery()関数とjQueryオブジェクト}{4}{0}{2}
+\beamer@subsectionintoc {2}{2}{jQueryオブジェクトのメソッド}{7}{0}{2}
+\beamer@subsectionintoc {2}{3}{ドキュメントの構造の変更}{12}{0}{2}
+\beamer@subsectionintoc {2}{4}{イベントハンドラーの取り扱い}{14}{0}{2}
+\beamer@sectionintoc {3}{Ajaxの処理}{18}{0}{3}
+\beamer@subsectionintoc {3}{1}{\texttt {jQuery.ajax()}関数}{18}{0}{3}
+\beamer@subsectionintoc {3}{2}{jQuery のサンプル}{20}{0}{3}
