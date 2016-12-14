@@ -149,12 +149,12 @@ Array
        これから単純な配列の代入は配列全体がコピーされていることがわかる。
  \item 関数\texttt{print\_r()}は配列などの構造を持つ変数の内容をわかりや
  すく表示する関数である。より詳しい情報を知りたい場合には関数
-       \Verb+var_dump()+ を用いるとよい。
+       \texttt{var\_dump()} を用いるとよい
 \end{itemize}
 \end{Exec}
  \begin{Prob}\upshape
-  実行例\ref{PHPsubstitute}で \Verb+print_r()+ 関数の代わりに
-   \Verb+var_dump()+ 関数を用いて出力がどのように変わるか確認しなさい。
+  実行例\ref{PHPsubstitute}で \texttt{print\_r()} 関数の代わりに
+   \texttt{var\_dump()} 関数を用いて出力がどのように変わるか確認しなさい。
  \end{Prob}
  \fi
  \iffalse\else
@@ -209,7 +209,7 @@ PHP にはいくつかの定義済みの変数が存在する。そのうち、�
 \end{center}
 \end{table}
 
-これらの変数のうち、\Correct{\Verb+$_ENV+} \Verb+$argc+ と
+これらの変数のうち、\Correct{\texttt{\$\_ENV}} \Verb+$argc+ と
 \Verb+$argv+ 以外はCGIで使用する。
 
 \Verb+$argv+はPHPをコマンドプロンプトから実行したときの(空白で区切られた)パ
