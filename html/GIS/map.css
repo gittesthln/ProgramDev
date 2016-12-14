@@ -1,0 +1,13 @@
+#map_canvas{
+    display: inline-block;
+}
+#form{
+    display: inline-block;
+    vertical-align:top;
+}
+table tr td {
+    text-align: right;
+}
+table > tr:nth-child(1) td:nth-child(2) {
+    text-align:center;
+}
