@@ -150,19 +150,25 @@
 \contentsline {subsection}{\numberline {12.3.2}CSS Sprite}{126}{subsection.12.3.2}
 \contentsline {chapter}{\numberline {第13回}XMLファイルの処理}{127}{chapter.13}
 \contentsline {section}{\numberline {13.1}XMLファイルとは}{127}{section.13.1}
-\contentsline {section}{\numberline {13.2}ブラウザでの処理}{127}{section.13.2}
-\contentsline {section}{\numberline {13.3}PHPによる処理}{129}{section.13.3}
-\contentsline {chapter}{\numberline {第14回}バージョン管理}{133}{chapter.14}
-\contentsline {section}{\numberline {14.1}バージョン管理とは}{133}{section.14.1}
-\contentsline {subsection}{\numberline {14.1.1}複数でシステム開発をするときの問題点}{133}{subsection.14.1.1}
-\contentsline {subsection}{\numberline {14.1.2}バージョン管理の概念}{133}{subsection.14.1.2}
-\contentsline {subsection}{\numberline {14.1.3}バージョン管理ソフトの概要}{134}{subsection.14.1.3}
-\contentsline {section}{\numberline {14.2}gitの使い方}{134}{section.14.2}
-\contentsline {subsection}{\numberline {14.2.1}git の特徴}{134}{subsection.14.2.1}
-\contentsline {subsection}{\numberline {14.2.2}git のインストール}{134}{subsection.14.2.2}
-\contentsline {subsection}{\numberline {14.2.3}初期設定}{134}{subsection.14.2.3}
-\contentsline {paragraph}{ユーザーネームの登録}{135}{section*.26}
-\contentsline {paragraph}{メールアドレスの登録}{135}{section*.27}
-\contentsline {paragraph}{SSH Keyの登録}{135}{section*.28}
-\contentsline {subsection}{\numberline {14.2.4}GitHub のアカウントの取得}{135}{subsection.14.2.4}
-\contentsline {subsection}{\numberline {14.2.5}リポジトリの作成と運用}{135}{subsection.14.2.5}
+\contentsline {subsection}{\numberline {13.1.1}W3CにおけるXMLの解説}{127}{subsection.13.1.1}
+\contentsline {subsection}{\numberline {13.1.2}XMLファイルの例}{128}{subsection.13.1.2}
+\contentsline {subsubsection}{GPXファイルの構造}{128}{section*.26}
+\contentsline {subsubsection}{GPXファイルの例}{128}{section*.27}
+\contentsline {subsubsection}{地球の形}{129}{section*.28}
+\contentsline {section}{\numberline {13.2}Google Mapsにおける\texttt {Polyline}の表示}{130}{section.13.2}
+\contentsline {section}{\numberline {13.3}ブラウザでの処理}{130}{section.13.3}
+\contentsline {section}{\numberline {13.4}PHPによる処理}{135}{section.13.4}
+\contentsline {chapter}{\numberline {第14回}バージョン管理}{137}{chapter.14}
+\contentsline {section}{\numberline {14.1}バージョン管理とは}{137}{section.14.1}
+\contentsline {subsection}{\numberline {14.1.1}複数でシステム開発をするときの問題点}{137}{subsection.14.1.1}
+\contentsline {subsection}{\numberline {14.1.2}バージョン管理の概念}{137}{subsection.14.1.2}
+\contentsline {subsection}{\numberline {14.1.3}バージョン管理ソフトの概要}{138}{subsection.14.1.3}
+\contentsline {section}{\numberline {14.2}gitの使い方}{138}{section.14.2}
+\contentsline {subsection}{\numberline {14.2.1}git の特徴}{138}{subsection.14.2.1}
+\contentsline {subsection}{\numberline {14.2.2}git のインストール}{138}{subsection.14.2.2}
+\contentsline {subsection}{\numberline {14.2.3}初期設定}{138}{subsection.14.2.3}
+\contentsline {paragraph}{ユーザーネームの登録}{139}{section*.29}
+\contentsline {paragraph}{メールアドレスの登録}{139}{section*.30}
+\contentsline {paragraph}{SSH Keyの登録}{139}{section*.31}
+\contentsline {subsection}{\numberline {14.2.4}GitHub のアカウントの取得}{139}{subsection.14.2.4}
+\contentsline {subsection}{\numberline {14.2.5}リポジトリの作成と運用}{139}{subsection.14.2.5}

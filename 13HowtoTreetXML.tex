@@ -1,8 +1,278 @@
 \chapter{XMLファイルの処理}
 \section{XMLファイルとは}
-\section{ブラウザでの処理}
-\LISTN{GIS/show-trace.html}{1}{last}{\small}
-\LISTN{GIS/map.css}{1}{last}{\small}
-\LISTN{GIS/map-new2.js}{1}{last}{\small}
-\section{PHPによる処理}
-\LISTN{GIS/getGPSData.php}{1}{last}{\small}
+\subsection{W3CにおけるXMLの解説}
+World Wide Web Consortium (W3C) によれば XML(eXtensible Markup Language)
+は次のように説明されている\footnote{\texttt{https://www.w3.org/standards/xml/core}}。
+\begin{quote}
+ The Extensible Markup Language (XML) is a simple text-based format for
+ representing structured information: documents, data, configuration,
+ books, transactions, invoices, and much more. It was derived from an
+ older standard format called SGML (ISO 8879), in order to be more
+ suitable for Web use. 
+\end{quote}
+XMLは構造化されたデータを表現する単純なテキストベースのフォーマットであ
+る。構造化された文書とは文書、データ、構成、本、、送付状やそのほかもろも
+ろのものである。
+
+さらに続けて次のように記されている。
+\begin{quote}
+ If you are already familiar with HTML, you can see that XML is very
+ similar. However, the syntax rules of XML are strict: XML tools will
+ not process files that contain errors, but instead will give you error
+ messages so that you fix them. This means that almost all XML documents
+ can be processed reliably by computer software. 
+
+\end{quote}
+ここにも書いてあるようにXMLの形式はHTMLの形式に似ているが、XMLの文法上に
+規則は厳格である。
+
+さらに続けてHTMLとの違いが述べられている。
+\begin{itemize}
+ \item すべての要素は閉じられているか、空の要素としてマークされる。
+ \item 空の要素は通常のように閉じられている
+			 (\texttt{<happiness></happiness>})か、特別な短い形式(\texttt{<happiness />})
+			 である。
+ \item HTML では属性値はある条件下のもと(空白や特殊文字を含む場合)以外
+			 では\"で囲む必要はないが、その規則は覚えておくのには難しい。XMLに
+			 おいては属性値は常に\"で囲む必要がある(\Verb+<happiness type="joy"+)。
+ \item HTML では組み込まれている要素名(とその属性)の集まりがあるが、 XML
+			 ではそのようなものは存在しない(例外は \texttt{xml} で始まるもの
+			 がある)。
+ \item  HTML ではいくつかの組み込まれた文字名(エンティティ)があるが、
+				XML には次の5つのものしかない。
+
+				\Verb+&lt;+(\Verb+<+), \Verb+&gt;+(\Verb+>+), \Verb+&amp;+(\Verb+&+),
+				\Verb+&quot;+(\Verb+&+), \Verb+&apos+(\Verb+'+)
+
+				XMLでは独自にエンティティを定義できる。
+\end{itemize}
+\subsection{XMLファイルの例}
+ここではGPSのログデータを保存する形式の一つとして普及しているGPX形式を取
+り上げる。 \texttt{http://www.topografix.com/gpx.asp}で規格を見ることが
+できる。
+\subsubsection{GPXファイルの構造}
+GPXファイルの構造は次のようになっている。
+
+ ルート要素は\texttt{gpx}で、
+ その下の子要素としては次のようなものがある。
+\begin{itemize}
+ \item \texttt{wpt}(ウェイポイント)\\
+			 ある地点の情報
+ \item \texttt{rte}(ルート)\\
+			 子要素として地点を表す\texttt{rtept}を持つ
+ \item \texttt{trk}(トラック)\\
+			 順序付けられた地点のリスト。子要素として\texttt{trkseg}を持つ
+ \item \texttt{trkseg}は順序付けられた地点(\texttt{trkpt})のリストを持つ
+\end{itemize}
+ これらの要素はすべてある必要はない。
+
+ \texttt{wpt}と\texttt{trkpt}のおもな構成要素は次の通りである。
+\begin{center}
+	 \begin{tabular}{|c|c|c|}\hline
+		名称&型&\multicolumn{1}{c|}{説明}\\\hline
+		\texttt{lat}&属性 & 地点の緯度\\ \hline
+		\texttt{lon}&属性 & 地点の経度\\ \hline
+		\texttt{ele}&要素 &標高 \\ \hline
+		\texttt{time}&要素 &地点での時刻。世界標準時 \\ \hline
+ \end{tabular}
+\end{center}
+\subsubsection{GPXファイルの例}
+ \LISTN{GIS/sample.gpx}{1}{last}{\small}
+ \begin{itemize}
+  \item 2行目から7行目が\texttt{gpx}のルート要素
+  \item 8行目に\texttt{tark}
+  \item 9行目と10行目にはこのルートの名前、通し番号などが存在
+  \item さらに\texttt{trkseg}が一つだけ存在
+  \item \texttt{trkseg}内には\texttt{trkpt}が存在
+
+        初めの位置の情報は次の通り
+        \begin{itemize}
+         \item 位置は北緯$35.4858026^{\circ}$(\texttt{lat})、
+               東経$139.340909^{\circ}$(\texttt{lon})
+         \item 標高$70.794189\mathrm{m}$(\texttt{ele})
+         \item 時刻 $2016-03-24T08:33:28$(2016年3月24日8:33:28)
+        \end{itemize}
+ \end{itemize}
+\subsubsection{地球の形}
+地球の形は測量法や測量法施行令で定められている。測量法施行令第三条では
+地球の長半径と扁平率が定められている。
+\begin{Verbatim}
+一　長半径　六百三十七万八千百三十七メートル
+二　扁平率　二百九十八・二五七二二二一〇一分の一
+\end{Verbatim}
+これから地球上の3次元の位置を求めるには次のようにする。
+
+元来は緯度と経度に対して扁平率を考慮して空間の位置を求める必要がある。
+しかし、GPXファイルのデータでは2点間の距離が小さいのと、
+扁平率が小さく、高さも地球の半径$R=6378137\mathrm{m}$に対して小さいので
+ 無視して計算することにする。
+  経度$\lambda$、緯度$\phi$の地点の空間位置は次の通りである。
+				\begin{eqnarray*}
+				 x &=& R\cos\phi\cos\lambda\\
+				 y &=& R\cos\phi\sin\lambda\\
+				 z &=& R\sin\phi
+				\end{eqnarray*}
+ \section{Google Mapsにおける\texttt{Polyline}の表示}
+ \texttt{Polyline}は指定した地点を折れ線でつなぎ、\texttt{Polygon}は指定
+ した地点を折れ線でつないだ多角形を表示する。これらのオブジェクトは
+ \texttt{new google.maps.Polyline(<option>)}または\texttt{new
+       google.maps.Polygn(<option>)}で作成する。
+ オプションで指定する代表的なものは次の通りである。
+\begin{center}
+ \begin{tabular}{|c|p{20zw}|}\hline
+  プロパティ& \multicolumn{1}{c|}{説明}\\\hline
+  \texttt{map}& 表示する地図\\ \hline
+  \texttt{path}& \texttt{LatLng}を要素とする(MVC)配列\\ \hline
+  \texttt{strokeColor}& (縁取りの)線の色\\ \hline
+  \texttt{strokeOpacity}& (縁取りの)線の色の不透明度\\ \hline
+  \texttt{strokeWeight}& (縁取りの)線の幅\\ \hline
+  \texttt{fillColor}& 塗りつぶしの色(\texttt{Polygon}のみ)\\ \hline
+  \texttt{fillOpacity}& 塗りつぶしの色の不透明度(\texttt{Polygon}のみ)\\ \hline
+ \end{tabular}
+\end{center}
+
+ \section{ブラウザでの処理}
+ 通常、ブラウザのプログラムではローカルに配置されたフォルダを参照できな
+ い。これはセキュリティのためである。この例外がファイルのアップロードで
+ ある。ユーザの責任において指定したファイルをサーバーにアップできるよう
+ になる。
+
+ 最近のJavaScriptでは\texttt{FileReader}オブジェクトを用いることで、サー
+ バーに転送する代わりにそのファイルをブラウザ内で処理できる。
+
+ 与えられたGPXファイル内の道のりをGoogle Maps 上に表示する例を考える。
+
+ 次のリストはHTMLの部分である。
+ \LISTN{GIS/show-trace.html}{1}{last}{\small}
+ \begin{itemize}
+	\item 6行目はこのページの外部スタイルシートを読み込むことを指定している。
+	\item ７行目から８行目でGoogle Maps API のファイルを読み込む。ここでは
+				APIキーが表示されていないので、コンソール画面に警告が現れる。
+	\item ９行目はGPXファイルのデータを処理するJavaScriptの読み込みを指定
+				している。
+	\item 12行目にあるGoogle Mapsの表示域である。
+	\item 13行目から17行目にはファイルのアップロードの要素が定義されている。
+	\item 19行目は表示されたGPXファイルに関する情報を示すものである。
+ \end{itemize}
+ 次のリストはこのHTMLで読み込まれるスタイルシートである。
+ \LISTN{GIS/map.css}{1}{last}{\small}
+ 主に、地図とフォー
+ ムを横並びにし(2行目と5行目の\texttt{display:inline-block})、表の数字を
+ 右寄せに(9行目)、文字のところを中央ぞろえにしている(12行目)。
+
+ 次のリストは外部のJavaScriptファイルである。
+ \LISTN{GIS/map-new2.js}{1}{10}{\small}
+ 2行目から53行目で読み込み終了後に実行される関数を定義している。
+ \begin{itemize}
+	\item 3行目から10行目でURLの後ろにパラメータ(\Verb+?+)があるかをチェックしている。
+	\item あった場合には、パラメータは\Verb+&+で区切られているのでそこで分
+				解し(5行目)、それぞれに対して(6行目の\Verb+forEach+)\Verb+=+で名
+				前と値に分割して、パラメタ(変数\Verb+PARAM+)に代入している。
+ \end{itemize}
+ \LISTN{GIS/map-new2.js}{11}{16}{\small}
+ ここでは、GPXのログ内に複数の\Verb+<trkseg>+があった場合に、それらを色
+ 分けするための色を指定している。道のりの色は後で見るように下が透けるよ
+ うに指定して(88行目)いるので、地図上と情報用の背景色が同じように見える
+ ように色を調整している。
+ \LISTN{GIS/map-new2.js}{17}{26}{\small}
+ ここでは初期の地図の表示を行っている。
+ \LISTN{GIS/map-new2.js}{27}{53}{\small}
+ ここでは、アップロードするファイルが変化したときのイベント処理を行って
+ いる。
+ \begin{itemize}
+	\item 31行目で\Verb+FileReader+オブジェクトを作成している。
+	\item 32行目から50行目で、このオブジェクトが利用可能になった時のイベン
+				ト処理関数を登録している。実際の起動は52行目で発生する。
+	\item 33行目で読み込まれたテキストを\Verb+"text/xml"+で処理をする。処
+				理をするオブジェクトが\Verb+window.DOMParser()+の
+				\Verb+parseFromString()+メソッドである。
+	\item この処理結果が\Verb+DOM+の構造になるので、今までの\Verb+DOM+の処
+				理が提要できることになる。
+	\item 34行目で\texttt{trk}要素に分解している。
+	\item それぞれの\texttt{trk}要素に対して処理を行うために、
+				\texttt{Array}オブジェクトのメソッド\texttt{forEach}を用いている。
+	\item 34行目で得られたものは\texttt{HTML}コレクションなので、このメソッ
+				ドが直接適用できない。そぉで\texttt{call}メソッドを利用すること
+				で解決している。
+	\item 36行目で各\texttt{trk}要素内の\texttt{trkpt}要素を求め、そこから
+				各\texttt{trkpt}要素の
+				緯度、経度、時間を求めて、空間の位置を計算し(38行目から42行目)、
+				結果を配列で返している(\texttt{map}メソッドを利用)。空間の位置を
+				計算しているのは道のりの長さを求めるためであるが、今回のプログラ
+				ムではそれは利用していない。
+	\item 49行目でログを表示する関数を呼び出している。
+	\item 51行目は読み込みが失敗したときの関数を登録している。
+	\item 52行目では指定されたファイルのデータをテキストとして読み込んでい
+				る。
+ \end{itemize}
+ 次の部分は、ログの情報を表示する部分である。
+ \LISTN{GIS/map-new2.js}{54}{63}{\small}
+ \begin{itemize}
+	\item この関数の引数は、表に表示するデータ、表示するオブジェクト、
+				(14行目で定義した)背景色の指定の3つである。
+	\item 55行目で作成した\texttt{tr}要素の中に、与えられたデータを表示(58
+				行目から62行目)する。
+ \end{itemize}
+ 次のリストは道のりを表示する部分である。
+ \LISTN{GIS/map-new2.js}{64}{last}{\small}
+ \begin{itemize}
+	\item この関数の引数は道のりの幅、不透明度である。
+	\item 69行目から76行目で道のりを構成する地点を Google Maps の地点オブ
+				ジェクトに変え、かつ、道のりの緯度、経度の最大値と最小値を求めて
+				いる。
+	\item 79行目から83行目で道のりの情報を表示する。
+	\item 84行目から90行目で与えられたデータをもとに、道のりを表示している。
+				道のりのデータはオブジェクトリテラルの形で与えられている。
+	\item 92行目から94行目では表示された道のりをすべて含む最大のズームレベ
+				ルを設定(\texttt{fitBounds}メソッド)している。
+ \end{itemize}
+ \section{PHPによる処理}
+ XMLファイルの処理はPHPでも可能である。次の例はGPXアイルから道のりに必要
+ なJSONオブジェクトを作成する例である。
+ \LISTN{GIS/getGPSData.php}{1}{9}{\small}
+ 与えられた緯度経度から空間の位置を求める関数である。
+ 戻り値は空間の位置を配列として返す。
+
+ 次のリストは与えられたファイルからGPXファイルを処理する関数である。ファ
+ イル名は初めの引数で与えられる。
+\LISTN{GIS/getGPSDataTmp.php}{10}{17}{\small}
+ \begin{itemize}
+%  \item ファイル\texttt{\$fn}からログ内の道程の距離を求める関数である。
+  \item XMLファイルを読み込むために\texttt{DOMDocument}のインスタン
+        スを作成(11行目)している。
+  \item \texttt{load}メソッドにファイル名を指定することで、DOMオブジェク
+        トに変換される(12行目)。
+  \item PHPではピリオド\texttt{.}は文字列の連接演算子なのでメソッドは
+        \texttt{->}を用いる。
+  \item \texttt{getElementsByTagName}で\texttt{trk}を取得(13行目)する。
+  \item 14行目でその数を変数\texttt{\$len}に格納している。
+  \item トラックごとの情報をしまうための変数を初期化(15行目と16行目)して
+				いる。
+ \end{itemize}
+\LISTN{GIS/getGPSDAtaTmp.php}{18}{28}{\small}
+ 各\texttt{trk}に対して距離などを求める。
+ \begin{itemize}
+  \item \texttt{trk}の一つを変数\texttt{\$trk}に格納している。呼び出しに注意(19行
+        目)すること。
+  \item \texttt{\$trk}に含まれる\texttt{trkpt}のリストを得る(20行目)。
+  \item 極端に短いログは省く(22行目)。
+  \item ログ内の地点の範囲を示す変数を初期化(24、25行目)している。
+  \item 地点の情報をしまう配列を初期化(26行目)している。
+  \item 初めの位置の空間座標を変数\texttt{\$ppos}に格納(27行目)している。
+  \item 積算距離の変数を初期化(28行目)する。
+ \end{itemize}
+ \LISTN{GIS/getGPSDAtaTmp.php}{29}{44}{\small}
+ \begin{itemize}
+  \item 各\texttt{trkpt}から緯度と経度を取り出し(31、32行目)、
+  今までの範囲外ならば範囲を更新(33行目から36行目)している。
+  \item 緯度と経度を配列に追加(37行目)し、空間の位置を計算(38行目)する。
+  \item ひとつ前の点との差を求め(39行目から41行目)、距離を計算(42行目)す
+				る。
+  \item ひとつ前の点を更新(43行目)する。
+ \end{itemize}
+ \LISTN{GIS/getGPSDAtaTmp.php}{45}{last}{\small}
+ \begin{itemize}
+  \item 移動がほとんどないトラックは登録しない(45行目)。
+  \item 登録するトラックをJSON形式で作成(48行目から49行目)する。
+  \item 関数\texttt{implode}は配列の要素を与えられた文字列を挟んで出力する。
+  \end{itemize}
