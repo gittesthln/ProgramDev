@@ -1,4 +1,4 @@
-chapter{システム開発のためのヒント}
+\chapter{システム開発のためのヒント}
 \section{コードの構造}
 \subsection{良いコードとは}
 良いコードとはどのようなものであろうか。それは個人によっても違うであろう。
@@ -29,6 +29,53 @@ chapter{システム開発のためのヒント}
  \texttt{C}、それ以外は\texttt{E}の成績をつけることにした。期末試験の点
  を与えて、評価の\texttt{S}などを返す関数\texttt{seiseki}を作成しなさい。
 \end{Exec}
+一番思いつくコードは次のようなものであろう(JavaScriptで記述)。
+\begin{Verbatim}
+function seiseki(val) {
+  if(val >= 90) return "S";
+  if(val >= 80) return "A";
+  if(val >= 70) return "B";
+  if(val >= 60) return "C";
+  return "E";
+}
+\end{Verbatim}
+これに対し、数値と戻り値をそれぞれ配列の値として用意するとつぎのようなコー
+ドとなるであろう。
+\begin{Verbatim}
+function seiseki(val) {
+  var Score = [90,80,70,60,0];
+  var Results= ["S","A","B","C","E"];
+  var i;
+  for(i=0;i<Grade.length;$i++) {
+    if(val>=Grade[i]) return Hyouka[i];
+  }
+  return "Error";
+}
+\end{Verbatim}
+二つの配列をまとめて一つの配列にするほうがコードの管理上わかりやすくなる
+であろう。
+\begin{Verbatim}
+var Results =[["S",90],["A",80],["B",70],["C",60],["E",0]];
+\end{Verbatim}
+または、次のような連想配列にしてもよい。
+\begin{Verbatim}
+var Results ={S:90,A:80,B:70,C:60,E:0};
+function seiseki(val) {
+  for(v in Results) {
+    if(val >=Results[v]) return v;
+  }
+}
+\end{Verbatim}
+JavaScriptでは\texttt{for(.. in ..)}で連想配列の要素をすべて渡ることがで
+き、かつわたる順序が定義された順なのでこのコードが可能となる。
+
+このように配列をうまく利用するとロジックの部分とパラメータの部分の分離が
+可能となる。
+
+なお、JavaScriptではJavaScript内から外部ファイルを自動で読み込むことがで
+きないので上のような変数\texttt{Results}を宣言する必要がある。この変数部
+分を別のプログラムから作成すればもう少し管理が楽になるであろう。
+
 
 \section{コードの管理}
 \subsection{複数でシステム開発をするときの問題点}
