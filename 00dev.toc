@@ -162,6 +162,7 @@
 \contentsline {section}{\numberline {14.1}コードの構造}{137}{section.14.1}
 \contentsline {subsection}{\numberline {14.1.1}良いコードとは}{137}{subsection.14.1.1}
 \contentsline {subsection}{\numberline {14.1.2}プログラムとデータの分離}{137}{subsection.14.1.2}
+<<<<<<< HEAD
 \contentsline {section}{\numberline {14.2}コードの管理}{137}{section.14.2}
 \contentsline {subsection}{\numberline {14.2.1}複数でシステム開発をするときの問題点}{137}{subsection.14.2.1}
 \contentsline {subsection}{\numberline {14.2.2}バージョン管理の概念}{138}{subsection.14.2.2}
@@ -175,3 +176,18 @@
 \contentsline {paragraph}{SSH Keyの登録}{139}{section*.34}
 \contentsline {subsubsection}{GitHub のアカウントの取得}{140}{section*.35}
 \contentsline {subsubsection}{リポジトリの作成と運用}{140}{section*.36}
+=======
+\contentsline {section}{\numberline {14.2}コードの管理}{138}{section.14.2}
+\contentsline {subsection}{\numberline {14.2.1}複数でシステム開発をするときの問題点}{138}{subsection.14.2.1}
+\contentsline {subsection}{\numberline {14.2.2}バージョン管理の概念}{139}{subsection.14.2.2}
+\contentsline {subsection}{\numberline {14.2.3}バージョン管理ソフトの概要}{139}{subsection.14.2.3}
+\contentsline {subsection}{\numberline {14.2.4}gitの使い方}{139}{subsection.14.2.4}
+\contentsline {subsubsection}{git の特徴}{140}{section*.29}
+\contentsline {subsubsection}{git のインストール}{140}{section*.30}
+\contentsline {subsubsection}{初期設定}{140}{section*.31}
+\contentsline {paragraph}{ユーザーネームの登録}{140}{section*.32}
+\contentsline {paragraph}{メールアドレスの登録}{140}{section*.33}
+\contentsline {paragraph}{SSH Keyの登録}{140}{section*.34}
+\contentsline {subsubsection}{GitHub のアカウントの取得}{141}{section*.35}
+\contentsline {subsubsection}{リポジトリの作成と運用}{141}{section*.36}
+>>>>>>> d4d0a586b5e6546801ed9828fd2b7d0efd26f15c
