@@ -29,6 +29,8 @@
 \end{itemize}
 \section{参考図書}
 \begin{enumerate}
+ \item E. Brown, 初めてのJavaScript　第3版, --ES2015以降の最新ウェブ開発, オラ
+       イリージャパン
  \item D. Crockford, JavaScript: The Good Parts 「良いパー
 	 ツ」によるベストプラ クティス, オライリージャパン
  \item David Flanagan, JavaScript 第6 版, オライリージャパン\label{JS6}
@@ -53,21 +55,20 @@
  第5回&オブジェクト属性と継承\newline
      プロトタイプによる継承など\\\hline
  第6回&正規表現と文字列の処理  \\\hline
- 第7回&正規表現の利用例 \\\hline
- 第8回&DOMの利用\newline
+ 第7回&DOMの利用\newline
      HTML文書の例、CSSと DOM の基礎\\\hline
- 第9回&イベント処理 \newline
+ 第8回&イベント処理 \newline
      イベントモデルとイベント処理の例\\\hline
- 第10回&PHP超入門\newline
+ 第9回&PHP超入門\newline
        PHPに関する簡単なプログラムの例\\\hline
- 第11回&サーバーとのデータの交換(1)\newline
+ 第10回&サーバーとのデータの交換(1)\newline
      PHP入門の続きとサーバーとのデータ交換の基礎\\\hline
- 第12回&サーバーとのデータの交換(2)\newline
-     サーバーとのデータの交換とAjaxの基礎\\\hline
- 第13回&jQuery \newline
+ 第11回&jQuery \newline
      DOMの処理を簡単にするライブラリーの紹介\\   \hline
- 第14回&jQueryのコード\newline
-     jQueryのコードの短縮化についての解説 \\\hline
+ 第12回&JavaScriptライブラリーの配布\newline
+     jQueryのコードの短縮化、Webサイトの効率化 \\\hline
+ 第13回&XMLファイルの処理\\\hline
+ 第14回&システム開発のヒント\\\hline
  第15回&最終試験と解説\\ \hline
 \end{tabular}
 \end{center}
@@ -75,9 +76,10 @@
 \section{JavaScriptの実行環境}
 \input 00prefice.tex
 \section{strict モードについて}
-ECMAScript の最新版では\Strict と呼ばれる厳密な解釈をするモー
-ドが導入されている。このモードでは従来見つけにくい単純なバグがエラーとな
-る。主な違いは次のとおりである。
+ECMAScript の改訂版 \ES \footnote{ES6 とも呼ばれる。今後、EcmaScript の
+バージョンは規格が制定された年号を用いることとなった。}では\Strict とい
+う厳密な解釈をするモードが導入された。このモードでは従来見つけにくい
+単純なバグがエラーとなる。主な違いは次のとおりである。
 \begin{center}
   \begin{tabular}{|m{20zw}|c|c|}\hline
    &非\Strict & {\Strict}\\\hline
@@ -102,7 +104,7 @@ ECMAScript の最新版では\Strict と呼ばれる厳密な解釈をするモ�
  次のコードを拡張子が\Verb+html+のファイルで作成する。それ
  をブラウザで開き、デベロッパーツールのコンソールから\Verb+foo();+と入力
  したときと、その後、コンソールで\texttt{i}と入力したときの結果を確認す
- ること。\Correct{同様のことを９行目の\Verb+i+の宣言を省いて行うこと}
+ ること。{同様のことを９行目の\Verb+i+の宣言を省いて行うこと}
 
  また、\Strict に変更し(7行目の後に「\Verb+"use strict";+」を追
  加する)、9行目の変数の宣言の行を取り除
@@ -112,9 +114,9 @@ ECMAScript の最新版では\Strict と呼ばれる厳密な解釈をするモ�
 コードの簡単な説明
 \begin{itemize}
  \item 1行目 HTML5におけるHTML文書の宣言
- \item 4行目 このファイルの文字コード(エンコーディング)を UTF-8 に指定。
+ \item 4行目 このファイルの文字コード(エンコーディング)を UTF-8 に指定
  \item 6行目 スクリプトの開始の要素。プログラミング言語がECMAScriptであ
-       ることを宣言している。
+       ることを宣言
  \item 7行目 \texttt{//}は行末までの部分をコメントにするJavaScriptの記法。
 残りの部分はこれ以降12行目までは通常の文字として解釈することを指定
        (\texttt{CDATA}セクションの開始)。
@@ -123,7 +125,9 @@ ECMAScript の最新版では\Strict と呼ばれる厳密な解釈をするモ�
 またその理由も考えること\footnote{最近のブラウザではエラーが起きないかも
        しれない。}。
  \item 8行目は関数\Verb+foo()+の宣言。13行目までがこの関数の定義範囲
- \item 9行目は変数 \texttt{i}の宣言
+ \item 9行目は変数 \texttt{i}の宣言(従来のJavaScriptでは\texttt{var}を用
+       いて宣言していたが、この授業では\ES で新しく導入された\texttt{let}だけ
+       を用いる。)
  \item 10行目 C言語などでおなじみの繰り返しの指定
  \item 11行目 引数内の式をコンソールに出力
  \item 14行目はメッセージボックスにコンソールを開くことを指示。

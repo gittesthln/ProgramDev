@@ -2,14 +2,14 @@
 \newcommand{\ElmJC}[2]{\ElmJ{Math.#1}%\IndexSetN{#2}{}{}{}{JS}
 }
 \ListAttribsF{JSMath}{\JS における\ElmJ{Math}オブジェクトの種類}{|c|c|c|}%
-{{名称}{種類}{説明}
-{\ElmJC{E}{e@$e$}}{定数}{自然対数の底($2.71828182\dots$)}
+{{名称}&{種類}&{説明}}
+{{\ElmJC{E}{e@$e$}}{定数}{自然対数の底($2.71828182\dots$)}
 {\ElmJC{LN10}{log10@$\protect\log10$}}{定数}{$\log_{e}10$}
 {\ElmJC{LN2}{log2@$\protect\log2$}}{定数}{$\log_{e}2$}
 {\ElmJC{LOG2E}{log2e@$\protect\log_2 e$}}{定数}{$\log_{2}e$}
 {\ElmJC{LOG10E}{\log10e$\protect\log_{10}e$}}{定数}{$\log_{10}e$}
 {\ElmJC{PI}{pi@$\protect\pi$}}{定数}{円周率($\pi=3.141592\dots$)}
-{\ElmJC{SQRT1\textunderscore2}{sqrt1/2@$\protect\sqrt{\protect\dfrac{1}{2}}$}}{
+{\ElmJC{SQRT1\textunderscore2}{sqrt1/2@$\protect\sqrt{\protect\dfrac{1}{2}}$}}{%
 定数}{$\dfrac{1}{2}$の平方根 $\sqrt{\dfrac{1}{2}}$}
 {\ElmJC{SQRT2}{sqrt2@$\sqrt{2}$}}{定数}{$2$の平方根 $\sqrt{2}$}
 {\ElmJC{abs(x)}{|x|@$|x|$}}{関数}{$x$ の絶対値}
@@ -32,3 +32,21 @@
 {\ElmJC{sqrt(x)}{}}{関数}{平方根を求める。 $\sqrt{x}$}
 {\ElmJC{tan(x)}{}}{関数}{正接関数 $\tan x$}
 }
+いくつか注意をしておく。
+\begin{itemize}
+ \item 配列の要素の最大値や最小値を求めるために\Verb+Math.max+ や
+       \Verb+Math.min+を直接使用できない。展開演算子\Verb+...+を用いると
+       計算ができる。次の実行例を参照のこと。
+\begin{Verbatim}
+>a = [3,5,23,1,4];
+(5) [3, 5, 23, 1, 4]
+>Math.max(a);
+NaN
+>Math.max(...a);
+23
+\end{Verbatim}
+ \item EcmaScript 2016 ではべき乗の演算子\texttt{**}が導入されているので
+\texttt{Math.pow()}は使わなくてもよい。
+\end{itemize}
+
+

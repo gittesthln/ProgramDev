@@ -168,6 +168,13 @@ GitHubで使用するリポジトリのユーザ名を登録は次のコマン�
 GitHubからの通知を受けるメールアドレスは次のコマンドで行う。
 
 \Verb+git --config --global user.email "Foo@example.com"+
+
+%git config --global core.editor "'C:/Program Files/Notepad++/notepad++.exe' -multiInst -nosession"
+%git config --global core.editor "'C:/Program
+%Files/Notepad++/notepad++.exe' -multiInst -nosession"
+
+%設定の確認
+%git config --list
 \paragraph{SSH Keyの登録}
 GitHub との接続には SSH による通信で行う。この通信はは公開鍵暗号方式で行
 うので、キーを生成する必要がある。キーの生成は次のコマンドで行う。

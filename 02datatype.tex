@@ -9,12 +9,14 @@ JavaScript の方には大きく分けて\KeyItem{プリミティブ型}と\KeyI
  \begin{table}[ht]
   \caption{プリミティブデータ型}\label{primitivedata}
 \begin{center}
-\begin{tabular}{|c|m{30zw}|}\hline
+\begin{tabular}{|c|m{33zw}|}\hline
  型&\multicolumn{1}{c|}{説明} \\\hline
- \ElmJ{Number} & 浮動小数点数だけ\\ \hline
- \ElmJ{String} & \KeyItem{文字列型}、1文字だけのデータ型はない。ダブルク
+ \ElmJ{Number} & 64ビット浮動小数点形式だけ\\ \hline
+ \ElmJ{String} & \KeyItem{文字列型}、文字のデータ型はない。ダブルク
      オート(\Verb+"+)か%" 
-     シングルクオート(\Verb+'+)で囲む。\\ \hline
+     シングルクオート(\Verb+'+)で囲む。ES2015では文字列内に式
+     の結果を埋め込むことができるテンプレートリテラル形式(バッククオート
+     \Verb+`+ではさむ\footnotemark{})が追加された。\\ \hline
  \ElmJ{Boolean}& \ElmJ{true} か \ElmJ{false} の値のみ\\ \hline
  \ElmJ{undefined} & 変数の値が定義されていないことを示す\\ \hline
  \ElmJ{null}& \ElmJ{null}という値しか取ることができない特別なオブジェク
@@ -22,19 +24,20 @@ JavaScript の方には大きく分けて\KeyItem{プリミティブ型}と\KeyI
 \end{tabular}
 \end{center}
  \end{table}
+\footnotetext{キーボードの\Verb+@+の上にある文字}
 
  変数や値の型を知りたいときは\ElmJ{typeof} 演算子を使う。
 \subsection{Number型}
-JavaScriptで扱う数は64ビット浮動小数点形式である。数を表現する方法(数値
-リテラル)としては次のものがある。
+数を表現する方法(数値リテラル)としては次のものがある。
 \begin{itemize}
  \item{\bfseries \KeyItem{整数リテラル}} 10進整数は通常通りの形式である。
       \KeyItem{16進数}を表す場合は
-	      先頭に\Verb+0x+ か \Verb+0X+ をつける。\Verb+0+で始まりそ
-	      のあとに\Verb+x+または\Verb+X+が来ない場合には\KeyItem{8進数}と解釈
+	      先頭に\Verb+0x+ か \Verb+0X+ をつける。先頭が\Verb+0+でそ
+	      のあとに\Verb+x+または\Verb+X+が来ない場合は\KeyItem{8進数}と解釈
       される場合がある
-      %\footnote{Opera, Internet Exploler, FireFox, Chrome では8進数と解釈されるようである。}。
-      \Strict ではこの形式はエラーとなる。
+      %\footnote{Opera, Internet Exploler, FireFox, Chrome では8進数と解
+      %釈されるようである。}
+      。\Strict ではこの形式はエラーとなる。
 
       2進数は\Verb+0b+ で、8進数は\Verb+0o+で始まるリテラルが定義されて
       いる。
@@ -58,57 +61,32 @@ JavaScriptで扱う数は64ビット浮動小数点形式である。数を表�
 こと。
 
 \KeyItem{文字列}に関する情報(プロパティ)や操作(メソッド)として次の
-ものがある。
+ものがある\footnote{この表にある正規表現については後日解説をする}。
 \begin{table}[ht]
  \caption{文字列のメソッドとプロパティ}\label{methodStrig}
 \begin{center}
  \begin{tabular}{|c|m{28zw}|}\hline
  メンバー&\multicolumn{1}{c|}{説明} \\\hline
   \ElmJP{length} &文字列の長さ\\ \hline
-\ElmJF{indexOf}{needle,start}& \Verb+needle+が与えられた文字列内にあ
-      ればそれが初めて現れる位置を返す。\Verb+start+の引数がある場合には、指定された位
+\ElmJF{indexOf}{needle,start}& 与えられた文字列内に\Verb+needle+が
+      初めて現れる位置を返す。\Verb+start+の引数があれば、その位
       置以降から調べる。見つからない場合は$-1$を返す。\\\hline
-\ElmJF{lastIndexOf}{needle,start}& \Verb+needle+が与えられた文字列内にあ
-      ればそれが一番最後に現れる位置を返す。\Verb+start+の引数がある場合
-      には、指定された位置以前から調べる。見つからない場合は$-1$を返す。\\\hline
-  \ElmJF{split}{separator,limit}&\Verb+separator+で与えられた文字列(ま
+\ElmJF{lastIndexOf}{needle,start}& 与えられた文字列内に\Verb+needle+が
+      一番最後に現れる位置を返す。\Verb+start+の引数があれば、指定された
+      位置以前から調べる。見つからない場合は$-1$を返す。\\\hline
+  \ElmJF{split}{separator,limit}&\Verb+separator+の文字列(ま
       たは正規表現)で与え
-      られた文字列を分けて配列で返す。セパレーターの部分は返されない。
+      られた文字列を分割し、配列で返す。\Verb+separator+の部分は返されない。
       2番目の引数はオプションで、分割する最大数を返す。\\ \hline
   \ElmJF{substring}{start,end}&与えられた文字列の\Verb+start+から
       \Verb+end+の前の位置までの部分文字列を返す。\\ \hline
   \ElmJF{slice}{start,end}&与えられた文字列の\Verb+start+から
-      \Verb+end+の前の位置までの部分文字列を返す。値が負の場合には文字列
-      の最後から数えた位置を表す。\\ \hline
+      \Verb+end+の前の位置までの部分文字列を返す。値が負のときは文字列
+      末尾から数えた位置を表す。\\ \hline
 \end{tabular}
 \end{center}
 \end{table}
-
-この表に現れる正規表現については後日解説をする。
-\begin{Exec}\upshape
- 次の実行結果を確かめなさい。
- \begin{enumerate}
-	\item \texttt{"0123456789".indexOf("1");}
-	\item \texttt{"0123456789".indexOf("a");}
-	\item \texttt{"0123456789".indexOf("1",2);}
-	\item \texttt{"0,1,2,3".split(",");}
-	\item \texttt{"0,1,2,3".split(",",2);}
-	\item \texttt{"0123".split("");}
-	\item \texttt{"0123456789".substring(3);}
-	\item \texttt{"0123456789".substring(-3);}
-	\item \texttt{"0123456789".slice(-3);}
-	\item \texttt{"0123456789".substring(3,5);}
-	\item \texttt{"0123456789".slice(3,5);}
-	\item \texttt{"0123456789".slice(3,-3);}
- \end{enumerate}
-\end{Exec}
-\iffalse
-\begin{Prob}\upshape
- 与えられた文字列の最後の3つの部分の文字列を得る(文字列
- \texttt{"0123456789"}に対しては\texttt{"789"}を返す)ためにはどのようにすれば
- よいか。
-\end{Prob}
-\fi
+\input prob02-01string.tex
   \subsection{Bool型}
 \ElmJ{true} と \ElmJ{false} の2つの値をとる。この2つは予約語である。論理
 式の結果としてこれらの値が設定されたり、論理値が必要なところでこれらの値
@@ -127,8 +105,10 @@ JavaScriptの変数の特徴は次の通りである。
  \item 変数名はアルファベットまたは\Verb+_+(アンダースコア)で始まる英数
        字または\Verb+_+ が続く文字列
  \item 大文字と小文字は区別される。
- \item 変数の宣言は \texttt{var} で行う。
- \item 宣言時に初期化ができる。
+ \item 変数の宣言は \texttt{let} で行う。\texttt{var}でもできるが、問題
+       があるのでこの授業では使用しない。
+ \item 宣言時に初期化ができる。 ES2015 では初期化以降で値の変更が
+       できない\texttt{const}で変数の宣言ができる。
  \item 非\Strict のときは変数は宣言をしなくても使用できる。初期化してい
        ない変数を演算の対象として使用するとエラーが起こる。詳しくは後述する。
  \item 変数に保存するデータの型には制限がない。途中で変更することもでき
@@ -139,10 +119,10 @@ JavaScriptの変数の特徴は次の通りである。
 配列を使うためには、変数を配列で初期化する必要がある。変数の宣言と同時に
 行ってもよい。
 \begin{Verbatim}
-var a = [];
-var b = [1,2,3];
+let a = [];      //空の配列の定義
+let b = [1,2,3]; //要素が3つある配列
 \end{Verbatim}
-\Verb+a+ は空の配列で初期化されている。\Verb+b+ は　
+\Verb+a+ は空の配列で、\Verb+b+ は
 \Verb+b[0]=1,b[1]=2,b[2]=3+ となる配列で初期化されている。
 次のことに注意する必要がある。
 \begin{itemize}
@@ -150,9 +130,52 @@ var b = [1,2,3];
  \item 実行時に配列の大きさを自由に変えられる。
  \item 配列の要素に配列を置くことができる。
 \begin{Verbatim}
-var a=[1,[2,3,4],"a"];
+let a=[1,[2,3,4],"a"];
 \end{Verbatim}
+ \item 配列のを変数に代入は参照である。
+\begin{Verbatim}
+>let a = [0,1,2,3,4];
+undefined
+>let b = a;  //別の変数への代入
+undefined
+>b;
+(5) [0, 1, 2, 3, 4]  // a と同じ内容が表示
+>b[3]= b[3]*10;      // 4番目の要素を10倍
+30
+>b;
+(5) [0, 1, 2, 30, 4]
+>a;
+(5) [0, 1, 2, 30, 4] // a も b と同じ要素の値を持つ
+\end{Verbatim}
+       配列の代入が参照なので片方の要素を変化させると、両方とも変わるこ
+       とが分かる。
+ \item 配列の要素の一部をまとめて別の変数に代入する分割代入が\ES で導
+       入された。
+\begin{Verbatim}
+[a,,b,...c] = [0,1,2,3,4,5,6,7];
+\end{Verbatim}
+この代入の結果は次のとおりである。
+\begin{Verbatim}
+a ==> 0
+b ==> 2
+c  ==> [3, 4, 5, 6, 7]
+\end{Verbatim}
+       \begin{itemize}
+        \item  変数\Verb+a+には0番目の、\Verb+b+には3番目の、\Verb+c+に
+               は4番目以降の配列の要素が代入される。
+        \item \Verb+a+ と \Verb+b+ の間に\Verb+,,+がある
+       ので2番目の要素は代入されない。
+        \item 4番目以降の要素はまとめて変数\Verb+c+に代入されている。
+
+       \end{itemize}
+
+  この機能は関数の戻り値が配列であるとき、戻り値の必要なところだけ利用す
+       るために便利な機能である。
+
+       なお、ここで使用している\Verb+...+は展開演算子と呼ばれ、配列に対
+       して要素を並べたものを表す。
 \end{itemize}
+\input prob02-02asign.tex
 \subsection{配列のメソッド}
 表\ref{arrayPropMethod}は配列のメソッドやプロパティをまとめたものである。
 \begin{table}[ht]
@@ -163,41 +186,47 @@ var a=[1,[2,3,4],"a"];
   \Verb+length+ &配列の要素の数\\ \hline
   \Verb+join(separator)+& 配列を文字列に変換する。\Verb+separator+はオプ
       ションの引数で、省略された場合はカンマ\Verb+,+である。\\ \hline
-  \Verb+pop()+& 配列の最後の要素を削除し、その値を返す。配列をスタックと
-      して利用できる。\\ \hline
-  \Verb+push(i1,i2,...)+& 引数で渡された要素を配列の最後に付け加える。配
-      列をスタックやキューとして利用できる。\\ \hline
-  \Verb+shift()+&配列の最初の要素を削除し、その値を返す。配列をキューと
-      して利用できる。\\ \hline
+  \Verb+pop()+& 配列の最後の要素を削除し、その値を返す。
+      配列をスタックとして利用できる。
+      \\ \hline
+  \Verb+push(i1,i2,...)+& 引数で渡された要素を配列の最後に付け加える。
+      配列をスタックやキューとして利用できる。
+      \\ \hline
+  \Verb+shift()+&配列の最初の要素を削除し、その値を返す。
+      配列をキューと して利用できる。
+      \\ \hline
+  \Verb+unshift()+&配列の最初の要素を削除し、その値を返す。
+      配列をキューと して利用できる。
+      \\ \hline
   \Verb+slice(start,end)+&\Verb+start+から\Verb+end+の前の位置にある要素を取
       り出した配列を返す。元の配列は変化しない。\\ \hline
   \Verb+splice(start,No,i1,i2,...)+&\Verb+start+の位置から\Verb+No+の要素を取
       り除き、その位置に\Verb+i1,i1,...+以下の要素を付け加える。元の配列
       を変更する。\\ \hline
+  \Verb+indexOf(value,start)+&配列の要素で\texttt{value}に等しい
+      (\texttt{===})ものを探し、その位置を返す。見つからない場合は
+      \texttt{-1}を返す。
+      オプションの引数\texttt{start}はそのインデックス以降から探す。
+      \\ \hline
+  \Verb+lastIndexOf(value,start)+&配列の要素で\texttt{value}に等しいものを探
+      し、その位置を返す。見つからない場合は\texttt{-1}を返す。
+      オプションの引数\texttt{start}はそのインデックス以前から探す。
+      \\ \hline
 \end{tabular}
 \end{center}
 \end{table}
-\begin{Exec}\upshape
- 次の実行結果を確かめなさい
-\begin{enumerate}\upshape
- \item \texttt{[1,2,[],3].length;}
- \item \texttt{var a=[1,2,3]; console.log(a.pop()); console.log(a.length);a;}
- \item \texttt{var a=[1,2,3]; a.push(4,5); console.log(a.length);a;}
- \item \texttt{var a=[1,2,3]; a.shift(4,5); console.log(a.length);a;}
- \item \texttt{var a=[1,2,3]; a.join(" ");
- \item \texttt{var a=[1,2,3,4,5]; console.log(a.slice(1,2)); console.log(a.length);a;}
- \item var a=[1,2,3,4,5]; console.log(a.splice(1,2)); console.log(a.length);a;}
-\end{enumerate}
-\end{Exec}
 
+配列のメソッドとしてはこのほかに、引数に処理をする関数を与えるものがある。それらについ
+ては関数のところで解説をする。
+\input prob02-03.tex
 \section{演算子}\label{operator}
 \subsection{代入、四則演算}
 数に対してはC言語と同様の演算子が使用できる。ただし、次のことに注意する
 こと。
 \begin{itemize}
  \item \Verb-+-演算子は文字列の連接にも使用できる。\Verb-+-演算子は左右のオペ
-ランドがNumberのときだけ、数の和をとる。どちらかが数でもう一方が文字列の
-場合は数を文字列に直して、文字列の連接を行う。
+ランドがNumberのときだけ、和をとる。一方が文字列の
+場合は数を文字列に直して、文字列として連接を行う。
 \begin{Verbatim}
 1+2  => 3
 1+"2" => 12
@@ -210,7 +239,6 @@ var a=[1,[2,3,4],"a"];
  "2"-0 +3 => 5
  "2"*3    => 6
  "2"*"3"  => 6
- "f" *2   => NaN
  "f" *2   => NaN
  "0xf"*2  => 30
  "0o10"*2 => 16
@@ -243,16 +271,17 @@ Boolean 型に対して使用できる演算子は次の3つである。
 \end{itemize}
 論理和や論理積では左のオペランドの結果により、式の値が決まる場合は右のオ
 ペランドの評価は行われない。たとえば、論理和の場合、左の値が
-\Verb+true+であれば右のオペランドの評価が行われない。
+\Verb+true+であれば右のオペランドの評価が行われない。次の例では変数
+\Verb+a+ の値は $1$ のままである。 
 \begin{Verbatim}
-var a=1; true ||(a=3); 
+let a=1; true ||(a=3); 
 \end{Verbatim}
-では変数 \Verb+a+ の値は $1$ のままである。
 \subsubsection{比較演算子}
 比較演算子は比較の結果、Boolean の値を返す演算である。C言語と同様の比較
-演算子が使用できる。\texttt{>,>=,<,<=}など。等しいことを比較するためには
+演算子が使用できる。\texttt{>,>=,<,<=}などがある。等しいことを比較するためには
 \Verb+==+(等価比較演算子)のほかに 型変換を伴わない等価比較演算子
 \Verb+===+ がある。等価比較演算子\texttt{==}は必要に応じて型変換を行う。
+特別な事情がない限り、\Verb+==+や\Verb+!=+は使用しないこと。
 \begin{Verbatim}
 0 == "0" => true
 0 === "0" => false
@@ -260,11 +289,11 @@ var a=1; true ||(a=3);
 同様に非等価比較演算子\texttt{!=}にも型変換を伴わない非等価演算子
 \texttt{!==}がある。
 
-また、\Verb+NaN == NaN+ の結果は \Verb+false+ である。そのために値が \Verb+NaN+ で
-あるかどうかを調べる関数(\ElmJ{isNaN()})がある。
+\Verb+NaN === NaN+ の結果は \Verb+false+ である。値が \Verb+NaN+ で
+あるかを調べるには関数\ElmJ{isNaN()}を用いる。
 \section{組み込みオブジェクト}
 \subsection{組み込み関数}
-JavaScript に初めから組み込まれている関数としては次のものがある。
+JavaScript に組み込まれている代表的な関数としては次のものがある。
 \begin{itemize}
  \item \Verb+parseInt(string,radix)+ \Verb+string+(文字列)と
        \Verb+radix+(基数、省略したときは$10$)をとり、先頭から見て正しい
@@ -288,50 +317,50 @@ JavaScript に初めから組み込まれている関数としては次のもの
  \item \ElmJ{decodeURI(string)} \ElmJ{encodeURI(string)} の逆の操作をす
 			 る。
 \end{itemize}
-このほかにも関数があるが、省略する。
+%このほかにも関数があるが、省略する。
+\subsection{\protect\texttt{Math}オブジェクト}
+\ElmJ{Math}オブジェクトには数学的な定数の定義(円周率など)や三角関数など
+の関数が定義されている。表\ref{JSMath}はそれらのプロパティや関数をまとめ
+たものである。\newpage%\vspace{-1cm}
+\input 00Math.tex
 %\newpage
 %\clearpage
 \subsection{\protect\texttt{Dateオブジェクト}}
 日付や時間に関するデータを扱うコンストラクタ関数である。
-
-引数は、年、月、日、時、分、秒、ミリ秒の順で設定される。
-\begin{Verbatim}
->new Date(2015,10,2,10,10,20,500);
-Mon Nov 02 2015 10:10:20 GMT+0900 (東京 (標準時))
-\end{Verbatim}
-省略された引数は \texttt{0} が設定されたものとみなされる。月の値は
-\texttt{0} が1月を表す。上記の例では月の値\texttt{10}となっているので11
-月に設定されている。
-
-引数がなく使用すると、現在の日時を設定したものと解釈される。
+引数の数や型によりいくつかの異なる日付と日時のオブジェクトが作成できる。
+\begin{itemize}
+ \item 引数なしの場合は現在の日付と日時を用いて作成
 \begin{Verbatim}
 >new Date()
 Thu Oct 01 2015 13:17:46 GMT+0900 (東京 (標準時))
 \end{Verbatim}
-なお、\Verb+Date+オブジェクトの\texttt{getTime()}メソッドで得られるタイ
-ムスタンプの値は世界標準時(UTC)において1970年1月1日0時が基準となっていて
-単位はミリ秒である。
+ \item 引数が数値の場合は世界標準時(UTC)において1970年1月1日0時からの経
+       過時間をミリ秒単位で作成
+ \item 引数が文字列の場合は日時を示す文字列に基づいて作成(次の例を参照)
+ \item 引数の数が2つ以上7つの場合は年、月、日、時、分、秒、ミリ秒の順が
+       指定されたとして作成。ない引数は0と解釈される。
+
+       また、月の値は\texttt{0} が1月を表す。
+\begin{Verbatim}
+>new Date(2015,10,2,10,10,20,500);
+Mon Nov 02 2015 10:10:20 GMT+0900 (東京 (標準時))
+\end{Verbatim}
+
+上記の例では月の値\texttt{10}となっているので11
+月(\Verb+Nov+)に設定されている。
+
+       引数の値が範囲を外れる(日に対して0を指定するなど)
+       場合でも、正しく作成される。たとえば日の値が0のときは指定した月の
+       1日の1日前、つまり前の月の最終日と解釈される。
+\end{itemize}%
+
 \input 00Date.tex
 
-\begin{Prob}\upshape\label{DateProb}
- 次の日時を求める式を答えよ。
- \begin{enumerate}
-	\item 与えられた日時から1週間後の日時
-	\item 与えられた日時の翌月の1日
-	\item 与えられた日時の前の月の最終日
-	\item 与えられた日時の月の第1月曜日
- \end{enumerate}
-\end{Prob}
-\clearpage
-\subsection{\protect\texttt{Math}オブジェクト}
-\ElmJ{Math}オブジェクトには数学的な定数の定義(円周率など)や三角関数など
-の関数が定義されている。表\ref{JSMath}はそれらのプロパティや関数をまとめ
-たものである。
-\input 00Math.tex
-%
 \clearpage
 \section{第2回目復習課題}
+%\Answertrue
 %
-\Answertrue
-%\Answerfalse
-\input prob02.tex
+\Answerfalse
+\begin{Prob}\upshape
+\input prob02-05Check.tex
+\end{Prob}

@@ -1,0 +1,16 @@
+\begin{Prob}\upshape
+ 次の実行結果を確かめなさい\footnote{\ref{omitlet}以降をコンソールで連続
+ して行う場合には\ref{omitlet2}以降にある\texttt{let}はつけないこと。}。
+\begin{enumerate}\upshape
+ \item \texttt{[1,2,[],3].length;}
+ \item \texttt{let a=[1,2,3]; console.log(a.pop());
+       console.log(a.length);a;}\label{omitlet}
+ \item \texttt{let a=[1,2,3]; a.push(4,5); console.log(a.length);a;}\label{omitlet2}
+ \item \texttt{let a=[1,2,3]; a.shift(4,5); console.log(a.length);a;}
+ \item \texttt{let a=[1,2,3]; a.join(" ");}
+ \item \texttt{let a=[1,2,3,4,5]; console.log(a.slice(1,2)); console.log(a.length);a;}
+ \item \texttt{let a=[1,2,3,4,5]; console.log(a.splice(1,2)); console.log(a.length);a;}
+ \item \texttt{let a=[1,2,3,4,5]; console.log(a.indexOf(3)); console.log(a.indexOf(3,3));}
+ \item \texttt{let a=[3,1,2,3,4,5]; console.log(a.lastIndexOf(3)); console.log(a.lastIndexOf(3,2));}
+\end{enumerate}
+\end{Prob}

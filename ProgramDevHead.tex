@@ -15,47 +15,43 @@
 \newcommand{\ElmJP}[1]{\texttt{#1}}
 \newcommand{\Event}[1]{\texttt{#1}}
 \newcommand{\KeyItem}[1]{#1}
-
-\newcommand{\ListAttribsF}[4]{%
-  \begin{table}[ht]
+\iffalse
+\newcommand{\ListAttribsF}[5]{%
+   \begin{longtable}{#3}
      \caption{#2}\label{#1}%
-   \hfill%\begin{center}
-    \begin{tabular}[t]{#3}
-       \hline
-       \ShowExpF#4\relax\relax\relax
-    \end{tabular}
-    \hspace*{\fill}%\end{center}
-  \end{table}
+   \hline
+        #4\\ \hline
+\endfirsthead
+     \caption{#2}%
+   \hline
+        #4\\ \hline
+\endhead
+    \hline
+    \multicolumn{3}{r}{次ページへ続く}
+\endfoot
+ \hline
+\endlastfoot
+       \ShowExp#5\relax\relax\relax
+\end{longtable}
 }
-%
-\newcommand{\ListAttribs}[3]{%
-  \begin{table}[ht]
-     \label{#1}\caption{#2}%
-    \begin{center}
-      \begin{tabular}[t]{|c|c|c|}
-        \hline
-        属性名& 意味& 属性値\\\hline
-       \ShowExp#3\relax\relax\relax
-      \end{tabular}
-    \end{center}
-  \end{table}
+\else
+\newcommand{\ListAttribsF}[5]{%
+    \begin{table}[ht]
+ \caption{#2}\label{#1}\vspace{-\baselineskip}%
+\begin{center}
+\begin{tabular}[t]{#3}\hline
+        #4\\ \hline
+       \ShowExp#5\relax\relax\relax
+\end{tabular}
+\end{center}
+    \end{table}
 }
-%
-\newcommand{\ShowExpF}[3]{%
-%  \def\TTT{#1}
-%  \ifx\TTT\RELAX\else
-  \ifx#1\relax\else
-    {#1}&#2&#3\\\hline
-    \expandafter\ShowExpF%
-  \fi}
-%
+\fi
 \newcommand{\ShowExp}[3]{%
-%   \def\TTT{#1}
-%   \ifx\TTT\RELAX\else
    \ifx#1\relax\else
-     \Attrib{#1}&#2&#3\\\hline
-     \expandafter\ShowExp%
-   \fi}
+     #1&#2&#3\\ \hline
+     \expandafter\ShowExp\fi
+}
 %
 \newcommand{\Attrib}[1]{\texttt{#1}}
 \newcommand{\JS}{JavaScript}
@@ -74,3 +70,4 @@ numbersep=4pt,firstline=#2,lastline=#3,firstnumber=1]{html/#1}
 }
 \newcommand{\Strict}{\texttt{strict}モード}
 \newcommand{\Correct}[1]{{\color{red}#1}}
+\newcommand{\ES}{ES2015}
