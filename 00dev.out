@@ -140,3 +140,12 @@
 \BOOKMARK [2][-]{subsection.14.2.2}{バージョン管理の概念}{section.14.2}% 140
 \BOOKMARK [2][-]{subsection.14.2.3}{バージョン管理ソフトの概要}{section.14.2}% 141
 \BOOKMARK [2][-]{subsection.14.2.4}{gitの使い方}{section.14.2}% 142
+\BOOKMARK [0][-]{chapter.15}{システム開発のためのヒント}{}% 143
+\BOOKMARK [1][-]{section.15.1}{コードの構造}{chapter.15}% 144
+\BOOKMARK [2][-]{subsection.15.1.1}{良いコードとは}{section.15.1}% 145
+\BOOKMARK [2][-]{subsection.15.1.2}{プログラムとデータの分離}{section.15.1}% 146
+\BOOKMARK [1][-]{section.15.2}{コードの管理}{chapter.15}% 147
+\BOOKMARK [2][-]{subsection.15.2.1}{複数でシステム開発をするときの問題点}{section.15.2}% 148
+\BOOKMARK [2][-]{subsection.15.2.2}{バージョン管理の概念}{section.15.2}% 149
+\BOOKMARK [2][-]{subsection.15.2.3}{バージョン管理ソフトの概要}{section.15.2}% 150
+\BOOKMARK [2][-]{subsection.15.2.4}{gitの使い方}{section.15.2}% 151
