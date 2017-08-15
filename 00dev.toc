@@ -5,7 +5,7 @@
 \contentsline {section}{\numberline {1.4}JavaScriptの実行環境}{2}{section.1.4}
 \contentsline {section}{\numberline {1.5}strict モードについて}{3}{section.1.5}
 \contentsline {section}{\numberline {1.6}第1回目復習課題}{3}{section.1.6}
-\contentsline {chapter}{\numberline {第2回}JavaScriptが取り扱うデータ}{7}{chapter.2}
+\contentsline {chapter}{\numberline {第2回}JavaScriptのデータとプログラミングの基礎}{7}{chapter.2}
 \contentsline {section}{\numberline {2.1}データーの型}{7}{section.2.1}
 \contentsline {subsection}{\numberline {2.1.1}プリミティブデータ型}{7}{subsection.2.1.1}
 \contentsline {subsection}{\numberline {2.1.2}Number型}{7}{subsection.2.1.2}
@@ -22,28 +22,28 @@
 \contentsline {subsection}{\numberline {2.4.2}論理演算子と比較演算子}{13}{subsection.2.4.2}
 \contentsline {subsubsection}{論理演算子}{13}{section*.2}
 \contentsline {subsubsection}{比較演算子}{14}{section*.3}
-\contentsline {section}{\numberline {2.5}組み込みオブジェクト}{14}{section.2.5}
-\contentsline {subsection}{\numberline {2.5.1}組み込み関数}{14}{subsection.2.5.1}
-\contentsline {subsection}{\numberline {2.5.2}\texttt {Math}オブジェクト}{14}{subsection.2.5.2}
-\contentsline {subsection}{\numberline {2.5.3}\texttt {Dateオブジェクト}}{16}{subsection.2.5.3}
-\contentsline {section}{\numberline {2.6}第2回目復習課題}{18}{section.2.6}
+\contentsline {section}{\numberline {2.5}制御構造}{14}{section.2.5}
+\contentsline {section}{\numberline {2.6}組み込みオブジェクト}{14}{section.2.6}
+\contentsline {subsection}{\numberline {2.6.1}組み込み関数}{14}{subsection.2.6.1}
+\contentsline {subsection}{\numberline {2.6.2}\texttt {Math}オブジェクト}{15}{subsection.2.6.2}
+\contentsline {subsection}{\numberline {2.6.3}\texttt {Dateオブジェクト}}{16}{subsection.2.6.3}
+\contentsline {section}{\numberline {2.7}第2回目復習課題}{18}{section.2.7}
 \contentsline {chapter}{\numberline {第3回}関数}{19}{chapter.3}
 \contentsline {section}{\numberline {3.1}今回の内容}{19}{section.3.1}
 \contentsline {section}{\numberline {3.2}関数の定義方法と呼び出し}{19}{section.3.2}
 \contentsline {subsection}{\numberline {3.2.1}簡単な関数の例}{19}{subsection.3.2.1}
 \contentsline {paragraph}{実行例}{20}{section*.4}
 \contentsline {subsection}{\numberline {3.2.2}仮引数への代入}{21}{subsection.3.2.2}
-\contentsline {subsection}{\numberline {3.2.3}\texttt {aruguments}について}{22}{subsection.3.2.3}
-\contentsline {subsection}{\numberline {3.2.4}変数のスコープ}{23}{subsection.3.2.4}
-\contentsline {subsection}{\numberline {3.2.5}スコープチェイン}{26}{subsection.3.2.5}
-\contentsline {section}{\numberline {3.3}JavaScriptにおける関数の特徴}{26}{section.3.3}
-\contentsline {subsection}{\numberline {3.3.1}関数もデータ}{26}{subsection.3.3.1}
-\contentsline {subsection}{\numberline {3.3.2}無名関数とコールバック関数}{26}{subsection.3.3.2}
-\contentsline {subsection}{\numberline {3.3.3}自己実行関数}{28}{subsection.3.3.3}
-\contentsline {subsection}{\numberline {3.3.4}関数を返す関数}{28}{subsection.3.3.4}
-\contentsline {section}{\numberline {3.4}クロージャ}{28}{section.3.4}
-\contentsline {subsection}{\numberline {3.4.1}クロージャの例 -- 変数を隠す}{29}{subsection.3.4.1}
-\contentsline {subsection}{\numberline {3.4.2}クロージャの例 -- 無名関数をその場で実行する}{30}{subsection.3.4.2}
+\contentsline {subsection}{\numberline {3.2.3}変数のスコープ}{22}{subsection.3.2.3}
+\contentsline {subsection}{\numberline {3.2.4}スコープチェイン}{24}{subsection.3.2.4}
+\contentsline {section}{\numberline {3.3}JavaScriptにおける関数の特徴}{25}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}関数もデータ}{25}{subsection.3.3.1}
+\contentsline {subsection}{\numberline {3.3.2}コールバック関数}{25}{subsection.3.3.2}
+\contentsline {subsection}{\numberline {3.3.3}自己実行関数}{26}{subsection.3.3.3}
+\contentsline {subsection}{\numberline {3.3.4}関数を返す関数}{27}{subsection.3.3.4}
+\contentsline {section}{\numberline {3.4}クロージャ}{27}{section.3.4}
+\contentsline {subsection}{\numberline {3.4.1}クロージャの例 -- 変数を隠す}{27}{subsection.3.4.1}
+\contentsline {subsection}{\numberline {3.4.2}クロージャの例 -- 無名関数をその場で実行する}{28}{subsection.3.4.2}
 \contentsline {chapter}{\numberline {第4回}オブジェクト}{33}{chapter.4}
 \contentsline {section}{\numberline {4.1}配列とオブジェクト}{33}{section.4.1}
 \contentsline {section}{\numberline {4.2}コンストラクタ関数}{35}{section.4.2}

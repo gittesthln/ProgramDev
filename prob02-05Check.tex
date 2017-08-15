@@ -1,13 +1,15 @@
 %-*- coding: utf-8 -*-
-
-\newcommand{\Rule}{\ifAnswer\else\rule[-2ex]{0em}{5ex}\fi}
+\newcommand{\WW}{26zw}
+\ifAnswer\else\ifText\renewcommand{\WW}{35zw}\fi\fi
+\newcommand{\Rule}{\ifAnswer\else%
+   \ifText\rule[-3ex]{0em}{7ex}\else\rule[-2ex]{0em}{5ex}\fi}
 \ifAnswer
 \newcommand{\AnsShow}[3]{\texttt{#1}&#2&#3\\\hline}
 \else
 \newcommand{\AnsShow}[3]{\texttt{#1}&&\\\hline}
 \fi
 次の式の評価結果を求めなさい。\\[0.1em]
- \begin{tabular}{|>{\Rule}c|c|m{26zw}|}\hline
+ \begin{tabular}{|>{\Rule}c|m{3zw}|m{\WW}|}\hline
   \multicolumn{1}{|c|}{式}&\multicolumn{1}{c|}{結果}
   &\multicolumn{1}{c|}{理由}  \\\hline
 %  \AnsShow{5\%3}{$2$}{$5$を$3$で割った余り}

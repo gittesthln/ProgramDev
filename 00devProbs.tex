@@ -1,30 +1,61 @@
-\input ProgramDevHead.tex
-\Textfalse
-\renewcommand{\postchaptername}{回}
+\documentclass[a4j]{jarticle}
+\newif\ifHMSol
+\newif\ifText
+\newif\ifAnswer
+\newcommand{\LecName}{\hspace{1zw}ソフトウェア開発}
+\input enshuuhead.tex
+\Texttrue
+\newcommand{\Ans}[1]{\hfill\underline{\makebox[#1zw][l]{\theenumi.}}}
+%\renewcommand{\postchaptername}{回}
+\newcommand{\ProblemN}{%
+\stepcounter{LecNo}
+\Problem{
+\ \\[\baselineskip]
+足りない場合は裏面を使用してよい。}
+}
+\newcommand{\ProblemNN}[1]{\stepcounter{LecNo}\Problem{#1}}
+\newcommand{\ProblemNR}[1]{\stepcounter{LecNo}\ProblemRev{#1}}
 \begin{document}
-\frontmatter
-\maketitle
-\tableofcontents
-\mainmatter
-\chapter{ガイダンス}
-
-\chapter{JavaScriptが取り扱うデータ}
+\pagestyle{enshuu}
+\renewcommand{\theLecNo}{第\arabic{LecNo}回}
+%\chapter{ガイダンス}
+\ProblemN
+%\chapter{JavaScriptが取り扱うデータ}
+\ProblemNN{
 \input prob02-01string.tex
 \input prob02-02asign.tex
 \input prob02-03.tex
 \input prob02-04Date.tex
+\Texttrue
+\begin{Prob}\upshape
 \input prob02-05Check.tex
+\end{Prob}
+}
+%\chapter{関数}
+\ProblemNN{
+ \begin{Prob}\upshape
+  次のプログラムを実行したときのコンソールの出力を記せ。また、その理由も
+  述べよ。
+  \input prob03-01.tex
+ \end{Prob}
+\underline{\makebox[10zw][l]{(1)}}\hfill
+\underline{\makebox[10zw][l]{(2)}}\hfill
+\underline{\makebox[10zw][l]{(3)}}\hfill
+\underline{\makebox[10zw][l]{(4)}}\\[\baselineskip]
+\underline{\makebox[\textwidth][l]{\bfseries 理由:}}
 
-\chapter{関数}
-\chapter{オブジェクト}
-\chapter{オブジェクトのプロトタイプと継承}
-\chapter{正規表現}
-\chapter{DOMの利用}
-\chapter{イベント}
-\chapter{PHPの超入門}
-\chapter{サーバーとのデータのやり取り}
-\chapter{jQuery}
-\chapter{JavaScriptライブラリーの配布}
-\chapter{XMLファイルの処理}
-\chapter{システム開発のためのヒント}
+\input prob03-02.tex
+\input prob03-03factorial.tex
+}
+%\chapter{オブジェクト}
+%\chapter{オブジェクトのプロトタイプと継承}
+%\chapter{正規表現}
+%\chapter{DOMの利用}
+%\chapter{イベント}
+%\chapter{PHPの超入門}
+%\chapter{サーバーとのデータのやり取り}
+%\chapter{jQuery}
+%\chapter{JavaScriptライブラリーの配布}
+%\chapter{XMLファイルの処理}
+%\chapter{システム開発のためのヒント}
 \end{document}

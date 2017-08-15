@@ -1,5 +1,5 @@
 %-*- coding: utf-8 -*-
-\chapter{JavaScriptが取り扱うデータ}
+\chapter{JavaScriptのデータとプログラミングの基礎}
 \section{データーの型}
 JavaScript の方には大きく分けて\KeyItem{プリミティブ型}と\KeyItem{非プリ
 ミティブ型}の2種類がある。
@@ -291,6 +291,12 @@ let a=1; true ||(a=3);
 
 \Verb+NaN === NaN+ の結果は \Verb+false+ である。値が \Verb+NaN+ で
 あるかを調べるには関数\ElmJ{isNaN()}を用いる。
+\section{制御構造}
+JavaScript ではC言語などと同様に\ElmJ{if}文、\ElmJ{for}文、\ElmJ{while}
+文、\ElmJ{switch}文がある。使い方は同様なのでここでは説明をしない。また、
+Java やC++のように
+\ElmJ{for}分の初期化のところに現れる変数を\ElmJ{let}を用いて宣言すること
+もできる。このの宣言された変数に関するJavaScript特有の注意は次回解説をする。
 \section{組み込みオブジェクト}
 \subsection{組み込み関数}
 JavaScript に組み込まれている代表的な関数としては次のものがある。
@@ -321,7 +327,7 @@ JavaScript に組み込まれている代表的な関数としては次のもの
 \subsection{\protect\texttt{Math}オブジェクト}
 \ElmJ{Math}オブジェクトには数学的な定数の定義(円周率など)や三角関数など
 の関数が定義されている。表\ref{JSMath}はそれらのプロパティや関数をまとめ
-たものである。\newpage%\vspace{-1cm}
+たものである。%\newpage%\vspace{-1cm}
 \input 00Math.tex
 %\newpage
 %\clearpage
@@ -355,7 +361,7 @@ Mon Nov 02 2015 10:10:20 GMT+0900 (東京 (標準時))
 \end{itemize}%
 
 \input 00Date.tex
-
+\input prob02-04Date.tex
 \clearpage
 \section{第2回目復習課題}
 %\Answertrue
