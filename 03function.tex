@@ -383,12 +383,15 @@ window.setTimeout(
        に名前は\Verb+callMe+である(3行目)。\footnote{\Verb+function+オブジェクトには引数を表す配列のようなオブジェクト\Verb+arguments+があるが、\ES で非推奨となっているのでここでは使用しない。そのため、コールバック関数に名前を付けている。}
  \item 4行目で呼び出されたときの時間を求め、経過時間が$10000$ミリ秒以下
        であれば(5行目)、経過時間を秒単位で表示する(6行目)。
- \item さらに、自分自身を1秒後に呼び出す(7行目)。非\Strict では
+ \item さらに、自分自身を1秒後に呼び出す(7行目)。
+
+\iffalse			 非\Strict では
        \Verb+arguments+を仮引数としてもつ関数を\Verb+arguments.callee+で
        呼び出すことができる。つまり自分自身を呼び出せることとなる。
        \Strict では\Verb+arguments.callee+は使用できないので3行目の関数
        に名前を付けてその関数名を\Verb+arguments.callee+の代わりに用いる
        必要がある。
+			 \fi
 \end{itemize}
 \end{Exec}
 なお、関数の宣言を {\Verb+function foo()\{...\}+} でする代わりに、
@@ -464,7 +467,7 @@ window.setTimeout(
  次の関数を考える。
 \begin{Verbatim}[numbers=left]
 function f1() {
-  var n=0;
+  let n=0;
   return function() {
     return n++;
   };
@@ -487,6 +490,7 @@ function f1() {
  return n++;
  }
 \end{Verbatim}
+	これにより変数\Verb+ff+は関数オブジェクトになる。
 	\item \texttt{f1()}内のローカル変数は参照できない。
 \begin{Verbatim}
 >n;
@@ -530,7 +534,7 @@ VM351:2 Uncaught ReferenceError: n is not defined(…)
   次のリストは、使い捨ての関数の例である。このような方法を用いるとオブジェ
     クトに共通の変数を持つことができる。
 var foo = (function () {
-  var n=0;
+  let n=0;
   return function() {
     return n++;
   };
@@ -551,15 +555,15 @@ var foo = (function () {
 \end{Verbatim}
 \end{itemize}
 \end{Exec}
-\newpage
-\begin{Exec}\upshape
+%\newpage
+\begin{Exec}\upshape\label{functionsReturnLocalValue}
 次の例は関数内のローカル変数の値を単純に返すと、不都合が起こる例である\footnote{こ
 				の例は Stoyan Stefanov(水野貴明、渋川よしき訳)オブジェクト指向
 				JavaScript、アスキーメディアワークス、2012年の103ページ以降から取りました。}
 \begin{Verbatim}[numbers=left]
 function f2() {
-  var a = [];
-  var i;
+  let a = [];
+  let i;
   for(i=0; i<3; i++) {
     a[i] = function() {
       return i;
@@ -588,22 +592,19 @@ function f2() {
  ある。
 \end{Exec}
 \begin{Exec}\upshape
-この不具合を直すためには、その値を関数の引数に(値渡しで)渡すことで、スコー
- プチェーンを切ればよい。
- \begin{Verbatim}[numbers=left]
-function f3() {
-  var a = [];
-  var i;
-  for(i=0; i<3; i++) {
-    a[i] = (function(x){
-      return function() {
-        return x;
-      }
-    })(i);
-  };
+この不具合を直すためには、\ElmJ{for}の制御変数\Verb+i+を\Verb+for+文の初
+ 期化のところで宣言すればよい。
+\begin{Verbatim}
+ function f2() {
+  let a = [];
+  for(let i=0; i<3; i++) {
+    a[i] = function() {
+      return i;
+    };
+  }
   return a;
 }
- \end{Verbatim}
+\end{Verbatim}
 これを実行すると、期待した結果が得られる。
 \begin{Verbatim}
 >funcs2 = f3();
@@ -614,6 +615,26 @@ function f3() {
 1
 \end{Verbatim}
 
+この形で\Verb+let+による変数の宣言を\Verb+var+に変えると変数の巻き上げに
+ より正しく動作しない。
+ 
+ 初めの宣言の位置で正しく動作させるためには値を関数の引数に(値渡しで)渡すことで、スコー
+ プチェーンを切ればよい。
+ \begin{Verbatim}[numbers=left]
+function f3() {
+  let a = [];
+  let i;
+  for(i=0; i<3; i++) {
+    a[i] = (function(x){
+      return function() {
+        return x;
+      }
+    })(i);
+  };
+  return a;
+}
+ \end{Verbatim}
+
 \begin{itemize}
  \item 5行目から9行目で、その場で実行される、引数を取る無名関数を用意している。
  \item この関数の戻り値は、無名関数で与えられた引数の値を返す無名関数(6行目から8行目)
@@ -623,6 +644,12 @@ function f3() {
        \texttt{x}に保持される。
 \end{itemize}
 \end{Exec}
+\begin{Prob}\upshape
+ 実行例\ref{functionsReturnLocalValue}において、\ElmJ{for}文の代わりに
+ \ElmJ{while}文に書き換えたときに正しく動作するようにせよ。ただし、直前
+ のように即時実行関数を用いないで実現すること。
+\end{Prob}
+\iffalse
 この書き方が有効になるのは関数をオブジェクトのコンストラクタとして使用し、
 インスタンスに通し番号を付けるときなどに必要となる。
 \begin{Prob}\upshape
@@ -644,3 +671,4 @@ function f4() {
 \end{Verbatim}
 
 \end{Prob}
+\fi

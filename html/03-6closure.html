@@ -6,22 +6,22 @@
 <script type="text/ecmascript">
 //<![CDATA[
 function f1() {
-  var n=0;
+  let n=0;
   return function() {
     return n++;
   };
 }
 
-var foo = (function () {
-  var n=0;
+let foo = (function () {
+  let n=0;
   return function() {
     return n++;
   };
 })();
 
 function f2() {
-  var a = [];
-  var i;
+  let a = [];
+  let i;
   for(i=0; i<3; i++) {
     a[i] = function() {
       return i;

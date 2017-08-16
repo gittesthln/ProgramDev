@@ -43,7 +43,7 @@
 \contentsline {subsection}{\numberline {3.3.4}関数を返す関数}{27}{subsection.3.3.4}
 \contentsline {section}{\numberline {3.4}クロージャ}{27}{section.3.4}
 \contentsline {subsection}{\numberline {3.4.1}クロージャの例 -- 変数を隠す}{27}{subsection.3.4.1}
-\contentsline {subsection}{\numberline {3.4.2}クロージャの例 -- 無名関数をその場で実行する}{28}{subsection.3.4.2}
+\contentsline {subsection}{\numberline {3.4.2}クロージャの例 -- 無名関数をその場で実行する}{29}{subsection.3.4.2}
 \contentsline {chapter}{\numberline {第4回}オブジェクト}{33}{chapter.4}
 \contentsline {section}{\numberline {4.1}配列とオブジェクト}{33}{section.4.1}
 \contentsline {section}{\numberline {4.2}コンストラクタ関数}{35}{section.4.2}
