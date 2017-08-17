@@ -56,6 +56,13 @@ JavaScript の方には大きく分けて\KeyItem{プリミティブ型}と\KeyI
        れる。
 \end{itemize}
 \subsection{String型}
+文字列は\Verb+"+　または \Verb+'+ではさむ。%"
+1文字だけの文字の型はない。\ES では文字列の中に式の値を埋め込むことがで
+きるテンプレートリテラルが新たに導入された。テンプレートリテラルはバック
+クオート(\Verb+`+)ではさむ。埋め込む式は\texttt{\$\{2+3\}}のように記述する。
+\begin{Verbatim}
+`2+3=${2+3}`  => "2+3=5"
+\end{Verbatim}
 文字列に関する演算子としては、2つの文字列をつなげる\KeyItem{連接演算子}
 がある。JavaScript では\ElmJ{+}を用いる。詳しくは\ref{operator}を参照の
 こと。
@@ -87,7 +94,7 @@ JavaScript の方には大きく分けて\KeyItem{プリミティブ型}と\KeyI
 \end{center}
 \end{table}
 \input prob02-01string.tex
-  \subsection{Bool型}
+\subsection{Bool型}
 \ElmJ{true} と \ElmJ{false} の2つの値をとる。この2つは予約語である。論理
 式の結果としてこれらの値が設定されたり、論理値が必要なところでこれらの値
 に設定される。詳しくは\ref{operator}を参照のこと。
@@ -227,22 +234,18 @@ c  ==> [3, 4, 5, 6, 7]
  \item \Verb-+-演算子は文字列の連接にも使用できる。\Verb-+-演算子は左右のオペ
 ランドがNumberのときだけ、和をとる。一方が文字列の
 場合は数を文字列に直して、文字列として連接を行う。
-\begin{Verbatim}
-1+2  => 3
-1+"2" => 12
-\end{Verbatim}
  \item そのほかの演算子(\Verb+-*/+)については文字列を数に変換してから数
        として計算する。
  \item 文字列全体が数にならない場合には変換の結果が\Verb+NaN+になる。
 \begin{Verbatim}
- "2" + 3  => "23"
+ 2+3  => 5
+ "2"+3 => "23"
  "2"-0 +3 => 5
  "2"*3    => 6
  "2"*"3"  => 6
  "f" *2   => NaN
  "0xf"*2  => 30
  "0o10"*2 => 16
- "010"*2  => 20
 \end{Verbatim}
  \item 整数を整数で割った場合、割り切れなければ小数となる。
        小数部分を切り捨てたいときは\Verb+Math.floor()+を用いる。
@@ -259,8 +262,8 @@ Boolean 型に対して使用できる演算子は次の3つである。
  \item \Verb+&&+ 論理積
  \item \Verb+||+ 論理和
 \end{itemize}
-論理演算子をBoolean 型でない値を与えると元の値がBoolean型に変換されてか
-ら実行される。次の値は \Verb+false+ に変換される。
+論理演算子をBoolean 型でない値を与えると
+次の値は \Verb+false+ とみなされる。
 \begin{itemize}
  \item 空文字列 \Verb+""+
  \item \Verb+null+
@@ -358,8 +361,8 @@ Mon Nov 02 2015 10:10:20 GMT+0900 (東京 (標準時))
        引数の値が範囲を外れる(日に対して0を指定するなど)
        場合でも、正しく作成される。たとえば日の値が0のときは指定した月の
        1日の1日前、つまり前の月の最終日と解釈される。
-\end{itemize}%
-
+\end{itemize}
+\newpage
 \input 00Date.tex
 \input prob02-04Date.tex
 \clearpage

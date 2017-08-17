@@ -30,16 +30,17 @@
 %       ば、Goole Maps API を考えている。
 \end{itemize}
 \section{参考図書}
+
 \begin{enumerate}
  \item E. Brown, 初めてのJavaScript　第3版, --ES2015以降の最新ウェブ開発, オラ
-       イリージャパン
+       イリージャパン\label{ES2016}
  \item D. Crockford, JavaScript: The Good Parts 「良いパー
-	 ツ」によるベストプラ クティス, オライリージャパン
+	 ツ」によるベストプラ クティス, オライリージャパン\label{goodparats}
  \item David Flanagan, JavaScript 第6 版, オライリージャパン\label{JS6}
- \item David Flanagan, JavaScript クイックリファレンス第6 版, オ
+ \item David Flanagan, JavaScript クイックリファレンス第6 版, オ\label{JS6ref}
 	 ライリージャパン
  \item Nicholas C. Zakas, ハイパフォーマンスJavaScript, オライリー
-	 ジャパン
+	 ジャパン\label{JSPerformance}
  \item Nicholas C. Zakas, メンテナブルJavaScript 　読みやすく保守しやすいJavaScript 
 コードの作法, オライリージャパン
 \end{enumerate}
@@ -99,7 +100,7 @@ ECMAScript の改訂版 \ES \footnote{ES6 とも呼ばれる。今後、EcmaScri
 \section{第1回目復習課題}
 \begin{Prob}\upshape
  各自が使用しているブラウザにおいてJavaScriptの文が直接実行できるコンソール
- が開けることを確認しなさい。また、コンソールで「\texttt{1+2}」と入力すると、計算結果が
+ が開けること、コンソールで「\texttt{1+2}」と入力すると、計算結果が
  表示されることを確認すること。
 \end{Prob}
 \begin{Prob}\label{FisatJS}\upshape
@@ -131,10 +132,13 @@ ECMAScript の改訂版 \ES \footnote{ES6 とも呼ばれる。今後、EcmaScri
        いて宣言していたが、この授業では\ES で新しく導入された\texttt{let}だけ
        を用いる。)
  \item 10行目 C言語などでおなじみの繰り返しの指定
- \item 11行目 引数内の式をコンソールに出力
+ \item 11行目 引数内の式をコンソールに出力。ここでは\ES で導入された文字
+       列の中に式を埋め込むことができるテンプレートリテラル形式(バックク
+       オート\Verb+@+の上にある文字で挟む)で記述し
+       ている。
  \item 14行目はメッセージボックスにコンソールを開くことを指示。
 \end{itemize}
-
+開発者ツールを開き、コンソールから\Verb+foo();+を入力する。
 \input 02datatype.tex
 
 \input 03function.tex

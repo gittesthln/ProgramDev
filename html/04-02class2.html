@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<title>クラスの例</title>
+<script type="text/ecmascript">
+//<![CDATA[
+class Person{
+  constructor(name, year, month, day, hometown){
+    this.name = "foo";
+    this.birthday = {
+      year : year,
+      month : month,
+      day : day
+    };
+    this["hometown"] = hometown || "神奈川";
+  }
+  get age() {
+    let today = new Date();
+    let age = today.getFullYear() - this.birthday.year;
+    if(today.getTime() <
+         new Date(today.getFullYear(),
+                  this.birthday.month-1,
+                  this.birthday.day).getTime()) age--;
+    return age;
+  }
+}
+class Student extends Person {
+  constructor(name, id, year, month, day, hometown) {
+    super(name, year, month, day, hometown);
+    this.id = id;
+  }
+}
+//]]>
+</script>
+</head>
+</html>

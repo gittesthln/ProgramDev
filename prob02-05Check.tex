@@ -46,8 +46,9 @@
   \AnsShow{![]}{\texttt{false}}{空の配列はオブジェクトとして存在するので\texttt{true}と解釈され、否定
 	  演算子で\texttt{false}になる。}
   \AnsShow{false == []}{\texttt{true}}{\texttt{[]}が空文字\texttt{""}に変換されたのち、\texttt{0}に変換される。}
-  \AnsShow{"false" == []}{\texttt{false}}{文字列\texttt{"false"}は空文字ではな
-	  いので\texttt{true}に変換される。}
+  \AnsShow{false == undefined}{\texttt{false}}{どちらも\texttt{false}と
+  みなされるが異なるものと判断される。\texttt{null}と\texttt{undefined}
+  は同等に取り扱われる。}
   \AnsShow{[] == []}{\texttt{false}}{配列はオブジェクトであり、二つの空の配
 	  列は別物とみなされる。}
   \AnsShow{typeof []}{\texttt{"object"}}{配列はオブジェクトである。}

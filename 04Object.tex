@@ -2,12 +2,12 @@
 \chapter{オブジェクト}
 \section{配列とオブジェクト}
 配列はいくつかのデータをまとめて一つの変数に格納している。各データを利用
-するためには \verb+foo[1]+ のように数による添え字を使う。これにたいし、
+するためには \verb+foo[1]+ のように数による添え字を使う。これに対し、
 オブジェクトでは添え字に任意の文字列を使うことができる。
 \begin{Exec}\label{Execconstructor}\upshape
 次の例はあるオブジェクトを定義してそれの各データにアクセスする方法を示している。
 \begin{Verbatim}
-var person = {
+let person = {
   name : "foo",
   birthday :{
     year : 2001,
@@ -24,7 +24,8 @@ var person = {
  \item キーの文字列が変数名の約束事に合わないときはキー全体を \verb+""+
 			 で囲う必要がある。
  \item 値はJavaScriptで取り扱えるデータなあらば何でもよい。上の例ではキー
-       \verb+birthday+ の値がまたオブジェクトとなっている。
+       \verb+birthday+ の値がまたオブジェクトとなっている。値が関数であ
+       るキーはそのオブジェクトのメソッドと呼ばれる。
  \item 各要素の値を取り出す方法は2通りある。
 \begin{itemize}
  \item \verb+.+演算子を用いてオブジェクトのキーをそのあとに書く。
@@ -78,11 +79,13 @@ undefined
 \begin{itemize}
  \item \verb+for( v in obj)+ の形で使用する。変数 \verb+v+ はループ内で
        キーの値が代入される変数、\verb+obj+ はキーが走査されるオブジェク
-       トである。
+       トである。\footnote{\pageref{ES2016}ページの[\ref{ES2016}162ペー
+       ジ]にはオブジェクトの独自プロパティだけを見たい場合には
+       \ElmJ{hasOwnProperty()}を使うことが推奨されている。}
  \item キーの値は \verb+obj[v]+ で得られる。
 \end{itemize}
 \begin{Verbatim}
->for(i in person) { console.log(i+" "+person[i]);};
+>for(i in person) { console.log(`i ${person[i]}`);};
 name foo
 birthday [object Object]
 hometown 北海道
@@ -94,6 +97,37 @@ undefined
 \end{Exec}
 オブジェクトを\verb+{}+の形式で表したものを\ElmJ{オブジェクトリテラル}と
 よぶ。
+\section{クラスとインスタンスの生成}
+前節で同じキーを持つオブジェクトを複数作成したい場合に同じようなコードを
+繰り返すのは問題である。たとえば、キーの追加をするときの修正の手間がかかりすぎてプ
+ログラムのメンテナンスが面倒になる。
+
+そこで、オブジェクトのひな形を作成し、それをもとにオブジェクトを構成する
+ことが考えられる。このオブジェクトのひな形は通常クラスと呼ばれる。\ES で
+はクラスの宣言ができる。前節の例をクラスを用いて書き直すと次のようになる。
+\begin{Verbatim}[numbers=left]
+class Person{
+  constructor(name, year, month, day, hometown){
+    this.name = "foo";
+    this.birthday = {
+      year : year,
+      month : month,
+      day : day
+    };
+    this["hometown"] = hometown || "神奈川";
+  }
+\end{Verbatim}
+\begin{itemize}
+ \item 1行目がクラスの宣言である。キーワード\ElmJ{class}の後にクラス名
+       \texttt{Person}を記述する。
+ \item その後の\Verb+{+と\Verb+}+内にクラスの記述を行う。
+ \item クラスの定義には初期化を行う\ElmJ{constructor()}が必須である。こ
+       こでは5つの引数を取るコンストラクタが定義されている。
+ \item クラスは実体がない。キーワード\ElmJ{this}はクラスから作成された実
+       体を指す。
+ \item 3行目から9行目で、その実体のオブジェクトのキーを定義している。
+\end{itemize}
+\iffalse
 \section{コンストラクタ関数}
 オブジェクトを定義する方法としてはコンストラクタ関数を使う方法がある。
 \begin{Exec}\label{constructor}\upshape
@@ -262,6 +296,7 @@ function Object() { [native code] }
  \item なお、実行例\ref{Execconstructor}でみたように、このプロパティは
        \verb+for-in+ループ内では表示されない。
 \end{itemize}
+\fi
 \subsection{\protect\texttt{instanceof}演算子}
 \texttt{instanceof}演算子はオブジェクトを生成したコンストラクタ関数が指
 定されたものかを判定できる。
@@ -304,6 +339,7 @@ function Function() { [native code] }
 の授業で解説をする。
 %\paragraph{\protect\texttt{Function}オブジェクトのメソッド}
 \fi
+\iffalse
 \subsection{同じコンストラクタ関数からの生成されたオブジェクトに連番号を付ける}\label{SetID}
 オブジェクト指向言語では同じコンストラクタ関数(クラス)から生成されたオブ
 ジェクトに重複のない番号を付けることがある。\JS でそのようなことを実現す
@@ -420,4 +456,5 @@ Object {name: "foo"}
  を付けて、外部から変更できないようにしなさい。(ヒント:\texttt{ID}の値を
  参照するために別の変数が必要になるかもしれない。)
 \end{Prob}
+\fi
 \input JSON.tex
