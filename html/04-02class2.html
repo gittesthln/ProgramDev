@@ -6,14 +6,14 @@
 <script type="text/ecmascript">
 //<![CDATA[
 class Person{
-  constructor(name, year, month, day, hometown){
+  constructor(name, year, month, day, hometown="神奈川"){
     this.name = "foo";
     this.birthday = {
       year : year,
       month : month,
       day : day
     };
-    this["hometown"] = hometown || "神奈川";
+    this["hometown"] = hometown;
   }
   get age() {
     let today = new Date();

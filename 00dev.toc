@@ -46,7 +46,7 @@
 \contentsline {chapter}{\numberline {第4回}オブジェクト}{29}{chapter.4}
 \contentsline {section}{\numberline {4.1}配列とオブジェクト}{29}{section.4.1}
 \contentsline {section}{\numberline {4.2}クラスとインスタンスの生成}{31}{section.4.2}
-\contentsline {subsection}{\numberline {4.2.1}\texttt {instanceof}演算子}{31}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.1}\texttt {instanceof}演算子}{32}{subsection.4.2.1}
 \contentsline {section}{\numberline {4.3}オブジェクトリテラルとJSON}{32}{section.4.3}
 \contentsline {chapter}{\numberline {第5回}オブジェクトのプロトタイプと継承}{35}{chapter.5}
 \contentsline {section}{\numberline {5.1}オブジェクト属性}{35}{section.5.1}
