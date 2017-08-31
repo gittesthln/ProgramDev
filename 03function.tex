@@ -27,11 +27,11 @@ JavaScript における関数はいろいろな目的のために利用される
 関数はオブジェクトを作成するときのも用いられるが、その解説は次回で行う。
 \section{関数の定義方法と呼び出し}
 \subsection{簡単な関数の例}
-次の例は \Verb+sum()+という関数を定義している例である。
+次の例は \Verb+sum()+という関数を定義している。
 \begin{Verbatim}
 function sum(a,b) {
   let c = a + b;
-  return c;
+  return c;  // return a + b;　でもよい。
 }
 \end{Verbatim}
 関数の定義は次の部分から成り立っている。
@@ -191,24 +191,49 @@ function sum2(a, b){
 5
 \end{Verbatim}
 \end{itemize}
- sumN(...args) {
+\else
+\subsection{可変引数をとる関数}
+前節で定義した引数の和を計算する関数において、引数の数を固定しないように
+するためには仮引数に展開演算子をつける\footnote{これまでのJavaScript で
+は、関数の引数を表す配列のような性質を持つ\texttt{arguments}オブジェクト
+が用意されていたが、\ES では非推奨となった。}。
+\begin{Verbatim}
+function sumN(...args) {
     let S = 0;
     for(let i=0;i<args.length;i++) {
         S += args[i];
     }
     return S;
 }
-undefined
-sumN(1,2,3,4);
+\end{Verbatim}
+\begin{itemize}
+ \item 1行目で関数の仮引数\texttt{args}に展開演算子\texttt{...}をつけて
+       いる。
+ \item \texttt{args}は配列となるのでその大きさは\texttt{args.length}でわ
+       かる。
+ \item これを用いて総和のプログラムが2行目から5行目に記述されている。
+\end{itemize}
+実行例は次のとおりである。
+\begin{Verbatim}
+>sumN(1,2,3,4);
 10
-sumN(1,2,3,4,5);
-15\else
+>sumN(1,2,3,4,5);
+15
+\end{Verbatim}
+ \begin{Prob}\upshape
+  上で定義した関数\texttt{sumN}について次の問いに答えよ。
+  \begin{enumerate}
+   \item \texttt{sumN()}の結果を調べよ。
+   \item 変数\texttt{a}が数値からなる配列のとき、\texttt{sumN()}を用いて
+         \texttt{a}の要素の総和を求めるにはどうすればよいか答えよ。
+  \end{enumerate}
+\end{Prob}
 \fi
 \subsection{変数のスコープ}
 変数のスコープとはある場所で使われている変数がどこから参照できるかという
 概念である。JavaScriptでは次の特徴がある。
 \begin{enumerate}
- \item 非\Strict 変数は宣言しなくても使用できる。\label{3-4NoDeclare}
+ \item 非\Strict では変数は宣言しなくても使用できる。\label{3-4NoDeclare}
  \item 関数内で \Verb+let+ により明示的に定義された変数はブロック内で有
        効となる。\label{3-4DeclareInFunc}\footnote{変数を\Verb+var+で宣
        言すると関数の途中で宣言しても、関数の先頭で宣言したと同じ効果を
@@ -316,10 +341,10 @@ local in func4
 \end{Verbatim}
 \end{itemize}
 \end{itemize}
-\input prob03-02.tex
+\input prob03-03factorial.tex
 \subsection{スコープチェイン}
 関数の中で関数を定義すると、その
-内側の関数内で\Verb+var+で宣言された変数のほかに、一つ上の関数で利用でき
+内側の関数内で\Verb+let+で宣言された変数のほかに、一つ上の関数で利用でき
 る(スコープにある)変数が利用できる。これがスコープチェインである。
 例を挙げる。
 \begin{Verbatim}
@@ -339,11 +364,14 @@ function func1(a) {
        \Verb+func1()+の仮引数の \Verb+a+ と\Verb+func1()+のローカル変数
        \Verb+b+、\Verb+func2()+のローカル変数\Verb+G2+と\Verb+c+が利用で
        きる。
+ \item \Verb+func1()+で定義された\Verb+c+は\Verb+func2()+では同名の
+       \Verb+c+が宣言されているために隠されてしまう。
 \end{itemize}
 このように内側で定義された関数は自分自身の中で定義されたローカル変数があ
 るかを探し、見つからない場合には一つ上のレベルでの変数を探す。これがスコー
 プチェインである。JavaScriptの関数のスコープは関数が定義されたときのスコー
-プチェインが適用される。これをレキシカルスコープと呼ぶ。レキシカルスコー
+プチェインが適用される(実行例\ref{ExecScope}の14行目参照)。
+これをレキシカルスコープと呼ぶ。レキシカルスコー
 プは静的スコープとも呼ばれる。これに対して実行時にスコープが決まるものは
 動的スコープと呼ばれる。
 \section{JavaScriptにおける関数の特徴}
@@ -387,7 +415,11 @@ window.setTimeout(
        時間(単位はミリ秒)を引数に取る。
  \item 実行する関数は3行目から9行目で定義されている。
  \item この関数内で一定の条件のときはこの関数を呼び出す。この関数
-       に名前は\Verb+callMe+である(3行目)。\footnote{\Verb+function+オブジェクトには引数を表す配列のようなオブジェクト\Verb+arguments+があるが、\ES で非推奨となっているのでここでは使用しない。そのため、コールバック関数に名前を付けている。}
+       に名前は\Verb+callMe+である(3行目)。\footnote{\Verb+function+オブ
+       ジェクトには引数を表す配列のようなオブジェクト\Verb+arguments+が
+       あり、そのプロパティ\texttt{callee}を使うのが従来の方法である。
+       \ES では\Verb+arguments+が非推奨となったため、コールバック関数に
+       名前を付けている。}
  \item 4行目で呼び出されたときの時間を求め、経過時間が$10000$ミリ秒以下
        であれば(5行目)、経過時間を秒単位で表示する(6行目)。
  \item さらに、自分自身を1秒後に呼び出す(7行目)。
@@ -402,16 +434,35 @@ window.setTimeout(
 \end{itemize}
 \end{Exec}
 なお、関数の宣言を {\Verb+function foo()\{...\}+} でする代わりに、
-{\Verb+var foo = function()...\{\}+} と無名関数を利用して定義してもよい。
+{\Verb+let foo = function()...\{\}+} と無名関数を利用して定義してもよい。
 
-\input prob03-03factorial.tex
+\Verb+setTimeout()+メソッドのコールバック関数に引数の値を渡したいときは、
+\Verb+setTimeout()+メソッドの3番目以降の引数に記述する。
+\begin{Prob}\upshape
+  次のリストは上記の例のコールバック関数を引数付にしたもの
+    である。
+\begin{Verbatim}
+let T = new Date();
+window.setTimeout(
+  function callMe(L){
+    let NT = new Date();
+    if(NT.getTime()-T.getTime()<10000) {
+      console.log(Math.floor((NT.getTime()-T.getTime())/1000));
+      L +=1000;
+      window.setTimeout(callMe,L,L);
+    }
+   },1000,1000);
+\end{Verbatim}
+ どのような動作をするか確認しなさい。
+\end{Prob}
+%\input prob03-03factorial.tex
   \subsection{自己実行関数}
 関数を定義してその場で直ちに実行することができる。たとえば次のコードを
 考える。これは課題\ref{FisatJS}の関数の中身である。
 \begin{Verbatim}
   let i;
   for(i=1;i<10;i++) {
-    console.log(i+" "+i*i);
+    console.log(`${i} ${i*i}`);
   }
 \end{Verbatim}
 このプログラムを実行すると$1$から$9$までの値とそれの2乗の値がコンソール
@@ -430,7 +481,7 @@ window.setTimeout(
 (function(){
   let i;
   for(i=1;i<10;i++) {
-    console.log(i+" "+i*i);
+    console.log(`${i} ${i*i}`);
   })();
 \end{Verbatim}
 この様に関数の定義を全体で\Verb+()+で囲み、そのあとに関数の呼び出しを示
@@ -443,7 +494,7 @@ window.setTimeout(
 その変数は\ElmJ{for}文内でしか存在しない。
 \begin{Verbatim}
   for(let i=1;i<10;i++) {
-    console.log(i+" "+i*i);
+    console.log(`${i} ${i*i}`);
   }
 \end{Verbatim}
 
@@ -531,10 +582,10 @@ VM351:2 Uncaught ReferenceError: n is not defined(…)
 				れ以上実行されないようにするためにはこの関数を無名関数としてそ
 				の場で実行すればよい。
 \begin{Exec}\upshape
-\begin{Verbatim}
   次のリストは、使い捨ての関数の例である。このような方法を用いるとオブジェ
     クトに共通の変数を持つことができる。
-var foo = (function () {
+\begin{Verbatim}
+let foo = (function () {
   let n=0;
   return function() {
     return n++;
@@ -579,7 +630,7 @@ function f2() {
 				(4行目から8行目)
 	\item 配列全体を戻り値として返す(9行目)。
  \end{itemize}
- これを実行すると次のようになる\footnote{ここでの出力例はOperaによるもの
+ これを実行すると次のようになる\footnote{ここでの出力例はChromeによるもの
  である。ブラウザによっては出力が異なる。}。
 \begin{Verbatim}
 >funcs=f2()
@@ -594,7 +645,8 @@ function f2() {
 \end{Exec}
 \begin{Exec}\upshape
 この不具合は、\ElmJ{for}の制御変数\Verb+i+を\Verb+for+文の初
- 期化のところで宣言すれば発生しない。
+ 期化のところで宣言すれば発生しない\footnote{\ES では\texttt{for}文の初
+ 期化内で\texttt{let}で宣言された変数のスコープ規則が別に定められている。}。
 \begin{Verbatim}
  function f2() {
   let a = [];
@@ -619,7 +671,7 @@ function f2() {
 この形で\Verb+let+による変数の宣言を\Verb+var+に変えると変数の巻き上げに
  より正しく動作しない。
  
- 初めの宣言の位置で正しく動作させるためには値を関数の引数に(値渡しで)渡すことで、スコー
+正しく動作させるためには値を関数の引数に(値渡しで)渡すことで、スコー
  プチェーンを切ればよい。
  \begin{Verbatim}[numbers=left]
 function f3() {
@@ -635,7 +687,6 @@ function f3() {
   return a;
 }
  \end{Verbatim}
-
 \begin{itemize}
  \item 5行目から9行目で、その場で実行される、引数を取る無名関数を用意している。
  \item この戻り値は、5行目の無名関数の引数の値を返す無名

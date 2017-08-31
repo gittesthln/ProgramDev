@@ -97,7 +97,13 @@ undefined
 \end{Exec}
 オブジェクトを\verb+{}+の形式で表したものを\ElmJ{オブジェクトリテラル}と
 よぶ。
-\section{クラスとインスタンスの生成}
+\begin{Prob}\upshape
+\verb+window+ オブジェクトにはどのようなプロパティがあるか調べよ。2つ以
+ 上のブラウザで実行し、比較すること。
+\end{Prob}
+
+\input JSON.tex
+ \section{クラスとインスタンスの生成}
 前節で同じキーを持つオブジェクトを複数作成したい場合に同じようなコードを
 繰り返すのは問題である。たとえば、キーの追加をするときの修正の手間がかかりすぎてプ
 ログラムのメンテナンスが面倒になる。
@@ -127,6 +133,79 @@ class Person{
        体を指す。
  \item 3行目から9行目で、その実体のオブジェクトのキーを定義している。
 \end{itemize}
+クラスの定義からデータを保持する実体を作成するためにはキーワード
+\ElmJ{new}をつけてクラスを呼び出す。上の例ではコンストラクタが引数を必要
+としているので次のようになる。
+\begin{Verbatim}
+>p = new Person("foo",2001,8,18);
+Person {name: "foo", birthday: {…}, hometown: "神奈川"}
+>p.birthday
+{year: 2001, month: 8, day: 18}
+>p.hometown;
+"神奈川"
+\end{Verbatim}
+\section{クラスのメソッド}
+JavaScript ではオブジェクトのキーに関数を指定することができる。この場合
+にはオブジェクトのメソッドと呼ばれる。オブジェクトのメソッドにはオブジェ
+クトに値を設定するセッター、値を呼び出すゲッターの2種類がある。\ES では
+ゲッターやセッターにはキーワード\ElmJ{get}と\ElmJ{set}を用いる。
+
+次のリストは\texttt{Person}に実行時における年令を返すゲッター
+\texttt{age}を追加したものである。
+\begin{Verbatim}[numbers=left]
+class Person{
+  constructor(name, year, month, day, hometown){
+    this.name = "foo";
+    this.birthday = {
+      year : year,
+      month : month,
+      day : day
+    };
+    this["hometown"] = hometown || "神奈川";
+  }
+  get age() {
+    let today = new Date();
+    let age = today.getFullYear() - this.birthday.year;
+    if(today.getTime() <
+         new Date(today.getFullYear(),
+                  this.birthday.month-1,
+                  this.birthday.day).getTime()) age--;
+    return age;
+  }
+}
+\end{Verbatim}
+11行目から19行目でゲッター\texttt{age}が定義されている。
+ \begin{itemize}
+ \item 11行目でキーワード\ElmJ{get}をつけて、ゲッター\texttt{age()}を宣
+       言している。メソッドは関数なので\texttt{()}をつける必要がある。た
+       だし、ゲッターに仮引数をつけることはできない。
+ \item 12行目でアクセス時の時間を変数\texttt{today}に保存している。
+ \item 13行目でアクセス時の年から誕生日の年を引いている。
+ \item 14行目から17行目で、今年の誕生日が過ぎているかどうかをチェックし
+       ている。アクセス時の年と誕生日の月を日をもとに日付を作成し、その
+       時間を比較することでチェックができる。
+ \item 誕生日前ならば13行目で求めた値を$1$減少させる。
+ \end{itemize}
+ 実行例は次のとおりである。
+\begin{Verbatim}
+>p.age;
+16
+>p.age = 50;
+50
+>p.age;
+16
+\end{Verbatim}
+\begin{itemize}
+ \item 定義の方はには\texttt{()}があるが、つけるとエラーになる。記述の方
+       法はキーと同じようになる。
+ \item 代入の式はエラーがなく実行できるが、代入の結果、ゲッターの機能は
+       変わらない。
+\end{itemize}
+\begin{Verbatim}
+p.age(10);
+VM87:1 Uncaught TypeError: p.age is not a function
+    at <anonymous>:1:3
+\end{Verbatim}
 \iffalse
 \section{コンストラクタ関数}
 オブジェクトを定義する方法としてはコンストラクタ関数を使う方法がある。
@@ -198,10 +277,6 @@ true
  \end{itemize}
 \end{itemize}
 \end{Exec}
-\begin{Prob}\upshape
-\verb+window+ オブジェクトにはどのようなプロパティがあるか調べよ。2つ以
- 上のブラウザで実行し、比較すること。
-\end{Prob}
 \iffalse
 \begin{Prob}
 実行例\ref{constructor}を次のように変える。
@@ -457,4 +532,3 @@ Object {name: "foo"}
  参照するために別の変数が必要になるかもしれない。)
 \end{Prob}
 \fi
-\input JSON.tex
