@@ -105,7 +105,7 @@ undefined
 \input JSON.tex
  \section{クラスとインスタンスの生成}
 前節で同じキーを持つオブジェクトを複数作成したい場合に同じようなコードを
-繰り返すのは問題である。たとえば、キーの追加をするときの修正の手間がかかりすぎてプ
+繰り返すのは問題である。また、キーの追加をするときの修正の手間がかかりすぎてプ
 ログラムのメンテナンスが面倒になる。
 
 そこで、オブジェクトのひな形を作成し、それをもとにオブジェクトを構成する
@@ -113,14 +113,14 @@ undefined
 はクラスの宣言ができる。前節の例をクラスを用いて書き直すと次のようになる。
 \begin{Verbatim}[numbers=left]
 class Person{
-  constructor(name, year, month, day, hometown){
+  constructor(name, year, month, day, hometown="神奈川"){
     this.name = "foo";
     this.birthday = {
       year : year,
       month : month,
       day : day
     };
-    this["hometown"] = hometown || "神奈川";
+    this["hometown"] = hometown;
   }
 \end{Verbatim}
 \begin{itemize}
@@ -130,8 +130,17 @@ class Person{
  \item クラスの定義には初期化を行う\ElmJ{constructor()}が必須である。こ
        こでは5つの引数を取るコンストラクタが定義されている。
  \item クラスは実体がない。キーワード\ElmJ{this}はクラスから作成された実
-       体を指す。
- \item 3行目から9行目で、その実体のオブジェクトのキーを定義している。
+       体(インスタンス)を指す。
+ \item 3行目から9行目で、その実体のオブジェクトのキーを定義している。キー
+			 の値は前の例と同じである。
+ \item 9行目の定義はコンストラクタの最後の引数はデフォルトの値が与えられ
+			 ている。
+ \item この関数を用いてオブジェクトを作成するためには、
+       \verb+new Person(...)+ とする。
+\begin{Verbatim}
+>p = new Person("foo",1900,4,1);
+Person {name: "foo", birthday: {…}, hometown: "神奈川"}
+\end{Verbatim}
 \end{itemize}
 クラスの定義からデータを保持する実体を作成するためにはキーワード
 \ElmJ{new}をつけてクラスを呼び出す。上の例ではコンストラクタが引数を必要
@@ -231,7 +240,6 @@ function Person(){
  \item この関数には\verb+return+がないことに注意すること。
  \item この関数を用いてオブジェクトを作成するためには、\verb+new+ をつけ
        て関数を呼び出す。
-\begin{Verbatim}
 >var person = new Person();
 undefined
 \end{Verbatim}
