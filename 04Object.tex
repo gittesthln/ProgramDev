@@ -103,7 +103,8 @@ undefined
 \end{Prob}
 
 \input JSON.tex
- \section{クラスとインスタンスの生成}
+ \section{クラス}
+ \subsection{クラスの宣言とインスタンスの生成}
 前節で同じキーを持つオブジェクトを複数作成したい場合に同じようなコードを
 繰り返すのは問題である。また、キーの追加をするときの修正の手間がかかりすぎてプ
 ログラムのメンテナンスが面倒になる。
@@ -125,10 +126,12 @@ class Person{
 \end{Verbatim}
 \begin{itemize}
  \item 1行目がクラスの宣言である。キーワード\ElmJ{class}の後にクラス名
-       \texttt{Person}を記述する。
+       \texttt{Person}を記述する。通常、クラス名は大文字で始まる。関数の
+       時と同様にクラスの宣言を変数に代入することもできる。
  \item その後の\Verb+{+と\Verb+}+内にクラスの記述を行う。
  \item クラスの定義には初期化を行う\ElmJ{constructor()}が必須である。こ
-       こでは5つの引数を取るコンストラクタが定義されている。
+       こでは5つの引数を取るコンストラクタが定義されている。5番目の引数
+       はデフォルトの値が指定されている。
  \item クラスは実体がない。キーワード\ElmJ{this}はクラスから作成された実
        体(インスタンス)を指す。
  \item 3行目から9行目で、その実体のオブジェクトのキーを定義している。キー
@@ -137,6 +140,7 @@ class Person{
 			 ている。
  \item この関数を用いてオブジェクトを作成するためには、
        \verb+new Person(...)+ とする。
+ \item クラス内のコードは\Strict で実行される。
 \begin{Verbatim}
 >p = new Person("foo",1900,4,1);
 Person {name: "foo", birthday: {…}, hometown: "神奈川"}
@@ -153,24 +157,24 @@ Person {name: "foo", birthday: {…}, hometown: "神奈川"}
 >p.hometown;
 "神奈川"
 \end{Verbatim}
-\section{クラスのメソッド}
-JavaScript ではオブジェクトのキーに関数を指定することができる。この場合
-にはオブジェクトのメソッドと呼ばれる。オブジェクトのメソッドにはオブジェ
-クトに値を設定するセッター、値を呼び出すゲッターの2種類がある。\ES では
+\subsection{クラスのプロトタイプメソッド}
+クラス内では\ElmJ{constructor}のほかにメソッドと呼ばれる関数を定義できる。
+めそっどにはオブジェクトに値を渡すセッター、値を得るゲッターの2種類を指定することも
+可能である。\ES では
 ゲッターやセッターにはキーワード\ElmJ{get}と\ElmJ{set}を用いる。
-
+\begin{Exec}\upshape\label{PersonWidthGetter}
 次のリストは\texttt{Person}に実行時における年令を返すゲッター
 \texttt{age}を追加したものである。
 \begin{Verbatim}[numbers=left]
 class Person{
-  constructor(name, year, month, day, hometown){
+  constructor(name, year, month, day, hometown = "神奈川"){
     this.name = "foo";
     this.birthday = {
       year : year,
       month : month,
       day : day
     };
-    this["hometown"] = hometown || "神奈川";
+    this["hometown"] = hometown;
   }
   get age() {
     let today = new Date();
@@ -195,6 +199,7 @@ class Person{
        時間を比較することでチェックができる。
  \item 誕生日前ならば13行目で求めた値を$1$減少させる。
  \end{itemize}
+\end{Exec}
  実行例は次のとおりである。
 \begin{Verbatim}
 >p.age;
@@ -207,7 +212,7 @@ class Person{
 \begin{itemize}
  \item 定義の方はには\texttt{()}があるが、つけるとエラーになる。記述の方
        法はキーと同じようになる。
- \item 代入の式はエラーがなく実行できるが、代入の結果、ゲッターの機能は
+ \item 代入の式はエラーがなく実行できるが、ゲッターの機能は
        変わらない。
 \end{itemize}
 \begin{Verbatim}
@@ -215,6 +220,18 @@ p.age(10);
 VM87:1 Uncaught TypeError: p.age is not a function
     at <anonymous>:1:3
 \end{Verbatim}
+\begin{Prob}\upshape
+実行例\ref{PersonWidthGetter}のリストにあるプロトタイプメソッド
+ \texttt{age()}の前にある\ElmJ{get}を省略して実行しるとどうなるか報告せ
+ よ。
+\end{Prob}
+\subsection{静的メソッド}
+クラスに対して、インスタンスを作成しないで使用できる静的メソッドを定義で
+きる。キーワード\ElmJ{static}を付けたものが静的メソッドとなる。インスタ
+ンス化されたオブジェクトからは使用できない。
+
+\ElmJ{Math}オブジェクトにある各関数が\ElmJ{Math}オブジェクトの静的メソッ
+ドになっている。
 \iffalse
 \section{コンストラクタ関数}
 オブジェクトを定義する方法としてはコンストラクタ関数を使う方法がある。
