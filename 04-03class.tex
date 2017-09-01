@@ -1,5 +1,5 @@
- \section{クラス}
- \subsection{クラスの宣言とインスタンスの生成}
+\section{クラス}
+\subsection{クラスの宣言とインスタンスの生成}
 前節で同じキーを持つオブジェクトを複数作成したい場合に同じようなコードを
 繰り返すのは問題である。また、キーの追加をするときの修正の手間がかかりすぎてプ
 ログラムのメンテナンスが面倒になる。
@@ -62,31 +62,14 @@ Person {name: "foo", birthday: {…}, hometown: "神奈川"}
  スタンスについてプロパティの値の変更、プロパティの追加ができるか確認し
  なさい。
 \end{Prob}
-\subsection{\protect\texttt{instanceof}演算子}
-\texttt{instanceof}演算子はオブジェクトを生成したコンストラクタ関数が指
-定されたものかを判定できる。
-\begin{Exec}\upshape
-次の結果は Chrome で、前節の例を実行した後にさらに実行したものである。
-\begin{Verbatim}
->p instanceof Person
-true
->p instanceof Object;
-true
->p instanceof Date;
-false
-\end{Verbatim}
-\verb+Person+ オブジェクトが \verb+Object+ を継承している
- ために\texttt{o instanceof Object} が\texttt{true}となっている。
- 継承については後の授業で解説する。
- \end{Exec}
-\subsection{クラスのプロトタイプメソッド}
+\subsection{クラスメソッド}
 クラス内では\ElmJ{constructor}のほかにメソッドと呼ばれる関数で定義された
 プロパティがある。また、メソッドにはアクセッサプロパティと呼ばれるオブジェ
 クトに値を渡すセッター、値を得るゲッターの2種類を指定することもできる。\ES では
 ゲッターやセッターにはキーワード\ElmJ{get}と\ElmJ{set}を用いる。
 \begin{Exec}\upshape\label{PersonWidthGetter}
-次のリストは\texttt{Person}に実行時における年令を返すゲッター
-\texttt{age}を追加したものである。
+次のリストは\texttt{Person}に文字列に変換する\ElmJ{toString()}と、実行時に
+ おける年令を返すゲッター\texttt{age}を追加したものである。
 \begin{Verbatim}[numbers=left]
 class Person{
   constructor(name, year, month, day, hometown = "神奈川"){
@@ -97,6 +80,11 @@ class Person{
       day : day
     };
     this["hometown"] = hometown;
+  }
+  toString() {
+    return `${this.name}さんは`+
+      `${this.birthday.year}年${this.birthday.month}月${this.birthday.day}日に}` +
+     `${this.hometown}で生まれました。`;
   }
   get age() {
     let today = new Date();
@@ -109,17 +97,30 @@ class Person{
   }
 }
 \end{Verbatim}
-11行目から19行目でゲッター\texttt{age}が定義されている。
+ 11行目から15行目でメソッド\ElmJ{toString()}が定義されている。
+
+ 一般に\ElmJ{toString()}メソッドはすべてのオブジェクトに定義されていて、
+ 文字列が必要な時に呼び出される。ここでは「～さんは～年～月～日に～
+        で生まれました。」という表示を返す。
+
+実行例は次のとおりである。文字列が必要なときに呼び出されることがわかる。
+\begin{Verbatim}
+>p.toString();//toString()の明示的呼び出し
+"2001年4月1日}"  
+>`${p}`       //暗黙のtoString()呼び出し
+"2001年4月1日}"
+\end{Verbatim}
+ 16行目から24行目でゲッター\texttt{age}が定義されている。
  \begin{itemize}
- \item 11行目でキーワード\ElmJ{get}をつけて、ゲッター\texttt{age()}を宣
+ \item 16行目でキーワード\ElmJ{get}をつけて、ゲッター\texttt{age()}を宣
        言している。メソッドは関数なので\texttt{()}をつける必要がある。た
        だし、ゲッターに仮引数をつけることはできない。
- \item 12行目でアクセス時の時間を変数\texttt{today}に保存している。
- \item 13行目でアクセス時の年から誕生日の年を引いている。
- \item 14行目から17行目で、今年の誕生日が過ぎているかどうかをチェックし
+ \item 17行目でアクセス時の時間を変数\texttt{today}に保存している。
+ \item 18行目でアクセス時の年から誕生日の年を引いている。
+ \item 19行目から22行目で、今年の誕生日が過ぎているかどうかをチェックし
        ている。アクセス時の年と誕生日の月を日をもとに日付を作成し、その
-       時間を比較することでチェックができる。
- \item 誕生日前ならば13行目で求めた値を$1$減少させる。
+       時間(\ElmJ{getTime()}を利用)を比較することでチェックができる。
+ \item 誕生日前ならば18行目で求めた値を$1$減少させる。
  \end{itemize}
 \end{Exec}
  実行例は次のとおりである。
@@ -133,7 +134,7 @@ class Person{
 \end{Verbatim}
 \begin{itemize}
  \item 定義の方はには\texttt{()}があるが、つけるとエラーになる。記述の方
-       法はキーと同じようになる。
+       法はプロパティと同じようになる。
  \item 代入の式はエラーがなく実行できるが、ゲッターの機能は
        変わらない。
 \end{itemize}
@@ -142,6 +143,15 @@ p.age(10);
 VM87:1 Uncaught TypeError: p.age is not a function
     at <anonymous>:1:3
 \end{Verbatim}
+\begin{Prob}\upshape
+ 指定された日付における年令を求めるメソッドを作成しなさい。
+ 求める年齢は次の条件を満たすこと。
+ \begin{itemize}
+  \item 引数がない場合には\texttt{age}と同じように実行時
+  \item 年しかない場合にはその年の1月1日現在
+  \item 年と月しかない場合にはその年月の1日現在
+ \end{itemize}
+\end{Prob}
 \begin{Prob}\upshape
 実行例\ref{PersonWidthGetter}のリストにあるプロトタイプメソッド
  \texttt{age()}の前にある\ElmJ{get}を省略して実行する(通常のメソッド)と
@@ -153,7 +163,110 @@ VM87:1 Uncaught TypeError: p.age is not a function
 ンス化されたオブジェクトからは使用できない。
 
 \ElmJ{Math}オブジェクトにある各関数が\ElmJ{Math}オブジェクトの静的メソッ
-ドになっている。
+ドの例になっている。
+\subsection{継承}
+すでにあるクラスをもとに機能の追加や変更を加えた新しいクラスを作ることが
+できる。新しいクラスはもとになるクラスを継承しているという。もとのクラス
+は新しいクラスのスーパークラス、新しいクラスはもとになるクラスのサブクラ
+スという。JavaScript では複数のクラスから同時に継承する多重継承はサポー
+トされていない。
+ \begin{Exec}\upshape\label{Inheritance}
+  次の例は実行例\ref{PersonWidthGetter}のクラス\texttt{Person}を継承して
+  新しいクラス\texttt{Student}を作成するものである。
+\begin{Verbatim}[numbers=left]
+class Student extends Person {
+  constructor(name, id, year, month, day, hometown) {
+    super(name, year, month, day, hometown);
+    this.id = id;
+  }
+}
+\end{Verbatim}
+  \begin{itemize}
+   \item クラスを継承するためにはクラス名の後に、キーワード
+         \ElmJ{extends}を付けて継承するクラス名を書く(1行目)。
+   \item \texttt{Student}クラスのコンストラクタには\texttt{Person}クラス
+         で必要なパラメタのほかに\texttt{id}が付け加えている(2行目)。
+   \item 親クラス(スーパークラス)のコンストラクタを呼び出すために
+         \ElmJ{super()}を実行する(3行目)
+   \item 4行目で追加のプロパティの設定を行っている。
+  \end{itemize}
+ \end{Exec}
+ 実行例は次のとおりである。
+\begin{Verbatim}
+>s = new Student("foo",1523999,2001,4,1);//Person のデフォルト引数値が設定されている
+Student {name: "foo", birthday: {…}, hometown: "神奈川", id: 1523999}
+> `${s}` //toString()もPersonで定義されたものが使われる
+"fooさんは2001年4月1日に}神奈川で生まれました。"
+>s2 = new Student("foo",1523999,2001,4,1,"厚木");//デフォルト以外の設定もできる
+Student {name: "foo", birthday: {…}, hometown: "厚木", id: 1523999}
+>`${s2}`;
+"fooさんは2001年4月1日に}厚木で生まれました。"
+\end{Verbatim}
+\begin{Prob}\upshape
+\texttt{Student}クラスにプロパティ\texttt{id}も表記するような
+ \texttt{toString()}メソッドを定義すると、\texttt{Person}の
+ \ElmJ{toString()}が上書きされることを確認しなさい。
+\end{Prob}
+\subsection{\protect\texttt{instanceof}演算子}
+\texttt{instanceof}演算子はオブジェクトを生成したコンストラクタ関数が指
+定されたものかを判定できる。
+\begin{Exec}\upshape
+次の結果は Chrome で、実行例\ref{PersonWidthGetter}の例である。
+\begin{Verbatim}
+>p instanceof Person
+true
+>p instanceof Object;
+true
+>p instanceof Date;
+false
+\end{Verbatim}
+\verb+Person+ オブジェクトが \verb+Object+ を継承している
+ ために\texttt{o instanceof Object} が\texttt{true}となっている。
+% 継承については後の授業で解説する。
+\end{Exec}
+\subsection{同じクラスのインスタンスに通し番号をつける}
+実行例\ref{Inheritance}のプロパティ\texttt{id}を重複がなくかつ連続な値に
+設定しようとするとクラスにおいて管理する変数が必要となる。
+オブジェクト指向言語ではクラスのインスタンスで共通に持つ変数をクラス変数
+という仕組みがあるが、JavaScript には直接的には存在しない。これを実現す
+るためにはクラスをクロージャの中で定義して、その中に変数を置けばよい。
+
+\begin{Prob}\upshape
+次の例は即時実行関数内に\texttt{id}を管理する変数を用意して、その関数が
+ クラス式を返すようにしたものである。
+\begin{Verbatim}[numbers=left]
+const Student = (function(){
+  let id = 10000;
+  return class extends Person {
+    constructor(name, year, month, day, hometown) {
+      super(name, year, month, day, hometown);
+      this.id = id++;
+    }
+  }
+})();
+\end{Verbatim}
+ \begin{itemize}
+  \item 即時実行関数の戻り値はクラス式であり、それを変数\texttt{Student}
+        に代入している。同じ名前のクラスが再定義されないようにするため変
+        数を\ElmJ{const}で宣言している。
+  \item 2行目で次に設定する\texttt{id}を保存する変数を初期化している。
+  \item 関数の戻り値としてクラス式を返す。クラスの定義は以前のものとほと
+        んど同じである。
+  \item 異なるのはインスタンスに設定した後で\texttt{id}を管理する変数を
+        増加させているところ(6行目の右辺)。
+ \end{itemize}
+ 実行例は次のとおりである。
+\begin{Verbatim}
+>s = new Student("foo",2001,4,1);  //初めのインスタンスの id は 10000
+{name: "foo", birthday: {…}, hometown: "神奈川", id: 10000}
+>`${s}`;
+"fooさんは2001年4月1日に}神奈川で生まれました。"
+>s2 = new Student("foo",2001,4,1,"厚木");  //次のインスタンスの id は 10001
+{name: "foo", birthday: {…}, hometown: "厚木", id: 10001}
+>`${s2}`;
+"fooさんは2001年4月1日に}厚木で生まれました。"
+\end{Verbatim}
+\end{Prob}
 \iffalse
 \section{コンストラクタ関数}
 オブジェクトを定義する方法としてはコンストラクタ関数を使う方法がある。

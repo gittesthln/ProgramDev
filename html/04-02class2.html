@@ -15,7 +15,15 @@ class Person{
     };
     this["hometown"] = hometown;
   }
-  get age(){
+  static showBirthday(p) {
+    return `${p.birthday.year}年${p.birthday.month}月${p.birthday.day}日`;
+  }
+  toString() {
+    return `${this.name}さんは`+
+      `${this.birthday.year}年${this.birthday.month}月${this.birthday.day}日に}` +
+   `${this.hometown}で生まれました。`;
+  }
+  get Age(){
     let today = new Date();
     let age = today.getFullYear() - this.birthday.year;
     if(today.getTime() <
@@ -23,12 +31,6 @@ class Person{
                   this.birthday.month-1,
                   this.birthday.day).getTime()) age--;
     return age;
-  }
-  static showBirthday(p) {
-    return `${p.birthday.year}年${p.birthday.month}月${p.birthday.day}日`;
-  }
-  toString() {
-    return `${this.birthday.year}年${this.birthday.month}月${this.birthday.day}日}`;
   }
 }
 class Student extends Person {
