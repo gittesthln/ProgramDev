@@ -49,9 +49,9 @@
 \contentsline {section}{\numberline {4.2}オブジェクトリテラルとJSON}{33}{section.4.2}
 \contentsline {section}{\numberline {4.3}クラス}{34}{section.4.3}
 \contentsline {subsection}{\numberline {4.3.1}クラスの宣言とインスタンスの生成}{34}{subsection.4.3.1}
-\contentsline {subsection}{\numberline {4.3.2}クラスのプロトタイプメソッド}{36}{subsection.4.3.2}
-\contentsline {subsection}{\numberline {4.3.3}静的メソッド}{37}{subsection.4.3.3}
-\contentsline {subsection}{\numberline {4.3.4}\texttt {instanceof}演算子}{37}{subsection.4.3.4}
+\contentsline {subsection}{\numberline {4.3.2}\texttt {instanceof}演算子}{36}{subsection.4.3.2}
+\contentsline {subsection}{\numberline {4.3.3}クラスのプロトタイプメソッド}{36}{subsection.4.3.3}
+\contentsline {subsection}{\numberline {4.3.4}静的メソッド}{37}{subsection.4.3.4}
 \contentsline {chapter}{\numberline {第5回}オブジェクトのプロトタイプと継承}{39}{chapter.5}
 \contentsline {section}{\numberline {5.1}オブジェクト属性}{39}{section.5.1}
 \contentsline {subsection}{\numberline {5.1.1}\ElmJ {class}属性}{39}{subsection.5.1.1}

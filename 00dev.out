@@ -46,9 +46,9 @@
 \BOOKMARK [1][-]{section.4.2}{オブジェクトリテラルとJSON}{chapter.4}% 46
 \BOOKMARK [1][-]{section.4.3}{クラス}{chapter.4}% 47
 \BOOKMARK [2][-]{subsection.4.3.1}{クラスの宣言とインスタンスの生成}{section.4.3}% 48
-\BOOKMARK [2][-]{subsection.4.3.2}{クラスのプロトタイプメソッド}{section.4.3}% 49
-\BOOKMARK [2][-]{subsection.4.3.3}{静的メソッド}{section.4.3}% 50
-\BOOKMARK [2][-]{subsection.4.3.4}{instanceof演算子}{section.4.3}% 51
+\BOOKMARK [2][-]{subsection.4.3.2}{instanceof演算子}{section.4.3}% 49
+\BOOKMARK [2][-]{subsection.4.3.3}{クラスのプロトタイプメソッド}{section.4.3}% 50
+\BOOKMARK [2][-]{subsection.4.3.4}{静的メソッド}{section.4.3}% 51
 \BOOKMARK [0][-]{chapter.5}{オブジェクトのプロトタイプと継承}{}% 52
 \BOOKMARK [1][-]{section.5.1}{オブジェクト属性}{chapter.5}% 53
 \BOOKMARK [2][-]{subsection.5.1.1}{class属性}{section.5.1}% 54

@@ -15,8 +15,8 @@ class Person{
     };
     this["hometown"] = hometown;
   }
-  get age(){
-    let today = new Date();
+  age(x){
+    let today = new Date();console.log(x);
     let age = today.getFullYear() - this.birthday.year;
     if(today.getTime() <
          new Date(today.getFullYear(),
@@ -24,19 +24,20 @@ class Person{
                   this.birthday.day).getTime()) age--;
     return age;
   }
-  static showBirthday(p) {
-    return `${p.birthday.year}年${p.birthday.month}月${p.birthday.day}日`;
-  }
-  toString() {
-    return `${this.birthday.year}年${this.birthday.month}月${this.birthday.day}日}`;
-  }
 }
-class Student extends Person {
-  constructor(name, id, year, month, day, hometown) {
-    super(name, year, month, day, hometown);
-    this.id = id;
+let Student =(function(){
+  let id = 10000;
+  return class extends Person {
+    let _id;
+    constructor(name, year, month, day, hometown) {
+      super(name, year, month, day, hometown);
+      _id = id++;
+    }
+    get id(){
+      return _id;
+    }
   }
-}
+})();
 //]]>
 </script>
 </head>

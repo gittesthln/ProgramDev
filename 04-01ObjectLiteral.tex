@@ -1,0 +1,101 @@
+\section{配列とオブジェクト}
+配列はいくつかのデータをまとめて一つの変数に格納している。各データを利用
+するためには \verb+foo[1]+ のように数による添え字を使う。これに対し、
+オブジェクトでは添え字に任意の文字列を使うことができる。
+\begin{Exec}\label{Execconstructor}\upshape
+次の例はあるオブジェクトを定義してそれの各データにアクセスする方法を示している。
+\begin{Verbatim}
+let person = {
+  name : "foo",
+  birthday :{
+    year : 2001,
+    month : 4,
+    day : 1
+  },
+  "hometown" : "神奈川",
+}
+\end{Verbatim}
+\begin{itemize}
+ \item オブジェクトは全体を \verb+{}+ で囲む。
+ \item 各要素はキーと値の組で表される。両者の間は \verb+:+ で区切る。
+ \item キーは任意の文字列でよい。
+ \item キーの文字列が変数名の約束事に合わないときはキー全体を \verb+""+
+			 で囲う必要がある。
+ \item 値はJavaScriptで取り扱えるデータなあらば何でもよい。上の例ではキー
+       \verb+birthday+ の値がまたオブジェクトとなっている。値が関数であ
+       るキーはそのオブジェクトのメソッドと呼ばれる。
+ \item 各要素の値を取り出す方法は2通りある。
+\begin{itemize}
+ \item \verb+.+演算子を用いてオブジェクトのキーをそのあとに書く。
+\begin{Verbatim}
+>person.name;
+"foo"
+\end{Verbatim}
+ \item 配列と同様に\verb+[]+内にキーを文字列として指定する。
+\begin{Verbatim}
+>person["name"];
+"foo"
+\end{Verbatim}
+\end{itemize}
+
+ \item オブジェクトの中にあるキーをすべて網羅するようなループを書く場合や変数名
+       として利用できないキーを参照する場合には後者
+       の方法が利用される。
+ \item キーの値が再びオブジェクトであれば、前と同様の方法で値を取り出せ
+       る。
+\begin{Verbatim}
+>person.birthday;
+Object {year: 2001, month: 4, day: 1}
+>person.birthday.year;
+2001
+>person.birthday["year"];
+2001
+\end{Verbatim}
+この例のように取り出し方は混在してもよい。
+ \item キーの値は代入して変更できる。
+\begin{Verbatim}
+>person.hometown;
+"神奈川"
+>person.hometown="北海道";
+"北海道"
+>person.hometown;
+"北海道"
+\end{Verbatim}
+ \item 存在しないキーを指定すると値として\verb+undefined+が返る。
+\begin{Verbatim}
+>person.mother;
+undefined
+\end{Verbatim}
+ \item 存在しないキーに値を代入すると、キーが自動で生成される。
+\begin{Verbatim}
+>person.mother = "aaa";
+"aaa"
+>person.mother;
+"aaa"
+\end{Verbatim}
+ \item オブジェクトのキーをすべて渡るループは \verb+for-in+で実現できる。
+\begin{itemize}
+ \item \verb+for( v in obj)+ の形で使用する。変数 \verb+v+ はループ内で
+       キーの値が代入される変数、\verb+obj+ はキーが走査されるオブジェク
+       トである。\footnote{\pageref{ES2016}ページの[\ref{ES2016}162ペー
+       ジ]にはオブジェクトの独自プロパティだけを見たい場合には
+       \ElmJ{hasOwnProperty()}を使うことが推奨されている。}
+ \item キーの値は \verb+obj[v]+ で得られる。
+\end{itemize}
+\begin{Verbatim}
+>for(i in person) { console.log(`i ${person[i]}`);};
+name foo
+birthday [object Object]
+hometown 北海道
+mother aaa
+undefined
+\end{Verbatim}
+最後の\verb+undefined+は\verb+for+ループの戻り値である。
+\end{itemize}
+\end{Exec}
+オブジェクトを\verb+{}+の形式で表したものを\ElmJ{オブジェクトリテラル}と
+よぶ。
+\begin{Prob}\upshape
+\verb+window+ オブジェクトにはどのようなプロパティがあるか調べよ。2つ以
+ 上のブラウザで実行し、比較すること。
+\end{Prob}
