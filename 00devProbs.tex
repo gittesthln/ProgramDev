@@ -3,8 +3,10 @@
 \newif\ifText
 \newif\ifAnswer
 \newcommand{\LecName}{\hspace{1zw}ソフトウェア開発}
+\input 00dev-tmp.aux
 \input enshuuhead.tex
 \Texttrue
+\renewcommand{\label}[1]{\relax}
 \newcommand{\Ans}[1]{\hfill\underline{\makebox[#1zw][l]{\theenumi.}}}
 %\renewcommand{\postchaptername}{回}
 \newcommand{\ProblemN}{%
