@@ -32,7 +32,6 @@
 \contentsline {section}{\numberline {3.1}今回の内容}{17}{section.3.1}
 \contentsline {section}{\numberline {3.2}関数の定義方法と呼び出し}{17}{section.3.2}
 \contentsline {subsection}{\numberline {3.2.1}簡単な関数の例}{17}{subsection.3.2.1}
-\contentsline {paragraph}{実行例}{18}{section*.4}
 \contentsline {subsection}{\numberline {3.2.2}仮引数への代入}{19}{subsection.3.2.2}
 \contentsline {subsection}{\numberline {3.2.3}可変引数をとる関数}{20}{subsection.3.2.3}
 \contentsline {subsection}{\numberline {3.2.4}変数のスコープ}{20}{subsection.3.2.4}
@@ -66,13 +65,13 @@
 \contentsline {subsection}{\numberline {5.3.2}エラーからの復帰}{51}{subsection.5.3.2}
 \contentsline {chapter}{\numberline {第6回}正規表現}{53}{chapter.6}
 \contentsline {section}{\numberline {6.1}正規表現オブジェクトの記述方法}{53}{section.6.1}
-\contentsline {paragraph}{リテラル文字}{53}{section*.5}
-\contentsline {paragraph}{文字クラス}{54}{section*.6}
-\contentsline {paragraph}{繰り返し}{54}{section*.7}
-\contentsline {paragraph}{非貪欲な繰り返し}{54}{section*.8}
-\contentsline {paragraph}{選択、グループ化、参照}{55}{section*.9}
-\contentsline {paragraph}{一致位置の指定}{55}{section*.10}
-\contentsline {paragraph}{フラグ}{55}{section*.11}
+\contentsline {paragraph}{リテラル文字}{53}{section*.4}
+\contentsline {paragraph}{文字クラス}{54}{section*.5}
+\contentsline {paragraph}{繰り返し}{54}{section*.6}
+\contentsline {paragraph}{非貪欲な繰り返し}{54}{section*.7}
+\contentsline {paragraph}{選択、グループ化、参照}{55}{section*.8}
+\contentsline {paragraph}{一致位置の指定}{55}{section*.9}
+\contentsline {paragraph}{フラグ}{55}{section*.10}
 \contentsline {section}{\numberline {6.2}文字列のパターンマッチングメソッド}{57}{section.6.2}
 \contentsline {chapter}{\numberline {第7回}DOMの利用}{61}{chapter.7}
 \contentsline {section}{\numberline {7.1}HTML文書の構成}{61}{section.7.1}
@@ -94,7 +93,7 @@
 \contentsline {subsection}{\numberline {9.1.1}サーバーの重要な設定項目}{83}{subsection.9.1.1}
 \contentsline {subsection}{\numberline {9.1.2}CGI}{83}{subsection.9.1.2}
 \contentsline {subsection}{\numberline {9.1.3}Webサーバーのインストール}{83}{subsection.9.1.3}
-\contentsline {paragraph}{XAMPP}{84}{section*.12}
+\contentsline {paragraph}{XAMPP}{84}{section*.11}
 \contentsline {section}{\numberline {9.2}PHPとは}{84}{section.9.2}
 \contentsline {section}{\numberline {9.3}PHPプログラムの書き方}{84}{section.9.3}
 \contentsline {section}{\numberline {9.4}データの型}{84}{section.9.4}
@@ -109,12 +108,12 @@
 \contentsline {subsection}{\numberline {9.8.1}配列の基礎}{90}{subsection.9.8.1}
 \contentsline {subsection}{\numberline {9.8.2}配列に関する制御構造}{92}{subsection.9.8.2}
 \contentsline {subsection}{\numberline {9.8.3}配列に関する関数}{93}{subsection.9.8.3}
-\contentsline {paragraph}{\texttt {list()}}{93}{section*.13}
-\contentsline {paragraph}{\texttt {array\textunderscore pop()}と\texttt {array\textunderscore push()}}{94}{section*.14}
-\contentsline {paragraph}{配列のキーと値の存在の判定}{94}{section*.15}
-\contentsline {paragraph}{並べ替え}{94}{section*.16}
-\contentsline {paragraph}{配列からランダムな値を取り出す}{94}{section*.17}
-\contentsline {paragraph}{配列の切り出しと追加}{94}{section*.18}
+\contentsline {paragraph}{\texttt {list()}}{93}{section*.12}
+\contentsline {paragraph}{\texttt {array\textunderscore pop()}と\texttt {array\textunderscore push()}}{94}{section*.13}
+\contentsline {paragraph}{配列のキーと値の存在の判定}{94}{section*.14}
+\contentsline {paragraph}{並べ替え}{94}{section*.15}
+\contentsline {paragraph}{配列からランダムな値を取り出す}{94}{section*.16}
+\contentsline {paragraph}{配列の切り出しと追加}{94}{section*.17}
 \contentsline {section}{\numberline {9.9}関数}{95}{section.9.9}
 \contentsline {subsection}{\numberline {9.9.1}PHPの関数の特徴}{95}{subsection.9.9.1}
 \contentsline {subsection}{\numberline {9.9.2}関数の定義の例}{96}{subsection.9.9.2}
@@ -122,9 +121,9 @@
 \contentsline {chapter}{\numberline {第10回}サーバーとのデータのやり取り}{99}{chapter.10}
 \contentsline {section}{\numberline {10.1}サーバーとのデータ交換の基本}{99}{section.10.1}
 \contentsline {section}{\numberline {10.2}スパーグローバルの補足}{101}{section.10.2}
-\contentsline {paragraph}{\texttt {\$\_SERVER}}{101}{section*.19}
-\contentsline {paragraph}{\texttt {\$\_COOKIE}}{101}{section*.20}
-\contentsline {paragraph}{\texttt {\$\_SESSION}}{101}{section*.21}
+\contentsline {paragraph}{\texttt {\$\_SERVER}}{101}{section*.18}
+\contentsline {paragraph}{\texttt {\$\_COOKIE}}{101}{section*.19}
+\contentsline {paragraph}{\texttt {\$\_SESSION}}{101}{section*.20}
 \contentsline {section}{\numberline {10.3}Web Storage}{101}{section.10.3}
 \contentsline {section}{\numberline {10.4}Ajax}{105}{section.10.4}
 \contentsline {chapter}{\numberline {第11回}jQuery}{111}{chapter.11}
@@ -132,10 +131,10 @@
 \contentsline {section}{\numberline {11.2}jQueryの基本}{111}{section.11.2}
 \contentsline {subsection}{\numberline {11.2.1}jQuery()関数とjQueryオブジェクト}{111}{subsection.11.2.1}
 \contentsline {subsection}{\numberline {11.2.2}jQueryオブジェクトのメソッド}{112}{subsection.11.2.2}
-\contentsline {paragraph}{HTML属性の取得と設定}{112}{section*.22}
-\contentsline {paragraph}{CSS属性の取得と設定}{112}{section*.23}
-\contentsline {paragraph}{HTMLフォーム要素の値の取得と設定}{112}{section*.24}
-\contentsline {paragraph}{要素のコンテンツの取得と設定}{113}{section*.25}
+\contentsline {paragraph}{HTML属性の取得と設定}{112}{section*.21}
+\contentsline {paragraph}{CSS属性の取得と設定}{112}{section*.22}
+\contentsline {paragraph}{HTMLフォーム要素の値の取得と設定}{112}{section*.23}
+\contentsline {paragraph}{要素のコンテンツの取得と設定}{113}{section*.24}
 \contentsline {section}{\numberline {11.3}ドキュメントの構造の変更}{113}{section.11.3}
 \contentsline {section}{\numberline {11.4}イベントハンドラーの取り扱い}{113}{section.11.4}
 \contentsline {section}{\numberline {11.5}Ajaxの処理}{114}{section.11.5}
@@ -152,9 +151,9 @@
 \contentsline {section}{\numberline {13.1}XMLファイルとは}{125}{section.13.1}
 \contentsline {subsection}{\numberline {13.1.1}W3CにおけるXMLの解説}{125}{subsection.13.1.1}
 \contentsline {subsection}{\numberline {13.1.2}XMLファイルの例}{126}{subsection.13.1.2}
-\contentsline {subsubsection}{GPXファイルの構造}{126}{section*.26}
-\contentsline {subsubsection}{GPXファイルの例}{126}{section*.27}
-\contentsline {subsubsection}{地球の形}{127}{section*.28}
+\contentsline {subsubsection}{GPXファイルの構造}{126}{section*.25}
+\contentsline {subsubsection}{GPXファイルの例}{126}{section*.26}
+\contentsline {subsubsection}{地球の形}{127}{section*.27}
 \contentsline {section}{\numberline {13.2}Google Mapsにおける\texttt {Polyline}の表示}{128}{section.13.2}
 \contentsline {section}{\numberline {13.3}ブラウザでの処理}{128}{section.13.3}
 \contentsline {section}{\numberline {13.4}PHPによる処理}{133}{section.13.4}
@@ -167,11 +166,11 @@
 \contentsline {subsection}{\numberline {14.2.2}バージョン管理の概念}{137}{subsection.14.2.2}
 \contentsline {subsection}{\numberline {14.2.3}バージョン管理ソフトの概要}{137}{subsection.14.2.3}
 \contentsline {subsection}{\numberline {14.2.4}gitの使い方}{137}{subsection.14.2.4}
-\contentsline {subsubsection}{git の特徴}{138}{section*.29}
-\contentsline {subsubsection}{git のインストール}{138}{section*.30}
-\contentsline {subsubsection}{初期設定}{138}{section*.31}
-\contentsline {paragraph}{ユーザーネームの登録}{138}{section*.32}
-\contentsline {paragraph}{メールアドレスの登録}{138}{section*.33}
-\contentsline {paragraph}{SSH Keyの登録}{138}{section*.34}
-\contentsline {subsubsection}{GitHub のアカウントの取得}{139}{section*.35}
-\contentsline {subsubsection}{リポジトリの作成と運用}{139}{section*.36}
+\contentsline {subsubsection}{git の特徴}{138}{section*.28}
+\contentsline {subsubsection}{git のインストール}{138}{section*.29}
+\contentsline {subsubsection}{初期設定}{138}{section*.30}
+\contentsline {paragraph}{ユーザーネームの登録}{138}{section*.31}
+\contentsline {paragraph}{メールアドレスの登録}{138}{section*.32}
+\contentsline {paragraph}{SSH Keyの登録}{138}{section*.33}
+\contentsline {subsubsection}{GitHub のアカウントの取得}{139}{section*.34}
+\contentsline {subsubsection}{リポジトリの作成と運用}{139}{section*.35}

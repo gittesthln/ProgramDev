@@ -69,22 +69,10 @@ NaN
  \item 引数を多く渡してもエラーが発生しない。無視されるだけである。
 \end{itemize}
 これらのことから JavaScript の関数はオブジェクト指向で使われるポリモーフィ
-ズムをサポートしていない。さらに、次の例で見るように同じ関数を定義しても
+ズムをサポートしていない。さらに、次の問題で見るように同じ関数を定義しても
 エラーにならない。後の関数の定義が優先される。
-\begin{Verbatim}
-function sum(a, b){
-  let c = a+b;
-  return c;
-}
-function sum(a, b, c){
-  let d = a+b+c;
-  return d;
-}
-\end{Verbatim}
-\begin{Prob}\upshape
- ここで定義した関数\texttt{sum(a,b,c)}について\Verb+sum(1,2,3)+ と
- \Verb+sum(1,2)+ を実行した結果を確認しなさい。
-\end{Prob}
+
+\input 03-01OrderOfDefFunction.tex
 \subsection{仮引数への代入}
 \renewcommand{\theFancyVerbLine}{\normalsize\arabic{FancyVerbLine}}
 仮引数に値を代入してもエラーとはならない。仮引数で渡された値がプリミティブなとき
@@ -197,6 +185,8 @@ function sum2(a, b){
 するためには仮引数に展開演算子をつける\footnote{これまでのJavaScript で
 は、関数の引数を表す配列のような性質を持つ\texttt{arguments}オブジェクト
 が用意されていたが、\ES では非推奨となった。}。
+\begin{Exec}\upshape\label{DefOfFunctionwithIndefiniteArges}
+次で定義された関数は任意個数の引数を取る関数の例である。
 \begin{Verbatim}
 function sumN(...args) {
     let S = 0;
@@ -220,14 +210,9 @@ function sumN(...args) {
 >sumN(1,2,3,4,5);
 15
 \end{Verbatim}
- \begin{Prob}\upshape
-  上で定義した関数\texttt{sumN}について次の問いに答えよ。
-  \begin{enumerate}
-   \item \texttt{sumN()}の結果を調べよ。
-   \item 変数\texttt{a}が数値からなる配列のとき、\texttt{sumN()}を用いて
-         \texttt{a}の要素の総和を求めるにはどうすればよいか答えよ。
-  \end{enumerate}
-\end{Prob}
+
+\end{Exec}
+\input 03-02FunctionWithArbituraryArgs.tex
 \fi
 \subsection{変数のスコープ}
 変数のスコープとはある場所で使われている変数がどこから参照できるかという
