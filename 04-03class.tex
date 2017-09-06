@@ -83,7 +83,7 @@ class Person{
   }
   toString() {
     return `${this.name}さんは`+
-      `${this.birthday.year}年${this.birthday.month}月${this.birthday.day}日に}` +
+      `${this.birthday.year}年${this.birthday.month}月${this.birthday.day}日に` +
      `${this.hometown}で生まれました。`;
   }
   get age() {
@@ -196,11 +196,11 @@ class Student extends Person {
 >s = new Student("foo",1523999,2001,4,1);//Person のデフォルト引数値が設定されている
 Student {name: "foo", birthday: {…}, hometown: "神奈川", id: 1523999}
 > `${s}` //toString()もPersonで定義されたものが使われる
-"fooさんは2001年4月1日に}神奈川で生まれました。"
+"fooさんは2001年4月1日に神奈川で生まれました。"
 >s2 = new Student("foo",1523999,2001,4,1,"厚木");//デフォルト以外の設定もできる
 Student {name: "foo", birthday: {…}, hometown: "厚木", id: 1523999}
 >`${s2}`;
-"fooさんは2001年4月1日に}厚木で生まれました。"
+"fooさんは2001年4月1日に厚木で生まれました。"
 \end{Verbatim}
 \begin{Prob}\upshape
 \texttt{Student}クラスにプロパティ\texttt{id}も表記するような
@@ -231,7 +231,7 @@ false
 という仕組みがあるが、JavaScript には直接的には存在しない。これを実現す
 るためにはクラスをクロージャの中で定義して、その中に変数を置けばよい。
 
-\begin{Prob}\upshape
+\begin{Exec}\upshape
 次の例は即時実行関数内に\texttt{id}を管理する変数を用意して、その関数が
  クラス式を返すようにしたものである。
 \begin{Verbatim}[numbers=left]
@@ -266,7 +266,43 @@ const Student = (function(){
 >`${s2}`;
 "fooさんは2001年4月1日に}厚木で生まれました。"
 \end{Verbatim}
-\end{Prob}
+\end{Exec}
+なお、[\ref{ES2016}、174ページ]にはクラスメソッドを用いてクラス変数
+(クラスに共通の変数)を実現する方法の説明がある。その方法を用いて上の例を
+書き直すと次のようになる。
+\begin{Verbatim}[numbers=left]
+class Student extends Person {
+  static getNextId(){
+    return Student.nextId++;
+  }
+  constructor(name, year, month, day, hometown) {
+    super(name, year, month, day, hometown);
+    this.id = Student.getNextId();
+  }
+}
+Student.nextId = 10000;
+\end{Verbatim}
+\begin{itemize}
+ \item 2行目から4行目で次の\texttt{id}を求めるクラスメソッドを定義してい
+       る。
+ \item ここではクラス変数\texttt{nextId}を$1$増加させている(3行目)
+ \item \texttt{nextId}の初期化は10行目で行っている。
+ \item 初期化の方法からも推察されるように、この値は途中で変更が可能であ
+       る。
+\end{itemize}
+実行例は次のとおりである。
+\begin{Verbatim}
+>s1 = new Student("foo1",2001,4,1);
+Student {name: "foo", birthday: {…}, hometown: "神奈川", id: 10000}
+>s2 = new Student("foo2",2001,5,1);
+Student {name: "foo", birthday: {…}, hometown: "神奈川", id: 10001}
+Student.nextId = -100;
+-100
+>s3 = new Student("foo2",2001,6,1);
+Student {name: "foo", birthday: {…}, hometown: "神奈川", id: -100}
+\end{Verbatim}
+3つ目のインスタンスを作成する前にこの値を上書きしているので、最後のイン
+スタンスは前の2つと異なるものに設定できていることが分かる。
 \iffalse
 \section{コンストラクタ関数}
 オブジェクトを定義する方法としてはコンストラクタ関数を使う方法がある。

@@ -2,7 +2,7 @@
 \newcommand{\WW}{26zw}
 \ifAnswer\else\ifText\renewcommand{\WW}{35zw}\fi\fi
 \newcommand{\Rule}{\ifAnswer\else%
-   \ifText\rule[-3ex]{0em}{7ex}\else\rule[-2ex]{0em}{5ex}\fi}
+   \ifText\rule[-3ex]{0em}{7ex}\else\rule[-2ex]{0em}{5ex}\fi\fi}
 \ifAnswer
 \newcommand{\AnsShow}[3]{\texttt{#1}&#2&#3\\\hline}
 \else

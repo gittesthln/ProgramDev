@@ -18,6 +18,6 @@ $(T).dvi: $(SRCSL)
 	$(LATEX) $(T)
 M = 00dev
 all:
-	grep newlabel $(M).aux > $(M)-tmp.aux
 	make T=$(M) -B
+#	nkf -Sw $(M).aux |	grep newlabel > $(M)-tmp.aux
 	make T=$(M)Probs -B

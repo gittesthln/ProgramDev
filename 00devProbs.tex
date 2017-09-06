@@ -3,7 +3,6 @@
 \newif\ifText
 \newif\ifAnswer
 \newcommand{\LecName}{\hspace{1zw}ソフトウェア開発}
-\input 00dev-tmp.aux
 \input enshuuhead.tex
 \Texttrue
 \renewcommand{\label}[1]{\relax}
@@ -17,6 +16,7 @@
 }
 \newcommand{\ProblemNN}[1]{\stepcounter{LecNo}\Problem{#1}}
 \newcommand{\ProblemNR}[1]{\stepcounter{LecNo}\ProblemRev{#1}}
+\input 00dev-tmp.aux
 \begin{document}
 \pagestyle{enshuu}
 \renewcommand{\theLecNo}{第\arabic{LecNo}回}
@@ -66,9 +66,13 @@
 \underline{\makebox[\textwidth][l]{\bfseries 理由:}}
 %\input 03-01OrderOfDefFunction.tex
 \input 03-02FunctionWithArbituraryArgs.tex
-
-\input prob03-02.tex
-\input prob03-03factorial.tex
+\input prob03-03declairVAriablesByVar.tex
+\Newpage
+\input 03-04setTimeout.tex
+\begin{Prob}\upshape
+ 実行例3.7における\texttt{func2()}、\texttt{func3()}と\texttt{func4()}の
+ 動作を確認しなさい。コンソール画面のキャプチャを貼り付けること。
+\end{Prob}
 }
 %\chapter{オブジェクト}
 %\chapter{オブジェクトのプロトタイプと継承}
