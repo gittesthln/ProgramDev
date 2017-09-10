@@ -16,6 +16,15 @@ class Person{
     this["hometown"] = "神奈川";
   }
 }
+function Person2(name, year, month, day, hometown="神奈川"){
+    this.name = name;
+    this.birthday = {
+      year : year,
+      month : month,
+      day : day
+    };
+    this["hometown"] = hometown;
+}
 //]]>
 </script>
 </head>

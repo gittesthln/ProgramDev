@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<title>クラスの例</title>
+<script type="text/ecmascript">
+//<![CDATA[
+class Person{
+  static checkName(name) {
+    if(name === "") throw new Error("名前がありません");
+    return name;
+  }
+  static checkDate(y, m, d) {
+    if(m<1 || m>12) throw new Error("月が不正です");
+    let date = new Date(y,m,0);
+    if(d<1 || d>date.getDate()) throw new Error("日が不正です");
+    return {year: y, month: m, day: d};
+  }
+  constructor(name, year, month, day, hometown="神奈川"){
+    this.name = Person.checkName(name);
+    this.birthday = Person.checkDate(year, month, day);
+    this["hometown"] = hometown;
+  }
+  toString() {
+    return `${this.name}さんは`+
+      `${this.birthday.year}年${this.birthday.month}月${this.birthday.day}日に}` +
+   `${this.hometown}で生まれました。`;
+  }
+  get age(){
+    let today = new Date();
+    let age = today.getFullYear() - this.birthday.year;
+    if(today.getTime() <
+         new Date(today.getFullYear(),
+                  this.birthday.month-1,
+                  this.birthday.day).getTime()) age--;
+    return age;
+  }
+}
+const Student = (function(){
+  let id = 10000;
+  return class extends Person {
+    constructor(name, year, month, day, hometown) {
+      super(name, year, month, day, hometown);
+      this.id = id++;
+    }
+  }
+})();
+//]]>
+</script>
+</head>
+</html>

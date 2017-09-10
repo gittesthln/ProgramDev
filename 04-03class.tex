@@ -8,12 +8,12 @@
 ことが考えられる。このオブジェクトのひな形は通常クラスと呼ばれる。\ES で
 はクラスの宣言ができる。クラスから作成されたオブジェクトはこのクラスのイ
 ンスタンスと呼ばれる。
-
-前節の例をクラスを用いて書き直すと次のようになる。
+\begin{Exec}\upshape\label{ExecconstructorClass}
+実行例\ref{Execconstructor}をクラスを用いて書き直すと次のようになる。
 \begin{Verbatim}[numbers=left]
 class Person{
   constructor(name, year, month, day, hometown="神奈川"){
-    this.name = "foo";
+    this.name = name;
     this.birthday = {
       year : year,
       month : month,
@@ -43,6 +43,8 @@ class Person{
 Person {name: "foo", birthday: {…}, hometown: "神奈川"}
 \end{Verbatim}
 \end{itemize}
+
+\end{Exec}
 クラスの定義からインスタンスを作成するためにはキーワード
 \ElmJ{new}をつけてクラスを呼び出す。上の例ではコンストラクタが引数を必要
 としているので次のようになる。
@@ -105,10 +107,10 @@ class Person{
 
 実行例は次のとおりである。文字列が必要なときに呼び出されることがわかる。
 \begin{Verbatim}
->p.toString();//toString()の明示的呼び出し
-"2001年4月1日}"  
->`${p}`       //暗黙のtoString()呼び出し
-"2001年4月1日}"
+p.toString();//toString()の明示的呼び出し
+"fooさんは2001年4月1日に}神奈川で生まれました。"
+`${p}`;      //暗黙のtoString()呼び出し
+"fooさんは2001年4月1日に}神奈川で生まれました。"
 \end{Verbatim}
  16行目から24行目でゲッター\texttt{age}が定義されている。
  \begin{itemize}
@@ -133,10 +135,11 @@ class Person{
 16
 \end{Verbatim}
 \begin{itemize}
- \item 定義の方はには\texttt{()}があるが、つけるとエラーになる。記述の方
-       法はプロパティと同じようになる。
+ \item 定義の方はにはメソッドであることを示す\texttt{()}があるが、利用す
+       るときはプロパティと同じようになる。\texttt{()}を付けるとエラーに
+       なる。
  \item 代入の式はエラーがなく実行できるが、ゲッターの機能は
-       変わらない。
+       変わらない。代入はセッターの呼び出しが行われる。
 \end{itemize}
 \begin{Verbatim}
 p.age(10);
@@ -157,13 +160,6 @@ VM87:1 Uncaught TypeError: p.age is not a function
  \texttt{age()}の前にある\ElmJ{get}を省略して実行する(通常のメソッド)と
  どうなるか報告せよ。
 \end{Prob}
-\subsection{静的メソッド}
-クラスに対して、インスタンスを作成しないで使用できる静的メソッドを定義で
-きる。キーワード\ElmJ{static}を付けたものが静的メソッドとなる。インスタ
-ンス化されたオブジェクトからは使用できない。
-
-\ElmJ{Math}オブジェクトにある各関数が\ElmJ{Math}オブジェクトの静的メソッ
-ドの例になっている。
 \subsection{継承}
 すでにあるクラスをもとに機能の追加や変更を加えた新しいクラスを作ることが
 できる。新しいクラスはもとになるクラスを継承しているという。もとのクラス
@@ -209,7 +205,7 @@ Student {name: "foo", birthday: {…}, hometown: "厚木", id: 1523999}
 \end{Prob}
 \subsection{\protect\texttt{instanceof}演算子}
 \texttt{instanceof}演算子はオブジェクトを生成したコンストラクタ関数が指
-定されたものかを判定できる。
+定されたものかを判定する。
 \begin{Exec}\upshape
 次の結果は Chrome で、実行例\ref{PersonWidthGetter}の例である。
 \begin{Verbatim}
@@ -221,55 +217,24 @@ true
 false
 \end{Verbatim}
 \verb+Person+ オブジェクトが \verb+Object+ を継承している
- ために\texttt{o instanceof Object} が\texttt{true}となっている。
+ ので\texttt{p instanceof Object} が\texttt{true}となっている。
 % 継承については後の授業で解説する。
 \end{Exec}
-\subsection{同じクラスのインスタンスに通し番号をつける}
-実行例\ref{Inheritance}のプロパティ\texttt{id}を重複がなくかつ連続な値に
-設定しようとするとクラスにおいて管理する変数が必要となる。
-オブジェクト指向言語ではクラスのインスタンスで共通に持つ変数をクラス変数
-という仕組みがあるが、JavaScript には直接的には存在しない。これを実現す
-るためにはクラスをクロージャの中で定義して、その中に変数を置けばよい。
+\subsection{静的メソッド}
+クラスに対して、インスタンスを作成しないで使用できる静的メソッドを定義で
+きる。静的メソッドはキーワード\ElmJ{static}を付ける。インスタ
+ンス化されたオブジェクトからは使用できない。
 
+\ElmJ{Math}オブジェクトにある各関数が\ElmJ{Math}オブジェクトの静的メソッ
+ドの例になっている。
+%\subsection{同じクラスのインスタンスに通し番号をつける}
+
+実行例\ref{Inheritance}のプロパティ\texttt{id}を重複がなくかつ連続な値に
+自動で設定しようとするとクラスにおいて変数を管理する変数(クラス変数)が必要となる。
+%[\ref{ES2016}、174ページ]にはクラスメソッドを用いてクラス変数
+%を実現する方法の説明がある。
 \begin{Exec}\upshape
-次の例は即時実行関数内に\texttt{id}を管理する変数を用意して、その関数が
- クラス式を返すようにしたものである。
-\begin{Verbatim}[numbers=left]
-const Student = (function(){
-  let id = 10000;
-  return class extends Person {
-    constructor(name, year, month, day, hometown) {
-      super(name, year, month, day, hometown);
-      this.id = id++;
-    }
-  }
-})();
-\end{Verbatim}
- \begin{itemize}
-  \item 即時実行関数の戻り値はクラス式であり、それを変数\texttt{Student}
-        に代入している。同じ名前のクラスが再定義されないようにするため変
-        数を\ElmJ{const}で宣言している。
-  \item 2行目で次に設定する\texttt{id}を保存する変数を初期化している。
-  \item 関数の戻り値としてクラス式を返す。クラスの定義は以前のものとほと
-        んど同じである。
-  \item 異なるのはインスタンスに設定した後で\texttt{id}を管理する変数を
-        増加させているところ(6行目の右辺)。
- \end{itemize}
- 実行例は次のとおりである。
-\begin{Verbatim}
->s = new Student("foo",2001,4,1);  //初めのインスタンスの id は 10000
-{name: "foo", birthday: {…}, hometown: "神奈川", id: 10000}
->`${s}`;
-"fooさんは2001年4月1日に}神奈川で生まれました。"
->s2 = new Student("foo",2001,4,1,"厚木");  //次のインスタンスの id は 10001
-{name: "foo", birthday: {…}, hometown: "厚木", id: 10001}
->`${s2}`;
-"fooさんは2001年4月1日に}厚木で生まれました。"
-\end{Verbatim}
-\end{Exec}
-なお、[\ref{ES2016}、174ページ]にはクラスメソッドを用いてクラス変数
-(クラスに共通の変数)を実現する方法の説明がある。その方法を用いて上の例を
-書き直すと次のようになる。
+クラスメソッドを用いて連続した\texttt{id}を作成する方法は次のようになる。
 \begin{Verbatim}[numbers=left]
 class Student extends Person {
   static getNextId(){
@@ -303,6 +268,49 @@ Student {name: "foo", birthday: {…}, hometown: "神奈川", id: -100}
 \end{Verbatim}
 3つ目のインスタンスを作成する前にこの値を上書きしているので、最後のイン
 スタンスは前の2つと異なるものに設定できていることが分かる。
+
+\end{Exec}
+
+この欠点を解消するには
+クラスメソッドで定義する代わりにクラスをクロージャの中で定義して、その中
+に変数を置く方法がある。
+
+\begin{Exec}\upshape
+次の例は即時実行関数内に\texttt{id}を管理する変数を用意して、その関数が
+ クラス式を返すようにしたものである。
+\begin{Verbatim}[numbers=left]
+const Student = (function(){
+  let id = 10000;
+  return class extends Person {
+    constructor(name, year, month, day, hometown) {
+      super(name, year, month, day, hometown);
+      this.id = id++;
+    }
+  }
+})();
+\end{Verbatim}
+ \begin{itemize}
+  \item 即時実行関数の戻り値はクラス式であり、それを変数\texttt{Student}
+        に代入している。同じ名前のクラスが再定義されないようにするため変
+        数を\ElmJ{const}で宣言している。
+  \item 2行目で次に設定する\texttt{id}を保存する変数を初期化している。
+  \item 関数の戻り値としてクラス式を返す。クラスの定義は以前のものとほと
+        んど同じである。
+  \item 違いはインスタンスに設定した後で\texttt{id}を管理する変数を
+        増加させているところ(6行目の右辺)。
+ \end{itemize}
+ 実行例は次のとおりである。
+\begin{Verbatim}
+>s = new Student("foo",2001,4,1);  //初めのインスタンスの id は 10000
+{name: "foo", birthday: {…}, hometown: "神奈川", id: 10000}
+>`${s}`;
+"fooさんは2001年4月1日に}神奈川で生まれました。"
+>s2 = new Student("foo",2001,4,1,"厚木");  //次のインスタンスの id は 10001
+{name: "foo", birthday: {…}, hometown: "厚木", id: 10001}
+>`${s2}`;
+"fooさんは2001年4月1日に}厚木で生まれました。"
+\end{Verbatim}
+\end{Exec}
 \iffalse
 \section{コンストラクタ関数}
 オブジェクトを定義する方法としてはコンストラクタ関数を使う方法がある。
