@@ -48,46 +48,27 @@ const StudentF = (function(){
 StudentF.prototype = new PersonF();
 StudentF.prototype.constructor = StudentF;
 
-console.log('>p = new PersonF("foo",2001,4,1);');
-console.log(p = new PersonF("foo",2001,4,1));
-console.log('>p.mother = "Alice";');
-console.log(p.mother = "Alice");
-console.log('>p.mother;');
-console.log(p.mother);
-console.log('>p.mather = "Old Alice";');
-console.log(p.grandmother = "Old Alice");
-console.log('>p.grandmother;');
-console.log(p.grandmother);
-console.log('>Object.preventExtensions(p);');
-console.log(Object.preventExtensions(p));
-console.log('>p.father = "Bob";');
-console.log(p.father = "Bob");
-console.log('>p.father;');
-console.log(p.father);
-console.log('>delete p.mother;');
-console.log(delete p.mother);
-console.log('>p.mother;');
-console.log(p.mother);
-console.log('>Object.seal(p);');
-console.log(Object.seal(p));
-console.log('>Object.isSealed(p);');
-console.log(Object.isSealed(p));
-console.log('>delete p.grandmother;');
-console.log(delete p.grandmother);
-console.log('>p.grandmother;');
-console.log(p.grandmother);
-console.log('>p.grandmother = "Very Old Alice";');
-console.log(p.grandmother = "Very Old Alice");
-console.log('>p.grandmother;');
-console.log(p.grandmother);
-console.log('>Object.freeze(p);');
-console.log(Object.freeze(p));
-console.log('>p.grandmother = "Very Very Old Alice";');
-console.log(p.grandmother = "Very Very Old Alice");
-console.log('>;');
-console.log();
-console.log('>p.grandmother;');
-console.log(p.grandmother);
+function showExec(s) {
+  console.log(`>${s};`);
+  console.log(eval(s));
+}
+showExec('p = new PersonF("foo",2001,4,1)');
+showExec('p.mother = "Alice"');
+showExec('p.grandmother = "Old Alice"');
+showExec('Object.preventExtensions(p)');
+showExec('p.father = "Bob"');
+showExec('p.father');
+showExec('delete p.mother');
+showExec('p.mother');
+showExec('Object.seal(p)');
+showExec('Object.isSealed(p)');
+showExec('delete p.grandmother');
+showExec('p.grandmother');
+showExec('p.grandmother = "Very Old Alice"');
+showExec('p.grandmother;');
+showExec('Object.freeze(p)');
+showExec('p.grandmother = "Very Very Old Alice"');
+showExec('p.grandmother');
 //]]>
 </script>
 </head>
