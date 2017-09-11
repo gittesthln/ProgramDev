@@ -15,8 +15,8 @@ sugar(糖衣構文)と呼ぶ。}。実行例\ref{ExecconstructorClass}に
 \begin{Exec}\label{constructor}\upshape
 次の例はコンストラクタ関数を用いて、前の例と同じオブジェクト(インスタン
  ス)を構成している。
-\begin{Verbatim}
-実行例\ref{ExecconstructorClass}の例で確認する。
+
+ 実行例\ref{ExecconstructorClass}の例で確認する。
 \begin{Verbatim}
 function PersonF(name, year, month, day, hometown = "神奈川"){
     this.name = name;
@@ -107,10 +107,10 @@ PersonF {name: "foo", birthday: {…}, hometown: "神奈川"}
 \begin{Verbatim}
 >p = new PersonF("foo",2001,4,1);
 PersonF {name: "foo", birthday: {…}, hometown: "神奈川"}
->p.mather = "Alice";
+>p.mother = "Alice";
 Alice
 >p.mother;
-undefined
+Alice
 >p.mather = "Old Alice";
 Old Alice
 >p.grandmother;
