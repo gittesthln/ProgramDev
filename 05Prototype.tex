@@ -107,16 +107,13 @@ PersonF {name: "foo", birthday: {…}, hometown: "神奈川"}
 \begin{Verbatim}
 >p = new PersonF("foo",2001,4,1);
 PersonF {name: "foo", birthday: {…}, hometown: "神奈川"}
+PersonF
 >p.mother = "Alice";
 Alice
->p.mother;
-Alice
->p.mather = "Old Alice";
-Old Alice
->p.grandmother;
+>p.grandmother = "Old Alice";
 Old Alice
 >Object.preventExtensions(p);
- PersonF {name: "foo", birthday: {…}, hometown: "神奈川", mather: "Alice", grandmother: "Old Alice"}
+PersonF
 >p.father = "Bob";
 Bob
 >p.father;
@@ -126,23 +123,22 @@ true
 >p.mother;
 undefined
 \end{Verbatim}
- \end{Exec}
 \begin{itemize}
  \item \texttt{Object.preventExtensions(p)}を実行する前では存在しな
        い属性の追加ができている(\texttt{p.mother})。
- \item 設定後は、新しい属性が定義できていない(\texttt{p.father})。
+ \item \texttt{Object.preventExtensions(p)}を実行後は、新しい属性が定義
+			 できていない(\texttt{p.father})。
  \item \texttt{Object.preventExtensions(p)}では属性の削除までは禁止でき
-       ない(\texttt{delet p.mother}が成功している)。
+       ない(\texttt{delet p.mother}が成功していて、
+			 値を参照すると\ElmJ{undefined}が返る)。
 \end{itemize}
 属性の削除まで禁止したい場合には\ElmJ{Object.seal()}を用いる。一度この関
-数を実行されたオブジェクトは解除できない。また、すで
-にその状態になっているかどうかは、\ElmJ{Object.isSealed()}を用いる。
-書き込み可の属性の値は変えることができる。
- \begin{Exec}\upshape\label{ExecContined}
-  実行例\ref{Execconstructor}の例で確認する。
+数を実行されたオブジェクトは解除できない。
+	
+引き続いて実行すると次のようになる。
 \begin{Verbatim}
 >Object.seal(p);
-PersonF {name: "foo", birthday: {…}, hometown: "神奈川", mather: "Alice", grandmother: "Old Alice"}
+PersonF
 >Object.isSealed(p);
 true
 >delete p.grandmother;
@@ -151,36 +147,34 @@ false
 Old Alice
 >p.grandmother = "Very Old Alice";
 Very Old Alice
->p.grandmother;
+>p.grandmother;;
 Very Old Alice
 \end{Verbatim}
- \end{Exec}
- \begin{itemize}
-  \item \texttt{Object.seal()}を実行した後、存在しない属性
-        \texttt{p.mother}は定義されていないことがわかる。
-  \item 既存の属性の値は変更可能である。
- \end{itemize}
+\begin{itemize}
+	 \item すでに\texttt{seal}された状態になっているかどうかは、
+				 \ElmJ{Object.isSealed()}を用いる。
+ \item \texttt{seal}された状態ではプロパティを削除できない
+			 (\texttt{delete p.grandmother}の結果が\ElmJ{false})。
+ \item \texttt{seal}された状態で値を変えることができる
+			 (\texttt{p.grandmother}の値の書き換えができている)。
+\end{itemize}
 最も強く、オブジェクトを拘束するためには、\ElmJ{Object.freeze()}を用いる。
 また、この状態を確認するためには\ElmJ{Object.isFrozen()}を用いる。
   \begin{Exec}\upshape
    実行例\ref{ExecContined}に引き続いて\ElmJ{Object.freeze()}を実行した
    結果である
- \end{Exec}
 \begin{Verbatim}
->Object.isFrozen(p);
-false
 >Object.freeze(p);
-PersonF {name: "foo", birthday: {…}, hometown: "神奈川", mather: "Alice", grandmother: "Very Old Alice"}
+PersonF
 >p.grandmother = "Very Very Old Alice";
 Very Very Old Alice
->;
 >p.grandmother;
 Very Old Alice
 \end{Verbatim}
  \texttt{p.grandmother}の値が設定できていないことがわかる。
 このような状態で属性値を変えたい場合には、属性にたいするセッターメソッド
 を定義することになる。
-
+\end{Exec}
  \iffalse
  なお、\texttt{Object.seal()}や \texttt{Object.freeze()}の影響は、渡され
  たオブジェクト自身の属性にしか影響を及ぼさない。継承元のオブジェクトに
