@@ -2,18 +2,18 @@ window.onload = function() {
   function getElm(N){
     return document.getElementById(N);
   }
-  var Squares   = getElm("Squares");
-  var Select    = getElm("select");
-  var ColorName = getElm("colorName");
-  var Radio     = getElm("radio");
-  var Set       = getElm("Set");
-  var Inputs    = document.getElementsByClassName("click");
-  var Squareschildren =	 Squares.children;
-  var lastClicked = Squareschildren[1];  
+  let Squares   = getElm("Squares");
+  let Select    = getElm("select");
+  let ColorName = getElm("colorName");
+  let Radio     = getElm("radio");
+  let Set       = getElm("Set");
+  let Inputs    = document.getElementsByClassName("click");
+  let Squareschildren =	 Squares.children;
+  let lastClicked = Squareschildren[1];  
   function SetBackground(Pos, Color) {
     Squareschildren[Pos].style.background = Color;
   }
-  var v = "value";
+  let v = "value";
   SetBackground(0, "red");
   SetBackground(1, "yellow");
   SetBackground(2, "blue");
@@ -25,7 +25,7 @@ window.onload = function() {
     Inputs[3][v] = E.pageY;
     Inputs[4][v] = window.pageXOffset;
     Inputs[5][v] = window.pageYOffset;
-    var R = E.target.getBoundingClientRect();
+    let R = E.target.getBoundingClientRect();
     Inputs[6][v] = E.pageX-R.left;
     Inputs[7][v] = E.pageY-R.top;
     ColorName[v] = E.target.style.background;

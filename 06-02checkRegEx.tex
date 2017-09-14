@@ -1,0 +1,43 @@
+
+\newcommand{\makeVSPACE}{%
+  \ifText\vspace{0.03\textheight}\fi}
+\begin{Prob}\upshape
+次の実行結果がどうなるか答えよ。理由も述べること。
+\begin{enumerate}
+ \item \texttt{"aaaabaaabb".match(/.*b/);}\makeVSPACE
+%["aaaabaaabb"]
+ \item \texttt{"aaaabaaabb".match(/.*b/g);}\makeVSPACE
+%["aaaabaaabb"]
+ \item \texttt{"aaaabaaabb".match(/.*?b/);}\makeVSPACE
+%["aaaab"]
+ \item \texttt{"aaaabaaabb".match(/.*?b/g)};\makeVSPACE
+ \item \Verb+"abccbcckkccaaMMaacc".match(/((.)\2).*\1/);+\makeVSPACE
+%["ccbcckkccaaMMaacc", "cc", "c"]
+ \item \Verb+"abccbcckkccaaMMaacc".match(/((.)\2).*\1/g);+\makeVSPACE
+%["ccbcckkccaaMMaacc"]
+ \item \Verb+"abccbcckkccaaMMaacc".match(/((.)\2).*?\1/);+\makeVSPACE
+%["ccbcc", "cc", "c"]
+ \item \Verb+"abccbcckkccaaMMaacc".match(/((.)\2).*?\1/g);+\makeVSPACE
+%["ccbcc", "ccaaMMaacc"]
+ \item \Verb+"abccbcckkccaaMMaa".match(/((.)\2).*\1/);+\makeVSPACE
+%["ccbcckkcc", "cc", "c"]
+ \item \Verb+"abccbcckkccaaMMaa".match(/((.)\2).*\1/g);+\makeVSPACE
+%["ccbcckkcc", "aaMMaa"]
+ \item \Verb+"abccbcckkccaaMMccaa".match(/((.)\2).*\1/g);+\makeVSPACE
+%["ccbcckkccaaMMcc"]
+ \item \Verb+"abccbcckkccaaMMccaa".match(/((.)\2).*?\1/g);+\makeVSPACE
+%["ccbcc", "ccaaMMcc"]
+% \item \Verb++
+%
+\end{enumerate}
+  \end{Prob}
+\iffalse
+"abccbcckkccaaMMaacc".match(/((.)\2).*\1/g);
+["ccbcckkccaaMMaacc"]
+"abccbcckkccaaMMaacc".match(/((.)\2).*?\1/g);
+["ccbcc", "ccaaMMaacc"]
+"abccbcckkccaaMMccaa".match(/((.)\2).*\1/g);
+["ccbcckkccaaMMcc"]
+"abccbcckkccaaMMccaa".match(/((.)\2).*?\1/g);
+["ccbcc", "ccaaMMcc"]
+\fi

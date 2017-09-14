@@ -5,7 +5,8 @@
 <title>クラスの例</title>
 <script type="text/ecmascript">
 //<![CDATA[
-function PersonF(name, year, month, day, hometown="神奈川"){
+class Person{
+  constructor(name, year, month, day, hometown="神奈川"){
     this.name = "foo";
     this.birthday = {
       year : year,
@@ -14,12 +15,11 @@ function PersonF(name, year, month, day, hometown="神奈川"){
     };
     this["hometown"] = hometown;
   }
-if(false) PersonF.prototype = {
-  toString:function() {
+  toString() {
     return `${this.name}さんは`+
-      `${this.birthday.year}年${this.birthday.month}月${this.birthday.day}日に` +
+      `${this.birthday.year}年${this.birthday.month}月${this.birthday.day}日に}` +
    `${this.hometown}で生まれました。`;
-  },
+  }
   get age(){
     let today = new Date();console.log(x);
     let age = today.getFullYear() - this.birthday.year;
@@ -28,31 +28,23 @@ if(false) PersonF.prototype = {
                   this.birthday.month-1,
                   this.birthday.day).getTime()) age--;
     return age;
-  },
-  constructor: PersonF
+  }
 }
-
-const StudentF = (function(){
+const Student = (function(){
   let id = 10000;
-  return function(name, year, month, day, hometown = "神奈川") {
-    this.name = name
-    this.birthday = {
-      year : year,
-      month : month,
-      day : day
-    };
-    this["hometown"] = hometown;
-    this.id = id++;
+  return class extends Person {
+    constructor(name, year, month, day, hometown) {
+      super(name, year, month, day, hometown);
+      this.id = id++;
     }
-  })();
-StudentF.prototype = new PersonF();
-StudentF.prototype.constructor = StudentF;
+  }
+})();
 
 function showExec(s) {
   console.log(`>${s};`);
   console.log(eval(s));
 }
-showExec('p = new PersonF("foo",2001,4,1)');
+showExec('p = new Student("foo",2001,4,1)');
 showExec('p.mother = "Alice"');
 showExec('p.grandmother = "Old Alice"');
 showExec('Object.preventExtensions(p)');

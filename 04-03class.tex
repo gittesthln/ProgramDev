@@ -59,11 +59,7 @@ Person {name: "foo", birthday: {…}, hometown: "神奈川"}
 コンストラクタの最後の引数にはデフォルト値が指定されているので、この実行例の
 ように値が指定されていない場合にはデフォルト値に設定されていることが分か
 る。
-\begin{Prob}\upshape
-実行例\ref{Execconstructor}と同様に、\ElmJ{class}を用いて作成されたイン
- スタンスについてプロパティの値の変更、プロパティの追加ができるか確認し
- なさい。
-\end{Prob}
+\input 04-03ChangeProperties.tex
 \subsection{クラスメソッド}
 クラス内では\ElmJ{constructor}のほかにメソッドと呼ばれる関数で定義された
 プロパティがある。また、メソッドにはアクセッサプロパティと呼ばれるオブジェ
@@ -146,20 +142,9 @@ p.age(10);
 VM87:1 Uncaught TypeError: p.age is not a function
     at <anonymous>:1:3
 \end{Verbatim}
-\begin{Prob}\upshape
- 指定された日付における年令を求めるメソッドを作成しなさい。
- 求める年齢は次の条件を満たすこと。
- \begin{itemize}
-  \item 引数がない場合には\texttt{age}と同じように実行時
-  \item 年しかない場合にはその年の1月1日現在
-  \item 年と月しかない場合にはその年月の1日現在
- \end{itemize}
-\end{Prob}
-\begin{Prob}\upshape
-実行例\ref{PersonWidthGetter}のリストにあるプロトタイプメソッド
- \texttt{age()}の前にある\ElmJ{get}を省略して実行する(通常のメソッド)と
- どうなるか報告せよ。
-\end{Prob}
+\input 04-04ageAtToday.tex
+\input 04-05ageRemoveGet.tex
+\input 04-06ageSetter.tex
 \subsection{継承}
 すでにあるクラスをもとに機能の追加や変更を加えた新しいクラスを作ることが
 できる。新しいクラスはもとになるクラスを継承しているという。もとのクラス

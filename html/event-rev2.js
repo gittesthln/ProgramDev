@@ -1,5 +1,5 @@
-awindow.onload = function() {
-  var Squares, Select, ColorName, Radio, Set;
+window.onload = function() {
+  let Squares, Select, ColorName, Radio, Set;
 		(function(document,getElementById){
       Squares   = document[getElementById]("Squares");
       Select    = document[getElementById]("select");
@@ -7,8 +7,8 @@ awindow.onload = function() {
       Radio     = document[getElementById]("radio");
       Set       = document[getElementById]("Set");
 	})(document,"getElementById");
-  var Inputs    = document.getElementsByClassName("click");
-  var lastClicked = Squares.children[1];  
+  let Inputs    = document.getElementsByClassName("click");
+  let lastClicked = Squares.children[1];  
   Squares.children[0].style.background = "red";
   Squares.children[1].style.background = "yellow";
   Squares.children[2].style.background = "blue";
@@ -20,7 +20,7 @@ awindow.onload = function() {
     Inputs[3].value = E.pageY;
     Inputs[4].value = window.pageXOffset;
     Inputs[5].value = window.pageYOffset;
-    var R = E.target.getBoundingClientRect();
+    let R = E.target.getBoundingClientRect();
     Inputs[6].value = E.pageX-R.left;
     Inputs[7].value = E.pageY-R.top;
     ColorName.value = E.target.style.background;

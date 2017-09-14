@@ -6,11 +6,10 @@
 <script type="text/ecmascript">
 //<![CDATA[
   window.onload = function(){
-    var i, Option;
-    var Select = document.createElement("select");
+    let Select = document.createElement("select");
     document.getElementById("menu").appendChild(Select);
-    for(i=1;i<=12;i++) {
-      Option = document.createElement("option");
+    for(let i=1;i<=12;i++) {
+      let Option = document.createElement("option");
       Option.setAttribute("value",i);
       Select.appendChild(Option);
       Option.appendChild(document.createTextNode(i+"月"));

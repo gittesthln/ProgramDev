@@ -1,10 +1,10 @@
 window.onload = function() {
-  var Squares   = document.getElementById("Squares");
-  var Select    = document.getElementById("select");
-  var ColorName = document.getElementById("colorName");
-  var Radio     = document.getElementById("radio");
-  var Set       = document.getElementById("Set");
-  var Inputs    = document.getElementsByClassName("click");
+  let Squares   = document.getElementById("Squares");
+  let Select    = document.getElementById("select");
+  let ColorName = document.getElementById("colorName");
+  let Radio     = document.getElementById("radio");
+  let Set       = document.getElementById("Set");
+  let Inputs    = document.getElementsByClassName("click");
   Squares.children[0].style.background = "red";
   Squares.children[1].style.background = "yellow";
   Squares.children[2].style.background = "blue";
@@ -16,7 +16,7 @@ window.onload = function() {
     Inputs[3].value = E.pageY;
     Inputs[4].value = window.pageXOffset;
     Inputs[5].value = window.pageYOffset;
-    var R = E.target.getBoundingClientRect();
+    let R = E.target.getBoundingClientRect();
     Inputs[6].value = E.pageX-R.left;
     Inputs[7].value = E.pageY-R.top;
       },false);
@@ -31,7 +31,7 @@ window.onload = function() {
     },false);
   Set.addEventListener("click", function(){
       Squares.children[2].style.background = ColorName.value; }, false);
-  var Form = document.getElementsByTagName("form")[0];
+  let Form = document.getElementsByTagName("form")[0];
   Form.setAttribute("method","PUT");
   Form.setAttribute("action","09sendDataGet.php");
 }

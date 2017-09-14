@@ -7,18 +7,16 @@
 //<![CDATA[
   window.onload = function(){
     function makeSelectNumber(from, to, prefix, suffix, id, parent){
-      var i, option;
-      var Select = makeElm("select", {"id":id}, parent);
-      for(i=from; i<=to; i++) {
-        option = makeElm("option",{ "value":i}, Select);
+      let Select = makeElm("select", {"id":id}, parent);
+      for(let i=from; i<=to; i++) {
+        let option = makeElm("option",{ "value":i}, Select);
         makeTextNode(prefix+i+suffix,option);
       }
       return Select;
     };
     function makeElm(name, attribs, parent) {
-      var elm = document.createElement(name);
-      var attrib;
-      for(attrib in attribs) {
+      let elm = document.createElement(name);
+      for(let attrib in attribs) {
         elm.setAttribute(attrib,attribs[attrib]);
       };
       if(parent) parent.appendChild(elm);
@@ -27,21 +25,21 @@
     function makeTextNode(text,parent) {
         parent.appendChild(document.createTextNode(text));
     };
-    var Form  = document.getElementById("menu");
-    var Year  = makeSelectNumber(2000,2020,"","年","year", Form);
-    var Month = makeSelectNumber(1,12,"","月","month", Form);
-    var Days = [];
-    for(d=28; d<=31; d++) {
+    let Form  = document.getElementById("menu");
+    let Year  = makeSelectNumber(2000,2020,"","年","year", Form);
+    let Month = makeSelectNumber(1,12,"","月","month", Form);
+    let Days = [];
+    for(let d=28; d<=31; d++) {
       Days[d] = makeSelectNumber(1,d,"","日","day");
     }
-    var d, today = new Date();
+    let today = new Date();
     Year.value = today.getFullYear();
     Month.value = today.getMonth()+1;
-    d = new Date(Year.value, Month.value,0).getDate();
+    let d = new Date(Year.value, Month.value,0).getDate();
     Form.appendChild(Days[d]);
     Form.children[2].value = today.getDate();
     Form.addEventListener("change", function(){
-      var d2 = Form.children[2].value
+      let d2 = Form.children[2].value
       d = new Date(Year.value, Month.value, 0).getDate();
       if( d != Form.children[2].children.length) {
         Form.replaceChild(Days[d],Form.children[2]);

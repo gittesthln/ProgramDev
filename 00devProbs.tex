@@ -2,6 +2,7 @@
 \newif\ifHMSol
 \newif\ifText
 \newif\ifAnswer
+\newcommand{\ElmJ}[1]{\texttt{#1}}
 \newcommand{\LecName}{\hspace{1zw}ソフトウェア開発}
 \input enshuuhead.tex
 \Texttrue
@@ -16,7 +17,7 @@
 }
 \newcommand{\ProblemNN}[1]{\stepcounter{LecNo}\Problem{#1}}
 \newcommand{\ProblemNR}[1]{\stepcounter{LecNo}\ProblemRev{#1}}
-\input 00dev-tmp.aux
+%\input 00dev-tmp.aux
 \begin{document}
 \pagestyle{enshuu}
 \renewcommand{\theLecNo}{第\arabic{LecNo}回}
@@ -75,14 +76,61 @@
 \end{Prob}
 }
 %\chapter{オブジェクト}
-%\chapter{オブジェクトのプロトタイプと継承}
+\ProblemNN{
+\input 04-01windowProperty.tex
+\input 04-02JSONProb.tex
+\ \vspace{0.15\textheight}
+\input 04-03ChangeProperties.tex
+\input 04-04ageAtToday.tex
+\Newpage
+\input 04-05ageRemoveGet.tex
+\input 04-06ageSetter.tex
+}
+%\chapter{オブジェクトの詳細}
+\ProblemNN{
+\input 05-01extensibleClass.tex
+\input 05-02checkPrototype.tex
+\input 05-03errorCheck.tex
+\Newpage
+\input 05-04errorCheckMoreStrict.tex
+}
 %\chapter{正規表現}
+\ProblemNN{
+\input 06-01makeRegEx.tex
+\begin{Prob}\upshape
+日付を表す文字列 \Verb+"2017年10月27日"+から年(\Verb+2017+)、月(\Verb+10+)、
+ 日(\Verb+27+)をそれぞれ変数\Verb+y+、\Verb+m+、\Verb+d+に代入するプログ
+ ラムを書け。\\[0.02\textheight]
+\end{Prob}
+\Newpage
+\input 06-02checkRegEx.tex
+ \begin{Prob}\upshape
+  実行例5.7において\ElmJ{prompt()}の戻り値は文字列である。これを利用して
+  入力値を正規表現を用いてチェックするように直せ。
+\end{Prob}
+}
 %\chapter{DOMの利用}
+\ProblemNN{
+}
 %\chapter{イベント}
+\ProblemNN{
+}
 %\chapter{PHPの超入門}
+\ProblemNN{
+}
 %\chapter{サーバーとのデータのやり取り}
+\ProblemNN{
+}
 %\chapter{jQuery}
+\ProblemNN{
+}
 %\chapter{JavaScriptライブラリーの配布}
+\ProblemNN{
+}
 %\chapter{XMLファイルの処理}
+\ProblemNN{
+}
 %\chapter{システム開発のためのヒント}
+\ProblemNN{
+}
 \end{document}

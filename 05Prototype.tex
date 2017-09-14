@@ -61,39 +61,6 @@ PersonF {name: "foo", birthday: {…}, hometown: "神奈川"}
  \texttt{toString()}が呼び出されている。
 \end{Exec}
 
-
-\iffalse
- \ElmJ{Array()}オブジェクトには
-\texttt{toString()}が定義(オーバーライド)されているので次のような形にし
-ないとこのような結果が得られない。
-\begin{Verbatim}
->Object.prototype.toString.call([]);
-"[object Array]"
-\end{Verbatim}
-これは、\ElmJ{Object}の\ElmJ{prototype}属性に定義されている
-\ElmJ{toString}を引数のメソッドとして利用することを意味する。
-\ElmJ{prototype}の意味は後で説明をする。
-同じように他のオブジェクトで実行すると次のようになる(Operaで実行)。
-\begin{Verbatim}
->Object.prototype.toString.call(null);
-"[object Null]"
->Object.prototype.toString.call(undefined);
-"[object Undefined]"
->Object.prototype.toString.call(NaN);
-"[object Number]"
->Object.prototype.toString.call(window);
-"[object global]"
->window+""
-"[object Window]"
-\end{Verbatim}
-なお、FireFoxやInternet Explorer では最後の例は次のようになる。
-\begin{Verbatim}
->Object.prototype.toString.call(window);
-"[object Window]"
->window+""
-"[object Window]"
-\end{Verbatim}
- \fi
 \subsection{\protect\ElmJ{extensible}属性}
 \ElmJ{extensible}はオブジェクトに対してプロパティの追加ができるか
 どうかを指定する。\JS ではこの属性の取得や設定ができる関数が用意され
@@ -102,7 +69,7 @@ PersonF {name: "foo", birthday: {…}, hometown: "神奈川"}
 この属性の取得は\ElmJ{Object.isExtensible()}に調べたいオブジェクトを引数
 にして渡す。オブジェクトのプロパティを拡張できなくするためには
 \ElmJ{Object.preventExtension()}に引数として設定したいオブジェクトを渡す。
- \begin{Exec}\upshape
+ \begin{Exec}\upshape\label{ExecconstructorExtensible}
   実行例\ref{Execconstructor}の例で確認する。
 \begin{Verbatim}
 >p = new PersonF("foo",2001,4,1);
@@ -152,15 +119,15 @@ Very Old Alice
 \end{Verbatim}
 \begin{itemize}
 	 \item すでに\texttt{seal}された状態になっているかどうかは、
-				 \ElmJ{Object.isSealed()}を用いる。
+				 \ElmJ{Object.isSealed()}で調べられる。
  \item \texttt{seal}された状態ではプロパティを削除できない
 			 (\texttt{delete p.grandmother}の結果が\ElmJ{false})。
- \item \texttt{seal}された状態で値を変えることができる
+ \item \texttt{seal}された状態ではプロパティの値を変えることができる
 			 (\texttt{p.grandmother}の値の書き換えができている)。
 \end{itemize}
 最も強く、オブジェクトを拘束するためには、\ElmJ{Object.freeze()}を用いる。
 また、この状態を確認するためには\ElmJ{Object.isFrozen()}を用いる。
-  \begin{Exec}\upshape
+
    実行例\ref{ExecContined}に引き続いて\ElmJ{Object.freeze()}を実行した
    結果である
 \begin{Verbatim}
@@ -173,13 +140,33 @@ Very Old Alice
 \end{Verbatim}
  \texttt{p.grandmother}の値が設定できていないことがわかる。
 このような状態で属性値を変えたい場合には、属性にたいするセッターメソッド
-を定義することになる。
-\end{Exec}
- \iffalse
- なお、\texttt{Object.seal()}や \texttt{Object.freeze()}の影響は、渡され
- たオブジェクト自身の属性にしか影響を及ぼさない。継承元のオブジェクトに
- は影響を及ぼさない。
- \fi
+  を定義することになる。
+
+このオブジェクトではプロパティ\texttt{birthday}の値がオブジェクトになっ
+ている。このオブジェクトは\ElmJ{seal}されていない。
+\begin{Verbatim}
+>p.birthday;
+{year: 2001, month: 4, day: 1}
+>delete p.birthday;
+false
+>p.birthday = {};
+{}
+>p.birthday;
+{year: 2001, month: 4, day: 1}
+>delete p.birthday.year;
+true
+>p.birthday;
+{month: 4, day: 1}
+\end{Verbatim}
+  \begin{itemize}
+   \item \texttt{p.birthday}は削除できない。また、値の変更もできない。
+   \item 一方で、\texttt{p.birthday.year}は削除できる。
+  \end{itemize}
+ \end{Exec}
+ \input 05-01extensibleClass.tex
+ このように JavaScript におけるクラスとそれから生成されるインスタンスは
+ 通常のオブジェクト指向言語のように構造を固定化された状態で存在させるた
+ めにはインスタンスごとに行う必要があることが分かる。
  \subsection{\protect\ElmJ{prototye}属性}
  オブジェクトの\ElmJ{prototype}属性の値は、同じコンストラクタ関数で生成
  された間で共通のものになっている。オブジェクトリテラルで生成されたオブ
@@ -223,16 +210,12 @@ PersonF.prototype = {
 
 なお、\ElmJ{get}キーワードの代わりに\ElmJ{set}キーワードを用いるとセッター
 を定義できる。
-
-\begin{Prob}\upshape
- 実行例\ref{Execconst3}において、\texttt{age}プロパティがセッターとして
- 使われたときには注意を促すメッセージを表示するようにしなさい。
-\end{Prob}
+\input 05-02checkPrototype.tex
 \section{関数によるオブジェクトの継承}
 \JS では\ElmJ{prototype}を用
 いることでメソッドの継承が可能となっている。
 \begin{Exec}\upshape\label{Execconst4}
-次のリストは実行例\ref{Execconst3}の\texttt{Person2}を継承して、学籍番号
+次のリストは実行例\ref{Execconst3}の\texttt{Person}を継承して、学籍番号
  を追加のプロパティとする\texttt{Student}オブジェクトのコンストラクタ関
  数である。
 \begin{Verbatim}[numbers=left]
@@ -253,43 +236,20 @@ StudentF.prototype = new PersonF();
 StudentF.prototype.constructor = StudentF;
 \end{Verbatim}
 \end{Exec}
-\iffalse
 \begin{itemize}
- \item \texttt{name}などのプロパティはオブジェクトごとに違う値をとるので
-       \texttt{Person2.rototype}内には置くことができない。したがって、そ
-       れぞれを\texttt{this}のプロパティに格納する(２行目から６行目)。
- \item \texttt{Person2}の\texttt{prototype}を利用するために、
-       \texttt{Student.prototype}にオブジェクトを新規に作成して代入する
-       (8行目)。これにより、この後で\texttt{Person2}のプロパティが変更さ
-       れても、\texttt{Student}オブジェクトには影響がでない。
- \item \texttt{Student.prototype.constructor}を\texttt{Student}に戻して
-       おく(9行目)
+ \item 関数を用いた継承では\ElmJ{super}が使えないので、継承元のクラスで
+       定義されたプロパティ(\texttt{name}など)は継承先で定義する必要があ
+       る(4行目から10行目)。
+ \item 一方、メソッドはインスタンスで共有されるので継承元で定義をする必
+       要はないが、参照できるようにする必要がある。そのために14行目で継
+       承元のクラスを作成して継承するクラスの\ElmJ{prototype}を書き直し
+       ている(14行目)。
+ \item このままでは\ElmJ{constructor}プロパティが\texttt{Person}になって
+       しまうので、\texttt{Student.prototype.constructor}を
+       \texttt{Student}に戻して\texttt{Student.prototype.constructor}を
+       継承するクラスに置き換える(15行目)
 \end{itemize}
-実行結果は次のとおりである。
-\begin{Verbatim}
->s = new Student("me",1323300,1995,4,1)
-Student {name: "me", year: 1995, month: 4, day: 1, id: 1323300}
->s.age;
-20
->s.name
-"me"
->s+"";
-"私の名前はmeです"
->s.constructor;
-Student(n, id, y, m, d){
-  this.name   = n;
-  this.year  = y;
-  this.month = m;
-  this.day   = d;
-  this.id    = id;
-}
-\end{Verbatim}
-\texttt{Person2}で定義されたメソッドが利用できていることがわかる。
- \begin{Prob}\upshape
-	実行例\ref{Execconst4}の\texttt{Student}に所属学部を表示するメソッドを
-	追加しなさい。所属学部のプロパティは追加しないで学籍番号から求めること。
-\end{Prob}
-\fi
+
  \section{エラーオブジェクトについて}
 エラーオブジェクトとはエラーが発生したことを知らせるオブジェクトである。
 通常は計算の継続ができなくなったときにエラーオブジェクトをシステムに送る
@@ -308,13 +268,14 @@ Student(n, id, y, m, d){
  \end{center}
 \end{table}
 \subsection{エラー処理の例}
-エラー処理の例をいくつか挙げる。
+エラー処理の例としてインスタンス作成時に引数の妥当性をチェックする例を挙げる。
  \begin{Exec}\upshape\label{throwError}
 	次のリストは、実行例\ref{Execconst3}において、コンストラクタに与えられ
 	た引数をチェックして不正な値の場合にはエラーを投げるように書き直したも
 	のである。
 
-	なお、このリストでは\texttt{Person2}の\texttt{age}の内容が以前のものと
+	なお、このリストでは\texttt{Person}の\texttt{toString()}と\texttt{age}、
+	継承するクラス\texttt{Student}の内容が以前のものと
 	同じなので \texttt{...} で省略している。
  \end{Exec}
 \begin{Verbatim}[numbers=left]
@@ -335,40 +296,35 @@ class Person{
     this["hometown"] = hometown;
   }
   toString() {
-    return `${this.name}さんは`+
-      `${this.birthday.year}年${this.birthday.month}月${this.birthday.day}日に}` +
-   `${this.hometown}で生まれました。`;
+  ...
   }
   get age(){
-    let today = new Date();
-    let age = today.getFullYear() - this.birthday.year;
-    if(today.getTime() <
-         new Date(today.getFullYear(),
-                  this.birthday.month-1,
-                  this.birthday.day).getTime()) age--;
-    return age;
+    ...
   }
 }
 const Student = (function(){
-  let id = 10000;
-  return class extends Person {
-    constructor(name, year, month, day, hometown) {
-      super(name, year, month, day, hometown);
-      this.id = id++;
-    }
-  }
+  ...
 })();
 \end{Verbatim}
 \begin{itemize}
- \item 2行目で、\texttt{name} が空文字であればエラーを発生させている。
- \item 5行目では月の値の範囲をチェックしている。
- \item 6行目では、与えられた年と月からその月の最終の日を求めている。
+ \item 2行目から5行目で、\texttt{name} が空文字であればエラーを発生させ、
+       正しければ値をそのまま返すクラスメソッドを定義している。
+ \item 6行目から11行目で正しい日付でないとエラーを発生させ、正しいときは
+       日付のオブジェクトを返すクラスメソッドを定義している。
+       \begin{itemize}
+        \item 7行目は月の値の範囲をチェックしている。
+ \item 8行目では、与えられた年と月からその月の最終の日を求めている。
 			 \ElmJ{Date.getMonth()}の戻り値が0(1月)から11(12月)になっているの
 			 で、\texttt{new Date(y,m,0)}により翌月の1日の1日前、つまり、問題
 			 としている月の最終日が設定できる\footnote{課題\ref{DateProb}
 			 の3番目の問題の解答である。}。
- \item 7行目で与えられた範囲に日が含まれていなければエラーを発生させてい
+ \item 9行目で与えられた範囲に日が含まれていなければエラーを発生させてい
 			 る。
+        \item 10行目ｆで日付のオブジェクトを作成し、戻り値として返している。
+       \end{itemize}
+ \item 13行目と14行目で、名前と日付を指定したプロパティにクラスメソッド
+       からの戻り値で設定している。
+% \item 残りの部分は前のリストと同じである。
 \end{itemize}
 これをいくつかのデータで実行した結果は次のようになる。
 \begin{itemize}
@@ -397,108 +353,59 @@ Person {name: "foo", year: 1996, month: 2, day: 29}
  Uncaught Error: 日が不正です(…)
 \end{Verbatim}
 \end{itemize}
-\begin{Prob}\upshape\label{CorrectErrorCheck}
- 実行例\ref{throwError}においてエラーチェックが完全ではないことを指摘し、
- それを改良しなさい。
-\end{Prob}
-このリストの欠点はこのオブジェクトを継承するオブジェクトに対して、継承先
-のオブジェクトに対してエラーチェックの部分を再び書く必要がある。
-これを改良したのが次のリストである。
-\begin{Exec}\upshape\label{Error2}
-次のリストはエラーチェックの部分を関数化して、継承先でも同じようなチェッ
- クができるようにしたものである。
-\begin{Verbatim}[numbers=left]
-function Person2(name, y, m, d){
-  this.checkDate(y, m, d);
-  this.checkName(name);
-  this.name = name;
-  this.year = y;
-  this.month = m,
-  this.day = d
-}
-Person2.prototype = {
-  toString : function(){
-      return "私の名前は"+this.name+"です";
-    },
-  checkDate : function(y, m, d) {
-      var date = new Date(y,m,0);
-      if(m<1 || m>12) throw new Error("月が不正です");
-      if(d<1 || d>date.getDate()) throw new Error("日が不正です");
-    },
-  checkName : function(name) {
-      if(name === "") throw new Error("名前がありません");
-    },
- get age(){
-   ... // 内容は省略
-    },
-  get birthday() {
-      return this.year+"年"+this.month+"月"+this.day+"日";
-    }
-}
-\end{Verbatim}
- \end{Exec}
-このリストではエラーチェックをする関数を作成して、それを
- \texttt{Person2.prototype}のなかに置いている。
-\begin{itemize}
- \item 2行目と3行目でエラーチェックをする関数を呼び出している。この関数
-			 はエラーが起きたときはエラーを投げるので、コンストラクタ関数の制
-			 御から離れることとなる。
- \item それぞれのエラーチェックをする関数は13行目から17行目と18行目から
-			 20行目に記述されている。
- \item 実行例\ref{Execconst4}における\texttt{Person2}継承した
-			 \texttt{Student}オブジェクトは次のようになる。
-\end{itemize}
-\begin{Verbatim}[numbers=left]
-function Student(n, id, y, m, d){
-  this.checkDate(y, m, d);
-  this.checkName(name);
-  this.name   = n;
-  this.year  = y;
-  this.month = m;
-  this.day   = d;
-  this.id    = id;
-}
-Student.prototype = new Person2();
-Student.prototype.constructor = Student;
-\end{Verbatim}
-これを実行すると\texttt{Person2}と同じように動作することがわかる。
-\begin{Verbatim}
->s=new Student("foo",1223300,1995,12,1);
-Student {name: "foo", year: 1995, month: 12, day: 1, id: 1223300}
->s=new Student("foo",1223300,1995,4,0);
- Uncaught Error: 日が不正です(…)
->s=new Student("foo",1223300,1995,13,1);
- Uncaught Error: 月が不正です(…)
-\end{Verbatim}
+\input 05-03errorCheck.tex
+\input 05-04errorCheckMoreStrict.tex
 \subsection{エラーからの復帰}
 前節の例ではエラーが発生するとそこでプログラムの実行が止まってしまう。エ
 ラーが発生したときに、投げられた(\ElmJ{throw}された)エラーを捕まえる
 (\ElmJ{catch}する)ことが必要である。このためには\ElmJ{try\{...\}catch\{...\}}構文
 を使用する。
+
+\begin{itemize}
+ \item \ElmJ{try}のブロック内にエラーが発生する可能性があるコードを記述
+       する。
+ \item エラーが発生したときは\ElmJ{throw}を用いてエラーを発生させる。
+ \item エラーが発生すると\ElmJ{catch(e)}ブロックが実行される。
+       \ElmJ{catch}の後にある\texttt{e}は投げられたエラーオブジェクトが
+       渡される。この変数のスコープは\ElmJ{catch}内である。
+ \item \ElmJ{finally\{\}}を付けることも
+できる。\texttt{try\{...\}catch\{...\}}内の部分は\texttt{try}や
+\texttt{catch}の処理がが実行後、必ず呼び出される。これは\ElmJ{try}や
+       \ElmJ{catch}の部分が\ElmJ{return}文、\ElmJ{break}文、
+       \ElmJ{continue}文、\ElmJ{return}文や新しい例外を投げたとしても呼
+       び出される。
+ \item \ElmJ{try\{...\}catch\{...\}}構文は入れ子にできる。投げられたエラー
+			 に一番近い\texttt{catch}にエラーが捕まえられる。
+\end{itemize}
  \begin{Exec}\upshape
-	次のリストは\ElmJ{try\{...\}catch\{...\}}構文を用いてオブジェクトが正しくでき
-	るまで繰り返す。
+	次のリストは実行例\ref{throwError}において
+  \ElmJ{try\{...\}catch\{...\}}構文を用いてオブジェクトが正しくでき
+	るまで繰り返すようにしたものである。
  なお、このリストはブラウザで実行することを想定している。
  \end{Exec}
 \begin{Verbatim}[numbers=left]
 function test() {
-  var y, m, d;
   for(;;) {
     try {
-      y = Number(prompt("生まれた年を西暦で入力してください"));
-      m = Number(prompt("生まれた月を入力してください"));
-      d = Number(prompt("生まれた日を入力してください"));
-      return new Person2("foo", y, m, d);
+      let y = Number(prompt("生まれた年を西暦で入力してください"));
+      console.log(`年:${y}`)
+      let m = Number(prompt("生まれた月を入力してください"));
+      console.log(`月:${m}`)
+      let d = Number(prompt("生まれた日を入力してください"));
+      console.log(`日:${d}`)
+      return new Person("foo", y, m, d);
     } catch(e) {
       console.log(e.name+":"+e.message);
+    } finally{
+      console.log("finnally");
     }
   }
 }
 \end{Verbatim}
 \begin{itemize}
  \item テストを繰り返す関数\texttt{test()}が定義されている。
- \item 3行目では無限ループが定義されている。正しいパラメータが与えられた
-			 ときに8行目で作成されたオブジェクトを戻り値にして関数の実行が終了
+ \item 2行目では無限ループが定義されている。正しいパラメータが与えられた
+			 ときに7行目で作成されたオブジェクトを戻り値にして関数の実行が終了
 			 する。
  \item \ElmJ{try\{\}}内にはエラーが発生するかもしれないコードを中に含め
 			 る。
@@ -506,18 +413,32 @@ function test() {
 	 \item ここでは年、月、日の入力を\ElmJ{prompt}用いてダイアログボックス
 				 を表示させ、そこに入力させている。
 	 \item 戻り値は文字列なので、\ElmJ{Number}で数に直している。
+   \item 代入された値が正当であればその値をコンソールに出力している。
 	\end{itemize}
  \item 与えられた入力が正しくなければエラーが投げられ、
 			 \ElmJ{catch}\texttt{(e)}の中に制御が移る。
  \item \ElmJ{catch}\texttt{(e)}における\texttt{e}には発生したエラーオブ
-			 ジェクトが渡されるので、コンソールにその情報を出力する(10行目)。
+			 ジェクトが渡されるので、コンソールにその情報を出力する(12行目)。
 \end{itemize}
-\ElmJ{try\{...\}catch\{\}}構文については次のようなこともある。
+\begin{Verbatim}
+>p = test();
+ 年:2010
+ 月:4
+ 日:31
+ Error:日が不正です
+ finnally
+ 年:2010
+ 月:4
+ 日:30
+finnally
+Person {name: "foo", birthday: {…}, hometown: "神奈川"}
+\end{Verbatim}
 \begin{itemize}
- \item \ElmJ{finally\{\}}を付けることも
-できます。\ElmJ{try\{...\}catch\{\}}内の部分は\texttt{try}や
-\texttt{catch}の部分が実行された後必ず呼び出される\footnote{この例では
-正常時には\ElmJ{return}が実行されるので呼び出されません。}。
- \item \ElmJ{try\{...\}catch\{...\}}構文は入れ子にできる。投げられたエラー
-			 に一番近い\texttt{catch}にエラーがつかまる。
+ \item 200年4月31日は不正な日付なので、9行目の\ElmJ{console.log()}の出力
+       はない。
+ \item その代り、エラーの内容が出力されている。
+ \item また、エラー出力後は\ElmJ{finally}ブロックが実行されていることも
+       分かる。
+ \item 入力データが正しい場合でも\ElmJ{finally}ブロックが実行されている
+       (下から2行目)。
 \end{itemize}
