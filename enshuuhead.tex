@@ -195,8 +195,9 @@ multibox,fancyvrb}
   \wellspaceside{科目名}& \wellspaceside{{学科$\bullet$組}}&
   \wellspaceside{学籍番号} &
   \wellspaceside{氏名} & \wellspaceside{採点}\\ \hline
-  {#2 \rule{0mm}{0.033\paperheight}\wellspaceside{{\raisebox{#3mm}{#1}}}} &
-   & & & \\ \hline
+  \multicolumn{1}{|c|}{#2%
+  \rule{0mm}{0.033\paperheight}\raisebox{#3mm}{\hspace*{-1zw}#1}} &
+           & & & \\ \hline
   \end{tabular}
 \hfill}
 \setcounter{Prob}{0}
@@ -204,12 +205,12 @@ multibox,fancyvrb}
 \\[-0.02\paperheight]
 }
 \makeatletter
-\newcommand{\LenL}{0.27}
+\newcommand{\LenL}{0.28}
 \newcommand{\ps@enshuu}{%
 \renewcommand{\@oddhead}{%
 \hfill{\raisebox{-0.004\paperheight}%
          {\rule{\LenL\paperwidth}{0.002\paperwidth}}%
-  \hspace*{-\LenL\paperwidth}%
+  \hspace*{-\LenL\paperwidth}\hspace*{-1zw}
   \setcounter{TPage}{\value{page}}\addtocounter{TPage}{-\fpage}%
   \stepcounter{TPage}%
   \makebox[\LenL\paperwidth][l]{\LecName\upshape 課題\theLecNo\hfill\Pre-p.\arabic{TPage}}}

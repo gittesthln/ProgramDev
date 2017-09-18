@@ -59,9 +59,9 @@ function sum(a,b) {
 \begin{itemize}
  \item 引数に \Verb+1+ と \Verb+2+ を与えれば期待通りの結果が得られる。
  \item 引数に \Verb+1+ だけを与えた場合、エラーが起こらず、\Verb+NaN+ と
-       なる。これは、不足している引数(この場合には \Verb+b+)には
-       \Verb+undefined+ が渡されるためである。\Verb-1+undefined-の結果は
-       \Verb+NaN+ になる。
+       なる。これは、不足している引数 \Verb+b+ には
+       \Verb+undefined+ が渡され、戻り値は \Verb-1+undefined- の計算
+       結果(\Verb+NaN+)であるためである。
  \item 引数を多く渡してもエラーが発生しない。無視されるだけである。
 \end{itemize}
 これらのことから JavaScript の関数はオブジェクト指向で使われるポリモーフィ
@@ -97,8 +97,8 @@ function func2(a){
 >a;
 4          //a の値は変化しない
 \end{Verbatim}
- \item \Verb+func2()+の仮引数は配列が想定してある。この先頭の値だけ2倍さ
-       れる関数である。これに配列を渡すと、戻ってきたとき配列の先頭の値
+ \item \Verb+func2()+の仮引数は配列が想定してあり、その配列の先頭の値だ
+       け2倍する関数である。この関数に配列を渡すと、実行後、配列の先頭の値
        が変化している。つまり、プライミティブ型以外では仮引数の渡し方が
        参照渡しであることがわかる。
 \begin{Verbatim}
@@ -209,19 +209,23 @@ function sumN(...args) {
 概念である。JavaScriptでは次の特徴がある。
 \begin{enumerate}
  \item 非\Strict では変数は宣言しなくても使用できる。\label{3-4NoDeclare}
- \item 関数内で \Verb+let+ により明示的に定義された変数はブロック内で有
-       効となる。\label{3-4DeclareInFunc}\footnote{変数を\Verb+var+で宣
-       言すると関数の途中で宣言しても、関数の先頭で宣言したと同じ効果を
-       持つ。これを変数の巻き上げという。}
-       ブロックとは\Verb+{+と\Verb+}+で囲まれた部分である。ただし、宣言
-       よりも前では使用できない。
+ \item \label{3-4DeclareInFunc}
+       関数内で \ElmJ{let} により明示的に定義された変数はブロック内で有
+       効となる。ブロックとは\Verb+{+と\Verb+}+で囲まれた部分である。ただし、宣言
+       よりも前では使用できない。同じスコープ
+       内で \ElmJ{let}+ による同一変数名の宣言はエラーになる。
+ \item 変数を\ElmJ{var}で宣言すると関数の途中で宣言しても、関数の先頭で
+       宣言したと同じ効果を持つ。これを変数の巻き上げという。関数の外で
+       \ElmJ{var} で宣言された変数は、プログラムの先頭で宣言したものとみ
+       なされる。ただし、初期化は宣言された位置で行われる。同じスコープ
+       内で \ElmJ{var} による同一変数名の宣言はエラーにならない。
  \item 関数の外で宣言された変数や宣言されないで使用された変数はすべてグ
        ローバルとなる。\label{3-4Declare2}
 \end{enumerate}
 %\subsection{スコープチェイン}
 関数やブロックの中で関数を定義したりブロックを作成すると、その
 内側の関数やブロック内で\Verb+let+で宣言された変数のほかに、一つ上の関数
-やっブロックでで利用できる(スコープにある)変数が利用できる。これがスコー
+やブロックで利用できる(スコープにある)変数が利用できる。これがスコー
 プチェインである。
 例を挙げる。
 \begin{Verbatim}
@@ -337,7 +341,7 @@ local in func4
  \item 19行目では関数オブジェクトを変数\Verb+func5+に代入している。これ
        により\Verb+func5()+という関数が定義される。
  \item \Verb+let+による変数の宣言がないので変数\Verb+func5+はグローバル変数となる
-       (\ref{3-4Declare2}参照)。
+       (\pageref{3-4Declare2}ページの変数のスコープの\ref{3-4Declare2}参照)。
  \item \Verb+func5()+内では変数\Verb+S+の内容を出力が定義されている。
  \item \Verb+func4()+を実行した後では\Verb+func5()+が実行できる。
  \item 関数\Verb+func5()+が定義された段階では変数\Verb+S+が、この関数を
@@ -352,7 +356,7 @@ local in func4
 \end{itemize}
 \input prob03-03declairVAriablesByVar.tex
 \section{JavaScriptにおける関数の特徴}
-JavaScript関数ではほかの言語では見られない関数の取り扱い方法がある。
+%JavaScript関数ではほかの言語では見られない関数の取り扱い方法がある。
 \subsection{関数もデータ}
 関数もデータ型のひとつなので、関数の定義を変数に代入することができる。
 課題\ref{ExecScope}の19行目以降で関数オブジェクトを変数に代入している。
@@ -393,11 +397,11 @@ window.setTimeout(
        時間(単位はミリ秒)を引数に取る。
  \item 実行する関数は3行目から9行目で定義されている。
  \item この関数内で一定の条件のときはこの関数を呼び出す。この関数
-       に名前は\Verb+callMe+である(3行目)。\footnote{\Verb+function+オブ
-       ジェクトには引数を表す配列のようなオブジェクト\Verb+arguments+が
-       あり、そのプロパティ\texttt{callee}を使うのが従来の方法である。
+       に名前は\Verb+callMe+である(3行目)\footnote{\Verb+function+オブ
+       ジェクトの引数を表す配列のようなオブジェクト\Verb+arguments+の
+       プロパティ\texttt{callee}を使うのが従来の方法である。
        \ES では\Verb+arguments+が非推奨となったため、コールバック関数に
-       名前を付けている。}
+       名前を付けている。}。
  \item 4行目で呼び出されたときの時間を求め、経過時間が$10000$ミリ秒以下
        であれば(5行目)、経過時間を秒単位で表示する(6行目)。
  \item さらに、自分自身を1秒後に呼び出す(7行目)。
@@ -412,7 +416,7 @@ window.setTimeout(
 \end{itemize}
 \end{Exec}
 なお、関数の宣言を \Verb+function foo(){...}+ でする代わりに、
-{\Verb+let foo = function()...\{\}+} と無名関数を利用して定義してもよい。
+{\Verb+let foo = function(){...}+} と無名関数で定義してもよい。
 
 \Verb+setTimeout()+メソッドのコールバック関数に引数の値を渡したいときは、
 \Verb+setTimeout()+メソッドの3番目以降の引数に記述する。
@@ -437,8 +441,8 @@ window.setTimeout(
 きない(\Verb+undefined+が出力される)。
 
 前者の場合は変数\texttt{i}、後者の場合は関数名\texttt{foo}がグローバル変
-数が残ってしまっている。これを避けるためには定義した関数をその場で実行で
-きる機能があればよい。これを実行するためには次のように記述する。
+数が残っている。グローバル変数を残さないために、定義した関数をその場で実
+行する方法がある。これを実現するためには次のように記述する。
 \begin{Verbatim}
 (function(){
   let i;
@@ -446,15 +450,15 @@ window.setTimeout(
     console.log(`${i} ${i*i}`);
   })();
 \end{Verbatim}
-この様に関数の定義を全体で\Verb+()+で囲み、そのあとに関数の呼び出しを示
+関数の定義を全体で\Verb+()+で囲み、そのあとに関数の呼び出しを示
 すための\Verb+()+を付ける。
 
 この技法は、初期化の段階で1回しか実行しない事柄を記述し、かつグローバル
-な空間を汚さない(余計な変数などを残さない)手段として用いられる。
+な空間に余計な変数などを残さない手段として用いられる。
 
 なお、\ElmJ{let}で変数\Verb+i+を\ElmJ{for}内で宣言すると、
-その変数は\ElmJ{for}文内でしか存在しない。実行例
-\ref{declareVariableInFor}を参照のこと。
+その変数は\ElmJ{for}文内でしか存在しない。また、スコープの規則が少し異な
+る。実行例\ref{declareVariableInFor}を参照のこと。
 \iffalse
 \begin{Verbatim}
   for(let i=1;i<10;i++) {
@@ -498,10 +502,10 @@ function f1() {
  これを次のように実行する。
  \begin{itemize}\upshape
 	\item  変数\texttt{ff}に関数\texttt{f1()}で返される関数オブジェクトを代入する。
+	これにより変数\Verb+ff+は関数オブジェクトになる。
 \begin{Verbatim}
 >ff= f1();  //関数の定義が表示される
 \end{Verbatim}
-	これにより変数\Verb+ff+は関数オブジェクトになる。
 	\item \texttt{f1()}内のローカル変数は参照できない。
 \begin{Verbatim}
 >n;
@@ -524,12 +528,6 @@ VM351:2 Uncaught ReferenceError: n is not defined(…)
 \end{Verbatim}
  \end{itemize}
 \end{Exec}
-\iffalse
-次の章
-では関数を用いてオブジェクトを作成することができることを紹介する。このと
-き、同じ関数から作成されるオブジェクトに共通の変数を使うことはこの方法で
-はできない。
-\fi
   \subsection{クロージャの例 -- 無名関数をその場で実行する}
  例\ref{Closure1}で定義された関数\texttt{f1}を一度だけ実行して、それがこ
 				れ以上実行されないようにするためにはこの関数を無名関数としてそ
@@ -547,7 +545,7 @@ let foo = (function () {
 \end{Verbatim}
 \begin{itemize}
  \item 無名関数を定義した部分を\texttt{()}でくくり、引数リストをその後の
-			 \texttt{()}に記述する。ここでは、引数がないので中はない。
+			 \texttt{()}に記述する。ここでは、引数がないので中は空である。
  	\item 戻された関数オブジェクトを変数\texttt{foo}に代入する。
 	\item 前と同じように実行できる。
 \begin{Verbatim}
@@ -561,7 +559,8 @@ let foo = (function () {
 \begin{Exec}\upshape\label{functionsReturnLocalValue}
 次の例は関数内のローカル変数の値を単純に返すと、不都合が起こる例である\footnote{こ
 				の例は Stoyan Stefanov(水野貴明、渋川よしき訳)オブジェクト指向
-				JavaScript、アスキーメディアワークス、2012年の103ページ以降から取りました。}
+				JavaScript、アスキーメディアワークス、2012年の103ページ以降から
+ 取りました。}。
 \begin{Verbatim}[numbers=left]
 function f2() {
   let a = [];
@@ -645,28 +644,5 @@ function f3() {
 \begin{Prob}\upshape
  実行例\ref{functionsReturnLocalValue}において、\ElmJ{for}文の代わりに
  \ElmJ{while}文に書き換えたときに正しく動作するようにせよ。ただし、直前
- のように即時実行関数を用いないで実現すること。
+ のリストぼように即時実行関数を用いないで実現すること。
 \end{Prob}
-\iffalse
-この書き方が有効になるのは関数をオブジェクトのコンストラクタとして使用し、
-インスタンスに通し番号を付けるときなどに必要となる。
-\begin{Prob}\upshape
-次の関数のたいして\texttt{var a=f4();}とした後、\texttt{a[1](0);}などの
- 値がどうなるか調べなさい。また、そのような結果になる理由を考えなさ
- い。
-\begin{Verbatim}
-function f4() {
-  var a = [], b;
-  var i;
-  for(i=0; i<3; i++) {
-    b=[i];
-    a[i] = function() {
-      return b;
-    };
-  }
-  return a;
-}
-\end{Verbatim}
-
-\end{Prob}
-\fi

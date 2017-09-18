@@ -32,21 +32,5 @@
 {\ElmJC{sqrt(x)}{}}{関数}{平方根を求める。 $\sqrt{x}$}
 {\ElmJC{tan(x)}{}}{関数}{正接関数 $\tan x$}
 }
-いくつか注意をしておく。
-\begin{itemize}
- \item 配列の要素の最大値や最小値を求めるために\Verb+Math.max+ や
-       \Verb+Math.min+を直接使用できない。展開演算子\Verb+...+を用いると
-       計算ができる。次の実行例を参照のこと。
-\begin{Verbatim}
->a = [3,5,23,1,4];
-(5) [3, 5, 23, 1, 4]
->Math.max(a);
-NaN
->Math.max(...a);
-23
-\end{Verbatim}
- \item EcmaScript 2016 ではべき乗の演算子\texttt{**}が導入されているので
-\texttt{Math.pow()}は使わなくてもよい。
-\end{itemize}
 
 

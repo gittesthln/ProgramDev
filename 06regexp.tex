@@ -18,8 +18,8 @@
 次の正規表現はどちらも\texttt{s}で始まる文字列を表す。これを
 \texttt{s}で始まる文字列にマッチするという。
 \begin{Verbatim}
-var pattern = new RegExp("^s");
-var pattern = /^s/;
+let pattern = new RegExp("^s");
+let pattern = /^s/;
 \end{Verbatim}
 \iffalse%\else
 正規表現内の文字には通常の文
@@ -229,17 +229,13 @@ JavaScript では文字列は\Verb+"+%"
 \begin{Exec}\upshape
 $4$桁の数字にマッチする正規表現オブジェクトを作成する。
 \begin{Verbatim}
-var ex = /\d\d\d\d/;
-undefined
+let ex = /\d\d\d\d/;
 \end{Verbatim}
 この正規表現に対し、それぞれのメソッドを適用させる。
 \begin{Verbatim}
->"20144567".search(ex);
-0
->"20144567".match(ex);
-["2014"]
->"20144567".replace(ex,"AA");
-"AA4567"
+>"20144567".search(ex);         //戻り値は 0
+>"20144567".match(ex);          //戻り値は ["2014"]
+>"20144567".replace(ex,"AA");   //戻り値は "AA4567"
 \end{Verbatim}
 \begin{itemize}
  \item 検索対象の文字列はすべて数字からなるのでこの正規表現にマッチする
@@ -249,14 +245,10 @@ undefined
 \end{itemize}
 正規表現に\Verb+g+フラグをつけて同じようなことをする。
 \begin{Verbatim}
->var exg = /\d\d\d\d/g;
-undefined
->"20144567".search(exg);
-0
->"20144567".match(exg);
-["2014", "4567"]
->"20144567".replace(exg,"AA");
-"AAAA"
+>let exg = /\d\d\d\d/g;
+>"20144567".search(exg);      //戻り値は 0
+>"20144567".match(exg);       //戻り値は ["2014", "4567"]
+>"20144567".replace(exg,"AA");//戻り値は "AAAA"
 \end{Verbatim}
 \Verb+g+フラグがあるので\Verb+match()+や\Verb+replace()+が複数回実行されているこ
  とがわかる。
@@ -264,8 +256,7 @@ undefined
 \begin{Exec}\upshape
 次の例はマッチした文字列を置換する。
 \begin{Verbatim}
->"aaa bbb".replace(/(\w*)\s*(\w*)/,"$2,$1");
-"bbb,aaa"
+>"aaa bbb".replace(/(\w*)\s*(\w*)/,"$2,$1"); //戻り値は "bbb,aaa"
 \end{Verbatim}
 英数字からなる2つの文字列(\Verb+(\w*)+)の順序を入れ替えて、その間に
  \Verb+,+を挿入する。
@@ -284,42 +275,36 @@ undefined
 \begin{Exec}\label{greedy}\upshape
  貪欲さと非貪欲さの確認を行う。
 \begin{Verbatim}
->"aaaaab".match(/a+/);
-["aaaaa"]
->"aaaaab".match(/a+?/);
-["a"]
+>"aaaaab".match(/a+/);    //戻り値は ["aaaaa"]
+>"aaaaab".match(/a+?/);   //戻り値は ["a"]
 \end{Verbatim}
 上の例は貪欲なので\Verb+a+の繰り返しの部分を最大限の位置でマッチしている。
 下の例は非貪欲なので最小限の長さの部分にしかマッチしていない。
 \begin{Verbatim}
->"aaaaab".match(/a+?b/);
-["aaaaab"]
+>"aaaaab".match(/a+?b/);  //戻り値は ["aaaaab"]
 \end{Verbatim}
-この例では、\Verb+ab+ にマッチしていないことに注意すること。初めに先頭の
- \Verb+a+にマッチしたので\Verb+b+が来るところまでマッチする。
+ %この例では、\Verb+ab+ にマッチしていない。
+ 初めに先頭の\Verb+a+にマッチしたので\Verb+b+が来るところまでマッチする。
 \end{Exec}
 \begin{Exec}\upshape
 次の例は前方参照を行っている。
 \begin{Verbatim}
->"abcdbcc".search(/((.)\2).*\1/);
--1
+>"abcdbcc".search(/((.)\2).*\1/);  //戻り値は -1
 \end{Verbatim}
 \begin{itemize}
  \item \Verb+(.)+の部分は左かっこが２番目にあるので、\Verb+\2+で参照でき
-       る。したがって、\Verb+(.)\2+は同じ文字が２つ続いていることを意味
-       する。この部分全体が再び\Verb+()+でくくられているので、その部分は
+       る。\Verb+(.)\2+は同じ文字が2つ続く意味になる。
+       この部分全体が再び\Verb+()+でくくられているので、その部分は
        \Verb+\1+で参照できる。
- \item したがってこの正規表現は、同じ文字の繰り返しが２回現れる文字列に
+ \item したがって、この正規表現は、同じ文字の繰り返しが２回現れる文字列に
        マッチする。
  \item 文字列\Verb+"abcdbcc"+には同じ文字が連続して現れるのが末尾の
        \Verb+"cc"+しかないので、この文字列にはマッチしない(戻り値が$-1$
        である)。
 \end{itemize}
 \begin{Verbatim}
->"abccbcc".search(/((.)\2).*\1/);
-2
->"abccbcc".match(/((.)\2).*\1/);
-["ccbcc", "cc", "c"]
+>"abccbcc".search(/((.)\2).*\1/); //戻り値は 2
+>"abccbcc".match(/((.)\2).*\1/);  //戻り値は ["ccbcc", "cc", "c"]
 \end{Verbatim}
 \begin{itemize}
  \item この文字列では\Verb+cc+という同じ文字を繰り返した部分が2か所ある
@@ -327,32 +312,27 @@ undefined
        り値が$2$となっている。
  \item \Verb+match()+を行うと、\Verb+cc+ではさまれた部分文字列が戻り値の
        配列の先頭に、以下、\Verb+\1+と\Verb+\2+にマッチした部分文字列が
-       配列に入っている。
+       配列に入る。
 \end{itemize}
 \begin{Verbatim}
->"abccbcckkccaaMMaa".match(/((.)\2).*\1/);
-["ccbcckkcc", "cc", "c"]
+>"abccbcckkccaaMMaa".match(/((.)\2).*\1/);//戻り値は ["ccbcckkcc", "cc", "c"]
 \end{Verbatim}
 \begin{itemize}
  \item この例では\Verb+cc+が部分文字列に3か所現れている。
  \item 貪欲なマッチのため、マッチした部分は1番目と3番目の\Verb+cc+にはさ
        まれた部分である。
  % \item
-       この文字列には\Verb+aa+ではさまれた部分文字列も存在するが、
-       \Verb+g+フラグが付いていないのではじめにマッチしたものだけが戻っ
-       てこない。
+       \Verb+g+フラグがないので、\Verb+aa+ではさまれた部分文字列はマッチしない。
  \item 配列の残りの成分には\Verb+\1+と\Verb+\2+が入っている。
 \end{itemize}
 \begin{Verbatim}
->"abccbcckkccaaMMaa".match(/((.)\2).*\1/g);
-["ccbcckkcc", "aaMMaa"]
+>"abccbcckkccaaMMaa".match(/((.)\2).*\1/g); //戻り値は ["ccbcckkcc", "aaMMaa"]
 \end{Verbatim}
  \Verb+g+フラグを付けるとマッチした部分文字列の配列が戻ってくるが、
  %フラグがなかったときのように
  \Verb+\1+などの情報は得られない。
 \begin{Verbatim}
-"abccbcckkccaaMMaa".match(/((.)\2).*?\1/g);
-["ccbcc", "aaMMaa"]
+"abccbcckkccaaMMaa".match(/((.)\2).*?\1/g);//戻り値は ["ccbcc", "aaMMaa"]
 \end{Verbatim}
 この例は非貪欲でグローバルなマッチである。非貪欲にすると一番目と2番目の
  \Verb+cc+ にはさまれた部分と \Verb+aa+ ではさまれた部分がそれぞれマッチする。
@@ -361,10 +341,8 @@ undefined
 次の例は前方参照を利用してデータなどに含まれる文字列の引用符が対応してい
  る(シングルクオート同士、ダブルクオート同士)かを確認している。
 \begin{Verbatim}
->'\'abcd"df"\''.search(^/(['"]).*\1$/);
-0
->'\'abcd"df"\''.match(/^(['"]).*\1$/);
-["'abcd"df"'", "'"]
+>'\'abcd"df"\''.search(^/(['"]).*\1$/); //戻り値は 0
+>'\'abcd"df"\''.match(/^(['"]).*\1$/);  //戻り値は ["'abcd"df"'", "'"]
 \end{Verbatim}
 \begin{itemize}
  \item \Verb+\'+は文字列データとして与えられたことを仮定している。
@@ -374,7 +352,7 @@ undefined
  \item したがって、文字列の先頭と最後に同じ引用符が来る場合に文字は見つ
        かる。
  \item \Verb+match()+の戻り値は配列で、正規表現に\Verb+g+フラグがないと
-       きは、初めがマッチした文字列、以下順に\Verb+\1+,\Verb+\2+...にマッ
+       きは、初めがマッチした文字列、以下順に\Verb+\1+,\Verb+\2,..+にマッ
        チした文字列が入っている。
 \end{itemize}
 \fi
@@ -382,20 +360,18 @@ undefined
 \begin{Exec}\upshape
  文字列を指定した文字列で分割する \Verb+split()+ の分割する文字列にも正規表現が使える。
 \begin{Verbatim}
->" 1, 2 , 3   ,  4".split(/\s*,\s*/);
-[" 1", "2", "3", "4"]
+>" 1, 2 , 3   ,  4".split(/\s*,\s*/);//戻り値は [" 1", "2", "3", "4"]
 \end{Verbatim}
 $0$個以上の空白、\Verb+,+、$0$個以上の空白の部分で分割している。\Verb+1+の前にあ
  る空白が除去できていない。
 \begin{Verbatim}
->" 1, 2 , 3   ,  4".split(/\W+/);
-["", "1", "2", "3", "4"]
+>" 1, 2 , 3   ,  4".split(/\W+/);  //戻り値は ["", "1", "2", "3", "4"]
 \end{Verbatim}
 非単語文字の1個以上の並びで分割している。先頭の空白で分割されているので、
  分割された初めの文字列は空文字列\Verb+""+となっている。
 \begin{Verbatim}
 >" 1, 2 , 3   ,  4".replace(/\s/,"").split(/\W+/);
-["1", "2", "3", "4"]
+  //戻り値は ["1", "2", "3", "4"]
 \end{Verbatim}
 先頭の分割文字列が空文字になるのを防ぐために、初めに空白文字を空文字に置
  き換えて(取り除いて)いる。その文字列に対し非単語文字列で分割しているの
@@ -404,3 +380,4 @@ $0$個以上の空白、\Verb+,+、$0$個以上の空白の部分で分割して
 この様に文字列に対してメソッドを順に続けて記述することができる。
 \end{Exec}
 \input 06-02checkRegEx.tex
+\input 06-03checkPromptValue.tex

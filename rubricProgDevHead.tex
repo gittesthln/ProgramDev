@@ -1,0 +1,52 @@
+%\LecName{ソフトウェア開発}
+\Format{*{3}{m{15zw}|}}
+\EvalTitle{優れている,標準的,改良の余地あり}
+\newcommand{\Member}{
+\begin{center}
+ グループメンバー学籍番号\\[2ex]
+  \underline{\makebox[0.22\textwidth]{}}\hfill
+  \underline{\makebox[0.22\textwidth]{}}\hfill
+  \underline{\makebox[0.22\textwidth]{}}\hfill
+  \underline{\makebox[0.22\textwidth]{}}
+\end{center}  
+}
+\newtheorem{Report}{課題}
+\makeatletter
+\@addtoreset{Report}{section}
+\makeatother
+\newcommand{\Probs}[3]{%
+ \begin{Report}[#1]\upshape
+  #2
+  \begin{enumerate}\upshape
+  \ShowProbs#3\relax\relax
+  \end{enumerate}
+ \end{Report}
+ }
+ \newcommand{\ShowProbs}[2]{\ifx#1\relax\else%
+ \item #1\vspace{#2\textheight}\expandafter\ShowProbs\fi}
+
+ \newcommand{\changePage}[1]{
+  \setcounter{page}{1}
+}
+\newcommand{\Must}{{(\bfseries 必須)}}
+\newcommand{\ResultA}{{ \bfseries\normalsize リ 説 図 考}}
+\newcommand{\ResultLI}{{ \bfseries\normalsize リ 説 考}}
+\newcommand{\ResultEFI}{{ \bfseries\normalsize 説 図 考}}
+\newcommand{\ResultEI}{{ \bfseries\normalsize 説 考}}
+\newcommand{\ResultFI}{{ \bfseries\normalsize 図 考}}
+\newcommand{\ResultF}{{ \bfseries\normalsize 図}}
+
+\newcommand{\setDate}[1]{
+\def\Date{#1}%
+ \renewcommand{\thepage}{第\thechapter 回(#1)-\arabic{page}}
+  \setcounter{page}{1}%
+	}
+
+	\newcommand{\GradeLegend}{項目の最後の文字は次に示す項目の評価である。
+{\bfseries リ}(プログラム等のリスト)、{\bfseries 説}(プログラ
+ム説明が手書きまたは印刷である)、{\bfseries 図}(結果のキャプチャ画面)、
+{\bfseries 考}(考察が手書きまたは印刷である)を意味し、次の記号で評価を
+示す。
+$\times$(不備またはない)、$\triangle$(もう一息)、$\bigcirc$(良い)、
+$\circledcirc$(大変良い)
+}

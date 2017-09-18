@@ -2,7 +2,7 @@
 \chapter{JavaScriptのデータとプログラミングの基礎}
 \section{データーの型}
 JavaScript の方には大きく分けて\KeyItem{プリミティブ型}と\KeyItem{非プリ
-ミティブ型}の2種類がある。
+ミティブ型}の2種類がある。変数や値の型を知りたいときは\ElmJ{typeof} 演算子を使う。
 \subsection{プリミティブデータ型}
 表\ref{primitivedata}はJavaScriptにおける\KeyItem{プリミティブデータ型}の一覧であ
 る。
@@ -25,9 +25,7 @@ JavaScript の方には大きく分けて\KeyItem{プリミティブ型}と\KeyI
 \end{center}
  \end{table}
 \footnotetext{キーボードの\Verb+@+の上にある文字}
-
- 変数や値の型を知りたいときは\ElmJ{typeof} 演算子を使う。
-\subsection{Number型}
+\subsubsection{Number型}
 数を表現する方法(数値リテラル)としては次のものがある。
 \begin{itemize}
  \item{\bfseries \KeyItem{整数リテラル}} 10進整数は通常通りの形式である。
@@ -44,7 +42,7 @@ JavaScript の方には大きく分けて\KeyItem{プリミティブ型}と\KeyI
  \item{\bfseries \KeyItem{浮動小数点リテラル}} 整数部、そのあとに必要ならば小数点、小数部そ
        のあとに指数部がある形式である。
 \end{itemize}
-{\bfseries 特別なNumber} \KeyItem{Number型}には次のような特別な Number が定義され
+\KeyItem{Number型}には次のような特別な Number が定義され
 ている。
 \begin{itemize}
  \item {\bfseries \ElmJ{Infinity}}無限大を表す読み出し可能な変数である。
@@ -55,11 +53,11 @@ JavaScript の方には大きく分けて\KeyItem{プリミティブ型}と\KeyI
        文字列を数値に変換できない場合や \Verb+0/0+ などの結果としてこの値が設定さ
        れる。
 \end{itemize}
-\subsection{String型}
-文字列は\Verb+"+　または \Verb+'+ではさむ。%"
-1文字だけの文字の型はない。\ES では文字列の中に式の値を埋め込むことがで
-きるテンプレートリテラルが新たに導入された。テンプレートリテラルはバック
-クオート(\Verb+`+)ではさむ。埋め込む式は\texttt{\$\{2+3\}}のように記述する。
+\subsubsection{String型}
+文字列は\Verb+"+ または \Verb+'+ ではさむ。%"
+1文字だけの文字の型はない。テンプレートリテラルは文字列
+の中に式の値を埋め込むことができる。テンプレートリテラルはバッククオート
+(\Verb+`+)ではさむ。埋め込む式は\texttt{\$\{2+3\}}のように記述する。
 \begin{Verbatim}
 `2+3=${2+3}`  => "2+3=5"
 \end{Verbatim}
@@ -94,18 +92,33 @@ JavaScript の方には大きく分けて\KeyItem{プリミティブ型}と\KeyI
 \end{center}
 \end{table}
 \input prob02-01string.tex
-\subsection{Bool型}
+\subsubsection{Bool型}
 \ElmJ{true} と \ElmJ{false} の2つの値をとる。この2つは予約語である。論理
 式の結果としてこれらの値が設定されたり、論理値が必要なところでこれらの値
 に設定される。詳しくは\ref{operator}を参照のこと。
-\subsection{\protect\ElmJ{undefined}}
-値が存在しないことを示す読み出し可能な変数である。変数が宣言されたのに値
-が設定されていないときの初期値や、戻り値が定義されていない関数の戻り値はこの値に
-なる。
-\subsection{\protect\ElmJ{null}}
+\subsubsection{\protect\ElmJ{undefined}と\protect\ElmJ{null}}
+\ElmJ{undefined}は値が存在しないことを示す読み出し可能な変数である。
+変数が宣言されたのに値が設定されていないときの初期値や、戻り値が定義され
+ていない関数の戻り値はこの値になる。
+%\subsubsection{\protect\ElmJ{null}}
+
 \Verb+typeof null+ の値が \Verb+"object"+であることを示すように、オブジェ
 クトが存在しないことを示す特別なオブジェクト値（であると同時にオブジェク
 トでもある）である。
+\subsection{非プリミティブ型}
+プリミティブ型以外のデータ型は「オブジェクト」がある。JavaScriptでは
+次のようなオブジェクトが定義されている。\texttt{()}内はオブジェク
+ト(を作成するコンストラクタ)の名称である。
+\begin{itemize}
+ \item 配列(\ElmJ{Array})
+ \item 数学(\ElmJ{Math})
+ \item 日時(\ElmJ{Date})
+ \item 正規表現(\ElmJ{RegExp})
+ \item マップ(\ElmJ{Map})とウィークマップ(\ElmJ{WeakMap})
+ \item セット(\ElmJ{Set})とウィークセット(\ElmJ{WeakSet})
+\end{itemize}
+これらのデータ型のうち、マップ、セット、ウィークセット以外はこの章または
+後の章で解説する。
 \section{変数}
 JavaScriptの変数の特徴は次の通りである。
 \begin{itemize}
@@ -142,27 +155,22 @@ let a=[1,[2,3,4],"a"];
  \item 配列の変数の代入は参照である。
 \begin{Verbatim}
 >let a = [0,1,2,3,4];
-undefined
 >let b = a;  //別の変数への代入
-undefined
 >b;
 (5) [0, 1, 2, 3, 4]  // a と同じ内容が表示
->b[3]= b[3]*10;      // 4番目の要素を10倍
+>b[3]= b[3]*10;      // 4番目の要素を10倍 [0, 1, 2, 30, 4]となる
 30
->b;
-(5) [0, 1, 2, 30, 4]
 >a;
-(5) [0, 1, 2, 30, 4] // a も b と同じ要素の値を持つ
+(5) [0, 1, 2, 30, 4] // a も b と同じ値の要素を持つ
 \end{Verbatim}
        配列の代入が参照なので片方の要素を変化させると、両方とも変わるこ
        とが分かる。
  \item 配列の要素の一部をまとめて別の変数に代入する分割代入が\ES で導
        入された。分割代入では代入演算子\texttt{=}の左辺を配列の形で記述
        する。
-\begin{Verbatim}
-[a,,b,...c] = [0,1,2,3,4,5,6,7];
-\end{Verbatim}
-この代入の結果は次のとおりである。
+
+       代入\Verb+[a,,b,...c] = [0,1,2,3,4,5,6,7];+
+の結果は次のとおりである。
 \begin{Verbatim}
 a ==> 0
 b ==> 2
@@ -177,7 +185,7 @@ c ==> [3, 4, 5, 6, 7]
 
        \end{itemize}
 
-  この機能は関数の戻り値が配列であるとき、戻り値の必要なところだけ利用す
+ 配列が関数の戻り値のとき、戻り値の必要なところだけ利用す
        るために便利な機能である。
 
        なお、ここで使用している\Verb+...+は展開演算子と呼ばれ、配列に対
@@ -188,40 +196,40 @@ c ==> [3, 4, 5, 6, 7]
 表\ref{arrayPropMethod}は配列のメソッドやプロパティをまとめたものである。
 \begin{table}[ht]
 \caption{配列のメソッドとプロパティ}\label{arrayPropMethod}
-\begin{center}
+%\begin{center}
  \begin{tabular}{|c|m{28zw}|}\hline
  メンバー&\multicolumn{1}{c|}{説明} \\\hline
   \Verb+length+ &配列の要素の数\\ \hline
   \Verb+join(separator)+& 配列を文字列に変換する。\Verb+separator+はオプ
       ションの引数で、省略された場合はカンマ\Verb+,+である。\\ \hline
   \Verb+pop()+& 配列の最後の要素を削除し、その値を返す。
-      配列をスタックとして利用できる。
+%      配列をスタックとして利用できる。
       \\ \hline
   \Verb+push(i1,i2,...)+& 引数で渡された要素を配列の最後に付け加える。
-      配列をスタックやキューとして利用できる。
+%      配列をスタックやキューとして利用できる。
       \\ \hline
   \Verb+shift()+&配列の最初の要素を削除し、その値を返す。
-      配列をキューと して利用できる。
+%      配列をキューと して利用できる。
       \\ \hline
   \Verb+unshift()+&配列の最初の要素を削除し、その値を返す。
-      配列をキューと して利用できる。
+%XS      配列をキューと して利用できる。
       \\ \hline
   \Verb+slice(start,end)+&\Verb+start+から\Verb+end+の前の位置にある要素を取
       り出した配列を返す。元の配列は変化しない。\\ \hline
   \Verb+splice(start,No,i1,i2,...)+&\Verb+start+の位置から\Verb+No+の要素を取
-      り除き、その位置に\Verb+i1,i1,...+以下の要素を付け加える。元の配列
+      り除き、その位置に\Verb+i1,i2,...+以下の要素を付け加える。元の配列
       を変更する。\\ \hline
   \Verb+indexOf(value,start)+&配列の要素で\texttt{value}に等しい
       (\texttt{===})ものを探し、その位置を返す。見つからない場合は
       \texttt{-1}を返す。
       オプションの引数\texttt{start}はそのインデックス以降から探す。
       \\ \hline
-  \Verb+lastIndexOf(value,start)+&配列の要素で\texttt{value}に等しいものを探
-      し、その位置を返す。見つからない場合は\texttt{-1}を返す。
+  \Verb+lastIndexOf(value,start)+&配列の要素で\texttt{value}に等しいもの
+      を後ろから探し、その位置を返す。見つからない場合は\texttt{-1}を返す。
       オプションの引数\texttt{start}はそのインデックス以前から探す。
       \\ \hline
 \end{tabular}
-\end{center}
+%\end{center}
 \end{table}
 
 配列のメソッドとしてはこのほかに、引数に処理をする関数を与えるものがある。それらについ
@@ -246,8 +254,8 @@ c ==> [3, 4, 5, 6, 7]
  "2"*"3"  => 6
  "f" *2   => NaN
  "0xf"*2  => 30
- "0o10"*2 => 16
 \end{Verbatim}
+% "0o10"*2 => 16
  \item 整数を整数で割った場合、割り切れなければ小数となる。
        小数部分を切り捨てたいときは\Verb+Math.floor()+を用いる。
 \begin{Verbatim}
@@ -317,9 +325,8 @@ JavaScript に組み込まれている代表的な関数としては次のもの
        \Verb+Infinity+ または \Verb+-Infinity+ でないときに \Verb+true+、
        そうでないとき、\Verb+false+ を返す。
  \item \ElmJ{encodeURIComponent(string)} \texttt{string}を URLエンコー
-			 ドする。Google の検索で日本語を含むものを対象とすると、アドレス
-			 バーに\%で始まる文字列が見えるが、これがURLエンコードした結果で
-			 ある。 
+			 ドする。ブラウザの日本語を含む字句検索の結果のアドレス
+			 バーに\%で始まる文字列がURLエンコードした結果である。 
  \item \ElmJ{decodeURIComponent(string)}
 			 \ElmJ{encodeURIComponent(string)}の逆の操作をする。
  \item \ElmJ{encodeURI(string)} \texttt{string} をURIエンコーディングす
@@ -333,11 +340,29 @@ JavaScript に組み込まれている代表的な関数としては次のもの
 の関数が定義されている。表\ref{JSMath}はそれらのプロパティや関数をまとめ
 たものである。%\newpage%\vspace{-1cm}
 \input 00Math.tex
+いくつか注意をしておく。
+\begin{itemize}
+ \item 配列の要素の最大値や最小値を求めるために\Verb+Math.max+ や
+       \Verb+Math.min+を直接使用できない。展開演算子\Verb+...+を用いると
+       計算ができる。次の実行例を参照のこと。
+\begin{Verbatim}
+>a = [3,5,23,1,4];
+(5) [3, 5, 23, 1, 4]
+>Math.max(a);
+NaN
+>Math.max(...a);
+23
+\end{Verbatim}
+ \item EcmaScript 2016 ではべき乗の演算子\texttt{**}が導入されたので
+\texttt{Math.pow()}は使わなくてもよい。
+\end{itemize}
+詳しい解説は[\ref{ES2016},第16章]にある。
 %\newpage
 %\clearpage
 \subsection{\protect\texttt{Dateオブジェクト}}
 日付や時間に関するデータを扱うコンストラクタ関数である。
 引数の数や型によりいくつかの異なる日付と日時のオブジェクトが作成できる。
+\input 00Date.tex
 \begin{itemize}
  \item 引数なしの場合は現在の日付と日時を用いて作成
 \begin{Verbatim}
@@ -364,8 +389,8 @@ Mon Nov 02 2015 10:10:20 GMT+0900 (東京 (標準時))
        1日の1日前、つまり前の月の最終日と解釈される。
 \end{itemize}
 %\newpage
-\input 00Date.tex
 \input prob02-04Date.tex
+%
 \clearpage
 \section{第2回目復習課題}
 %\Answertrue

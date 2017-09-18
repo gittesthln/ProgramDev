@@ -1,52 +1,124 @@
-\usepackage{array,longtable,amsfonts}
+\usepackage{array,longtable,amsfonts,amssymb,fancyvrb}
 \newcommand{\ShowItem}[1]{%
 \ifx\relax#1\else%
-{\large$\Box$}\parbox[t]{12zw}{%
+{\large$\Box$}\parbox[t]{14zw}{%
   \rule[0.4\baselineskip]{0em}{1em}#1}\newline%
   \expandafter\ShowItem\fi%
 }
-\newcommand{\Target}[5]{%\typeout {#3}%
+\newcommand{\ShowItemP}[1]{%
+\ifx\relax#1\else%
+{\large$\Box$}\parbox[t]{19zw}{%
+  \rule[0.4\baselineskip]{0em}{1em}#1}\newline%
+  \expandafter\ShowItemP\fi%
+}
+%
+%評価段階の数の増減は\Targetの引数を変える
+%
+\newcommand{\Target}[5]{%現在は3段階
 	\ifx\relax#1\else
-	#1{\small \hspace*{-0.2em}(#2\%)}%
-	&\ShowItem#3\relax
+ 	\parbox{4zw}{\hspace*{\fill}#1\hspace*{\fill}\newline%
+  \hspace*{\fill}(#2\%)\hspace*{\fill}}%
+	&\ShowItem#3\relax  %この部分を必要に応じて増減
 	&\ShowItem#4\relax
 	&\ShowItem#5\relax\\ \hline\expandafter\Target\fi}
-\newcommand{\LecName}[1]{\newcommand{\LName}{#1}}
+\newcommand{\TargetN}[6]{%現在は3段階+項目
+	\ifx\relax#1\else
+	#1{\small \hspace*{-0.2em}\newline(#2\%)}%
+	&\ShowItem#3\relax  %この部分を必要に応じて増減
+	&\ShowItem#4\relax
+	&\ShowItem#5\relax
+	&#6\relax\\ \hline\expandafter\TargetN\fi}
+\newcommand{\TargetP}[4]{%現在は3段階+項目
+	\ifx\relax#1\else
+	#1{\small \hspace*{-0.2em}\newline(#2\%)}%
+	&\ShowItemP#3\relax  %この部分を必要に応じて増減
+	&\ShowItemP#4\relax
+	\\ \hline\expandafter\TargetP\fi}
+%\newcommand{\LecName}[1]{\newcommand{\LName}{#1}}
 \newcommand{\Date}[1]{\newcommand{\LDate}{#1}}
 \newcommand{\Aim}[1]{\newcommand{\LAim}{#1}}
 \newcommand{\Contents}[1]{%
   \newcommand{\ContentsItems}{#1}
 }
-\def\Test#1,#2\relax{%
+\def\EtitleDo#1,#2\relax{%
   	\def\tmp{&}\tmp\multicolumn{1}{c|}{#1}%
-		\ifx\relax#2\else\expandafter\Test\fi#2\relax
+		\ifx\relax#2\else\expandafter\EtitleDo\fi#2\relax
+	}
+\def\EtitlePDo#1,#2\relax{%
+  	\def\tmp{&}\tmp\multicolumn{1}{c|}{#1}%
+		\ifx\relax#2\else\expandafter\EtitlePDo\fi#2\relax
 	}
 \newcommand{\EvalTitle}[1]{%
-	\newcommand{\ETitle}{\hline 評価項目\Test#1,\relax\\\hline}
-	}
+	\newcommand{\ETitle}{\hline 評価項目\EtitleDo#1,\relax\\\hline}
+  }
 \newcommand{\EvalTitleN}[1]{%
-\newcommand{\ETitle}{\hline 評価項目\ETitleDo#1\relax\\\hline}
-}
-\newcommand{\ETitleDo}[1]{%
-	\def\tmp{&}%
-	\ifx\relax#1\else\tmp\multicolumn{1}{c|}{#1}\expandafter\ETitleDo\fi
-}
- \newcommand{\Rubric}[1]{%
+	\newcommand{\ETitle}{\hline 評価項目\EtitleDo#1,\relax\\\hline}
+  }
+\newcommand{\EvalTitleP}[1]{%
+	\newcommand{\ETitleP}{\hline 評価項目\EtitlePDo#1,\relax\\\hline}
+  }
+\newcommand{\Format}[1]{%
+   \newcommand{\LongTable}{\begin{longtable}{|m{4zw}|#1}}}
+\newcommand{\FormatP}[1]{%
+   \newcommand{\LongTableP}{\begin{longtable}{|m{2zw}|#1}}}
+\newcommand{\Rubric}[2]{%
+\newpage
 \begin{center}
- {\LARGE \LName}\\\LDate\\[2ex]
- {\Large 学籍番号 \underline{\makebox[10zw]{#1}}}
+% {\LARGE \LName}\\#1 #2\\[2ex]
+    \ExcerciseHeadN{\LecName}{}{2}{}{演習}%
+
 \end{center}
-\LAim
-\begin{longtable}{|m{2zw}|m{13zw}|m{13zw}|m{13zw}|}
+#1{\small
+\LongTable
 	 	  \ETitle
 \endfirsthead
 	 	  \ETitle
 \endhead
-	\multicolumn{4}{r}{\bfseries 裏に続きがあります}
+	\multicolumn{4}{r}{\bfseries 次のページに続きがあります}
 \endfoot
 \endlastfoot
- \expandafter\Target\ContentsItems\relax\relax\relax\relax\relax%
-\end{longtable}
+\Target#2\relax\relax\relax\relax\relax%
+%評価段階の数を変更したら\relaxの数を\Targetの引数の数以上にする
+\end{longtable}}
 \newpage
 }
- 
+\newcommand{\RubricN}[4]{%
+\newpage
+\begin{center}
+ {\LARGE \LName}\\#1 #2\\[2ex]
+% {\Large 学籍番号 \underline{\makebox[10zw]{#1}}}
+\end{center}
+#3{\small
+\LongTable
+	 	  \ETitle
+\endfirsthead
+	 	  \ETitle
+\endhead
+	\multicolumn{5}{r}{\bfseries 次のページに続きがあります}
+\endfoot
+\endlastfoot
+\TargetN#4\relax\relax\relax\relax\relax\relax%
+%評価段階の数を変更したら\relaxの数を\Targetの引数の数以上にする
+\end{longtable}}
+\newpage
+}
+\newcommand{\RubricP}[4]{%
+\newpage
+\begin{center}
+ {\LARGE \LName}\\#1 #2\\[2ex]
+% {\Large 学籍番号 \underline{\makebox[10zw]{#1}}}
+\end{center}
+#3{\small
+\LongTableP
+	 	  \ETitleP
+\endfirsthead
+	 	  \ETitleP
+\endhead
+	\multicolumn{3}{r}{\bfseries 次のページに続きがあります}
+\endfoot
+\endlastfoot
+\TargetP#4\relax\relax\relax\relax%
+%評価段階の数を変更したら\relaxの数を\Targetの引数の数以上にする
+\end{longtable}}
+%\newpage
+}
