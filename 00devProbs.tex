@@ -1,6 +1,15 @@
 \documentclass[a4j]{jarticle}
 \input rubricHead.tex
 \input rubricProgDevHead.tex
+\newcommand{\Cent}[1]{\hspace*{\fill}#1\hspace*{\fill}\rule{0em}{1ex}}
+\newcounter{NN}
+\newcounter{STEP}
+\newcommand{\ShowNo}[2]{%
+  \setcounter{NN}{#1}\setcounter{STEP}{-#2}\Cent{#1}\ShowNoDo}
+\newcommand{\ShowNoDo}{%
+  \addtocounter{NN}{\value{STEP}}\ifnum\value{NN}>-1\newline\Cent{\arabic{NN}}%
+  \expandafter\ShowNoDo\fi
+}
 \newif\ifHMSol
 \newif\ifText
 \newif\ifAnswer

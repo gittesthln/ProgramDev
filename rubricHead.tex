@@ -17,10 +17,11 @@
 \newcommand{\Target}[5]{%現在は3段階
 	\ifx\relax#1\else
  	\parbox{4zw}{\hspace*{\fill}#1\hspace*{\fill}\newline%
-  \hspace*{\fill}(#2\%)\hspace*{\fill}}%
+  \hspace*{\fill}(#2点)\hspace*{\fill}}%
 	&\ShowItem#3\relax  %この部分を必要に応じて増減
 	&\ShowItem#4\relax
-	&\ShowItem#5\relax\\ \hline\expandafter\Target\fi}
+	&\ShowItem#5\relax
+  &\ShowNo{#2}{1}\\ \hline\expandafter\Target\fi}
 \newcommand{\TargetN}[6]{%現在は3段階+項目
 	\ifx\relax#1\else
 	#1{\small \hspace*{-0.2em}\newline(#2\%)}%
@@ -58,7 +59,7 @@
 	\newcommand{\ETitleP}{\hline 評価項目\EtitlePDo#1,\relax\\\hline}
   }
 \newcommand{\Format}[1]{%
-   \newcommand{\LongTable}{\begin{longtable}{|m{4zw}|#1}}}
+   \newcommand{\LongTable}{\begin{longtable}{|m{4zw}|#1m{2zw}|}}}
 \newcommand{\FormatP}[1]{%
    \newcommand{\LongTableP}{\begin{longtable}{|m{2zw}|#1}}}
 \newcommand{\Rubric}[2]{%
