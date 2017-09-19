@@ -1,5 +1,0 @@
-\beamer@endinputifotherversion {3.36pt}
-\beamer@sectionintoc {1}{PHP入門--続き}{2}{0}{1}
-\beamer@subsectionintoc {1}{1}{関数}{2}{0}{1}
-\beamer@sectionintoc {2}{サーバーとのデータ－の交換(1)}{14}{0}{2}
-\beamer@sectionintoc {3}{Web Storage}{24}{0}{3}

@@ -1,9 +1,0 @@
-\beamer@endinputifotherversion {3.36pt}
-\beamer@sectionintoc {1}{XMLファイルとは}{2}{0}{1}
-\beamer@sectionintoc {2}{XMLファイルの例}{5}{0}{2}
-\beamer@subsectionintoc {2}{1}{GPXファイル}{5}{0}{2}
-\beamer@subsectionintoc {2}{2}{空間位置の決定}{9}{0}{2}
-\beamer@sectionintoc {3}{Google Mapsにおける\texttt {Polyline}の表示}{11}{0}{3}
-\beamer@sectionintoc {4}{XMLファイルの処理}{12}{0}{4}
-\beamer@subsectionintoc {4}{1}{ブラウザにおける処理}{12}{0}{4}
-\beamer@subsectionintoc {4}{2}{PHPによる処理}{26}{0}{4}
