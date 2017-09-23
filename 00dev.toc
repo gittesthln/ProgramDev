@@ -59,9 +59,10 @@
 \contentsline {subsection}{\numberline {5.2.3}\ElmJ {prototye}属性}{42}{subsection.5.2.3}
 \contentsline {subsection}{\numberline {5.2.4}\texttt {prototype}の使用例}{42}{subsection.5.2.4}
 \contentsline {section}{\numberline {5.3}関数によるオブジェクトの継承}{43}{section.5.3}
-\contentsline {section}{\numberline {5.4}エラーオブジェクトについて}{44}{section.5.4}
-\contentsline {subsection}{\numberline {5.4.1}エラー処理の例}{44}{subsection.5.4.1}
-\contentsline {subsection}{\numberline {5.4.2}エラーからの復帰}{46}{subsection.5.4.2}
+\contentsline {section}{\numberline {5.4}\ElmJ {WeakMap}によるインスタンスの安全性の確保}{44}{section.5.4}
+\contentsline {section}{\numberline {5.5}エラーオブジェクトについて}{44}{section.5.5}
+\contentsline {subsection}{\numberline {5.5.1}エラー処理の例}{45}{subsection.5.5.1}
+\contentsline {subsection}{\numberline {5.5.2}エラーからの復帰}{46}{subsection.5.5.2}
 \contentsline {chapter}{\numberline {第6回}正規表現}{49}{chapter.6}
 \contentsline {section}{\numberline {6.1}正規表現オブジェクトの記述方法}{49}{section.6.1}
 \contentsline {paragraph}{リテラル文字}{49}{section*.8}

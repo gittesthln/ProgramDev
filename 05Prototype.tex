@@ -249,7 +249,20 @@ StudentF.prototype.constructor = StudentF;
        \texttt{Student}に戻して\texttt{Student.prototype.constructor}を
        継承するクラスに置き換える(15行目)
 \end{itemize}
+\section{\protect\ElmJ{WeakMap}によるインスタンスの安全性の確保}
+クラスのクロージャ内に変数を閉じ込めることで、クラス全体に共通のデータを
+保護することはすでに解説をした。これを応用してクラスのインスタンスのデー
+タを安全に管理する方法としては\ES で導入された\ElmJ{WeakMap}を用いる方法
+がある。
 
+\ElmJ{WeakMap}はオブジェクトの拡張である%
+\footnote{\ES では\ElmJ{Map}オブジェクトも定義されている。\ElmJ{WeakMap}
+方がメモリーの使用状況が改善するような仕様であるのでここでは紹介しない。
+詳しくは[\ref{ES2016}]を参照のこと。}。
+オブジェクトのキーとしては文字
+列しか使用することはできない\footnote{実際には文字列以外にこの授業では紹
+介しない\ElmJ{SYMBOL}も利用できる。}。\ElmJ{WeakMap}ではキーにオブジェク
+トを指定することが可能である。
  \section{エラーオブジェクトについて}
 エラーオブジェクトとはエラーが発生したことを知らせるオブジェクトである。
 通常は計算の継続ができなくなったときにエラーオブジェクトをシステムに送る
