@@ -20,6 +20,15 @@ const Person = (function() {
           "hometown" : hometown
         });
     }
+    get name(){
+      return properties.get(this).name;
+    }
+    get birthday(){
+      return properties.get(this).birthday;
+    }
+    get hometown(){
+      return properties.get(this).hometown;
+    }
     toString() {
       return `${this.name}さんは`+
         `${this.birthday.year}年${this.birthday.month}月${this.birthday.day}日に` +
@@ -33,18 +42,6 @@ const Person = (function() {
                   this.birthday.month-1,
                   this.birthday.day).getTime()) age--;
       return age;
-    }
-    get birthday(){
-      return properties.get(this).birthday;
-    }
-    get birthday.year() {
-      return properties.get(this).birthday.year;
-    }
-    get name(){
-      return properties.get(this).name;
-    }
-    get hometown(){
-      return properties.get(this).hometown;
     }
   }
 })()

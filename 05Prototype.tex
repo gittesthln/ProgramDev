@@ -2,7 +2,7 @@
 \chapter{オブジェクトの詳細}
 \section{\protect\texttt{class}の実体}
 \ES ではキーワード\ElmJ{class}が導入されたが、その実体はこれまでの
-ECMASript に新しい機能を追加したわけではなく、従来のオブジェクトや継承に
+ECMAScript に新しい機能を追加したわけではなく、従来のオブジェクトや継承に
 関して記述を簡単にしたものに過ぎない\footnote{このことを syntactic
 sugar(糖衣構文)と呼ぶ。}。実行例\ref{ExecconstructorClass}に
 おいて\texttt{typeof Person}の結果は次のとおりである。
@@ -10,13 +10,12 @@ sugar(糖衣構文)と呼ぶ。}。実行例\ref{ExecconstructorClass}に
 >typeof Person;
 "function"
 \end{Verbatim}
-従来の EcmaSCript では関数を用いてクラスが定義されていて、それの手法が使
+従来の ECMAScript では関数を用いてクラスを定義する。\ElmJ{class}でもその手法が使
 われていることを示す。
 \begin{Exec}\label{constructor}\upshape
-次の例はコンストラクタ関数を用いて、前の例と同じオブジェクト(インスタン
- ス)を構成している。
-
- 実行例\ref{ExecconstructorClass}の例で確認する。
+次の例はコンストラクタ関数を用いて、前の例と同じオブジェクトを作成している。
+%
+ここでは実行例\ref{ExecconstructorClass}の例で確認する。
 \begin{Verbatim}
 function PersonF(name, year, month, day, hometown = "神奈川"){
     this.name = name;
@@ -125,11 +124,11 @@ Very Old Alice
  \item \texttt{seal}された状態ではプロパティの値を変えることができる
 			 (\texttt{p.grandmother}の値の書き換えができている)。
 \end{itemize}
-最も強く、オブジェクトを拘束するためには、\ElmJ{Object.freeze()}を用いる。
+オブジェクトを最も強く固定するためには\ElmJ{Object.freeze()}を用いる。
 また、この状態を確認するためには\ElmJ{Object.isFrozen()}を用いる。
-
-   実行例\ref{ExecContined}に引き続いて\ElmJ{Object.freeze()}を実行した
-   結果である
+%
+  %   実行例\ref{ExecContined}に
+引き続いて\ElmJ{Object.freeze()}を実行すると次のようになる。
 \begin{Verbatim}
 >Object.freeze(p);
 PersonF
@@ -142,8 +141,8 @@ Very Old Alice
 このような状態で属性値を変えたい場合には、属性にたいするセッターメソッド
   を定義することになる。
 
-このオブジェクトではプロパティ\texttt{birthday}の値がオブジェクトになっ
-ている。このオブジェクトは\ElmJ{seal}されていない。
+このオブジェクトのプロパティ\texttt{birthday}の値はオブジェクトである。
+このオブジェクトは\ElmJ{seal}されていない。
 \begin{Verbatim}
 >p.birthday;
 {year: 2001, month: 4, day: 1}
@@ -158,15 +157,14 @@ true
 >p.birthday;
 {month: 4, day: 1}
 \end{Verbatim}
-  \begin{itemize}
-   \item \texttt{p.birthday}は削除できない。また、値の変更もできない。
-   \item 一方で、\texttt{p.birthday.year}は削除できる。
-  \end{itemize}
+ \texttt{p.birthday}は削除できないし、値の変更もできない。
+ 一方で、\texttt{p.birthday.year}は削除できる。
  \end{Exec}
  \input 05-01extensibleClass.tex
- このように JavaScript におけるクラスとそれから生成されるインスタンスは
- 通常のオブジェクト指向言語のように構造を固定化された状態で存在させるた
- めにはインスタンスごとに行う必要があることが分かる。
+ JavaScript におけるクラスとそれから生成されるインスタンスは
+ 通常のオブジェクト指向言語と異なり、構造を変えることができる。
+ 固定化はインスタンスごとに行う必要がある。\ref{SaftyForInstance}節では
+ 別の方法を解説する。
  \subsection{\protect\ElmJ{prototye}属性}
  オブジェクトの\ElmJ{prototype}属性の値は、同じコンストラクタ関数で生成
  された間で共通のものになっている。オブジェクトリテラルで生成されたオブ
@@ -176,10 +174,12 @@ true
  の\ElmJ{prototype}も存在する。この一連の\ElmJ{prototype}オブジェクトを
  プロトタイプチェーンとよぶ。
 
+ \iffalse
  \JS で定義されている \ElmJ{Object.create()} メソッドは引数で与
  えられたオブジェクトの\ElmJ{prototype}を\ElmJ{prototype}に持つオブジェ
  クトを生成する。このメソッドに対して2番目の引数を与えて、新たに生成され
  たオブジェクトのプロパティを指定できる。
+ \fi
  \subsection{\protect\texttt{prototype}の使用例}
  \begin{Exec}\upshape\label{ExecConst2}
   次の例は\ref{Execconstructor}の属性を簡略し、いくつかのメソッ
@@ -244,31 +244,143 @@ StudentF.prototype.constructor = StudentF;
        要はないが、参照できるようにする必要がある。そのために14行目で継
        承元のクラスを作成して継承するクラスの\ElmJ{prototype}を書き直し
        ている(14行目)。
- \item このままでは\ElmJ{constructor}プロパティが\texttt{Person}になって
-       しまうので、\texttt{Student.prototype.constructor}を
-       \texttt{Student}に戻して\texttt{Student.prototype.constructor}を
+ \item このままでは\ElmJ{constructor}プロパティが\texttt{PersonF}になるの
+       で、\texttt{StudentF.prototype.constructor}を
        継承するクラスに置き換える(15行目)
 \end{itemize}
 \section{\protect\ElmJ{WeakMap}によるインスタンスの安全性の確保}
+\label{SaftyForInstance}
 クラスのクロージャ内に変数を閉じ込めることで、クラス全体に共通のデータを
 保護することはすでに解説をした。これを応用してクラスのインスタンスのデー
 タを安全に管理する方法としては\ES で導入された\ElmJ{WeakMap}を用いる方法
 がある。
 
-\ElmJ{WeakMap}はオブジェクトの拡張である%
+\ElmJ{WeakMap}はオブジェクトと同じようにキーと値の集まりである%
 \footnote{\ES では\ElmJ{Map}オブジェクトも定義されている。\ElmJ{WeakMap}
 方がメモリーの使用状況が改善するような仕様であるのでここでは紹介しない。
 詳しくは[\ref{ES2016}]を参照のこと。}。
-オブジェクトのキーとしては文字
+オブジェクトのキーは文字
 列しか使用することはできない\footnote{実際には文字列以外にこの授業では紹
-介しない\ElmJ{SYMBOL}も利用できる。}。\ElmJ{WeakMap}ではキーにオブジェク
-トを指定することが可能である。
+介しない\ElmJ{SYMBOL}も利用できる。}が、\ElmJ{WeakMap}の
+キーはオブジェクトしか使用できない。
+
+\begin{Exec}\upshape\label{WeakMap}
+  次の例は実行例\ref{PersonWidthGetter}を\ElmJ{WeakMap}を利用して、
+ \ElmJ{extensible}属性を使用しないで値の保護をするものである。
+\begin{Verbatim}[numbers=left]
+const Person = (function() {
+  const properties = new WeakMap();
+  return class {
+    constructor(name, year, month, day, hometown="神奈川"){
+      properties.set(this,
+        {
+          "name" : name,
+          "birthday" :{
+            "year" : year,
+            "month": month,
+            "day" : day
+          },
+          "hometown" : hometown
+        });
+    }
+    get name(){
+      return properties.get(this).name;
+    }
+    get birthday(){
+      return properties.get(this).birthday;
+    }
+    get hometown(){
+      return properties.get(this).hometown;
+    }
+    toString() {
+      return `${this.name}さんは`+
+        `${this.birthday.year}年${this.birthday.month}月${this.birthday.day}日に` +
+        `${this.hometown}で生まれました。`;
+    }
+    get age(){
+      let today = new Date();
+      let age = today.getFullYear() - this.birthday.year;
+      if(today.getTime() <
+         new Date(today.getFullYear(),
+                  this.birthday.month-1,
+                  this.birthday.day).getTime()) age--;
+      return age;
+    }
+  }
+})()
+\end{Verbatim}
+ \begin{itemize}
+  \item 2行目で\texttt{Person}クラスのインスタンスの(隠された)プロパティ
+        値を格納するための\ElmJ{WeakMap}のインスタンスを作成している。
+  \item 4行目から15行目で\ElmJ{constructor}を定義している。
+        \begin{itemize}
+         \item 6行目から14行目で定義されているオブジェクトは実行例
+        \ref{ExecconstructorClass}で定義しているオブジェクトと同じものに
+               なっている。
+         \item そのオブジェクトをインスタンス(\ElmJ{this})をキーにして、
+               2行目で作成した\ElmJ{WeakMap}のインスタンスに\ElmJ{set}メ
+               ソッドを用いて登録している。
+        \end{itemize}
+  \item 各インスタンスのプロパティを読み出すために、\texttt{name}、
+        \texttt{birthday}、\texttt{hometown}の3つのメソッド定義している
+        (16行目から24行目)。
+  \item インスタンスの(隠し)プロパティを保存している\ElmJ{WeakMap}から
+        値を取り出すために、\ElmJ{get}メソッドを使用している。
+  \item 25行目から29行目の\texttt{toString()}メソッドと30行目から38行目
+        の設定プロパティ\ElmJ{age}は以前の定義と同じである。
+ \end{itemize}
+ 次のリストはこのクラスの実行例である。
+\begin{Verbatim}
+>p = new Person("foo",2001,4,1);
+{}
+\end{Verbatim}
+インスタンスのプロパティは空である。これはインスタンスのプロパティを設定していな
+ いためである。結果を展開するとメソッドが見える。
+
+インスタンスのそれぞれのプロパティは読み出すことができる。
+\begin{Verbatim}
+>p.name;
+"foo"
+>p.birthday;
+{year: 2001, month: 4, day: 1}
+>p.hometown;
+"神奈川"
+\end{Verbatim}
+ メソッドも正しく動作する。
+\begin{Verbatim}
+>p.age;
+16
+>`${p}`;
+"fooさんは2001年4月1日に神奈川で生まれました。"
+\end{Verbatim}
+プロパティの値は変更できない。
+\begin{Verbatim}
+>p.name = "Alice"; //name の値を "Alice" にする試み
+>p.name;
+"foo"              //name の値は変更されていない。
+\end{Verbatim}
+プロパティは消去できない。
+\begin{Verbatim}
+>delete p.name;  //プロパティ name の消去の試み
+true             //成功?
+>p.name
+"foo"            //プロパティ name は消去されていない。
+\end{Verbatim}
+ \texttt{p.birthday}のプロパティの値は変更できる。
+\begin{Verbatim}
+>p.birthday.year = 2010;         // 戻り値 2010
+>p.birthday;
+{year: 2010, month: 4, day: 1}   //year の値が変更されている。
+\end{Verbatim}
+最後の2つの結果に関しては問題としておく。
+\end{Exec}
+\input 05-02WeakMap.tex
  \section{エラーオブジェクトについて}
 エラーオブジェクトとはエラーが発生したことを知らせるオブジェクトである。
 通常は計算の継続ができなくなったときにエラーオブジェクトをシステムに送る
 操作が必要である。これを通常、エラーを投げる(\ElmJ{throw}する)という。
 エラーオブジェクトには表\ref{ErrorProp}のようなプロパティがある。
-\begin{table}
+\begin{table}[ht]
  \caption{エラーオブジェクトのプロパティ}\label{ErrorProp}
  \begin{center}
 	 \begin{tabular}{|c|m{30zw}|}\hline
@@ -283,7 +395,7 @@ StudentF.prototype.constructor = StudentF;
 \subsection{エラー処理の例}
 エラー処理の例としてインスタンス作成時に引数の妥当性をチェックする例を挙げる。
  \begin{Exec}\upshape\label{throwError}
-	次のリストは、実行例\ref{Execconst3}において、コンストラクタに与えられ
+	次のリストは、実行例\ref{PersonWidthGetter}において、コンストラクタに与えられ
 	た引数をチェックして不正な値の場合にはエラーを投げるように書き直したも
 	のである。
 
@@ -329,8 +441,9 @@ const Student = (function(){
  \item 8行目では、与えられた年と月からその月の最終の日を求めている。
 			 \ElmJ{Date.getMonth()}の戻り値が0(1月)から11(12月)になっているの
 			 で、\texttt{new Date(y,m,0)}により翌月の1日の1日前、つまり、問題
-			 としている月の最終日が設定できる\footnote{課題\ref{DateProb}
-			 の3番目の問題の解答である。}。
+			 としている月の最終日が設定できる
+%       \footnote{課題\ref{DateProb}の3番目の問題の解答である。}
+       。
  \item 9行目で与えられた範囲に日が含まれていなければエラーを発生させてい
 			 る。
         \item 10行目ｆで日付のオブジェクトを作成し、戻り値として返している。
@@ -346,13 +459,13 @@ const Student = (function(){
 >p = new Person("foo",1995,4,1);
 Person {name: "foo", year: 1995, month: 4, day: 1}
 \end{Verbatim}
- \item 1996年はうるう年なので2月29日が存在する。したがって、エラーは起こ
-			 らず正しくオブジェクトが作成できる。
+ \item うるう年の1996年には2月29日あるので、エラーは起こ
+			 らずオブジェクトが作成できる。
 \begin{Verbatim}
 >p = new Person("foo",1996,2,29);
 Person {name: "foo", year: 1996, month: 2, day: 29}
 \end{Verbatim}
- \item 1995年はうるう年ではないので2月29日がない。したがって、エラーが起
+ \item うるう年ではない1995年には2月29日がないので、エラーが起
 			 きる。
 \begin{Verbatim}
 >p = new Person("foo",1995,2,29);
@@ -423,8 +536,8 @@ function test() {
  \item \ElmJ{try\{\}}内にはエラーが発生するかもしれないコードを中に含め
 			 る。
 	\begin{itemize}
-	 \item ここでは年、月、日の入力を\ElmJ{prompt}用いてダイアログボックス
-				 を表示させ、そこに入力させている。
+	 \item 年、月、日の入力を\ElmJ{prompt}によるダイアログボックス
+				 から入力させている。
 	 \item 戻り値は文字列なので、\ElmJ{Number}で数に直している。
    \item 代入された値が正当であればその値をコンソールに出力している。
 	\end{itemize}
