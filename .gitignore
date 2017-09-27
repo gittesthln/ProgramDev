@@ -1,5 +1,8 @@
 *~
 *.log
 *.bmc
+*.dvi
+00dev.ps
+00devProbs.ps
 pdfs/*.ps
 pdfs/*.dvi
