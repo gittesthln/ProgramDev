@@ -1,11 +1,16 @@
 \input devHeadDarmstadt.tex
+\newcommand{\ElmJ}{\texttt}
 \title{ソフトウェア開発\\第2回目授業}
 \author{平野 照比古}
 \institute{}
-\date{2016/9/30}
+\date{2017/9/29}
 \begin{document}
 \frame{\maketitle}
 %\frame{\tableofcontents}
+\section{前回のレポートから}
+\begin{frame}
+\frametitle{}
+\end{frame}
 \section{JavaScriptが取り扱うデータ}
 \subsection{データーの型}
 \begin{frame}[containsverbatim]
@@ -52,7 +57,7 @@ JavaScriptで扱う数は64ビット浮動小数点形式
 \end{frame}
 \begin{frame}[containsverbatim]
  \frametitle{String型}
-文字列に関する情報や操作には次のようなものがある 。
+文字列に関する情報や操作には次のようなものがある。
 \begin{center}
  \begin{tabular}{|c|m{12zw}|}\hline
  メンバー&\multicolumn{1}{c|}{説明} \\\hline
@@ -98,6 +103,21 @@ JavaScriptで扱う数は64ビット浮動小数点形式
 クトが存在しないことを示す特別なオブジェクト値（であると同時にオブジェク
 トでもある）である。
 \end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{非プリミティブデータ}
+プリミティブ型以外のデータ型は「オブジェクト」(\texttt{()}内はオブジェク
+トを作成するコンストラクタ)の名称
+\begin{itemize}
+ \item 配列(\ElmJ{Array})
+ \item 数学(\ElmJ{Math})
+ \item 日時(\ElmJ{Date})
+ \item 正規表現(\ElmJ{RegExp})
+ \item マップ(\ElmJ{Map})とウィークマップ(\ElmJ{WeakMap})
+ \item セット(\ElmJ{Set})とウィークセット(\ElmJ{WeakSet})
+\end{itemize}
+ これらのデータ型のうち、マップ(\ElmJ{Map})、セット(\ElmJ{Set})、ウィークセッ
+ ト(\ElmJ{WeakSet})以外は後で解説
+\end{frame}
 \subsection{変数}
 \begin{frame}[containsverbatim]
  \frametitle{JavaScriptにおける変数}
@@ -105,7 +125,8 @@ JavaScriptで扱う数は64ビット浮動小数点形式
  \item 変数名はアルファベットまたは\Verb+_+(アンダースコア)で始まる英数
        字または\Verb+_+で始まる文字列
  \item 大文字と小文字は区別される。
- \item 変数の宣言は \texttt{var} で行う。
+ \item 変数の宣言は \texttt{let} で行う。
+ \item 従来の\texttt{var}は問題があるのでこの授業では使用しない。
  \item 宣言時に初期化ができる。
  \item 非\Strict のときは変数は宣言をしなくても使用できる。初期化してい
        ない変数を使うとエラーが起こる。詳しくは後述する。
@@ -120,11 +141,11 @@ JavaScriptで扱う数は64ビット浮動小数点形式
 配列を使うためには、変数を配列で初期化する必要がある。変数の宣言と同時に
 行ってもよい。
 \begin{Verbatim}
-var a = [];
-var b = [1,2,3];
+let a = [];
+let b = [1,2,3];
 \end{Verbatim}
-\Verb+a+ は空の配列で初期化されている。\Verb+b+ は　
-\Verb+b[0]=1,b[1]=2,b[2]=3+ となる配列で初期化されている。
+ \Verb+a+ は空の配列で初期化\\
+ \Verb+b+ は\Verb+b[0]=1,b[1]=2,b[2]=3+ となる配列で初期化
 \end{frame}
 \begin{frame}[containsverbatim]
  \frametitle{配列に関する注意}
@@ -133,7 +154,7 @@ var b = [1,2,3];
  \item 実行時に配列の大きさを自由に変えられる。
  \item 配列の要素に配列を置くことができる。
 \begin{Verbatim}
-var a=[1,[2,3,4],"a"];
+let a=[1,[2,3,4],"a"];
 \end{Verbatim}
 \end{itemize}
 \end{frame}
@@ -221,7 +242,7 @@ Boolean 型に対して使用できる演算子は次の3つ
 ペランドの評価は行われない。たとえば、論理和の場合、左の値が
 \Verb+true+であれば右のオペランドの評価が行われない。
 \begin{Verbatim}
-var a=1; true ||(a=3); 
+let a=1; true ||(a=3); 
 \end{Verbatim}
 では変数 \Verb+a+ の値は $1$ のままである。
 \end{frame}
@@ -274,7 +295,6 @@ JavaScript に初めから組み込まれている関数としては次のもの
 
 数学的な定数の定義(円周率など)や三角関数などの関数が定義されている。
 \end{itemize}
-
 \end{frame}
 
 \end{document}

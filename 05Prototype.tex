@@ -182,8 +182,8 @@ true
  \fi
  \subsection{\protect\texttt{prototype}の使用例}
  \begin{Exec}\upshape\label{ExecConst2}
-  次の例は\ref{Execconstructor}の属性を簡略し、いくつかのメソッ
- ドを追加したものである。
+  次の例は\ref{Execconstructor}の属性を省略し、いくつかのメソッ
+ ドを\ElmJ{prototype}に追加したものである。
 \begin{Verbatim}[numbers=left]
 PersonF.prototype = {
   toString:function() {
@@ -265,8 +265,10 @@ StudentF.prototype.constructor = StudentF;
 キーはオブジェクトしか使用できない。
 
 \begin{Exec}\upshape\label{WeakMap}
-  次の例は実行例\ref{PersonWidthGetter}を\ElmJ{WeakMap}を利用して、
- \ElmJ{extensible}属性を使用しないで値の保護をするものである。
+  次の例は実行例\ref{PersonWidthGetter}のクラスを\ElmJ{WeakMap}を利用し
+ て書き直したものである。
+% \ElmJ{extensible}属性を使用しないで
+% インスタンスのプロパティの値の保護をするものである。
 \begin{Verbatim}[numbers=left]
 const Person = (function() {
   const properties = new WeakMap();
@@ -334,8 +336,8 @@ const Person = (function() {
 >p = new Person("foo",2001,4,1);
 {}
 \end{Verbatim}
-インスタンスのプロパティは空である。これはインスタンスのプロパティを設定していな
- いためである。結果を展開するとメソッドが見える。
+インスタンスのプロパティは設定していな
+ いため空である。結果を展開するとメソッドが見える。
 
 インスタンスのそれぞれのプロパティは読み出すことができる。
 \begin{Verbatim}
@@ -372,7 +374,7 @@ true             //成功?
 >p.birthday;
 {year: 2010, month: 4, day: 1}   //year の値が変更されている。
 \end{Verbatim}
-最後の2つの結果に関しては問題としておく。
+最後の2つの結果の理由は問題としておく。
 \end{Exec}
 \input 05-02WeakMap.tex
  \section{エラーオブジェクトについて}
@@ -495,8 +497,9 @@ Person {name: "foo", year: 1996, month: 2, day: 29}
        \ElmJ{catch}の後にある\texttt{e}は投げられたエラーオブジェクトが
        渡される。この変数のスコープは\ElmJ{catch}内である。
  \item \ElmJ{finally\{\}}を付けることも
-できる。\texttt{try\{...\}catch\{...\}}内の部分は\texttt{try}や
-\texttt{catch}の処理がが実行後、必ず呼び出される。これは\ElmJ{try}や
+       できる。%\texttt{try\{...\}catch\{...\}}内の部分は
+       \texttt{try}や\texttt{catch}の処理がが実行後、必ず呼び出される。
+       これは\ElmJ{try}や
        \ElmJ{catch}の部分が\ElmJ{return}文、\ElmJ{break}文、
        \ElmJ{continue}文、\ElmJ{return}文や新しい例外を投げたとしても呼
        び出される。
