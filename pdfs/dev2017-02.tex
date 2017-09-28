@@ -8,8 +8,60 @@
 \frame{\maketitle}
 %\frame{\tableofcontents}
 \section{前回のレポートから}
-\begin{frame}
-\frametitle{}
+\begin{frame}[containsverbatim]
+ \frametitle{レポートの形式}
+ \begin{itemize}
+  \item 一番上に復習問題の用紙を置き、全体をステープラで止める。表紙は不
+        要。
+  \item 問題の結果をそのまま手書きでもよい。
+  \item キャプチャ亜画像を印刷したときは、関係する説明文や考察も同じ用紙
+        に記述すること。
+  \item ブラウザを全画面表示してものをキャプチャしないこと。必要な結果が
+        入る範囲で表示のサイズを決めること。
+  \item ルーブリック評価は点数を除いて必ず自己評価をすること。採点結果と
+        の差がなくなるようにするためである。
+ \end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{テンプレートリテラルについて}
+\begin{itemize}
+ \item 問2における出力が間違っているものが多数見受けられた。
+ \item 出力結果が数になる。
+ \item テンプレートリテラルはテキストにあるようにバッククオート(\Verb+@+
+       の上の文字)で囲む。
+ \item バッククオート、シングルクオート、ダブルクオートを区別すること。
+\end{itemize} 
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{変数のスコープについて}
+\begin{itemize}
+ \item 定義された変数が有効である範囲を変数のスコープという。
+ \item 関数内で宣言された変数は関数内でしか有効ではない。
+ \item したがって、復習問題のリストで、\texttt{foo();}こコンソールから実
+       行すると、戻ってきた時点で変数は消えている。したがって、そこで変
+       数\texttt{i}を参照すると「変数がない」というエラーが返る。
+ \item 宣言がないと変数はグローバルで定義される。したがって、変数
+       \texttt{i}の宣言をなくすと、\texttt{foo();}の実行後に変数の値が
+       参照できる。
+ \item 変数のスコープは第3回の授業でもう一度解説をする。({\bfseries 重要})
+\end{itemize} 
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{\texttt{CDATA}セクションについて}
+ ブラウザのHTML文書の解釈の手順を理解しておくこと
+ \begin{itemize}
+  \item ブラウザは要素(タグ)に基づいて文書の構造を解析する。
+  \item \Verb+<+と\Verb+>+をもとに要素の構成を調べる。要素名については関
+        知しない。
+  \item したがって\Verb+<script>+要素内の比較演算子の\Verb+<+も要素の開
+        始ととらえる。
+  \item そのように解釈されないために書いてある文字をそのまま取り扱うよう
+        にするための範囲を定めたのが\texttt{CDATA}セクション
+  \item 構造の解釈が終わると要素の解釈が行われる。
+  \item その際に、\Verb+<script>+要素内に書かれた\texttt{CDATA}セクショ
+        ンの記述はJavaScriptの文法では正しくないのでその前に
+        JavaScriptのコメントとする必要がある。
+ \end{itemize}
 \end{frame}
 \section{JavaScriptが取り扱うデータ}
 \subsection{データーの型}
