@@ -3,7 +3,7 @@
 \title{ソフトウェア開発\\第3回目授業}
 \author{平野 照比古}
 \institute{}
-\date{2016/10/7}
+\date{2017/10/6}
 \begin{document}
 \frame{\maketitle}
 %\frame{\tableofcontents}
@@ -130,7 +130,7 @@
 \begin{Verbatim}
 function sum(a,b) {
   var c = a + b;
-  return c;
+  return c;  // return a + b;　でもよい。
 }
 \end{Verbatim}
 \end{frame}
@@ -182,11 +182,11 @@ NaN
 エラーにならない。後の関数の定義が優先される。
 \begin{Verbatim}
 function sum(a, b){
-  var c = a+b;
+  let c = a+b;
   return c;
 }
 function sum(a, b, c){
-  var d = a+b+c;
+  let d = a+b+c;
   return d;
 }
 \end{Verbatim}
@@ -245,9 +245,10 @@ function func2(a){
 >func2(a);
 0
 >a;
-[2, 2, 3]
+[2, 2, 3]  //配列の先頭の値が2倍されている
 \end{Verbatim}
 \end{frame}
+\iffalse
 \subsection{\protect\texttt{aruguments}について}
 \begin{frame}[containsverbatim]
 \frametitle{\protect\texttt{aruguments}について}
@@ -327,25 +328,63 @@ function sum2(a, b){
 5
 \end{Verbatim}
 \end{frame}
+\else
+\subsection{可変引数をとる関数}
+\begin{frame}[containsverbatim]
+\frametitle{可変引数をとる関数}
+引数の数を固定しないように
+するためには仮引数に展開演算子をつける\footnote{これまでのJavaScript で
+は、関数の引数を表す配列のような性質を持つ\texttt{arguments}オブジェクト
+ が用意されていたが、ES2015 では非推奨となった。}。
+ 
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{任意個数の引数を取る関数の例}
+\begin{Verbatim}
+function sumN(...args) {
+    let S = 0;
+    for(let i=0;i<args.length;i++) {
+        S += args[i];
+    }
+    return S;
+}
+\end{Verbatim}
+\begin{itemize}
+ \item 1行目で関数の仮引数\texttt{args}に展開演算子\texttt{...}をつける。
+ \item \texttt{args}は配列となのでその大きさは\texttt{args.length}
+ \item これを用いて総和のプログラムが2行目から5行目に記述
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{実行例}
+実行例は次のとおりである。
+\begin{Verbatim}
+>sumN(1,2,3,4);  //戻り値は 10
+>sumN(1,2,3,4,5);//戻り値は 15
+\end{Verbatim}
+\end{frame}
+\fi
 \subsection{変数のスコープ}
 \begin{frame}[containsverbatim]
 \frametitle{JavaScriptにおける変数のスコープ}
 変数のスコープとはある場所で使われている変数がどこから参照できるかという
 概念
 \begin{enumerate}
- \item 変数は宣言しなくても使用できる。\label{3-4NoDeclare}
- \item 関数内で \Verb+var+ により明示的に定義された変数はその関数内で有
-       効となる。\label{3-4DeclareInFunc}
- \item 関数の途中で宣言しても、関数の先頭で宣言したと同じ効果を持つ。
+ \item 非\Strict では変数は宣言しなくても使用できる。\label{3-4NoDeclare}
+ \item \Verb+let+ により明示的に定義された変数はそのブロック内で有
+       効\label{3-4DeclareInFunc}
+ \item \Verb+let+で宣言された変数はそのブロック内で宣言より前で使用不可
        \label{3-4DeclareInFunc2}
  \item 関数の外で宣言された変数や宣言されないで使用された変数はすべてグ
        ローバルとなる。\label{3-4Declare2}
+ \item 関数内で\Verb+var+により宣言された変数は関数の先頭で宣言したと同
+       じ。初期化は宣言の位置で行われる。
 \end{enumerate}
 \end{frame}
 \begin{frame}[containsverbatim]
 \frametitle{変数のスコープの確認(1)}
 \begin{Verbatim}
-var S = "global";
+let S = "global";
 function func1(){
   console.log(S);
   return 0;
@@ -371,10 +410,10 @@ global
 \begin{frame}[containsverbatim]
 \frametitle{変数のスコープの確認(2)}
 \begin{Verbatim}
-var S = "global";
+let S = "global";
 function func2(){
   console.log(S);
-  var S = "local";
+  let S = "local";
   console.log(S);
   return 0;
 }
@@ -386,10 +425,12 @@ function func2(){
  \item \Verb+S+の値をコンソールに2回出力している。
  \item この関数内で変数\Verb+S+ はローカル変数として宣言されている。
  \item そのしたの変数\Verb+S+はローカル変数となる
-  \item この段階ではローカル変数 \Verb+S+には値が代入されていないのでその
-       値は\Verb+undefined+となる。
- \item 後の出力はその前で定義された値となる。
+ \item この後、\Verb+let+で宣言されるので文法上エラーとなる。
+ \item \Verb+var+で宣言すると、この段階ではローカル変数 \Verb+S+には値が
+       代入されていないのでその値は\Verb+undefined+となり、
+        後の出力はその前で定義された値となる。
 \end{itemize}
+ \Verb+var+で宣言した場合の出力
 \begin{Verbatim}
 >func2();
 undefined
@@ -400,9 +441,9 @@ local
 \begin{frame}[containsverbatim]
 \frametitle{変数のスコープの確認(3)}
 \begin{Verbatim}
-var S = "global";
+let S = "global";
 function func3(){
-  var S = "local";
+  let S = "local";
   func1();
   return 0;
 }
@@ -423,9 +464,9 @@ global
 \begin{frame}[containsverbatim]
 \frametitle{変数のスコープの確認(4)}
 \begin{Verbatim}
-var S = "global";
+let S = "global";
 function func4(){
-  var S = "local in func4";
+  let S = "local in func4";
   func5 = function() {
     console.log(S);
     return 0;
@@ -452,7 +493,7 @@ local in func4
 \begin{itemize}
  \item 関数オブジェクトを変数\Verb+func5+に代入している。これ
        により\Verb+func5()+という関数が定義される。
- \item \Verb+var+宣言がないので変数\Verb+func5+はグローバル変数となる
+ \item 変数宣言がないので変数\Verb+func5+はグローバル変数となる
   \item \Verb+func5()+内では変数\Verb+S+の内容を出力が定義されている。
  \item \Verb+func4()+を実行した後では\Verb+func5()+が実行できる。
  \item 関数\Verb+func5()+が定義された段階での変数\Verb+S+はこの関数が
@@ -465,7 +506,7 @@ local in func4
 0
 \end{Verbatim}
 \end{frame}
-\subsection{スコープチェイン}
+%\subsection{スコープチェイン}
 \begin{frame}[containsverbatim]
 \frametitle{スコープチェイン}
 関数の中で関数を定義すると、その
@@ -475,11 +516,11 @@ local in func4
 \begin{frame}[containsverbatim]
 \frametitle{スコープチェインの解説}
 \begin{Verbatim}
-var G1, G2;
+let G1, G2;
 function func1(a) {
-  var b, c;
+  let b, c;
   function func2() [
-    var G2, c;
+    let G2, c;
    ...
   }
 }
@@ -533,10 +574,10 @@ JavaScriptの関数のスコープは関数が定義されたときのスコー
 
  \hspace*{1zw}\begin{minipage}[t]{0.9\textwidth}
 \begin{Verbatim}[numbers=left]
-var T = new Date();
+let T = new Date();
 window.setTimeout(
   function(){
-    var NT = new Date();
+    let NT = new Date();
     if(NT-T<10000) {
       console.log(Math.floor((NT-T)/1000));
       window.setTimeout(arguments.callee,1000);
@@ -557,17 +598,14 @@ window.setTimeout(
        に名前はない(3行目)。
  \item 4行目で呼び出されたときの時間を求め、経過時間が$10000$ミリ秒以下
        であれば(5行目)、経過時間を秒単位で表示する(6行目)。
- \item さらに、自分自身を1秒後に呼び出す(7行目)。\Verb+arguments+をもつ
-       関数を\Verb+arguments.callee+で呼び出すことができる。つまり自分
-       自身を呼び出せることとなる。\Strict では\Verb+arguments.callee+は
-       使用できないので、関数に名前を付け、それを参照するようにする。
+ \item さらに、自分自身を1秒後に呼び出す(7行目)。
 \end{itemize}
 \end{frame}
 \begin{frame}[containsverbatim]
 \frametitle{自己実行関数の必要性}
 次のコード考える。
 \begin{Verbatim}
-  var i;
+  let i;
   for(i=1;i<10;i++) {
     console.log(i+" "+i*i);
   }
@@ -583,7 +621,7 @@ window.setTimeout(
 定義した関数をその場で実行できる機能
 \begin{Verbatim}
 (function(){
-  var i;
+  let i;
   for(i=1;i<10;i++) {
     console.log(i+" "+i*i);
   })();
@@ -592,7 +630,11 @@ window.setTimeout(
 すための\Verb+()+を付ける。
 
 この技法は、初期化の段階で1回しか実行しない事柄を記述し、かつグローバル
-な空間を汚さない(余計な変数などを残さない)手段として用いられる。
+ な空間を汚さない(余計な変数などを残さない)手段として用いられる。
+
+ \texttt{let}で変数\Verb+i+を\texttt{for}内で宣言すると、
+その変数は\texttt{for}文内でしか存在しない。また、スコープの規則が少し異な
+る。
 \end{frame}
 \subsection{クロージャ}
 \begin{frame}[containsverbatim]
@@ -612,7 +654,7 @@ window.setTimeout(
 \frametitle{クロージャの例 -- 変数を隠す}
 \begin{Verbatim}
 function f1() {
-  var n=0;
+  let n=0;
   return function() {
     return n++;
   };
@@ -683,8 +725,8 @@ VM351:2 Uncaught ReferenceError: n is not defined(…)
         れ以上実行されないようにするためにはこの関数を無名関数としてそ
  の場で実行すればよい。
 \begin{Verbatim}
-var foo = (function () {
-  var n=0;
+let foo = (function () {
+  let n=0;
   return function() {
     return n++;
   };
@@ -712,8 +754,8 @@ var foo = (function () {
 \frametitle{ローカル変数の値を単純に返すと、不都合が起こる例}
 \begin{Verbatim}
 function f2() {
-  var a = [];
-  var i;
+  let a = [];
+  let i;
   for(i=0; i<3; i++) {
     a[i] = function() {
       return i;
@@ -736,11 +778,25 @@ function f2() {
 \end{frame}
 \begin{frame}[containsverbatim]
 \frametitle{改良}
-値を関数の引数に(値渡しで)渡すことで、スコープチェーンを切る。
+この不具合は、\texttt{for}の制御変数\Verb+i+を\Verb+for+文の初
+ 期化のところで宣言すれば発生しない。
 \begin{Verbatim}
 function f3() {
-  var a = [];
-  var i;
+  let a = [];
+  for(let i=0; i<3; i++) {
+    a[i] = function() {
+        return i;
+      };
+  };
+  return a;
+}
+\end{Verbatim}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{改良--従来の方法}
+ \begin{Verbatim}
+function f3() {
+  let a = [], i;
   for(i=0; i<3; i++) {
     a[i] = (function(x){
       return function() {
@@ -750,7 +806,7 @@ function f3() {
   };
   return a;
 }
-\end{Verbatim}
+ \end{Verbatim}
 \end{frame}
 \begin{frame}[containsverbatim]
 \frametitle{解説と実行}
