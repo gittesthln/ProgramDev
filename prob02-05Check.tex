@@ -43,17 +43,17 @@
 	  数との比較なので数 $0$ に変換される。}
   \AnsShow{"0" == []}{\texttt{false}}{空の配列が空文字\texttt{""}に変換され、
 	  文字列の比較となる。}
-  \AnsShow{![]}{\texttt{false}}{空の配列はオブジェクトとして存在するので\texttt{true}と解釈され、否定
-	  演算子で\texttt{false}になる。}
+  \AnsShow{![]}{\texttt{false}}{空の配列はオブジェクトとして存在するので
+  \texttt{true}と解釈され、否定演算子で\texttt{false}になる。}
   \AnsShow{false == []}{\texttt{true}}{\texttt{[]}が空文字\texttt{""}に変換されたのち、\texttt{0}に変換される。}
-  \AnsShow{false == undefined}{\texttt{false}}{どちらも\texttt{false}と
-  みなされるが異なるものと判断される。\texttt{null}と\texttt{undefined}
-  は同等に取り扱われる。}
+  \AnsShow{false == undefined}{\texttt{false}}{この比較は\texttt{false}
+  と定義されている。\texttt{null}と\texttt{undefined}
+  の比較は\texttt{true}となる。}
   \AnsShow{[] == []}{\texttt{false}}{配列はオブジェクトであり、二つの空の配
 	  列は別物とみなされる。}
   \AnsShow{typeof []}{\texttt{"object"}}{配列はオブジェクトである。}
-  \AnsShow{null == undefined}{\texttt{true}}{両方とも\texttt{false}に変換され
-	  てから比較される。}
+  \AnsShow{null == undefined}{\texttt{true}}{この比較は\texttt{true}
+  と定義されている。}
   \AnsShow{a=[], b=a, a==b;}{\texttt{true}}{同じメモリーにあるオブジェクトを参
   照している。}
  \end{tabular}
