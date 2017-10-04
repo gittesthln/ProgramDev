@@ -1,15 +1,24 @@
 %-*- coding: utf-8 -*-
-\newcommand{\WW}{26zw}
-\ifAnswer\else\ifText\renewcommand{\WW}{35zw}\fi\fi
+次の式の評価結果を求めなさい。\\[0.1em]
+\newcommand{\WW}{25zw}
+\newcommand{\WWii}{c}
+\ifAnswer\else\ifText%
+\renewcommand{\WW}{35zw}
+\renewcommand{\WWii}{m{4zw}}
+\fi\fi
 \newcommand{\Rule}{\ifAnswer\else%
    \ifText\rule[-3ex]{0em}{7ex}\else\rule[-2ex]{0em}{5ex}\fi\fi}
 \ifAnswer
 \newcommand{\AnsShow}[3]{\texttt{#1}&#2&#3\\\hline}
+ \begin{tabular}{|>{\Rule}c|c|m{25zw}|}\hline
 \else
-\newcommand{\AnsShow}[3]{\texttt{#1}&&\\\hline}
+  \newcommand{\AnsShow}[3]{\texttt{#1}&&\\\hline}
+  \ifText
+  \begin{tabular}{|>{\Rule}c|m{4zw}|m{35zw}|}\hline
+   \else
+ \begin{tabular}{|>{\Rule}c|c|m{25zw}|}\hline
+  \fi
 \fi
-次の式の評価結果を求めなさい。\\[0.1em]
- \begin{tabular}{|>{\Rule}c|m{3zw}|m{\WW}|}\hline
   \multicolumn{1}{|c|}{式}&\multicolumn{1}{c|}{結果}
   &\multicolumn{1}{c|}{理由}  \\\hline
 %  \AnsShow{5\%3}{$2$}{$5$を$3$で割った余り}
@@ -25,7 +34,7 @@
 	  て解釈するので$4+255=259$となる。}
   \AnsShow{4+parseInt("ff",16)}{$259$}{基数を$16$と指定しているので、正しく$255$と解
 	  釈される。}
-  \AnsShow{4+"1e1"}{\texttt{"4+1e1"}}{2番目と同じ}
+  \AnsShow{4+"1e1"}{\texttt{"4+1e1"}}{1番目と同じ}
 \AnsShow{4+parseInt("1e1")}{$5$}{"1e1" は数値リテラルとしては
 	  $1\times10^1=10$を表すが、\texttt{parseInt()}は整数リテラル表記
   しか扱わないので、数の変換は\texttt{e}の前で終わる。 $1$の値が
@@ -47,8 +56,7 @@
   \texttt{true}と解釈され、否定演算子で\texttt{false}になる。}
   \AnsShow{false == []}{\texttt{true}}{\texttt{[]}が空文字\texttt{""}に変換されたのち、\texttt{0}に変換される。}
   \AnsShow{false == undefined}{\texttt{false}}{この比較は\texttt{false}
-  と定義されている。\texttt{null}と\texttt{undefined}
-  の比較は\texttt{true}となる。}
+  と定義されている。}
   \AnsShow{[] == []}{\texttt{false}}{配列はオブジェクトであり、二つの空の配
 	  列は別物とみなされる。}
   \AnsShow{typeof []}{\texttt{"object"}}{配列はオブジェクトである。}
