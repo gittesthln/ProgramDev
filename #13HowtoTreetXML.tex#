@@ -1,9 +1,0 @@
-\chapter{XMLファイルの処理}
-\section{XMLファイルとは}
-
-\section{ブラウザでの処理}
-\LISTN{GIS/show-trace.html}{1}{last}{\small}
-\LISTN{GIS/map.css}{1}{last}{\small}
-\LISTN{GIS/map-new2.js}{1}{last}{\small}
-\section{PHPによる処理}
-\LISTN{GIS/getGPSData.php}{1}{last}{\small}
