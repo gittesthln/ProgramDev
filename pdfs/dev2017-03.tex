@@ -9,14 +9,64 @@
 %\frame{\tableofcontents}
 \section{第2回目復習課題}
 \subsection{前回の演習問題の解答}
-\newcommand{\Rule}{\iffalse\rule[-2ex]{0em}{5ex}\fi}
+  \begin{frame}[containsverbatim]\scriptsize
+   \frametitle{問題4(1)}
+\begin{itemize}
+ \item 与えられた日時から1週間後の日時\\
+\begin{Verbatim}
+>theDay = new Date();
+Wed Oct 04 2017 23:50:32 GMT+0900 (東京 (標準時))
+>new Date(theDay.getFullYear(),theDay.getMonth(),
+  theDay.getDate()+7);
+Wed Oct 11 2017 00:00:00 GMT+0900 (東京 (標準時))
+\end{Verbatim}
+ \item 与えられた日時の翌月の1日\\
+\begin{Verbatim}
+>new Date(theDay.getFullYear(),theDay.getMonth()+1,1);
+Wed Nov 01 2017 00:00:00 GMT+0900 (東京 (標準時))
+\end{Verbatim}
+ \item 与えられた日時の前の月の最終日\\
+\begin{Verbatim}
+>new Date(theDay.getFullYear(),theDay.getMonth(),0);
+Sat Sep 30 2017 00:00:00 GMT+0900 (東京 (標準時))
+\end{Verbatim}
+\end{itemize} 
+  \end{frame}
+  \begin{frame}[containsverbatim]\scriptsize
+   \frametitle{問題4(2)--与えられた日時の月の第1月曜日}
+\begin{verbatim}
+>new Date(theDay.getFullYear(),theDay.getMonth(),
+  (theDay.getDate()-theDay.getDay()+8)%7||7);
+Mon Oct 02 2017 00:00:00 GMT+0900 (東京 (標準時))
+\end{verbatim}
+\begin{Verbatim}
+>for(m=0;m<12;m++){
+    theDay = new Date(2017,m,4);
+    console.log(new Date(theDay.getFullYear(),theDay.getMonth(),
+                     (theDay.getDate()-theDay.getDay()+8)%7||7));
+}
+ Mon Jan 02 2017 00:00:00 GMT+0900 (東京 (標準時))
+ Mon Feb 06 2017 00:00:00 GMT+0900 (東京 (標準時))
+ Mon Mar 06 2017 00:00:00 GMT+0900 (東京 (標準時))
+ Mon Apr 03 2017 00:00:00 GMT+0900 (東京 (標準時))
+ Mon May 01 2017 00:00:00 GMT+0900 (東京 (標準時))
+ Mon Jun 05 2017 00:00:00 GMT+0900 (東京 (標準時))
+ Mon Jul 03 2017 00:00:00 GMT+0900 (東京 (標準時))
+ Mon Aug 07 2017 00:00:00 GMT+0900 (東京 (標準時))
+ Mon Sep 04 2017 00:00:00 GMT+0900 (東京 (標準時))
+ Mon Oct 02 2017 00:00:00 GMT+0900 (東京 (標準時))
+ Mon Nov 06 2017 00:00:00 GMT+0900 (東京 (標準時))
+ Mon Dec 04 2017 00:00:00 GMT+0900 (東京 (標準時))
+\end{Verbatim}
+  \end{frame}
+  \newcommand{\Rule}{\iffalse\rule[-2ex]{0em}{5ex}\fi}
 \begin{frame}[containsverbatim]
 \frametitle{前回の演習問題の解答(1)}
 次の式の評価結果を求めなさい。
 \begin{center}
  \begin{tabular}{|>{\Rule}c|c|m{14zw}|}\hline
   \multicolumn{1}{|c|}{式}&\multicolumn{1}{c|}{結果} &\multicolumn{1}{c|}{理由} \\\hline
-  \Verb+5%3+& 2 & $5$を$3$で割った余り\\ \hline
+%  \Verb+5%3+& 2 & $5$を$3$で割った余り\\ \hline
   \Verb-4+"5"-& \Verb+"45"+& 右のオペランドが文字列なので左の数は文字列
     に変換され、それらが連接される。\\ \hline
   \Verb+4-"5"+& $-1$& 演算子が\Verb+-+なので右の文字列が数に変換される。\\ \hline
@@ -92,13 +142,13 @@
  \begin{tabular}{|>{\Rule}c|c|m{11zw}|}\hline
   \Verb+false == []+& \Verb+true+& 空の配列が空文字\texttt{""}に変換されたのち、
     数 $0$ に変換される。\\ \hline
-  \Verb+"false" == []+& \Verb+false+& 文字列\Verb+"false"+は空文字ではな
-    いので\Verb+true+に変換される。\\ \hline
+  \Verb+false == undefined+& \texttt{false}&この比較は\texttt{false}
+  と定義されている。\\ \hline
   \Verb+[] == []+& \Verb+false+& 配列はオブジェクトであり、二つの空の配
     列は別物とみなされる。\\ \hline
   \Verb+typeof []+& "object"& 配列はオブジェクトである。\\ \hline
-  \Verb+null == undefined+& \Verb+true+ & 両方とも\Verb+false+に変換され
-    てから比較される。\\ \hline
+  \Verb+null == undefined+& \Verb+true+ & この比較は\texttt{true}
+  と定義されている。\\ \hline
   \Verb+a=[], b=a, a==b;+&\Verb+true+&同じメモリーにあるオブジェクトを参
     照している。\\ \hline
  \end{tabular}
@@ -337,9 +387,9 @@ function sum2(a, b){
 は、関数の引数を表す配列のような性質を持つ\texttt{arguments}オブジェクト
  が用意されていたが、ES2015 では非推奨となった。}。
  
-\end{frame}
-\begin{frame}[containsverbatim]
-\frametitle{任意個数の引数を取る関数の例}
+%\end{frame}
+%\begin{frame}[containsverbatim]
+%\frametitle{任意個数の引数を取る関数の例}
 \begin{Verbatim}
 function sumN(...args) {
     let S = 0;
@@ -510,7 +560,7 @@ local in func4
 \begin{frame}[containsverbatim]
 \frametitle{スコープチェイン}
 関数の中で関数を定義すると、その
-内側の関数内で\Verb+var+で宣言された変数のほかに、一つ上の関数で利用でき
+内側の関数内で\Verb+var+や\Verb+let+で宣言された変数のほかに、一つ上の関数で利用でき
 る(スコープにある)変数が利用できる。これがスコープチェインである。
 \end{frame}
 \begin{frame}[containsverbatim]
@@ -576,26 +626,26 @@ JavaScriptの関数のスコープは関数が定義されたときのスコー
 \begin{Verbatim}[numbers=left]
 let T = new Date();
 window.setTimeout(
-  function(){
+  function callMe(){
     let NT = new Date();
-    if(NT-T<10000) {
-      console.log(Math.floor((NT-T)/1000));
-      window.setTimeout(arguments.callee,1000);
+    if(NT.getTime()-T.getTime()<10000) {
+      console.log(Math.floor((NT.getTime()-T.getTime())/1000));
+      window.setTimeout(callMe,1000);
     }
    },1000);
 \end{Verbatim}
-              \end{minipage}
+\end{minipage}
 \end{frame}
 \begin{frame}[containsverbatim]
 \frametitle{無名関数の例の解説}
 \begin{itemize}
- \item １行目では実行開始時の時間を変数\Verb+T+に格納している。単位はミ
-       リ秒である。
+ \item １行目では実行開始時の時間を変数\Verb+T+に格納。単位はミ
+       リ秒。
  \item このメソッドは一定時間経過後に呼び出される関数と、実行される経過
        時間(単位はミリ秒)を引数に取る。
  \item 実行する関数は3行目から9行目で定義されている。
  \item この関数内で一定の条件のときはこの関数を呼び出す。この関数
-       に名前はない(3行目)。
+       の名前は\Verb+callMe+(3行目)。
  \item 4行目で呼び出されたときの時間を求め、経過時間が$10000$ミリ秒以下
        であれば(5行目)、経過時間を秒単位で表示する(6行目)。
  \item さらに、自分自身を1秒後に呼び出す(7行目)。
