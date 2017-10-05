@@ -9,9 +9,37 @@
 %\frame{\tableofcontents}
 \section{第2回目復習課題}
 \subsection{前回の演習問題の解答}
+  \begin{frame}[containsverbatim]
+   \frametitle{問題1}
+   \begin{itemize}
+    \item 単に実行結果だけでは満点ではない。
+    \item 必ず考察を付けること。
+    \item 今回の場合、\texttt{substring()}と\texttt{slice()}の比較が欲しい。
+   \end{itemize}
+  \end{frame}
+  \begin{frame}[containsverbatim]
+   \frametitle{問題2}
+
+   単に実行結果しか書いていないものが多かった。必ず、意味も含めた考察が
+   欲しい。
+  \end{frame}
+  \begin{frame}[containsverbatim]
+   \frametitle{問題3}
+   \begin{itemize}
+    \item コンソールに表示された結果をすべて書くこと
+    \item 最後の\texttt{undefined}は\texttt{console.log()}の戻り値なので
+          不要
+    \item \texttt{pop()}と\texttt{push()}を組み合わせればスタックが容易に構
+          成できる。
+    \item \texttt{shift()}と\texttt{push()}を組み合わせればキューが容易に構
+          成できる。
+    \item \texttt{slice()}と\texttt{splice()}の違いを書いてないものが多かっ
+          た。
+   \end{itemize}
+  \end{frame}
   \begin{frame}[containsverbatim]\scriptsize
    \frametitle{問題4(1)}
-\begin{itemize}
+  \begin{itemize}
  \item 与えられた日時から1週間後の日時\\
 \begin{Verbatim}
 >theDay = new Date();
@@ -30,7 +58,7 @@ Wed Nov 01 2017 00:00:00 GMT+0900 (東京 (標準時))
 >new Date(theDay.getFullYear(),theDay.getMonth(),0);
 Sat Sep 30 2017 00:00:00 GMT+0900 (東京 (標準時))
 \end{Verbatim}
-\end{itemize} 
+  \end{itemize} 
   \end{frame}
   \begin{frame}[containsverbatim]\scriptsize
    \frametitle{問題4(2)--与えられた日時の月の第1月曜日}
