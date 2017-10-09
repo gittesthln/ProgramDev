@@ -6,4 +6,149 @@
 \input 05-03errorCheck.tex
 \input 05-04errorCheckMoreStrict.tex
 }
-
+\RubricC{
+復習の目的は次の項目を理解することである。
+\begin{itemize}
+ \item 関数を用いたオブジェクト指向の基礎
+ \item \texttt{extensible}属性の種類と機能
+ \item \texttt{prototype}属性
+ \item オブジェクトの操作を限定し、より信頼性の高いオブジェクトの作成方
+       法
+ \item エラー処理
+\end{itemize}
+}
+{{\RProbNoM{1}{0.6}}{6}{
+ {クラスから作成したオブジェクトの\ElmJ{extensible}属性を変更したときの
+ 結果が配布資料以上にある。}
+ {オブジェクトで作成したものとクラスから作成したものとの比較が十分にある。}
+ {クラス\texttt{Person}を\ElmJ{freeze}できるか、
+         \texttt{freeze}後作成したインスタンスが\ElmJ{freeze}されている
+ か確認し、それに対する考察がある。}
+ }
+ {
+ {オブジェクトの\ElmJ{extensible}属性のうち\newline 拡張
+ (\ElmJ{preventExtensions})に関する結果が設定前後で確認してあり、考察も
+ ある。}
+ {オブジェクトの\ElmJ{extensible}属性のうち削除(\ElmJ{seal})に関する結果が設定前後で
+ 確認してあり、考察もある。}
+ {オブジェクトの\ElmJ{extensible}属性のうち固定化(\ElmJ{freeze})に関する
+ 結果が設定前後で確認してあり、考察もある。}
+ }
+ {
+ {オブジェクトの\ElmJ{extensible}属性のうち\newline 拡張
+ (\ElmJ{preventExtensions})に関する結果が設定前後の確認のうちどちらかがない
+ か全くない。考察も不十分かない。}
+ {オブジェクトの\ElmJ{extensible}属性のうち削除(\ElmJ{seal})に関する結果
+ が設定前後での確認のうちどちらかがないか全くない。考察もも不十分かない。}
+ {オブジェクトの\ElmJ{extensible}属性のうち固定化(\ElmJ{freeze})に関する
+ 結果が設定前後の確認のうちどちらかがないか全くない。考察も不十分かない。}
+ }
+{\RProbNoM{2}{0.6}}{4}{
+ {実行例4.4の\texttt{Person}クラスの\ElmJ{prototype}の結果があり、考察が
+ 十分にある。}
+ {実行例4.4の\texttt{Person}クラスのインスタンスに関する\ElmJ{prototype}
+ の結果がある。}
+ {考察が十分にある。}
+ }
+ {
+ {実行例4.4の\texttt{Person}クラスの\ElmJ{prototype}の結果がある。}
+ {考察が少し足りない。}
+ }
+ {
+ {実行例4.4の\texttt{Person}クラスの\ElmJ{prototype}の結果が十分でないか
+ 間違っている。}
+ {考察が少なすぎるか全くない。}
+ }
+ {\RProbNoM{\hspace*{\fill}\newline{3.1$\sim$3.4}}{0}}{10}{
+ {実行例5.6の\texttt{typeof p.name}の値を確認し、正しい考察がある。}
+ {実行例5.6の\texttt{delete p.name}の結果が\texttt{true}であるのに
+  \texttt{p.name}がその後も参照できる理由が\texttt{typeof p.name}
+ の値と関連して述べられていて正しい。}
+ {実行例5.6における\texttt{p.birthday}にプロパティの追加、消去できるか確
+ 認していて、その理由が正しい。}
+ {実行例5.6における\texttt{p.birthday.year}の値が書き直せる理由が正しい。}
+ }
+ {
+ {実行例5.6の\texttt{typeof p.name}の値を確認している。}
+ {実行例5.6の\texttt{typeof p.name}の値に関する考察が少し足りない。}
+ {実行例5.6の\texttt{delete p.name}の結果が\texttt{true}であるのに
+  \texttt{p.name}がその後も参照できる理由が\texttt{typeof p.name}
+ の値と関連して述べられていない。考察が正しくない。}
+ {実行例5.6の\texttt{p.birthday}にプロパティの追加、消去できるか確
+ 認している。}
+ {実行例5.6の\texttt{p.birthday}にプロパティの追加、消去できる理由が一部
+ 間違っている。}
+ {実行例5.6の\texttt{p.birthday.year}の値が書き直せる理由が一部間違って
+ いる。}
+ }
+ {
+ {実行例5.6の\texttt{typeof p.name}の値を確認していない。}
+ {実行例5.6の\texttt{typeof p.name}の値に関する考察がないか足りない。}
+ {実行例5.6の\texttt{delete p.name}の結果が\texttt{true}であるのに
+  \texttt{p.name}がその後も参照できる理由が正しくない。}
+ {実行例5.6の\texttt{p.birthday}にプロパティの追加、消去できるか確
+ 認が不十分か全くない。}
+ {実行例5.6の\texttt{p.birthday}にプロパティの追加、消去できる理由が間違っ
+ ているかない。}
+ {実行例5.6の\texttt{p.birthday.year}の値が書き直せる理由が間違って
+ いるかない。}
+ }
+ {\RProbNo{3.5}}{6}{
+ {問題3.4の理由の基づいて\newline\texttt{p.birthday.year}の値を書き直せないように
+ \texttt{birthday}メソッドを書き直している。}
+ {リストの解説が十分わかりやすい。}
+ }
+ {
+ {\texttt{p.birthday.year}の値を書き直せないように
+ \texttt{birthday}メソッドを書き直している。}
+ {\texttt{Person}クラスの構造を変えている。}
+ {クラスに関するリストが一部ない。}
+ {リストの解説が少し不十分である。}
+ }
+ {
+ {\texttt{p.birthday.year}の値を書き直せないように
+ \texttt{birthday}メソッドを書き直していいない。}
+ {リストがないか重要な部分が欠けている。}
+ {リストの解説がないか、不十分である。}
+ }
+ {\RProbNoM{4}{0.6}}{5}{
+ {\texttt{Person}を継承した\texttt{Student}クラスのエラーチェッ
+   クをエラーが起きない場合を含めてすべて行っている。}
+ {適切な考察が十分ある。}
+ }
+ {
+ {\texttt{Person}を継承した\texttt{Student}クラスの名前のエラーチェッ
+   クをエラーが起きない場合を含めてすべて行っている。}
+ {\texttt{Person}を継承した\texttt{Student}クラスの生年月日のエラーチェッ
+   クをエラーが起きない場合を含めてすべて行っている。}
+ {考察が少し足りない。なたは一部間違っている。}
+ }
+ {
+ {\texttt{Person}を継承した\texttt{Student}クラスの名前のエラーチェッ
+   クをエラーが起きない場合を含めて足りないか全く行っていない。}
+ {\texttt{Person}を継承した\texttt{Student}クラスの生年月日のエラーチェッ
+   クをエラーが起きない場合を含めて足りないか全く行っていない。}
+ {考察がないか足りないまたは間違っている。}
+ }
+ {\RProbNo{5}}{9}{
+ {実行例5.7においてエラーチェックの不完全な点が十分指摘されている。}
+ {指摘したエラーチェックの不完全な点の改良がすべて正しくなされている。}
+ {改良した点についてのリストがすべてある。}
+ {リストの解説が十分詳しくある。}
+ }
+ {
+ {整数であるべきところの入力値が整数でない場合の対処がしてある。}
+ {入力値が\ElmJ{NaN}となるような場合の対処がしてある。}
+ {その他のエラーチェックがあり、正しく対処している。}
+ {一部のエラーメッセージが不正確である。}
+ {改良した点についてのリストの一部がない。}
+ {リストの解説が一部不十分である。}
+ }
+ {
+ {実行例5.7においてエラーチェックの不完全な点がほとんど指摘されていない
+ か全くない。}
+ {指摘したエラーチェックの不完全な点の改良が直されていないか正しくない。}
+ {改良した点についてのリストが全くないか、ほとんどない。}
+ {リストの解説がない。}
+ }
+ }

@@ -83,6 +83,29 @@
 \end{longtable}}
 \newpage
 }
+\newcommand{\RubricC}[2]{%
+\newpage
+\begin{center}
+% {\LARGE \LName}\\#1 #2\\[2ex]
+    \ExcerciseHeadN{\LecName}{}{2}{}{演習}%
+\end{center}
+#1\par{\bfseries
+ レポートに関してもう一度解説してほしいところがあれば裏の余白に書いてください。}
+{\small
+\LongTable
+	 	  \ETitle
+\endfirsthead
+	 	  \ETitle
+\endhead
+	\multicolumn{4}{r}{\bfseries 次のページに続きがあります}
+\endfoot
+\endlastfoot
+\Target#2\relax\relax\relax\relax\relax%
+%評価段階の数を変更したら\relaxの数を\Targetの引数の数以上にする
+\end{longtable}}
+{\bfseries
+ レポートに関してもう一度解説してほしいところがあればこの下に書いてください。}\newpage
+}
 \newcommand{\RubricN}[4]{%
 \newpage
 \begin{center}

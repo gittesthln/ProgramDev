@@ -1,6 +1,11 @@
 \documentclass[a4j]{jarticle}
 \input rubricHead.tex
 \input rubricProgDevHead.tex
+\newcommand{\AnsLine}[1]{%
+  \underline{\makebox[#1\textwidth]{}}\\[1\baselineskip]
+}
+\newcommand{\RProbNoM}[2]{問題#1\hspace*{#2zw}\newline\ \Must}
+\newcommand{\RProbNo}[1]{問題#1}
 \newcommand{\Cent}[1]{\hspace*{\fill}#1\hspace*{\fill}\rule{0em}{1ex}}
 \newcounter{NN}
 \newcounter{STEP}

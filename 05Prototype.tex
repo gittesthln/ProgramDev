@@ -163,8 +163,8 @@ true
  \input 05-01extensibleClass.tex
  JavaScript におけるクラスとそれから生成されるインスタンスは
  通常のオブジェクト指向言語と異なり、構造を変えることができる。
- 固定化はインスタンスごとに行う必要がある。\ref{SaftyForInstance}節では
- 別の方法を解説する。
+ 固定化はインスタンスごとに行う必要がある。この手間を省く方法を
+ \ref{SaftyForInstance}節で解説する。
  \subsection{\protect\ElmJ{prototye}属性}
  オブジェクトの\ElmJ{prototype}属性の値は、同じコンストラクタ関数で生成
  された間で共通のものになっている。オブジェクトリテラルで生成されたオブ
@@ -182,7 +182,7 @@ true
  \fi
  \subsection{\protect\texttt{prototype}の使用例}
  \begin{Exec}\upshape\label{ExecConst2}
-  次の例は\ref{Execconstructor}の属性を省略し、いくつかのメソッ
+  次の例は実行例\ref{constructor}の属性を省略し、いくつかのメソッ
  ドを\ElmJ{prototype}に追加したものである。
 \begin{Verbatim}[numbers=left]
 PersonF.prototype = {
@@ -215,7 +215,7 @@ PersonF.prototype = {
 \JS では\ElmJ{prototype}を用
 いることでメソッドの継承が可能となっている。
 \begin{Exec}\upshape\label{Execconst4}
-次のリストは実行例\ref{Execconst3}の\texttt{Person}を継承して、学籍番号
+次のリストは実行例\ref{ExecConst2}の\texttt{Person}を継承して、学籍番号
  を追加のプロパティとする\texttt{Student}オブジェクトのコンストラクタ関
  数である。
 \begin{Verbatim}[numbers=left]
