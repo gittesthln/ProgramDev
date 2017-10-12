@@ -7,6 +7,61 @@
 \begin{document}
 \frame{\maketitle}
 %\frame{\tableofcontents}
+\section{前回の問題から}
+ \begin{frame}[containsverbatim]
+  \frametitle{問題3.1}
+  \begin{itemize}
+   \item (1)の結果が\ElmJ{NaN}という結果が目立った。\\
+         テキスト内では同じ関数名を持つ2つの関数の後で\Verb+sum(1,2)+な
+         どを実行していたのと間違えている。
+   \item 計算の結果が\ElmJ{NaN}になる場合の説明がないものが目立った。
+   \item 同じ関数名のものを同じスコープ内で再定義しない方法としては変数
+         を\ElmJ{const}で定義し、そこに関数オブジェクトを代入する方法が
+         ある。
+  \end{itemize}
+ \end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{問題3.2}
+ \begin{itemize}
+  \item \texttt{sumN()}の引数の数を変えていないものが多かった。
+  \item 引数に配列(の値を持つ変数)を与える場合には、展開演算子を付ければ
+        よい。
+ \end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{問題3.3}
+ \begin{itemize}
+  \item 宣言を\ElmJ{let}から\ElmJ{var}に変えると\texttt{func2()}は文法エラーが
+ 発生しない。
+  \item 初めの\Verb+console.log()+の出力は\ElmJ{undefined}となる。
+  \item それ以外は変化がない。
+  \item \ElmJ{var}と\ElmJ{let}による宣言の違いをまとめていないものが多かっ
+        た。
+ \end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{問題3.4}
+ 結果のみでキャプチャ画面などの添付や、実行時に表示時間がだんだん伸びる
+ などの指摘が少なかった。
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{レポートの体裁等}
+ \begin{itemize}
+  \item レポートの考察はキャプチャ画面のそばに記すこと。手書きでかまわな
+        い。
+  \item 考察には自分なりの考えを記すこと。
+  \item 実行例を行って疑問に思った点があれば自分で実行結果を付け加えるこ
+        と。
+  \item キャプチャ等の部分の印刷は希望があれば研究室で行うことも可能であ
+        る。研究室にくる前にプリンタのドライバーをインストールしておくこ
+        と。資料は次のところにある。
+
+        {\small
+        \texttt{http://www.hilano.org/hilano-lab/svg/driverDownload.pdf}}
+
+        時間は要相談である。
+ \end{itemize}
+\end{frame}
 \section{オブジェクト}
 \subsection{配列とオブジェクト}
 \begin{frame}[containsverbatim]
