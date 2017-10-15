@@ -222,55 +222,33 @@ true
  一方で、\texttt{p.birthday.year}は削除できる。
 \end{frame}
 \begin{frame}[containsverbatim]
- \frametitle{}
-\end{frame}
-\begin{frame}[containsverbatim]
- \frametitle{}
-\end{frame}
-\end{document}
-\begin{frame}[containsverbatim]
- \frametitle{}
-\end{frame}
-
- \begin{Exec}\upshape\label{ExecconstructorExtensible}
-  実行例\ref{Execconstructor}の例で確認する。
-したい場合にはを用いる。一度
-	
-引き続いて実行すると次のようになる。
-\begin{Verbatim}
-
-%
-  %   実行例\ref{ExecContined}に
-引き続いて\ElmJ{Object.freeze()}を実行すると次のようになる。
- ことがわかる。
-ことになる。
-
- \end{Exec}
- \input 05-01extensibleClass.tex
- JavaScript におけるクラスとそれから生成されるインスタンスは
+ \frametitle{オブジェクトの操作に対する安全性の確保}
+ \begin{itemize}
+  \item JavaScript におけるクラスとそれから生成されるインスタンスは
  通常のオブジェクト指向言語と異なり、構造を変えることができる。
- 固定化はインスタンスごとに行う必要がある。この手間を省く方法を
- \ref{SaftyForInstance}節で解説する。
+  \item  固定化はインスタンスごとに行う。
+  \item この手間を省く方法を後で解説する。
+ \end{itemize}
+\end{frame}
  \subsection{\protect\ElmJ{prototye}属性}
- オブジェクトの\ElmJ{prototype}属性の値は、同じコンストラクタ関数で生成
- された間で共通のものになっている。オブジェクトリテラルで生成されたオブ
- ジェクトは\ElmJ{Object.prototype}で参照できる。\ElmJ{new}を用いて生成さ
- れたオブジェクトはそのコンストラクタ関数の\ElmJ{prototype}を参照する。
- このコンストラクタ関数の\ElmJ{prototype}もオブジェクトであるから、それ
- の\ElmJ{prototype}も存在する。この一連の\ElmJ{prototype}オブジェクトを
- プロトタイプチェーンとよぶ。
-
- \iffalse
- \JS で定義されている \ElmJ{Object.create()} メソッドは引数で与
- えられたオブジェクトの\ElmJ{prototype}を\ElmJ{prototype}に持つオブジェ
- クトを生成する。このメソッドに対して2番目の引数を与えて、新たに生成され
- たオブジェクトのプロパティを指定できる。
- \fi
+ \begin{frame}[containsverbatim]
+  \frametitle{\protect\ElmJ{prototye}属性}
+  \begin{itemize}
+   \item オブジェクトの\ElmJ{prototype}属性の値は、同じコンストラクタ関数で生成
+ された間で共通
+   \item オブジェクトリテラルで生成されたオブジェクトは
+         \ElmJ{Object.prototype}で参照可能
+   \item \ElmJ{new}を用いて生成されたオブジェクトはそのコンストラクタ関
+         数の\ElmJ{prototype}を参照
+   \item このコンストラクタ関数の\ElmJ{prototype}もオブジェクトであるから、それ
+ の\ElmJ{prototype}も存在
+   \item この一連の\ElmJ{prototype}オブジェクトをプロトタイプチェーンとよぶ。
+  \end{itemize}
+ \end{frame}
  \subsection{\protect\texttt{prototype}の使用例}
- \begin{Exec}\upshape\label{ExecConst2}
-  次の例は実行例\ref{constructor}の属性を省略し、いくつかのメソッ
- ドを\ElmJ{prototype}に追加したものである。
-\begin{Verbatim}[numbers=left]
+\begin{frame}[containsverbatim]
+ \frametitle{前の例でメソッドをElmJ{prototype}に追加}
+\begin{Verbatim}
 PersonF.prototype = {
   toString:function() {
     return `${this.name}さんは`+
@@ -289,22 +267,26 @@ PersonF.prototype = {
   constructor: PersonF
 }
 \end{Verbatim}
- \end{Exec}
-これらの定義は前と同じである。オブジェクトリテラルの形式で
-\ElmJ{prototype}に代入している。異なるところは\ElmJ{constructor}プロパティ
-に自分自身を定義しているところである。
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{メソッドをElmJ{prototype}に追加--解説}
+ \begin{itemize}
+  \item これらの定義は前と同じ
+  \item オブジェクトリテラルの形式で\ElmJ{prototype}に代入
+  \item 異なるところは\ElmJ{constructor}プロパティに自分自身を定義している
+ \end{itemize}
+\end{frame}
 
-なお、\ElmJ{get}キーワードの代わりに\ElmJ{set}キーワードを用いるとセッター
-を定義できる。
-\input 05-02checkPrototype.tex
 \section{関数によるオブジェクトの継承}
-\JS では\ElmJ{prototype}を用
-いることでメソッドの継承が可能となっている。
-\begin{Exec}\upshape\label{Execconst4}
-次のリストは実行例\ref{ExecConst2}の\texttt{Person}を継承して、学籍番号
+\begin{frame}[containsverbatim]
+ \frametitle{関数によるメソッドの継承}
+ \JS では\ElmJ{prototype}を用
+ いることでメソッドの継承が可能
+
+ \texttt{Person}を継承して、学籍番号
  を追加のプロパティとする\texttt{Student}オブジェクトのコンストラクタ関
  数である。
-\begin{Verbatim}[numbers=left]
+\begin{Verbatim}
 const StudentF = (function(){
   let id = 10000;
   return function(name, year, month, day, hometown = "神奈川") {
@@ -321,40 +303,31 @@ const StudentF = (function(){
 StudentF.prototype = new PersonF();
 StudentF.prototype.constructor = StudentF;
 \end{Verbatim}
-\end{Exec}
-\begin{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{}
+ \begin{itemize}
  \item 関数を用いた継承では\ElmJ{super}が使えないので、継承元のクラスで
-       定義されたプロパティ(\texttt{name}など)は継承先で定義する必要があ
-       る(4行目から10行目)。
- \item 一方、メソッドはインスタンスで共有されるので継承元で定義をする必
-       要はないが、参照できるようにする必要がある。そのために14行目で継
-       承元のクラスを作成して継承するクラスの\ElmJ{prototype}を書き直し
-       ている(14行目)。
+       定義されたプロパティ(\texttt{name}など)は継承先で定義する
+ \item メソッドはインスタンスで共有されるので継承元で定義をする必
+       要はないが、参照できるようにする必要がある。
+  \item 継承元のクラスを作成して継承するクラスの\ElmJ{prototype}を書き直し
+       ている
  \item このままでは\ElmJ{constructor}プロパティが\texttt{PersonF}になるの
        で、\texttt{StudentF.prototype.constructor}を
-       継承するクラスに置き換える(15行目)
+       継承するクラスに置き換える
 \end{itemize}
+\end{frame}
 \section{\protect\ElmJ{WeakMap}によるインスタンスの安全性の確保}
-\label{SaftyForInstance}
-クラスのクロージャ内に変数を閉じ込めることで、クラス全体に共通のデータを
-保護することはすでに解説をした。これを応用してクラスのインスタンスのデー
-タを安全に管理する方法としては\ES で導入された\ElmJ{WeakMap}を用いること
-ができる。
-
-\ElmJ{WeakMap}はオブジェクトと同じようにキーと値の集まりである%
-\footnote{\ES では\ElmJ{Map}オブジェクトも定義されている。\ElmJ{WeakMap}
-方がメモリーの使用状況が改善するような仕様であるのでここでは紹介しない。
-詳しくは[\ref{ES2016}]を参照のこと。}。
-オブジェクトのキーは文字
-列しか使用することはできない\footnote{実際には文字列以外にこの授業では紹
-介しない\ElmJ{SYMBOL}も利用できる。}が、\ElmJ{WeakMap}の
-キーはオブジェクトしか使用できない。
-
-\begin{Exec}\upshape\label{WeakMap}
-  次の例は実行例\ref{PersonWidthGetter}のクラスを\ElmJ{WeakMap}を利用し
- て書き直したものである。
-% \ElmJ{extensible}属性を使用しないで
-% インスタンスのプロパティの値の保護をするものである。
+\begin{frame}[containsverbatim]
+ \frametitle{\protect\ElmJ{WeakMap}}
+ \begin{itemize}
+  \item \ElmJ{WeakMap}はオブジェクトと同じようにキーと値の集まり
+  \item \ElmJ{WeakMap}のキーはオブジェクトしか使用できない。
+ \end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{\protect\ElmJ{Person}クラスの書き換え}
 \begin{Verbatim}[numbers=left]
 const Person = (function() {
   const properties = new WeakMap();
@@ -397,27 +370,28 @@ const Person = (function() {
   }
 })()
 \end{Verbatim}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{\protect\ElmJ{Person}クラスの書き換え--解説}
  \begin{itemize}
-  \item 2行目で\texttt{Person}クラスのインスタンスの(隠された)プロパティ
-        値を格納するための\ElmJ{WeakMap}のインスタンスを作成している。
-  \item 4行目から15行目で\ElmJ{constructor}を定義している。
+  \item \texttt{Person}クラスのインスタンスの(隠された)プロパティ
+        値を格納するための\ElmJ{WeakMap}のインスタンスを作成
+  \item \ElmJ{constructor}を定義
         \begin{itemize}
-         \item 6行目から14行目で定義されているオブジェクトは実行例
-        \ref{ExecconstructorClass}で定義しているオブジェクトと同じものに
-               なっている。
-         \item そのオブジェクトをインスタンス(\ElmJ{this})をキーにして、
-               2行目で作成した\ElmJ{WeakMap}のインスタンスに\ElmJ{set}メ
-               ソッドを用いて登録している。
+         \item 定義されているオブジェクトは前と同じ
+         \item そのオブジェクト(\ElmJ{this})をキーにして、
+               \ElmJ{WeakMap}のインスタンスに\ElmJ{set}メ
+               ソッドを用いて登録
         \end{itemize}
   \item 各インスタンスのプロパティを読み出すために、\texttt{name}、
-        \texttt{birthday}、\texttt{hometown}の3つのメソッド定義している
-        (16行目から24行目)。
+        \texttt{birthday}、\texttt{hometown}の3つのメソッド定義
   \item インスタンスの(隠し)プロパティを保存している\ElmJ{WeakMap}から
-        値を取り出すために、\ElmJ{get}メソッドを使用している。
-  \item 25行目から29行目の\texttt{toString()}メソッドと30行目から38行目
-        の設定プロパティ\ElmJ{age}は以前の定義と同じである。
+        値を取り出すために、\ElmJ{get}メソッドを使用
+  \item \texttt{toString()}メソッドとプロパティ\ElmJ{age}は以前の定義と同じ
  \end{itemize}
- 次のリストはこのクラスの実行例である。
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{}
 \begin{Verbatim}
 >p = new Person("foo",2001,4,1);
 {}
@@ -460,14 +434,14 @@ true             //成功?
 >p.birthday;
 {year: 2010, month: 4, day: 1}   //year の値が変更されている。
 \end{Verbatim}
-最後の2つの結果の理由は問題としておく。
-\end{Exec}
-\input 05-02WeakMap.tex
+\end{frame}
  \section{エラーオブジェクトについて}
+\begin{frame}[containsverbatim]
+ \frametitle{エラーオブジェクト}
 エラーオブジェクトとはエラーが発生したことを知らせるオブジェクトである。
 通常は計算の継続ができなくなったときにエラーオブジェクトをシステムに送る
 操作が必要である。これを通常、エラーを投げる(\ElmJ{throw}する)という。
-エラーオブジェクトには表\ref{ErrorProp}のようなプロパティがある。
+には表\ref{ErrorProp}のようなプロパティがある。
 \begin{table}[ht]
  \caption{エラーオブジェクトのプロパティ}\label{ErrorProp}
  \begin{center}
@@ -480,17 +454,17 @@ true             //成功?
 	\end{tabular}
  \end{center}
 \end{table}
+\end{frame}
 \subsection{エラー処理の例}
-エラー処理の例としてインスタンス作成時に引数の妥当性をチェックする例を挙げる。
- \begin{Exec}\upshape\label{throwError}
-	次のリストは、実行例\ref{PersonWidthGetter}において、コンストラクタに与えられ
+\begin{frame}[containsverbatim]
+ \frametitle{エラー処理の例}
+ インスタンス作成時に引数の妥当性をチェック
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{エラー処理の例}
+コンストラクタに与えられ
 	た引数をチェックして不正な値の場合にはエラーを投げるように書き直したも
-	のである。
-
-	なお、このリストでは\texttt{Person}の\texttt{toString()}と\texttt{age}、
-	継承するクラス\texttt{Student}の内容が以前のものと
-	同じなので \texttt{...} で省略している。
- \end{Exec}
+ の
 \begin{Verbatim}[numbers=left]
 class Person{
   static checkName(name) {
@@ -519,6 +493,9 @@ const Student = (function(){
   ...
 })();
 \end{Verbatim}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{}
 \begin{itemize}
  \item 2行目から5行目で、\texttt{name} が空文字であればエラーを発生させ、
        正しければ値をそのまま返すクラスメソッドを定義している。
@@ -540,6 +517,9 @@ const Student = (function(){
        からの戻り値で設定している。
 % \item 残りの部分は前のリストと同じである。
 \end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{}
 これをいくつかのデータで実行した結果は次のようになる。
 \begin{itemize}
  \item 通常の日時ならば問題なく、オブジェクトが構成される。
@@ -567,6 +547,36 @@ Person {name: "foo", year: 1996, month: 2, day: 29}
  Uncaught Error: 日が不正です(…)
 \end{Verbatim}
 \end{itemize}
+\end{frame}
+
+\end{document}
+\begin{frame}[containsverbatim]
+ \frametitle{}
+\end{frame}
+\end{document}
+\begin{frame}[containsverbatim]
+ \frametitle{}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{}
+\end{frame}
+
+
+クラスのクロージャ内に変数を閉じ込めることで、クラス全体に共通のデータを
+保護することはすでに解説をした。これを応用してクラスのインスタンスのデー
+タを安全に管理する方法としては\ES で導入された\ElmJ{WeakMap}を用いること
+ができる。
+
+である%
+
+エラー処理の例としてする例を挙げる。
+ \begin{Exec}\upshape\label{throwError}
+	次のリストは、実行例\ref{PersonWidthGetter}において、である。
+
+	なお、このリストでは\texttt{Person}の\texttt{toString()}と\texttt{age}、
+	継承するクラス\texttt{Student}の内容が以前のものと
+	同じなので \texttt{...} で省略している。
+ \end{Exec}
 \input 05-03errorCheck.tex
 \input 05-04errorCheckMoreStrict.tex
 \subsection{エラーからの復帰}
