@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<title>クラスの例</title>
+<script type="text/ecmascript">
+//<![CDATA[
+function PersonF(name, year, month, day, hometown="神奈川"){
+    this.name = "foo";
+    this.birthday = {
+      year : year,
+      month : month,
+      day : day
+    };
+    this["hometown"] = hometown;
+  }
+}
+const StudentF = (function(){
+  let id = 10000;
+  return function(name, year, month, day, hometown = "神奈川") {
+    this.name = name
+    this.birthday = {
+      year : year,
+      month : month,
+      day : day
+    };
+    this["hometown"] = hometown;
+    this.id = id++;
+    }
+  })();
+StudentF.prototype = new PersonF();
+StudentF.prototype.constructor = StudentF;
+
+function showExec(s) {
+  console.log(`>${s};`);
+  console.log(eval(s));
+}
+showExec('p = new PersonF("foo",2001,4,1)');
+showExec('p.mother = "Alice"');
+showExec('p.grandmother = "Old Alice"');
+showExec('Object.preventExtensions(p)');
+showExec('p.father = "Bob"');
+showExec('p.father');
+showExec('delete p.mother');
+showExec('p.mother');
+showExec('Object.isSealed(p)');
+showExec('Object.seal(p)');
+showExec('Object.isSealed(p)');
+showExec('delete p.grandmother');
+showExec('p.grandmother');
+showExec('p.grandmother = "Very Old Alice"');
+showExec('p.grandmother;');
+showExec('Object.freeze(p)');
+showExec('p.grandmother = "Very Very Old Alice"');
+showExec('p.grandmother');
+showExec('p.birthday');
+showExec('delete p.birthday');
+showExec('p.birthday = {}');
+showExec('p.birthday');
+showExec('delete p.birthday.year');
+showExec('p.birthday');
+//]]>
+</script>
+</head>
+</html>

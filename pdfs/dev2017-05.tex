@@ -1,5 +1,5 @@
-\input devHeadMalmoe.tex
-%\input devHeadGoettingen.tex
+%\input devHeadMalmoe.tex
+\input devHeadGoettingen.tex
 \title{ソフトウェア開発\\第5回目授業}
 \author{平野 照比古}
 \institute{}
@@ -7,12 +7,10 @@
 \begin{document}
 \frame{\maketitle}
 %\frame{\tableofcontents}
-\newcommand{\ElmJ}[1]{\texttt{#1}}
 \section{レポート課題について}
 \begin{frame}[containsverbatim]
  \frametitle{レポート課題 3について}
 \end{frame}
-\chapter{オブジェクトの詳細}
 \section{\protect\texttt{class}の実体}
 \begin{frame}[containsverbatim]
 \frametitle{\ElmJ{class}の実体}
@@ -33,6 +31,7 @@
 \begin{frame}[containsverbatim]
  \frametitle{従来の方法によるオブジェクト指向}
  前回の授業の\texttt{Person}を従来の方法で定義する。
+ {\small
 \begin{Verbatim}
 function PersonF(name, year, month, day, hometown = "神奈川"){
     this.name = name;
@@ -44,6 +43,7 @@ function PersonF(name, year, month, day, hometown = "神奈川"){
     this["hometown"] = hometown;
 }
 \end{Verbatim}
+ }
  \begin{itemize}
   \item この定義では\ElmJ{constructor}の内容をそのまま関数にしている。
   \item メソッドなどが定義されていないが、それについては後で解説
@@ -146,10 +146,12 @@ undefined
 \begin{frame}[containsverbatim]
  \frametitle{属性の削除の禁止--\protect\ElmJ{Object.seal()}}
  この関数を実行されたオブジェクトは削除の禁止を解除できない。
-\begin{frame}[containsverbatim]
- \frametitle{属性の削除の禁止--実行例}
+%\end{frame}
+%\begin{frame}[containsverbatim]
+% \frametitle{属性の削除の禁止--実行例}
  {\scriptsize
- >Object.seal(p);
+\begin{Verbatim}
+>Object.seal(p);
 PersonF
 >Object.isSealed(p);
 true
@@ -177,10 +179,14 @@ Very Old Alice
 \end{frame}
 \begin{frame}[containsverbatim]
  \frametitle{オブジェクトの固定化--\\protext\ElmJ{Object.freeze()}}
-オブジェクトを最も強く固定するためには\ElmJ{Object.freeze()}を用いる。
-また、この状態を確認するためには\ElmJ{Object.isFrozen()}を用いる。\end{frame}
-\begin{frame}[containsverbatim]
- \frametitle{オブジェクトの固定化--実行例}
+\begin{itemize}
+ \item オブジェクトを最も強く固定するためには\ElmJ{Object.freeze()}を用
+			 いる。
+ \item この状態を確認するためには\ElmJ{Object.isFrozen()}を用いる。
+\end{itemize}
+%\end{frame}
+%\begin{frame}[containsverbatim]
+% \frametitle{オブジェクトの固定化--実行例}
 \begin{Verbatim}
 >Object.freeze(p);
 PersonF
@@ -220,6 +226,8 @@ true
  }
  \texttt{p.birthday}は削除できないし、値の変更もできない。
  一方で、\texttt{p.birthday.year}は削除できる。
+
+ 理由はレポート問題(この後にも同じような状況が起こる)
 \end{frame}
 \begin{frame}[containsverbatim]
  \frametitle{オブジェクトの操作に対する安全性の確保}
@@ -227,7 +235,9 @@ true
   \item JavaScript におけるクラスとそれから生成されるインスタンスは
  通常のオブジェクト指向言語と異なり、構造を変えることができる。
   \item  固定化はインスタンスごとに行う。
-  \item この手間を省く方法を後で解説する。
+	\item 固定化などはコンストラクタ内で\ElmJ{this}の\ElmJ{extensible}属性
+				を設定することで可能
+  \item 別の方法について後で解説する。
  \end{itemize}
 \end{frame}
  \subsection{\protect\ElmJ{prototye}属性}
@@ -248,6 +258,7 @@ true
  \subsection{\protect\texttt{prototype}の使用例}
 \begin{frame}[containsverbatim]
  \frametitle{前の例でメソッドをElmJ{prototype}に追加}
+{\scriptsize
 \begin{Verbatim}
 PersonF.prototype = {
   toString:function() {
@@ -267,9 +278,10 @@ PersonF.prototype = {
   constructor: PersonF
 }
 \end{Verbatim}
+}
 \end{frame}
 \begin{frame}[containsverbatim]
- \frametitle{メソッドをElmJ{prototype}に追加--解説}
+ \frametitle{メソッドを\ElmJ{prototype}に追加--解説}
  \begin{itemize}
   \item これらの定義は前と同じ
   \item オブジェクトリテラルの形式で\ElmJ{prototype}に代入
@@ -280,12 +292,13 @@ PersonF.prototype = {
 \section{関数によるオブジェクトの継承}
 \begin{frame}[containsverbatim]
  \frametitle{関数によるメソッドの継承}
- \JS では\ElmJ{prototype}を用
+ JavaScript では\ElmJ{prototype}を用
  いることでメソッドの継承が可能
 
  \texttt{Person}を継承して、学籍番号
  を追加のプロパティとする\texttt{Student}オブジェクトのコンストラクタ関
  数である。
+ {\scriptsize
 \begin{Verbatim}
 const StudentF = (function(){
   let id = 10000;
@@ -303,6 +316,7 @@ const StudentF = (function(){
 StudentF.prototype = new PersonF();
 StudentF.prototype.constructor = StudentF;
 \end{Verbatim}
+ }
 \end{frame}
 \begin{frame}[containsverbatim]
  \frametitle{}
@@ -327,8 +341,9 @@ StudentF.prototype.constructor = StudentF;
  \end{itemize}
 \end{frame}
 \begin{frame}[containsverbatim]
- \frametitle{\protect\ElmJ{Person}クラスの書き換え}
-\begin{Verbatim}[numbers=left]
+ \frametitle{\protect\ElmJ{Person}クラスの書き換え(1)}
+ {\scriptsize
+\begin{Verbatim}
 const Person = (function() {
   const properties = new WeakMap();
   return class {
@@ -353,6 +368,13 @@ const Person = (function() {
     get hometown(){
       return properties.get(this).hometown;
     }
+\end{Verbatim}
+ }
+ \end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{\protect\ElmJ{Person}クラスの書き換え(2)}
+ {\scriptsize
+\begin{Verbatim}
     toString() {
       return `${this.name}さんは`+
         `${this.birthday.year}年${this.birthday.month}月${this.birthday.day}日に` +
@@ -370,6 +392,7 @@ const Person = (function() {
   }
 })()
 \end{Verbatim}
+ }
 \end{frame}
 \begin{frame}[containsverbatim]
  \frametitle{\protect\ElmJ{Person}クラスの書き換え--解説}
@@ -391,7 +414,7 @@ const Person = (function() {
  \end{itemize}
 \end{frame}
 \begin{frame}[containsverbatim]
- \frametitle{}
+ \frametitle{実行例(1)}
 \begin{Verbatim}
 >p = new Person("foo",2001,4,1);
 {}
@@ -408,6 +431,9 @@ const Person = (function() {
 >p.hometown;
 "神奈川"
 \end{Verbatim}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{実行例(2)}
  メソッドも正しく動作する。
 \begin{Verbatim}
 >p.age;
@@ -421,6 +447,9 @@ const Person = (function() {
 >p.name;
 "foo"              //name の値は変更されていない。
 \end{Verbatim}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{実行例(3)}
 プロパティは消去できない。
 \begin{Verbatim}
 >delete p.name;  //プロパティ name の消去の試み
@@ -430,22 +459,25 @@ true             //成功?
 \end{Verbatim}
  \texttt{p.birthday}のプロパティの値は変更できる。
 \begin{Verbatim}
->p.birthday.year = 2010;         // 戻り値 2010
+>p.birthday.year = 2010;       // 戻り値 2010
 >p.birthday;
-{year: 2010, month: 4, day: 1}   //year の値が変更されている。
+{year: 2010, month: 4, day: 1} //year の値が変更されている。
 \end{Verbatim}
 \end{frame}
  \section{エラーオブジェクトについて}
 \begin{frame}[containsverbatim]
  \frametitle{エラーオブジェクト}
-エラーオブジェクトとはエラーが発生したことを知らせるオブジェクトである。
-通常は計算の継続ができなくなったときにエラーオブジェクトをシステムに送る
-操作が必要である。これを通常、エラーを投げる(\ElmJ{throw}する)という。
-には表\ref{ErrorProp}のようなプロパティがある。
+ \begin{itemize}
+	\item エラーオブジェクトとはエラーが発生したことを知らせるオブジェクト
+	\item 通常は計算の継続ができなくなったときにエラーオブジェクトをシステムに送る
+操作が必要
+	\item これを通常、エラーを投げる(\ElmJ{throw}する)という。
+ \end{itemize}
+下表のようなプロパティがある。
 \begin{table}[ht]
- \caption{エラーオブジェクトのプロパティ}\label{ErrorProp}
+ \caption{エラーオブジェクトのプロパティ}
  \begin{center}
-	 \begin{tabular}{|c|m{30zw}|}\hline
+	 \begin{tabular}{|c|m{20zw}|}\hline
 		プロパティ&\multicolumn{1}{c|}{説明}\\ \hline
 		\texttt{message}&エラーに関する詳細なメッセージ。コンストラクタで渡
 				された文字列か、デフォルトの文字列\\ \hline
@@ -458,14 +490,11 @@ true             //成功?
 \subsection{エラー処理の例}
 \begin{frame}[containsverbatim]
  \frametitle{エラー処理の例}
- インスタンス作成時に引数の妥当性をチェック
-\end{frame}
-\begin{frame}[containsverbatim]
- \frametitle{エラー処理の例}
-コンストラクタに与えられ
+以前に定義した\texttt{Person}クラスのコンストラクタに与えられ
 	た引数をチェックして不正な値の場合にはエラーを投げるように書き直したも
  の
-\begin{Verbatim}[numbers=left]
+ {\scriptsize
+\begin{Verbatim}
 class Person{
   static checkName(name) {
     if(name === "") throw new Error("名前がありません");
@@ -493,34 +522,31 @@ const Student = (function(){
   ...
 })();
 \end{Verbatim}
+ }
 \end{frame}
 \begin{frame}[containsverbatim]
- \frametitle{}
+ \frametitle{エラー処理の例--解説}
 \begin{itemize}
- \item 2行目から5行目で、\texttt{name} が空文字であればエラーを発生させ、
-       正しければ値をそのまま返すクラスメソッドを定義している。
- \item 6行目から11行目で正しい日付でないとエラーを発生させ、正しいときは
-       日付のオブジェクトを返すクラスメソッドを定義している。
+ \item \texttt{name} が空文字であればエラーを発生させ、
+       正しければ値をそのまま返すクラスメソッドを定義
+ \item 正しい日付でないとエラーを発生させ、正しいときは
+       日付のオブジェクトを返すクラスメソッドを定義
        \begin{itemize}
-        \item 7行目は月の値の範囲をチェックしている。
- \item 8行目では、与えられた年と月からその月の最終の日を求めている。
+        \item 月の値の範囲をチェックしている。
+ \item 与えられた年と月からその月の最終の日を求めている。
 			 \ElmJ{Date.getMonth()}の戻り値が0(1月)から11(12月)になっているの
 			 で、\texttt{new Date(y,m,0)}により翌月の1日の1日前、つまり、問題
-			 としている月の最終日が設定できる
-%       \footnote{課題\ref{DateProb}の3番目の問題の解答である。}
-       。
- \item 9行目で与えられた範囲に日が含まれていなければエラーを発生させてい
-			 る。
-        \item 10行目ｆで日付のオブジェクトを作成し、戻り値として返している。
+			 としている月の最終日が設定できる。
+ \item 与えられた範囲に日が含まれていなければエラーを発生
+        \item 日付のオブジェクトを作成し、戻り値として返す。
        \end{itemize}
- \item 13行目と14行目で、名前と日付を指定したプロパティにクラスメソッド
-       からの戻り値で設定している。
+ \item 名前と日付を指定したプロパティにクラスメソッド
+       からの戻り値で設定
 % \item 残りの部分は前のリストと同じである。
 \end{itemize}
 \end{frame}
 \begin{frame}[containsverbatim]
- \frametitle{}
-これをいくつかのデータで実行した結果は次のようになる。
+ \frametitle{エラー処理の例--実行例}
 \begin{itemize}
  \item 通常の日時ならば問題なく、オブジェクトが構成される。
 \begin{Verbatim}
@@ -548,67 +574,47 @@ Person {name: "foo", year: 1996, month: 2, day: 29}
 \end{Verbatim}
 \end{itemize}
 \end{frame}
-
-\end{document}
-\begin{frame}[containsverbatim]
- \frametitle{}
-\end{frame}
-\end{document}
-\begin{frame}[containsverbatim]
- \frametitle{}
-\end{frame}
-\begin{frame}[containsverbatim]
- \frametitle{}
-\end{frame}
-
-
-クラスのクロージャ内に変数を閉じ込めることで、クラス全体に共通のデータを
-保護することはすでに解説をした。これを応用してクラスのインスタンスのデー
-タを安全に管理する方法としては\ES で導入された\ElmJ{WeakMap}を用いること
-ができる。
-
-である%
-
-エラー処理の例としてする例を挙げる。
- \begin{Exec}\upshape\label{throwError}
-	次のリストは、実行例\ref{PersonWidthGetter}において、である。
-
-	なお、このリストでは\texttt{Person}の\texttt{toString()}と\texttt{age}、
-	継承するクラス\texttt{Student}の内容が以前のものと
-	同じなので \texttt{...} で省略している。
- \end{Exec}
-\input 05-03errorCheck.tex
-\input 05-04errorCheckMoreStrict.tex
 \subsection{エラーからの復帰}
-前節の例ではエラーが発生するとそこでプログラムの実行が止まってしまう。エ
-ラーが発生したときに、投げられた(\ElmJ{throw}された)エラーを捕まえる
-(\ElmJ{catch}する)ことが必要である。このためには\ElmJ{try\{...\}catch\{...\}}構文
-を使用する。
-
+\begin{frame}[containsverbatim]
+ \frametitle{エラーからの復帰--\ElmJ{try\{...\}catch\{...\}}構文}
 \begin{itemize}
+ \item 前節の例ではエラーが発生するとそこでプログラムの実行が停止
+ \item エラーが発生したときに、投げられた(\ElmJ{throw}された)エラーを捕まえる
+(\ElmJ{catch}する)ことが必要
+ \item このためには\ElmJ{try\{...\}catch\{...\}}構文を使用
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{\ElmJ{try\{...\}catch\{...\}}構文の解説}
+ \begin{itemize}
  \item \ElmJ{try}のブロック内にエラーが発生する可能性があるコードを記述
-       する。
- \item エラーが発生したときは\ElmJ{throw}を用いてエラーを発生させる。
- \item エラーが発生すると\ElmJ{catch(e)}ブロックが実行される。
-       \ElmJ{catch}の後にある\texttt{e}は投げられたエラーオブジェクトが
-       渡される。この変数のスコープは\ElmJ{catch}内である。
- \item \ElmJ{finally\{\}}を付けることも
-       できる。%\texttt{try\{...\}catch\{...\}}内の部分は
-       \texttt{try}や\texttt{catch}の処理がが実行後、必ず呼び出される。
+ \item エラーが発生したときは\ElmJ{throw}を用いてエラーを発生
+ \item エラーが発生すると\ElmJ{catch(e)}ブロックが実行
+	\item \ElmJ{catch}の後にある\texttt{e}は投げられたエラーオブジェクトが
+				渡される。
+	\item この変数のスコープは\ElmJ{catch}内
+ \item \ElmJ{finally\{\}}を付けることもできる。
+	\item \texttt{try}や\texttt{catch}の処理がが実行後、必ず呼び出される。
        これは\ElmJ{try}や
        \ElmJ{catch}の部分が\ElmJ{return}文、\ElmJ{break}文、
        \ElmJ{continue}文、\ElmJ{return}文や新しい例外を投げたとしても呼
        び出される。
  \item \ElmJ{try\{...\}catch\{...\}}構文は入れ子にできる。投げられたエラー
 			 に一番近い\texttt{catch}にエラーが捕まえられる。
+ \end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{実行例}
+\begin{itemize}
+ \item   前の例で\ElmJ{try\{...\}catch\{...\}}構文を用いてオブジェクトが正しくでき
+	るまで繰り返すようにしたもの
+ \item ブラウザで実行することを想定
 \end{itemize}
- \begin{Exec}\upshape
-	次のリストは実行例\ref{throwError}において
-  \ElmJ{try\{...\}catch\{...\}}構文を用いてオブジェクトが正しくでき
-	るまで繰り返すようにしたものである。
- なお、このリストはブラウザで実行することを想定している。
- \end{Exec}
-\begin{Verbatim}[numbers=left]
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{プログラムリスト}
+ {\scriptsize
+\begin{Verbatim}
 function test() {
   for(;;) {
     try {
@@ -627,24 +633,31 @@ function test() {
   }
 }
 \end{Verbatim}
+}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{解説}
 \begin{itemize}
- \item テストを繰り返す関数\texttt{test()}が定義されている。
- \item 2行目では無限ループが定義されている。正しいパラメータが与えられた
-			 ときに7行目で作成されたオブジェクトを戻り値にして関数の実行が終了
-			 する。
+ \item テストを繰り返す関数\texttt{test()}が定義
+ \item 無限ループのなかで正しいパラメータが与えられた
+			 ときに作成されたオブジェクトを戻り値にして関数の実行が終了
  \item \ElmJ{try\{\}}内にはエラーが発生するかもしれないコードを中に含め
 			 る。
 	\begin{itemize}
 	 \item 年、月、日の入力を\ElmJ{prompt}によるダイアログボックス
-				 から入力させている。
-	 \item 戻り値は文字列なので、\ElmJ{Number}で数に直している。
-   \item 代入された値が正当であればその値をコンソールに出力している。
+				 から入力
+	 \item 戻り値は文字列なので、\ElmJ{Number}で数に変換
+   \item 代入された値が正当であればその値をコンソールに出力
 	\end{itemize}
  \item 与えられた入力が正しくなければエラーが投げられ、
-			 \ElmJ{catch}\texttt{(e)}の中に制御が移る。
+			 \ElmJ{catch}\texttt{(e)}の中に制御が移動
  \item \ElmJ{catch}\texttt{(e)}における\texttt{e}には発生したエラーオブ
-			 ジェクトが渡されるので、コンソールにその情報を出力する(12行目)。
+			 ジェクトが渡されるので、コンソールにその情報を出力
 \end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{実行例}
+ {\scriptsize
 \begin{Verbatim}
 >p = test();
  年:2010
@@ -658,12 +671,15 @@ function test() {
 finnally
 Person {name: "foo", birthday: {…}, hometown: "神奈川"}
 \end{Verbatim}
+ }
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{実行例--解説}
 \begin{itemize}
- \item 200年4月31日は不正な日付なので、9行目の\ElmJ{console.log()}の出力
+ \item 200年4月31日は不正な日付なので、\ElmJ{console.log()}の出力
        はない。
  \item その代り、エラーの内容が出力されている。
- \item また、エラー出力後は\ElmJ{finally}ブロックが実行されていることも
-       分かる。
- \item 入力データが正しい場合でも\ElmJ{finally}ブロックが実行されている
-       (下から2行目)。
-\end{itemize}
+ \item エラー出力後は\ElmJ{finally}ブロックが実行されている。
+ \item 入力データが正しい場合でも\ElmJ{finally}ブロックが実行されている。
+\end{itemize}\end{frame}
+\end{document}
