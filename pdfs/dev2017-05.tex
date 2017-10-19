@@ -9,7 +9,89 @@
 %\frame{\tableofcontents}
 \section{レポート課題について}
 \begin{frame}[containsverbatim]
- \frametitle{レポート課題 3について}
+ \frametitle{レポート課題4.1について}
+\begin{Verbatim}
+for( i in window) console.log(`${i} ${window[i]}`);
+\end{Verbatim}
+ として実行する。
+ \begin{itemize}
+  \item 特定のものをチェックするのではなくすべてを見て、どのようなプロパ
+        ティがあるかを見てほしい。
+  \item 見慣れた関数名(\Verb+alert()+)がいくつか見つかるはず
+  \item 新しいオブジェクトが出てきて、文書化されていないときなどに利用で
+        きる。
+  \item コンソールでオブジェクトを出力すれば同様のことは可能
+ \end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{レポート課題4.2について}
+ \begin{itemize}
+  \item      出力結果は\Verb+[{},{}]+
+\begin{Verbatim}
+>JSON.stringify(persons,["year"]);
+"[{},{}]"
+ \end{Verbatim}
+  \item \texttt{year}の値を出すためには親のキーも含める。
+        {\footnotesize
+\begin{Verbatim}
+>JSON.stringify(persons,["year","birthday","day","month","name"]);
+"[{"birthday":{"year":2001,"day":1,"month":4},"name":"foo"},
+{"birthday":{"year":2010,"day":5,"month":5},"name":"Foo"}]"
+\end{Verbatim}
+        }
+ \end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{レポート課題4.3について}
+ 同様のことができることの確認が少ないレポートが多かった。
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{レポート課題4.4について}
+\begin{itemize}
+ \item ルーブリックにヒントを書いておいた。月と日の値はデフォルトの値を
+       書いておくとプログラムが簡単になる。
+ \item 仮引数に値が与えられないときは\texttt{undefined}が渡されることを
+       利用する。
+\end{itemize}
+ {\small
+\begin{Verbatim}
+  age(year, month=1, day=1) {
+    let today;
+    if(year === undefined) today = new Date();
+    else today = new Date(year, month-1, day);
+    let Age = today.getFullYear() - this.birthday.year;
+    if(today.getTime() <
+      new Date(today.getFullYear(),
+               this.birthday.month-1,
+               this.birthday.day).getTime()) Age--;
+    return Age;
+  }
+\end{Verbatim}
+ }
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{レポート課題4.5について}
+ \begin{itemize}
+  \item 実行方法は\texttt{()}を付ける(\texttt{get}がないとき)かどうか
+  \item メソッドの定義(\texttt{get}がない場合)
+        \begin{itemize}
+         \item 仮引数を与えることができる。
+         \item メソッドの書き換えが可能(できないようにすることは可能)
+        \end{itemize}
+ \end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{レポート課題4.6について}
+\begin{Verbatim}
+  set age(x){
+    window.alert("値をセットできません");
+  }
+\end{Verbatim}
+\begin{itemize}
+ \item セッターには仮引数が一つ必要
+ \item 通常はこの値をチェックして、条件を満たせば該当する値をセットし、
+       しかるべき追加の処理を行う
+\end{itemize}
 \end{frame}
 \section{\protect\texttt{class}の実体}
 \begin{frame}[containsverbatim]
@@ -178,7 +260,7 @@ Very Old Alice
 \end{itemize}
 \end{frame}
 \begin{frame}[containsverbatim]
- \frametitle{オブジェクトの固定化--\\protext\ElmJ{Object.freeze()}}
+ \frametitle{オブジェクトの固定化--\protect\ElmJ{Object.freeze()}}
 \begin{itemize}
  \item オブジェクトを最も強く固定するためには\ElmJ{Object.freeze()}を用
 			 いる。
@@ -242,7 +324,7 @@ true
 \end{frame}
  \subsection{\protect\ElmJ{prototye}属性}
  \begin{frame}[containsverbatim]
-  \frametitle{\protect\ElmJ{prototye}属性}
+  \frametitle{\ElmJ{prototye}属性}
   \begin{itemize}
    \item オブジェクトの\ElmJ{prototype}属性の値は、同じコンストラクタ関数で生成
  された間で共通
@@ -257,7 +339,7 @@ true
  \end{frame}
  \subsection{\protect\texttt{prototype}の使用例}
 \begin{frame}[containsverbatim]
- \frametitle{前の例でメソッドをElmJ{prototype}に追加}
+ \frametitle{前の例でメソッドを\ElmJ{prototype}に追加}
 {\scriptsize
 \begin{Verbatim}
 PersonF.prototype = {
@@ -336,6 +418,13 @@ StudentF.prototype.constructor = StudentF;
 \begin{frame}[containsverbatim]
  \frametitle{\protect\ElmJ{WeakMap}}
  \begin{itemize}
+  \item あるクラスのインスタンスごとにプロパティを保存するのに
+        \texttt{this.name}のようなキーを用いると、データの安全性が保障さ
+        れない。
+  \item クラス式のクロージャに入れるとクラスで共通のものになってしまい、
+        目的に合わない。
+  \item インスタンスごとに値をしまうためにはオブジェクトと値の集まりを
+        関連付ける必要がある。
   \item \ElmJ{WeakMap}はオブジェクトと同じようにキーと値の集まり
   \item \ElmJ{WeakMap}のキーはオブジェクトしか使用できない。
  \end{itemize}
