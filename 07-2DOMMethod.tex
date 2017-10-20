@@ -1,34 +1,40 @@
 %-*- coding: utf-8 -*-
 表\ref{MethodDOM}は DOM のメソッドのリストである。\texttt{document}だけ
-に適用できるものと、すべての要素に適応できるものとがある。
-なお、結果が要素のリストであるものについては配列と同様に\texttt{[ ]}によ
+に適用できるものと、すべての要素に適応できるものとがある。一番右の項目
+「PHP」はPHPの\texttt{DOMDocument}クラスにおけるサポート状態を示す。
+\Yes はサポートされていて\No はサポートされていないこと
+を示す。
+なお、結果が要素のリストであるものについては通常の配列と同様に\texttt{[ ]}によ
 りそれぞれの要素を指定できる。
 
 なお、表中の名前空間(Namespace)とは、指定した要素が定義されている規格を指定するもの
 である。一つの文書内で複数の規格を使用する場合、作成する要素がどこで定義
 されているのかを指定する。これにより、異なる規格で同じ要素名が定義されて
 いてもそれらを区別することが可能となる。
-HTML文書では\texttt{ http://www.w3.org/1999/xhtml}を指定する\footnote{\texttt{http://dev.w3.org/html5/spec-LC/namespaces.html}}。
-
-\begin{longtable}{|c|c|m{20em}|}
+HTML文書では\texttt{ http://www.w3.org/1999/xhtml}を指定する
+\footnote{\texttt{http://dev.w3.org/html5/spec-LC/namespaces.html}}。
+{\setlength{\tabcolsep}{0.2em}
+\begin{longtable}{|c|c|m{20em}|c|}
 \caption{DOMのメソッド}\label{MethodDOM}
 \\  \hline
 メソッド名  & {対象要素}&
-\hspace*{\fill}説{\hfill}明\hspace*{\fill}\rule{0em}{0em}\\ \hline
+\hspace*{\fill}説{\hfill}明\hspace*{\fill}\rule{0em}{0em}&{\scriptsize
+ PHP}\\ \hline
 \endfirsthead
 \caption{DOMのメソッド(続き)}
 \\  \hline
 メソッド名  & {対象要素}&
-\hspace*{\fill}説{\hfill}明\hspace*{\fill}\rule{0em}{0em}\\ \hline
+\hspace*{\fill}説{\hfill}明\hspace*{\fill}\rule{0em}{0em}&{\scriptsize
+ PHP}\\ \hline
 \endhead
 \hline\multicolumn{3}{r}{次ページへ続く}
 \endfoot
 \hline
 \endlastfoot
 \DOMM{getElementById}{(id)}&\texttt{document}&
-      属性\texttt{id}の値が\texttt{id}の要素を得る。 \\\hline
+      属性\texttt{id}の値が\texttt{id}の要素を得る。&\Yes \\\hline
 \DOMM{getElementsByTagName}{(Name)}&対象要素&
-     要素名が\texttt{Name}の要素のリストを得る。\\\hline
+     要素名が\texttt{Name}の要素のリストを得る。&\Yes\\\hline
 \DOMM{getElementsByClassName}{(Name)}&対象要素&
      属性\texttt{class}の値が\texttt{Name}の要素のリストを得る。\\\hline
 \DOMM{getElementsByName}{(Name)}&\texttt{document}&
@@ -41,10 +47,10 @@ HTML文書では\texttt{ http://www.w3.org/1999/xhtml}を指定する\footnote{\
  \\\hline
 \DOMM{getAttribute}{(Attrib)}&対象要素&
      対象要素の属性\texttt{Attrib}の値を読み出す。得られる値はすべて文字
-	  列である。\\ \hline
+	  列である。&\Yes\\ \hline
 {\DOMM{setAttribute}{(Attrib,Val)}}  &対象要素&
      対象要素の属性\texttt{Attrib}の値を\texttt{Val}にする。数を渡しても
-	  文字列に変換される。\\ \hline
+	  文字列に変換される。&\Yes\\ \hline
 {\DOMM{hasAttribute}{(Attrib)}}  &対象要素&
      対象要素に属性\texttt{Attrib}がある場合は\texttt{true}を、ない場合
  は\texttt{false}を返す。\\ \hline
@@ -78,3 +84,4 @@ HTML文書では\texttt{ http://www.w3.org/1999/xhtml}を指定する\footnote{\
 %	  \texttt{value}にする。}\\ \hline
 \end{longtable}
 
+}

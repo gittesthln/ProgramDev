@@ -1,5 +1,7 @@
 %-*- coding: utf-8 -*-
 \newcommand{\Elm}[1]{\texttt{<#1>}}
+\newcommand{\Yes}{$\bigcirc$}
+\newcommand{\No}{$\times$}
 \chapter{DOMの利用}
 この節からはHTML文書の取り扱いを始める。この授業では2014年10月28日にW3C
 のRecommendationとなったHTML5
@@ -81,7 +83,7 @@ Document Object Model(DOM)はHTML文書などの要素をノードとしたツ�
 スしたり、属性値やツリーの構造を変化させることができる。DOMの構造は開発
 者ツールなどで見ることができる。
 \begin{itemize}
- \item Opera と Google Chrome では開発者ツールの Elementsタブで確認でき
+ \item Google Chrome では開発者ツールの Elementsタブで確認でき
        る。ここで要素上で右クリックしてEdit as HTML
        を選択するとテキストとして編集できる。
  \item FireFoxでは開発ツールの「インスペクタ」タブでDOMツリーが確認でき
@@ -205,27 +207,29 @@ DOM では DOM ツリーを操作するために%表\ref{MethodDOM}や\ref{Prope
 \begin{table}[ht]
 \caption{DOM要素に対するプロパティ}\label{PropertyDOM}
 \begin{center}
- \begin{tabular}{|c|l|}
+ \begin{tabular}{|c|m{25zw}|c|}
   \hline
 プロパティ名  &
- \hspace*{\fill}説{\hfill}明\hspace*{\fill}\rule{0em}{0em}\\ \hline
-\DOMP{firstChild} &指定された要素の先頭にある子要素 \\ \hline
-\DOMP{lastChild} & 指定された要素の最後にある子要素\\ \hline
-\DOMP{nextSibling} & 指定された子要素の次の要素\\ \hline
-\DOMP{previousSibling} & 現在の子要素の前にある要素\\ \hline
-\DOMP{parentNode} & 現在の要素の親要素\\ \hline
+ \hspace*{\fill}説{\hfill}明\hspace*{\fill}\rule{0em}{0em}&{\scriptsize PHP}\\ \hline
+\DOMP{firstChild} &指定された要素の先頭にある子要素&\Yes \\ \hline
+\DOMP{lastChild} & 指定された要素の最後にある子要素&\Yes\\ \hline
+\DOMP{nextSibling} & 指定された子要素の次の要素&\Yes\\ \hline
+\DOMP{previousSibling} & 現在の子要素の前にある要素&\Yes\\ \hline
+\DOMP{parentNode} & 現在の要素の親要素&\Yes\\ \hline
 \DOMP{hasChildNodes} &その要素が子要素を持つ場合は\texttt{true}持たない
-      場合は\texttt{false}である。\\ \hline
-\DOMP{nodeName}& その要素の要素名前\\ \hline
-\DOMP{nodeType}& 要素の種類($1$は普通の要素、$3$はテキストノード)\\ \hline
-\DOMP{nodeValue}&(テキスト)ノードの値 \\ \hline
-\DOMP{childNodes}& 子要素の配列\\ \hline
+      場合は\texttt{false}である。&\No\\ \hline
+\DOMP{nodeName}& その要素の要素名前&\Yes\\ \hline
+\DOMP{nodeType}& 要素の種類($1$は普通の要素、$3$はテキストノード)&\Yes\\ \hline
+\DOMP{nodeValue}&(テキスト)ノードの値 &\Yes\\ \hline
+\DOMP{childNodes}& 子要素の配列&\Yes\\ \hline
 \DOMP{children}& 子要素のうち通常の要素だけからなる要素の配列
-      (DOM4で定義)\\ \hline
-\DOMP{firstElementChild} &指定された要素の先頭にある通常の要素である子要素(DOM4で定義)\\ \hline
-\DOMP{lastElementChild} & 指定された要素の最後にある通常の要素である子要素(DOM4で定義)\\ \hline
-\DOMP{nextElementSibling} & 指定された子要素の次の通常の要素(DOM4で定義)\\ \hline
-\DOMP{previousElementSibling} & 現在の子要素の前にある通常の要素(DOM4で定義)\\ \hline
+      (DOM4で定義)&\No\\ \hline
+\DOMP{firstElementChild} &指定された要素の先頭にある通常の要素である子要
+			素(DOM4で定義)&\No\\ \hline 
+\DOMP{lastElementChild} & 指定された要素の最後にある通常の要素である子要
+			素(DOM4で定義)&\No\\ \hline
+\DOMP{nextElementSibling} & 指定された子要素の次の通常の要素(DOM4で定義)&\No\\ \hline
+\DOMP{previousElementSibling} & 現在の子要素の前にある通常の要素(DOM4で定義)&\No\\ \hline
  \end{tabular}
 \end{center}
 \end{table}
