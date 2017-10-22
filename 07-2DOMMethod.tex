@@ -10,9 +10,11 @@
 なお、表中の名前空間(Namespace)とは、指定した要素が定義されている規格を指定するもの
 である。一つの文書内で複数の規格を使用する場合、作成する要素がどこで定義
 されているのかを指定する。これにより、異なる規格で同じ要素名が定義されて
-いてもそれらを区別することが可能となる。
+いてもそれらを区別することが可能となる。ルート要素(\HTML では
+\ElmJ{html})が通常は指定される。
 HTML文書では\texttt{ http://www.w3.org/1999/xhtml}を指定する
 \footnote{\texttt{http://dev.w3.org/html5/spec-LC/namespaces.html}}。
+\newpage
 {\setlength{\tabcolsep}{0.2em}
 \begin{longtable}{|c|c|m{20em}|c|}
 \caption{DOMのメソッド}\label{MethodDOM}
@@ -36,15 +38,15 @@ HTML文書では\texttt{ http://www.w3.org/1999/xhtml}を指定する
 \DOMM{getElementsByTagName}{(Name)}&対象要素&
      要素名が\texttt{Name}の要素のリストを得る。&\Yes\\\hline
 \DOMM{getElementsByClassName}{(Name)}&対象要素&
-     属性\texttt{class}の値が\texttt{Name}の要素のリストを得る。\\\hline
+     属性\texttt{class}の値が\texttt{Name}の要素のリストを得る。&\No\\\hline
 \DOMM{getElementsByName}{(Name)}&\texttt{document}&
- 属性\texttt{name}が\texttt{Name}である要素のリストを得る。\\\hline
+ 属性\texttt{name}が\texttt{Name}である要素のリストを得る。&\No\\\hline
 \DOMM{querySelector}{(selectors)}&対象要素&
      \texttt{selectors}で指定されたCSSのセレクタに該当する一番初めの要素
-	  を得る。 \\\hline
+	  を得る。&\No \\\hline
 \DOMM{querySelectorAll}{(selectors)}&対象要素&
      \texttt{selectors}で指定されたCSSのセレクタに該当する要素のリストを得る。
- \\\hline
+ &\No\\\hline
 \DOMM{getAttribute}{(Attrib)}&対象要素&
      対象要素の属性\texttt{Attrib}の値を読み出す。得られる値はすべて文字
 	  列である。&\Yes\\ \hline
@@ -53,35 +55,34 @@ HTML文書では\texttt{ http://www.w3.org/1999/xhtml}を指定する
 	  文字列に変換される。&\Yes\\ \hline
 {\DOMM{hasAttribute}{(Attrib)}}  &対象要素&
      対象要素に属性\texttt{Attrib}がある場合は\texttt{true}を、ない場合
- は\texttt{false}を返す。\\ \hline
+ は\texttt{false}を返す。&\Yes\\ \hline
 {\DOMM{removeAttribute}{(Attrib)}}  &対象要素&
-     対象要素の属性\texttt{Attrib}を削除する。\\ \hline
+     対象要素の属性\texttt{Attrib}を削除する。&\Yes\\ \hline
 %\DOMM{getNodeName}{()}&対象要素&対象要素の要素名を得る。\\\hline
 \DOMM{createElement}{(Name)} &\texttt{document}&
-     \texttt{Name}で指定した要素を作成する。 \\ \hline
+     \texttt{Name}で指定した要素を作成する。&\Yes \\ \hline
 \DOMM{createElementNS}{(NS,Name)} &\texttt{document}&
      \keyitem{名前空間}\texttt{NS}にある要素\texttt{Name}を作成
-	  する。 \\ \hline
+	  する。&\Yes \\ \hline
 \DOMM{createTextNode}{(text)} &\texttt{document}&
-     \texttt{text}を持つテキストノードを作成する。\\ \hline
+     \texttt{text}を持つテキストノードを作成する。&\Yes\\ \hline
 {\DOMM{cloneNode}{(bool)}} &対象要素&
 %   対象要素の複製を作る。
 \texttt{bool}が
   \texttt{true}のときは対象要素の子要素すべてを、%複製する。
-  \texttt{false}のときは対象要素だけの複製を作る。\\ \hline
+  \texttt{false}のときは対象要素だけの複製を作る。&\Yes\\ \hline
 {\DOMM{appendChild}{(Elm)}} &対象要素&
   \texttt{Elm}を対象要素の最後の子要素として付け加える。\texttt{Elm}がすでに
-	  対称要素の子要素のときは最後の位置に移動する。 \\ \hline
+	  対称要素の子要素のときは最後の位置に移動する。&\Yes \\ \hline
 {\DOMM{insertBefore}{(newElm, PElm)}} &対象要素&
    対象要素の子要素\texttt{PElm}の前に\texttt{newElm}を子要素として付け
   加える。\texttt{Elm}がすでに対称要素の子要素のときは指定さ
-	  れた位置に移動する。 \\ \hline
+	  れた位置に移動する。 &\Yes\\ \hline
 \DOMM{removeChild}{(Elm)} &対象要素& 対象要素の子要素
-      \texttt{Elm}を取り除く。\\ \hline
+      \texttt{Elm}を取り除く。&\Yes\\ \hline
 \DOMM{replaceChild}{(NewElm, OldElm)} &対象要素& 対象要素の子要素
-      \texttt{OldElm}を\texttt{NewElm}で置き換える。\\ \hline
+      \texttt{OldElm}を\texttt{NewElm}で置き換える。&\Yes\\ \hline
 %\DOMM{setValue}{(value)} &\small テキストノード& {対象のテキストノードの値を
 %	  \texttt{value}にする。}\\ \hline
 \end{longtable}
-
 }

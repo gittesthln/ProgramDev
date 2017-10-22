@@ -42,7 +42,7 @@
 		ルを外部から読み込むことをしている。
 	 \end{itemize}
  \item HTML文書で実際にブラウザ内で表示される情報は\Elm{body}要素
-       内に現れる。
+       内に記述する。
  \item このリストではGoogle Mapsを表示するための\Elm{div}要素が一つ
        あるだけである。このとき、\Elm{div}は\Elm{body}の子要素
        であるといい、\Elm{body}は\Elm{div}の親要素という。
@@ -84,13 +84,13 @@ Document Object Model(DOM)はHTML文書などの要素をノードとしたツ�
 者ツールなどで見ることができる。
 \begin{itemize}
  \item Google Chrome では開発者ツールの Elementsタブで確認でき
-       る。ここで要素上で右クリックしてEdit as HTML
+       る。要素上で右クリックして「Edit as HTML」
        を選択するとテキストとして編集できる。
- \item FireFoxでは開発ツールの「インスペクタ」タブでDOMツリーが確認でき
+ \item FireFoxでは開発ツールの「インスペクタ」タブで確認でき
        る。要素上で右クリックから「HTMLとして編集」とするとテキストとし
        て編集できる。 
- \item IEでは開発者ツールを開き、左にある「HTML」タブで同様の
-       ことができる。
+% \item IEでは開発者ツールを開き、左にある「HTML」タブで同様の
+%       ことができる。
 \end{itemize}
 \newcommand{\DOMM}{\texttt}
 \newcommand{\DOMP}{\texttt}
@@ -99,35 +99,34 @@ Document Object Model(DOM)はHTML文書などの要素をノードとしたツ�
 \newcommand{\HTML}{HTML文書}
 \section{DOM のメソッドとプロパティ}
 %\DOM の構造や属性値の操作をプログラムから可能にするために
-DOM では DOM ツリーを操作するために%表\ref{MethodDOM}や\ref{PropertyDOM}にある
-\keyitem{メソッド}や
-\keyitem{プロパティ}が規定されている。
-これらの手段を用いてDOM をサポートする文書にアクセスができる。
-
- メソッドとはそのオブジェクトに対する操作である。次のような手段を
-       提供している。
+DOM では DOM ツリーを操作する%表\ref{MethodDOM}や\ref{PropertyDOM}にある
+\keyitem{メソッド}や\keyitem{プロパティ}が規定されている。
+これらの手段を用るとDOMの構造を変化させて、結果として\HTML では表示の変
+更が可能となる。
+\iffalse
+ メソッド%とはそのオブジェクトに対する操作である。
+ では次のようなものあがある。
 \begin{itemize}
  \item 条件に合う要素または要素のリストを得る。
- \item 要素の属性を参照、変更ができる。
+ \item 要素の属性の参照、変更ができる。
  \item 要素を新規に作成する。
  \item ある要素に子要素を追加したり、取り除いたりする。
 \end{itemize}
 プロパティはそのオブジェクトが持つ性質であり、それらの値を参照できる。ほ
 とんどのプロパティは書き直しできない。
-
+\fi
+\iffalse
 なお、ここでのメソッドやプロパティは DOM文書で使用可能なものである。したがっ
 て、\HTML も \DOM{} をサポートするブラウザであれば同様の方法で
 部分的に書き直すことが可能である。
+\fi
 \subsection{DOMのメソッド}
 \input 07-2DOMMethod.tex
-
-%実行例\ref{ExGoogleMaps}では16行目でGoogle Mapsを表示する\Elm{div}
-%要素を得て、17行目でその要素内に地図を表示するように指定している。
 \begin{Exec}\upshape\label{PullDown}
  次の例は1月から12月までを選択できるプルダウンメニューを作成するものであ
  る。この様なプルダウンメニューをテキストエディタで入力すると次のように
  なる。\label{pulldown1}
-\begin{Verbatim}
+\begin{Verbatim}[numbers=left]
 <!DOCTYPE html>
 <head>
 <meta charset="UTF-8"/>
@@ -155,9 +154,9 @@ DOM では DOM ツリーを操作するために%表\ref{MethodDOM}や\ref{Prope
 \end{Verbatim}
 \begin{itemize}
  \item ユーザからの入力を受け付ける要素は通常、\Elm{form}要素内に記
-       述する。
- \item プルダウンメニュ－の要素名は\Elm{select}で、選択する内容は
-       \Elm{option}要素である。
+       述する(7行目)。
+ \item プルダウンメニュ－は8行目の\Elm{select}で作成している。選択する内容は
+       その子要素の\Elm{option}要素で指定する。
  \item \Elm{option}要素の属性\texttt{value}の値が選択した値として
        利用できる。
  \item \Elm{option}要素内の文字列(テキストノード)がプルダウンメニューに
@@ -165,6 +164,9 @@ DOM では DOM ツリーを操作するために%表\ref{MethodDOM}や\ref{Prope
  \item \Elm{select}は\Elm{form}の子要素であり、各\Elm{option}は
        \Elm{select}の子要素となっている。
 \end{itemize}
+ このHTML文書では\ElmJ{option}要素が数字の連番からなるので、プログラムで
+ 作成することも可能である。次のリストはJavaScriptでファイルのロード後に
+ \ElmJ{option}要素を作成するものである。
 \label{pulldown2}
 \LISTN{07-02pulldown.html}{1}{last}{\normalsize}
 \begin{itemize}
@@ -176,7 +178,7 @@ DOM では DOM ツリーを操作するために%表\ref{MethodDOM}や\ref{Prope
  \item 11行目では10行目で作成した\Elm{select}要素を
        \texttt{getElementById("menu")}で得た\Elm{form}要素の子要素に設定
        している。 
- \item 12行目から始まる\texttt{for}ループで12個の\Elm{option}要素を作成
+ \item 12行目からの\texttt{for}ループで12個の\Elm{option}要素を作成
        し、\Elm{select}要素の子要素としている。
        \begin{itemize}
 	\item 13行目で\Elm{option}要素を新規に作成し、14行目で、その要素の属性
@@ -217,27 +219,27 @@ DOM では DOM ツリーを操作するために%表\ref{MethodDOM}や\ref{Prope
 \DOMP{previousSibling} & 現在の子要素の前にある要素&\Yes\\ \hline
 \DOMP{parentNode} & 現在の要素の親要素&\Yes\\ \hline
 \DOMP{hasChildNodes} &その要素が子要素を持つ場合は\texttt{true}持たない
-      場合は\texttt{false}である。&\No\\ \hline
+      場合は\texttt{false}である。&\Yes\\ \hline
 \DOMP{nodeName}& その要素の要素名前&\Yes\\ \hline
 \DOMP{nodeType}& 要素の種類($1$は普通の要素、$3$はテキストノード)&\Yes\\ \hline
 \DOMP{nodeValue}&(テキスト)ノードの値 &\Yes\\ \hline
 \DOMP{childNodes}& 子要素の配列&\Yes\\ \hline
-\DOMP{children}& 子要素のうち通常の要素だけからなる要素の配列
-      (DOM4で定義)&\No\\ \hline
+\DOMP{children}& 子要素のうち通常の要素だけからなる要素の配列&\No\\ \hline
 \DOMP{firstElementChild} &指定された要素の先頭にある通常の要素である子要
-			素(DOM4で定義)&\No\\ \hline 
+			素&\No\\ \hline 
 \DOMP{lastElementChild} & 指定された要素の最後にある通常の要素である子要
-			素(DOM4で定義)&\No\\ \hline
-\DOMP{nextElementSibling} & 指定された子要素の次の通常の要素(DOM4で定義)&\No\\ \hline
-\DOMP{previousElementSibling} & 現在の子要素の前にある通常の要素(DOM4で定義)&\No\\ \hline
+			素&\No\\ \hline
+\DOMP{nextElementSibling} & 指定された子要素の次の通常の要素&\No\\ \hline
+\DOMP{previousElementSibling} & 現在の子要素の前にある通常の要素&\No\\ \hline
  \end{tabular}
 \end{center}
 \end{table}
-
+\iffalse
 なお、DOM4\footnote{\texttt{http://www.w3.org/TR/domcore/}}とは2015年11月現在
 W3Cが定める次の DOM の規格の Proposed Recommendation(勧告案) である。
 DOM の規格は今までに Level 1 から Level 3 までが Recommendation(勧告) と
 なっている。
+\fi
 \begin{itemize}
  \item これらのプロパティのうち、\texttt{nodeValue}を除いてはすべて、読み取り専用である。
  \item ある要素に子要素がない場合にはその要素の\texttt{firstChild}や
