@@ -2,7 +2,12 @@
 \input rubricHead.tex
 \input rubricProgDevHead.tex
 \newcommand{\AnsLine}[1]{%
-  \underline{\makebox[#1\textwidth]{}}\\[1\baselineskip]
+\ifText\\[1\baselineskip]\underline{\makebox[#1\textwidth]{}}\fi%
+}
+\newcommand{\AnsS}[1]{%
+\ifText\hfill%
+   \underline{\makebox[#1\textwidth]{}}%
+   \rule[-0.4\baselineskip]{0em}{2\baselineskip}\fi%
 }
 \newcommand{\RProbNoM}[2]{問題#1\hspace*{#2zw}\newline\ \Must}
 \newcommand{\RProbNoMM}[3]{%
@@ -53,26 +58,19 @@
 %\chapter{正規表現}
 \input Ex06.tex
 %\chapter{DOMの利用}
-\ProblemNN{
-}
+\input Ex07.tex
 %\chapter{イベント}
-\ProblemNN{
-}
+\input Ex08.tex
 %\chapter{PHPの超入門}
-\ProblemNN{
-}
+\input Ex09.tex
 %\chapter{サーバーとのデータのやり取り}
-\ProblemNN{
-}
+\input Ex10.tex
 %\chapter{jQuery}
-\ProblemNN{
-}
+\input Ex11.tex
 %\chapter{JavaScriptライブラリーの配布}
-\ProblemNN{
-}
+\input Ex12.tex
 %\chapter{XMLファイルの処理}
-\ProblemNN{
-}
+\input Ex13.tex
 %\chapter{システム開発のためのヒント}
 \ProblemNN{
 }

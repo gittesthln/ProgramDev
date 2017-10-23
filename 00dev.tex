@@ -1,6 +1,14 @@
 %Test Github
 \input ProgramDevHead.tex
 \Textfalse
+\newcommand{\AnsLine}[1]{%
+\ifText\\[1\baselineskip]\underline{\makebox[#1\textwidth]{}}\fi%
+}
+\newcommand{\AnsS}[1]{%
+\ifText\hfill%
+   \underline{\makebox[#1\textwidth]{}}%
+   \rule[-0.4\baselineskip]{0em}{2\baselineskip}\fi%
+}
 \renewcommand{\postchaptername}{回}
 \newcommand{\Ans}[1]{}
 \newcommand{\Must}{\ifText{(\bfseries 必須)}\fi}

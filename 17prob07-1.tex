@@ -1,24 +1,26 @@
-\begin{Prob}\upshape\label{nth-child}
+ \begin{Prob}\upshape\Must\label{nth-child}
+  \ifText 課題\ref{nth-child}の問に答えなさい。
+  \else
  次のHTML文書において以下の問いに答えなさい。
  \LISTN{07-01nth-child.html}{1}{last}{\normalsize}
  ここで\texttt{<ol>}は箇条書きの開始を示す要素で
- あり、\texttt{<li>}は箇条書きの各項目を示す要素である。
+ あり、\texttt{<li>}は箇条書きの各項目を示す要素である。\fi
 \begin{enumerate}
 \item \texttt{nth-child}の\texttt{()}内に次の式を入れたとき、各項目の背
       景色がどうなるか報告しなさい。
 \begin{enumerate}
- \item \texttt{n}(ここでのリストの設定)
- \item \texttt{2n}
- \item \texttt{n+3}
- \item \texttt{-n+2}
+ \item \texttt{n}(ここでのリストの設定)\AnsLine{0.9}
+ \item \texttt{2n}\AnsLine{0.9}
+ \item \texttt{n+3}\AnsLine{0.9}
+ \item \texttt{-n+2}\AnsLine{0.9}
 \end{enumerate}
  \item 背景色が次のようになるようにそれぞれCSSを設定しなさい。
 \begin{enumerate}
- \item 偶数番目が黄色、奇数番目がオレンジ色
+ \item 偶数番目が黄色、奇数番目がオレンジ色\AnsS{0.3}
  \item 1番目、4番目、\dots のように$3$で割ったとき、$1$ 余る位置が明るい
-       灰色
- \item 4番目以下がピンク
- \item 下から2番目以下が緑色
+       灰色\AnsS{0.3}
+ \item 4番目以下がピンク\AnsS{0.3}
+ \item 下から2番目以下が緑色\AnsS{0.3}
 \end{enumerate}
 \end{enumerate}
 \end{Prob}

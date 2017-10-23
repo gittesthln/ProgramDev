@@ -1,0 +1,13 @@
+\begin{Prob}\upshape\Must
+ \pageref{pulldown1}ページから始まるリストと\pageref{pulldown2}ページから始
+ まるリストにおける\texttt{<select>}要素の子要素の数を調べよ。異なる場合にはその理由
+ を述べよ。
+
+ \texttt{document.getElementsByTagName("select")[0].childNodes.length}を使
+ うかコンソールに出力して調べるのもよい。
+\ifText\newline\fi
+また、
+ \texttt{document.getElementsByTagName("select")[0].childNodes[0].nodeType}
+ も調べるとよいかもしれない。また、\texttt{childNodes}の代わりに
+ \texttt{children}を用いたらどうなるかも調べるとよい。
+\end{Prob}

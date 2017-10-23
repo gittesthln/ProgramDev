@@ -190,21 +190,10 @@ DOM では DOM ツリーを操作する%表\ref{MethodDOM}や\ref{PropertyDOM}�
        \end{itemize}
 \end{itemize}
 \end{Exec}
-\begin{Prob}\upshape
-実行例\ref{PullDown}に対して次のことを行いなさい。
-\begin{enumerate}
- \item ブラウザの「ページのソースを表示」を選択して、ソースコードがどの
-       ようになっているか確認する。
- \item DOMツリーが実行例\ref{PullDown}のリストと同じようにできていることを確認する。
-% \item 8行目と21行目を取り除いた場合に起こることを確認する。また、その理
-%       由を考える。
- \item \Elm{select}要素を構成する部分を関数化して、月だけでなく日(1日か
-       ら31日)が選べるプルダウンメニューも作成できるようにしなさい。関数
-       の引数を工夫すること。
-\end{enumerate}
-\end{Prob}
-\subsection{DOMの要素のプロパティ}
-表\ref{PropertyDOM}は DOM の要素に対するプロパティである。
+\input 17prob07-2.tex
+  \subsection{DOMの要素のプロパティ}
+表\ref{PropertyDOM}は DOM の要素に対するプロパティである。最後の「PHP」
+の項目は表\ref{MethodDOM}と同様の意味である。
 %該当するものがない場合には \texttt{null} の値になる。
 \begin{table}[ht]
 \caption{DOM要素に対するプロパティ}\label{PropertyDOM}
@@ -251,17 +240,5 @@ DOM の規格は今までに Level 1 から Level 3 までが Recommendation(勧
 \end{itemize}
 
 プロパティに関する例はイベント処理のところで示す。
-\begin{Prob}\upshape
- \pageref{pulldown1}ページから始まるリストと\pageref{pulldown2}ページから始
- まるリストにおける\texttt{<select>}要素の子要素の数を調べよ。異なる場合にはその理由
- を述べよ。
-
- \texttt{document.getElementsByTagName("select")[0].childNodes.length}を使
- うとよい。
-%
-また、
- \texttt{document.getElementsByTagName("select")[0].childNodes[0].nodeType}
- も調べるとよいかもしれない。また、\texttt{childNodes}の代わりに
- \texttt{children}を用いたらどうなるかも調べるとよい。
-\end{Prob}
+\input 17prob07-3.tex
 
