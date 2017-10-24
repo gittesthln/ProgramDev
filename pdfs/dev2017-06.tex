@@ -8,6 +8,27 @@
 \begin{document}
 \frame{\maketitle}
 %\frame{\tableofcontents}
+\section{前回のレポートから}
+\subsection{クラスの\ElmJ{extensible}属性}
+\begin{frame}
+ \frametitle{クラスの\ElmJ{extensible}属性}
+\end{frame}
+\subsection{\texttt{Person}クラスの\ElmJ{prototype}}
+\begin{frame}
+ \frametitle{\texttt{Person}クラスの\ElmJ{prototype}}
+\end{frame}
+\subsection{\ElmJ{WeakMap}を利用したクラス}
+\begin{frame}
+ \frametitle{\ElmJ{WeakMap}を利用したクラス}
+\end{frame}
+\subsection{クラスの継承におけるエラーチェック}
+\begin{frame}
+ \frametitle{クラスの継承におけるエラーチェック}
+\end{frame}
+\subsection{\ElmJ{WeakMap}を利用したクラス}
+\begin{frame}
+ \frametitle{エラーチェックの厳密化}
+\end{frame}
  \section{正規表現}
  \subsection{正規表現の定義}
 \begin{frame}
@@ -30,8 +51,8 @@
 \begin{frame}[containsverbatim]
  \frametitle{正規表現のオブジェクトの生成の例}
 \begin{Verbatim}
-var pattern = new RegExp("^s");
-var pattern = /^s/;
+let pattern = new RegExp("^s");
+let pattern = /^s/;
 \end{Verbatim}
 \begin{itemize}
  \item これらの正規表現はどちらも\texttt{s}で始まる文字列を表す
@@ -247,7 +268,7 @@ var pattern = /^s/;
  \frametitle{メソッドの実行例}
 ４桁の数字にマッチする正規表現オブジェクトを作成する。
 \begin{Verbatim}
-var ex = /\d\d\d\d/;
+let ex = /\d\d\d\d/;
 undefined
 \end{Verbatim}
 この正規表現に対し、それぞれのメソッドを適用させる。
@@ -273,7 +294,7 @@ undefined
  \frametitle{メソッドの実行例--\protect\texttt{g}フラグ}
 正規表現に\Verb+g+フラグをつけて同じようなことをする。
 \begin{Verbatim}
->var exg = /\d\d\d\d/g;
+>let exg = /\d\d\d\d/g;
 undefined
 >"20144567".search(exg);
 0
