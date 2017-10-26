@@ -12,22 +12,84 @@
 \subsection{クラスの\ElmJ{extensible}属性}
 \begin{frame}
  \frametitle{クラスの\ElmJ{extensible}属性}
+ \begin{itemize}
+	\item \texttt{PersonF}のほうで行っている解答が少しあった。
+	\item \ElmJ{class}のほうで起このうこと
+	\item 結果は同じ
+	\item 関数のほうを\ElmJ{freeze}してもインスタンスは\ElmJ{freeze}されな
+				いことを確認してほしい。
+ \end{itemize}
 \end{frame}
 \subsection{\texttt{Person}クラスの\ElmJ{prototype}}
 \begin{frame}
  \frametitle{\texttt{Person}クラスの\ElmJ{prototype}}
+ \begin{itemize}
+	\item 関数で定義したクラスとクラスによる定義の違いを認識してほしい。
+	\item 両者の比較をしてある解答は非常に少なかった。
+ \end{itemize}
 \end{frame}
-\subsection{\ElmJ{WeakMap}を利用したクラス}
+\subsection{\ElmJ{WeakMap}を利用したクラス(1)}
 \begin{frame}
  \frametitle{\ElmJ{WeakMap}を利用したクラス}
+ \begin{itemize}
+	\item \texttt{p.name}の型は\Verb+"string"+なので、インスタンスの値がコ
+				ピーされて戻ってくる。その値を\ElmJ{delete}しているのでメソッド
+				は消去されない。
+	\item \texttt{p.birthday}の戻り値はオブジェクトなので、その参照が返る。
+				したがって、参照先のデータは書き直せてしまう。
+	\item \texttt{p.birthday}の戻り値はオブジェクトなので、それにぷろぺてぃ
+				の追加や削除は可能である。
+ \end{itemize}
 \end{frame}
-\subsection{クラスの継承におけるエラーチェック}
+
+\begin{frame}[containsverbatim]
+ \frametitle{\ElmJ{WeakMap}を利用したクラス(2)}
+ \texttt{p.birthday}のプロパティを書き直せなくするには次の方法がある。
+ \begin{itemize}
+	\item コンストラクタ内でオブジェクトを\ElmJ{freeze}する。
+	\item \texttt{birthday}オブジェクトの内容をコピーして返す。
+\begin{Verbatim}
+  get birthday2(){
+    return {
+      year:properties.get(this).birthday.year,
+      month:properties.get(this).birthday.month,
+      day:properties.get(this).birthday.day};
+ }
+\end{Verbatim}
+\begin{Verbatim}
+  get birthday3(){
+    let res = {};
+    let obj = properties.get(this).birthday;
+    for(let key in obj) {
+      res[key] = obj[key];
+    }
+    return res;
+  }
+\end{Verbatim}
+\begin{Verbatim}
+  get birthday4(){
+    return JSON.parse(JSON.stringify(properties.get(this).birthday));
+  }
+\end{Verbatim}
+ \end{itemize}
+\end{frame}
+	\subsection{クラスの継承におけるエラーチェック}
 \begin{frame}
  \frametitle{クラスの継承におけるエラーチェック}
+ \texttt{Person}クラスで行っている例が目立った。
 \end{frame}
-\subsection{\ElmJ{WeakMap}を利用したクラス}
+\subsection{エラーチェックの厳密化}
 \begin{frame}
  \frametitle{エラーチェックの厳密化}
+\begin{itemize}
+ \item 小数のチェック
+ \item 名前が空
+ \item 年が負
+\end{itemize}
+ などいろいろな工夫があってよい解答がいくつがあった。
+
+ エラーチェックはなるべく早い段階で行うほうが手間がかからないので、その
+ 手段を本日の授業で解説する。
 \end{frame}
  \section{正規表現}
  \subsection{正規表現の定義}
