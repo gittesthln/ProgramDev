@@ -3,14 +3,14 @@
 \beamer@subsectionintoc {1}{1}{クラスの\texttt {extensible}属性}{2}{0}{1}
 \beamer@subsectionintoc {1}{2}{\texttt {Person}クラスの\texttt {prototype}}{3}{0}{1}
 \beamer@subsectionintoc {1}{3}{\texttt {WeakMap}を利用したクラス}{4}{0}{1}
-\beamer@subsectionintoc {1}{4}{クラスの継承におけるエラーチェック}{5}{0}{1}
-\beamer@subsectionintoc {1}{5}{\texttt {WeakMap}を利用したクラス}{6}{0}{1}
-\beamer@sectionintoc {2}{正規表現}{7}{0}{2}
-\beamer@subsectionintoc {2}{1}{正規表現の定義}{7}{0}{2}
-\beamer@subsectionintoc {2}{2}{リテラル文字}{10}{0}{2}
-\beamer@subsectionintoc {2}{3}{文字クラス}{12}{0}{2}
-\beamer@subsectionintoc {2}{4}{繰り返しの指定}{14}{0}{2}
-\beamer@subsectionintoc {2}{5}{グループ化と参照}{18}{0}{2}
-\beamer@sectionintoc {3}{文字列のパターンマッチングとその利用}{22}{0}{3}
-\beamer@subsectionintoc {3}{1}{\texttt {String}オブジェクトのメソッド}{22}{0}{3}
-\beamer@subsectionintoc {3}{2}{メソッドの実行例}{23}{0}{3}
+\beamer@subsectionintoc {1}{4}{クラスの継承におけるエラーチェック}{7}{0}{1}
+\beamer@subsectionintoc {1}{5}{エラーチェックの厳密化}{8}{0}{1}
+\beamer@sectionintoc {2}{正規表現}{9}{0}{2}
+\beamer@subsectionintoc {2}{1}{正規表現の定義}{9}{0}{2}
+\beamer@subsectionintoc {2}{2}{リテラル文字}{12}{0}{2}
+\beamer@subsectionintoc {2}{3}{文字クラス}{14}{0}{2}
+\beamer@subsectionintoc {2}{4}{繰り返しの指定}{16}{0}{2}
+\beamer@subsectionintoc {2}{5}{グループ化と参照}{20}{0}{2}
+\beamer@sectionintoc {3}{文字列のパターンマッチングとその利用}{24}{0}{3}
+\beamer@subsectionintoc {3}{1}{\texttt {String}オブジェクトのメソッド}{24}{0}{3}
+\beamer@subsectionintoc {3}{2}{メソッドの実行例}{25}{0}{3}

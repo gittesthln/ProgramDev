@@ -21,24 +21,31 @@
  \end{itemize}
 \end{frame}
 \subsection{\texttt{Person}クラスの\ElmJ{prototype}}
-\begin{frame}
+\begin{frame}[containsverbatim]
  \frametitle{\texttt{Person}クラスの\ElmJ{prototype}}
  \begin{itemize}
 	\item 関数で定義したクラスとクラスによる定義の違いを認識してほしい。
 	\item 両者の比較をしてある解答は非常に少なかった。
- \end{itemize}
+  \item \ElmJ{prototype}内にメソッドが存在する
+  \item インスタンス内の\Verb+__proto__+はコンストラクタの
+        \texttt{prototype}への参照
+\begin{Verbatim}
+>p = new Person("foo",2001,4,1);
+{}
+>p.__proto__=== Person.prototype;
+true
+\end{Verbatim}
+\end{itemize}
 \end{frame}
-\subsection{\ElmJ{WeakMap}を利用したクラス(1)}
+\subsection{\ElmJ{WeakMap}を利用したクラス}
 \begin{frame}
- \frametitle{\ElmJ{WeakMap}を利用したクラス}
+ \frametitle{\ElmJ{WeakMap}を利用したクラス(1)}
  \begin{itemize}
 	\item \texttt{p.name}の型は\Verb+"string"+なので、インスタンスの値がコ
 				ピーされて戻ってくる。その値を\ElmJ{delete}しているのでメソッド
 				は消去されない。
 	\item \texttt{p.birthday}の戻り値はオブジェクトなので、その参照が返る。
 				したがって、参照先のデータは書き直せてしまう。
-	\item \texttt{p.birthday}の戻り値はオブジェクトなので、それにぷろぺてぃ
-				の追加や削除は可能である。
  \end{itemize}
 \end{frame}
 
@@ -48,7 +55,8 @@
  \begin{itemize}
 	\item コンストラクタ内でオブジェクトを\ElmJ{freeze}する。
 	\item \texttt{birthday}オブジェクトの内容をコピーして返す。
-\begin{Verbatim}
+\end{itemize}
+\begin{Verbatim}[fontsize=\scriptsize]
   get birthday2(){
     return {
       year:properties.get(this).birthday.year,
@@ -56,7 +64,8 @@
       day:properties.get(this).birthday.day};
  }
 \end{Verbatim}
-\begin{Verbatim}
+\ElmJ{for(... in ...)}では次のように記述する。
+\begin{Verbatim}[fontsize=\scriptsize]
   get birthday3(){
     let res = {};
     let obj = properties.get(this).birthday;
@@ -66,13 +75,18 @@
     return res;
   }
 \end{Verbatim}
-\begin{Verbatim}
+\end{frame}
+ \begin{frame}[containsverbatim]
+  \frametitle{別解}
+  一般に、ある値がまたオブジェクトになっていたらその中もコピーする必要が
+  ある。それをしない方法として、一旦、JSON オブジェクトで文字列に変換し、
+  再びオブジェクトに戻すという方法がある。
+\begin{Verbatim}[fontsize=\small]
   get birthday4(){
     return JSON.parse(JSON.stringify(properties.get(this).birthday));
   }
 \end{Verbatim}
- \end{itemize}
-\end{frame}
+ \end{frame}
 	\subsection{クラスの継承におけるエラーチェック}
 \begin{frame}
  \frametitle{クラスの継承におけるエラーチェック}
@@ -385,7 +399,7 @@ undefined
  \frametitle{文字列のあとを参照}
 文中の \Verb+Java+ を \Verb+JavaScript+ に変えるものである。
 
-\Verb+JavaScript+ を{\color{red}\Verb+JavaScriptScript+} にしないために
+\Verb+JavaScript+ を{\Verb+JavaScriptScript+} にしないために
 \Verb+(?!p)+を用いる。
 \begin{Verbatim}
 >"JavaとJavaScriptは全く違う言語です。".
