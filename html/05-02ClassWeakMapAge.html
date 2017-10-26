@@ -26,8 +26,28 @@ const Person = (function() {
     get birthday(){
       return properties.get(this).birthday;
     }
+    get birthday2(){
+      return {
+        year:properties.get(this).birthday.year,
+        month:properties.get(this).birthday.month,
+        day:properties.get(this).birthday.day};
+    }
+    get birthday3(){
+      let res = {};
+      let obj = properties.get(this).birthday;
+      for(let key in obj) {
+        res[key] = obj[key];
+      }
+      return res;
+    }
+    get birthday4(){
+      return JSON.parse(JSON.stringify(properties.get(this).birthday));
+    }
     get hometown(){
       return properties.get(this).hometown;
+    }
+    toJSON(){
+      return JSON.stringify(properties.get(this));
     }
     toString() {
       return `${this.name}さんは`+
