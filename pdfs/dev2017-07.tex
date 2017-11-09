@@ -3,7 +3,7 @@
 \title{ソフトウェア開発\\第7回目授業}
 \author{平野 照比古}
 \institute{}
-\date{2016/11/11}
+\date{2017/11/10}
 \newtheorem{Prob}{解説}
 \setbeamercovered{transparent}
 \begin{document}
@@ -44,7 +44,7 @@
  \item 符号部は\texttt{+}または\texttt{-}からなる一文字からなる。一度だ
        けまで現れてよいので、この部分は \texttt{[+-]?}または\texttt{(+|-)?}で表される。
  \item 整数部は10進数の並びであり最低1文字は必要であるので反復の指定は
-       \texttt{+}となる。したがって、この部分は \texttt{\d+}で表される。
+       \texttt{+}となる。したがって、この部分は \texttt{\textbackslash d+}で表される。
  \item 小数点\texttt{.}は正規表現では任意の文字にマッチするのでエスケー
        プする必要がある。したがってこの部分は \texttt[\textbackslash .]
        となる。
@@ -100,7 +100,29 @@
 \end{Verbatim}
 }
  \end{frame}
- \iffalse
+ \subsection{日付を得る}
+ \begin{frame}[containsverbatim]
+	\frametitle{日付を分ける--ほしい部分を指定(\texttt{match}を利用)}
+	\begin{itemize}
+	 \item \Verb-/(\d+)年(\d+)月(\d+)日/-
+				 \begin{itemize}
+					\item 戻り値の1，2, 3番目に求める値が入る
+					\item したがって分割代入\texttt{[,y,m,d]}で
+								変数に代入ができる。
+				 \end{itemize}
+	 \item この形ならば\verb-/\d+/g-で十分
+	\end{itemize}
+ \end{frame}
+ \begin{frame}[containsverbatim]
+	\frametitle{日付を分ける--区切る部分を指定(\texttt{split}を利用)}
+	\begin{itemize}
+	 \item \texttt{/年|月|日/}\\
+					戻り値の 0, 1，2番目に求める値が入る
+	 \item 文字クラスでもよいが「平成」が付いた場合には対応できない
+	 \item \Verb-/\D+/-(数字以外で分ける)
+	\end{itemize}
+ \end{frame}
+ \iffalse\else
 \subsection{正規表現のマッチを確認する}
 \newcommand{\ShowCh}[1]{{\Large \texttt{#1}}}
 \newcommand{\Stringi}{%
@@ -251,6 +273,7 @@
  \item 全体で3つ答えを返す
 \end{itemize}
 \end{frame}
+\iffalse
 \begin{frame}[containsverbatim]
    \frametitle{\protect\texttt{"aaaabaaabb".match(/.*?b\textbackslash B/);}}
 \Stringi
@@ -317,6 +340,7 @@
        \texttt{b}のところから探索を始めているためではないかと考えられる
 \end{itemize}
 \end{frame}
+ \fi
 \begin{frame}[containsverbatim]
    \frametitle{\protect\texttt{"abccbcckkccaaMMaacc".match(/((.)\textbackslash2).*\textbackslash1/);}}
 \Stringii
@@ -859,9 +883,11 @@ DOM では DOM ツリーを操作するためにメソッドやプロパティ�
 \end{center}
 \end{table}
 \end{frame}
+\iffalse
 \section{レポート問題}
 \begin{frame}[containsverbatim]
  \frametitle{レポート問題}
 課題7.1から7.4までレポートにして提出のこと。
 \end{frame}
+\fi
 \end{document}
