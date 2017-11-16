@@ -42,7 +42,7 @@ PHP は 8 種類の基本型をサポートする。
   \item 論理値 (boolean)\\\texttt{TRUE} と \texttt{FALSE} の値をとる。小
 	文字で書いてもよい。
   \item 整数 (integer)\\整数の割り算はない。つまり $1/2$ は $0$ ではなく
-	$0.5$ となる。{なお、php 7 では整数の割り算の結果を与える
+	$0.5$ となる。{なお、PHP 7 では整数の割り算の結果を与える
         \Verb+intdiv()+関数が導入された。たとえば、\Verb+intdiv(1,2)+の結果は
         \Verb+0+となる。}
   \item 浮動小数点数 (float, double も同じ)
@@ -55,7 +55,7 @@ JavaScriptと同様に文字列の型はあるが、文字の型はない。
 \texttt{array()}を用いて作成する。引数にはカンマで区切られた
 	\texttt{key=>value}の形で定義する。\texttt{key=>}の部分はなくて
 	もよい。このときは\texttt{key}として\texttt{0,1,2,...}が順に与え
-	られる。
+	られる。なお、PHPの配列はキーと値を関連付ける連想配列しかない。
   \item オブジェクト (object)
  \end{itemize}
  \item 2 種類の特別な型:

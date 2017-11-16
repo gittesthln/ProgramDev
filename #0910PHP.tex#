@@ -1,0 +1,726 @@
+%-*- coding: utf-8 -*-
+%\section{PHPの超入門} 
+\section{PHPとは}
+日本PHPユーザー会のホームページ\footnote{http://www.php.gr.jp}には次のよ
+うに書かれている。
+\begin{quotation}
+PHP は、オープンソースの汎用スクリプト言語です。 特に、サーバサイドで動
+ 作する Web アプリケーションの開発に適しています。 言語構造は簡単で理解
+ しやすく、C 言語の基本構文に多くを拠っています。 手続き型のプログラミン
+ グに加え、（完全ではありませんが）オブジェクト指向のプログラミングも行
+ うことができます。
+\end{quotation}
+なお、PHPは Web アプリケーションのためではなく、通常
+のプログラミング言語としても使用できる。通常のプログラミング言語として使
+用するためには、コマンドプロンプトから PHP が実行できるように、環境変数
+\texttt{PATH}に \texttt{php.exe} があるフォルダを追記しておくとよい。
+
+また、コマンドプロンプトから \Verb+php -S localhost:8080+ を実行すると起
+動したフォルダをドキュメントルートとするポート番号が\Verb+8080+のサーバー
+が立ち上がる。
+
+なお、このテキストのPHPの仕様に関する説明は日本PHPユーザー会から多
+く引用している。
+
+%PHP はサーバーサイドで利用されることが多いので、サーバーに関する基礎知識
+%を紹介する。
+%\chapter{サーバーとのデータ－の交換}
+\section{PHPプログラムの書き方}
+通常のサーバーの設定ではPHPのプログラムの拡張子は\texttt{php}である。Web
+アプリケーションではクライアントから拡張子が\texttt{php}のファイルが要求
+されると、サーバーが PHP のプログラムを処理して、その出力がクライアント
+側に送られる。
+
+PHPで処理すべき部分は \texttt{<?php}と\texttt{?>}の
+間に記述する。それ以外の部分はそのまま出力される。このブロックは複数あっ
+てもかまわない。
+\section{データの型}
+PHP は 8 種類の基本型をサポートする。
+\begin{itemize}
+ \item 4 種類のスカラー型
+ \begin{itemize}
+  \item 論理値 (boolean)\\\texttt{TRUE} と \texttt{FALSE} の値をとる。小
+	文字で書いてもよい。
+  \item 整数 (integer)\\整数の割り算はない。つまり $1/2$ は $0$ ではなく
+	$0.5$ となる。{なお、PHP 7 では整数の割り算の結果を与える
+        \Verb+intdiv()+関数が導入された。たとえば、\Verb+intdiv(1,2)+の結果は
+        \Verb+0+となる。}
+  \item 浮動小数点数 (float, double も同じ)
+  \item 文字列 (string)\\
+JavaScriptと同様に文字列の型はあるが、文字の型はない。
+ \end{itemize}
+ \item 2 種類の複合型
+ \begin{itemize}
+  \item 配列 (array)\\
+\texttt{array()}を用いて作成する。引数にはカンマで区切られた
+	\texttt{key=>value}の形で定義する。\texttt{key=>}の部分はなくて
+	もよい。このときは\texttt{key}として\texttt{0,1,2,...}が順に与え
+	られる。なお、PHPの配列はキーと値を関連付ける連想配列しかない。
+  \item オブジェクト (object)
+ \end{itemize}
+ \item 2 種類の特別な型:
+\begin{itemize}
+ \item リソース (resource)\\
+オープンされたファイル、データベースへの接続、イメージなど特殊なハンドル
+       
+ \item ヌル (NULL)\\
+ある変数が値を持たないことを示す。
+\end{itemize}
+\end{itemize}
+\section{変数}
+PHPの変数の特徴は次のとおりである。
+\begin{itemize}
+ \item 変数は特に宣言しない。
+ \item 変数名は \texttt{\$}で始まる。
+ \item 変数に値を代入すればその値はすべてコピーされる。
+ \item コピーではなく参照にしたい場合には変数の前に \texttt{\&}を付
+ける。
+\end{itemize}
+\begin{Exec}\upshape\label{PHPsubstitute}
+次の例は単純な値を代入してある変数の参照をチェックしている。
+\begin{Verbatim}[numbers=left]
+<?php
+$a = 1;
+$b = $a;
+print "1:\$a=$a, \$b=$b\n";// 1:$a=1, $b=1
+$a = 2;
+print "2:\$a=$a, \$b=$b\n";// 2:$a=2, $b=1
+$b = &$a;
+print "3:\$a=$a, \$b=$b\n";// 3:$a=2, $b=2
+$a = 10;
+print "4:\$a=$a, \$b=$b\n";// 4:$a=10, $b=10
+?>
+\end{Verbatim}
+ \begin{itemize}
+  \item 3行目で変数 \Verb+$a+ の値を変数 \Verb+$b+ の代入している。4行目で見
+        るように両者の値は同じである。
+  \item 5行目で \Verb+$a+ の値を変更しても、変数 \Verb+$b+ の値は変化し
+        ない(6行目)。
+  \item 7行目では変数 \Verb+$b+ に変数の参照を代入している。この場合に
+        は変数 \Verb+$a+ の値を変更すると(9行目)変数 \Verb+$b+ の値も変
+        更される(10行目)。
+ \end{itemize}
+ \end{Exec}
+ \iffalse
+ 次の例は配列に対して同様のことをしている。
+\begin{Verbatim}[numbers=left]
+<?php
+$a = array(1,2);
+$b = $a;
+
+print_r($a);
+print_r($b);
+
+$a[0] = 20;
+print "1:\$b[0]=$b[0]\n";
+
+$b = &$a;
+$a[1] = 30;
+print "2:\$b=";
+print_r($b);
+?>
+\end{Verbatim}
+実行結果は次の通りである。
+\begin{Verbatim}
+Array
+(
+    [0] => 1
+    [1] => 2
+)
+Array
+(
+    [0] => 1
+    [1] => 2
+)
+1:$b[0]=1
+2:$b=Array
+(
+    [0] => 20
+    [1] => 30
+)
+
+\end{Verbatim}
+\begin{itemize}
+ \item 2行目で配列の成分が\texttt{1}と\texttt{2}である配列を作成している。
+       さらに、3行目でこの配列を別の変数に代入している。
+ \item 9行目では配列の一部分の値を変えているが、3行目で代入された変数の
+       値には変化がないことがわかる(10行目)。
+
+       これから単純な配列の代入は配列全体がコピーされていることがわかる。
+ \item 関数\texttt{print\_r()}は配列などの構造を持つ変数の内容をわかりや
+ すく表示する関数である。より詳しい情報を知りたい場合には関数
+       \texttt{var\_dump()} を用いるとよい
+\end{itemize}
+\end{Exec}
+\input 09prob-02.tex
+ \fi
+ \iffalse\else
+ \subsection{可変変数}
+ ある変数の値が文字列のとき、その前に\Verb+$+をつけると、その文字列が変
+ 数名として使える。
+ \begin{Exec}\upshape
+  次のリストは可変変数の使用例である。
+\begin{Verbatim}[numbers=left]
+<?php
+$a = 1;
+$b = 2;
+
+$c = "a";
+print "\$\$c = " . $$c ."\n";  // $$c = 1
+
+$c = "b";
+print "\$\$c = " . $$c . "\n"; // $$c = 2
+?>
+\end{Verbatim}
+  \begin{itemize}\upshape
+   \item 変数\Verb+$a+ と \Verb+$b+ にそれぞれ$1$と$2$を代入している(1行
+         目と2行目)。
+   \item 変数\Verb+$c+に文字列\Verb+"a"+を代入し、\Verb+$$c+を出力させ
+         ると\Verb+$a+の値が表示される(5行目と6行目)。
+   \item 同様に、変数\Verb+$c+に文字列\Verb+"b"+を代入して、\Verb+$$c+を出力させ
+         ると\Verb+$b+の値が表示される(8行目と9行目)。
+  \end{itemize}
+ \end{Exec}
+ \fi
+\subsection{定義済み変数}
+PHP にはいくつかの定義済みの変数が存在する。そのうち、スーパーグローバル
+と呼ばれる変数はグローバルスコープを持つ定義済みの変数である(表\ref{superglobal})。
+\begin{table}[ht]
+ \caption{スーパーグローバル}\label{superglobal}
+\begin{center}
+ \begin{tabular}{|c|m{30zw}|}\hline
+  変数名& \multicolumn{1}{c|}{変数の内容}\\\hline
+\Verb+$GLOBALS+ & グローバルスコープで使用可能なすべての変数への参照\\\hline
+\Verb+$_SERVER+ & サーバー情報および実行時の環境情報\\\hline
+\Verb+$_GET+ & HTTP 通信における GET によるパラメータ\\\hline
+\Verb+$_POST+ & HTTP 通信における POST によるパラメータ\\\hline
+\Verb+$_FILES+ & HTTP 通信でファイルアップロードに関する情報\\\hline
+  \Verb+$_COOKIE+ & HTTP 通信におけるクッキーの情報\\\hline
+\Verb+$_SESSION+ &HTTP 通信におけるセッション中に保持される情報 \\\hline
+\Verb+$_REQUEST+ & HTTP 通信におけるパラメータ(GETやPOSTの区別をしない)\\\hline
+\Verb+$_ENV+  &  環境変数のリスト\\\hline
+\Verb+$argc+  &  コマンドプロンプトから実行したときに与えられた引数の数\\\hline
+\Verb+$argv+  &  コマンドプロンプトから実行したときに与えられた引数のリ
+      スト\\\hline
+ \end{tabular}
+\end{center}
+\end{table}
+
+これらの変数のうち、{\texttt{\$\_ENV}} \Verb+$argc+ と
+\Verb+$argv+ 以外はCGIで使用する。
+
+\Verb+$argv+はPHPをコマンドプロンプトから実行したときの(空白で区切られた)パ
+ラメータを保持する文字列の配列である。\Verb+$argv[0]+には実行しているPHP
+ファイル名が渡される。\Verb+$argc+ は \Verb+count($argv)+と同じ値である。
+%\paragraph{}
+\section{文字列}
+\subsection{文字列の定義方法}PHPでは文字列を定義する方法が3通りある。
+\begin{itemize}
+ \item シングルクオート(\texttt{'})ではさむ。\\
+   中に書かれた文字がそのまま定義される。
+ \item ダブルクオート(\Verb+"+)ではさむ。%"
+       \\改行などの制御文字が有効になる。また、変数はその値で置き換えら
+       れる。これを変数が展開されるという。
+ \item ヒアドキュメント形式\\
+   複数行にわたる文字列を定義できる。\texttt{<<<}の後に識別子を置く。文
+       字列の最後は行の先頭に初めの識別子を置き、そのあとに文の終了を表
+       す\texttt{;}を置く。平ドキュメントの終わりを示す識別子は行の先頭から書く必要がある。
+       {\bfseries 識別子の前に空白などを入れてはいけない。}
+\end{itemize}
+\begin{Exec}\upshape
+次の例はいろいろな文字列の動作を確認するものである。
+ %
+\begin{Verbatim}[numbers=left]
+<?php
+print 'string1 \':abcd\n';
+print "string2 \":abcd\n";    // string1 ':abcd\nstring2 ":abcd
+
+$a = 1;
+print 'string3 \':$a bcd\n';
+print "string4 \":$a bcd\n"; //string3 ':$a bcd\nstring4 ":1 bcd
+print "string5 \":{$a}bcd\n";//string5 ":1bcd
+
+$b = array(1,2,3);
+print "string6:$b\n";        //string6:Array
+print "string7:$b[1]aa\n";  //string7:2aa
+print "string7:$b[$a]aa\n"; //string7:2aa
+
+print <<<_EOL_
+string8:
+  aa
+  \$a = $a
+_EOL_;          //string8:
+                //  aa
+                //  $a = 1
+\end{Verbatim}
+%"
+\begin{itemize}
+ \item シングルクオートの文字列では改行を意味する\texttt{\textbackslash
+       n}がそのまま
+       出力されているのに対し、ダブルクオートの文字列では改行に変換され
+       ている。
+ \item シングルクオートの文字列では変数名がそのまま
+       出力されているのに対し、ダブルクオートの文字列では変数の値に変換され
+       ている。この場合、変数と
+       して解釈されるのは変数名の区切りとなる文字(空白など)である。その
+       ため7行目では変数の後に空白を入れている。
+ \item 空白を入れたくない場合などは変数名全体を\texttt{\{}と\texttt{\}}
+       で囲む(8行目)。
+ \item 変数が配列の場合には添え字を個々に指定しなくてはいけない。その指定
+       には別の変数が使用できる。
+ \item ヒアドキュメントでは途中の改行もそのまま出力される。また、変数は
+       展開される。
+\end{itemize}
+\end{Exec}
+\subsection{文字列を取り扱う関数}
+PHPでは文字列を取り扱う関数が用意されている。これらの関数は文字列のメソッ
+ドとなっていないことに注意する必要がある。Unicode 文字列を取り扱う必要が
+ある場合には\Verb+mb_+で始まる関数群を使用する必要がある。具体的な関数の
+例はPHPのサイトで確認すること。
+\section{式と文}
+文の最後には必ず\texttt{;}が必要である。その他はほとんどC言語と同じ構文
+が使える。演算子「\texttt{+}」はJavaScriptと異なり、通常の数の演算となる。文字
+列に対して「\texttt{+}」を用いると数に直されて計算される。文字
+列の連接には「\texttt{.}」を用いる。
+\begin{Exec}\upshape
+次の例は文字列の演算子の確認である。
+\begin{Verbatim}[numbers=left]
+<?php
+print  1  + "2" . "\n";    // 3
+print "1" + "2" . "\n";    // 3
+print "1" . "2" . "\n";    // 12
+print 1 . 2 . "\n";        // 12
+
+print "1a" + "2" . "\n";  // 3
+print "a1" + "2" . "\n";  // 2
+print "0x1a" + "2" . "\n";// 28
+\end{Verbatim}
+\begin{itemize}
+ \item \texttt{+}演算子は常に数としての加法として扱われ、
+ \texttt{.}は文字列の連接として扱われる。
+ \item 文字列が数として不正な文字を含むとその直前まで解釈した値を返す(7行目と8行目)。
+ \item 16進リテラルも正しく解釈される(9行目)。
+\end{itemize}
+\end{Exec}
+比較演算子についてもC言語と同様のもののほかに、データ型も込めて等しいこ
+とをチェックする\texttt{===}演算子と\texttt{!==}演算子がある。
+
+\input compare_php.tex
+
+PHPでは分岐、繰り返しなどの制御構造はC言語と同じように\texttt{if}文、
+\texttt{for}文、\texttt{while}文と\texttt{switch}文などがある。
+
+\section{配列}
+\subsection{配列の基礎}
+PHPの配列は \texttt{array()}関数で作成する。配列にはC言語などのような数
+字を添え字とするものとキーと値の組み合わせであるものがある。
+\begin{Exec}
+ \upshape
+ 次のリストは配列の取り扱いに関する簡単な例である。
+\LISTNN{09DefArray.php}{2}{6}{\normalsize}
+\begin{itemize}
+ \item 1行目で４つの値を持つ配列を定義
+ \item ２行目で別の変数に値を代入
+ \item ３行目で初めの配列の先頭の値を変更
+ \item ４行目と５行目で配列の内容を出力するために\Verb+print_r()+関数を
+			 用いている。
+\end{itemize}
+出力結果は次のとおりである。
+\begin{Verbatim}
+Array
+(
+    [0] => 5
+    [1] => 10
+    [2] => 20
+    [3] => 30
+)
+Array
+(
+    [0] => 0
+    [1] => 10
+    [2] => 20
+    [3] => 30
+)
+\end{Verbatim}
+\Verb+$b=$a+で代入された変数\Verb+$b+は\Verb+$a+とは別の領域が割り当てら
+れていることがわかる。
+\end{Exec}
+ \begin{Prob}\upshape
+  実行例\ref{PHPsubstitute}で \Verb+print_r()+ 関数の代わりに
+   \Verb+var_dump()+ 関数を用いて出力がどのように変わるか確認しなさい。
+ \end{Prob}
+キーと値を組み合わせた配列については次の項で解説をする。
+\subsection{配列に関する制御構造}
+JavaScriptのオブジェクトのプロパティを列挙するのに利用した
+\texttt{for(... in ...)}に相当する\texttt{foreach}がある。
+この構文は形をとる。
+
+\texttt{foreach(「配列名」 as [キー ＝>] 値)}
+
+「キー」と「値」のところは単純な変数を置くことができる。
+「キー」の部分は省略可能である。
+\begin{Exec}\upshape
+ 次の例は\texttt{foreach}の使用例である。
+%\listinginput{1}{09Exforeach.php}
+\LISTNN{09Exforeach.php}{2}{8}{\normalsize}
+ 1行目で単純な配列を定義して、
+ 2行目から4行目と5行目から7行目でこの配列の要素をすべて表示させて
+       いる。
+この部分の出力は次のとおりである。
+\begin{verbatim}
+red
+yellow
+blue
+0:red
+1:yellow
+2:blue
+\end{verbatim}
+ 単純な配列のときは「キー」の値は $0,1,2,\dots$ を順にとる(出力4行
+       目から6行目)。ここでは\Verb+$a[$key]=$val+の関係が成立しているこ
+       とに注意すること。
+\LISTNN{09Exforeach.php}{9}{15}{\normalsize}
+ 1行目ではJavaScriptにおけるオブジェクトリテラルの形式に似た連想配
+       列を定義して、2行目から4行目と5行目から7行目で以前とと同じ形で配列の内容を
+       表示している。
+この出力は次のようになる。
+\begin{Verbatim}
+赤
+黄
+青
+red:赤
+yellow:黄
+blue:青
+\end{Verbatim}
+\end{Exec}%"
+\begin{Exec}\upshape
+次の例はPHPの配列に関する特別な状況を説明するためのものである。
+\LISTNN{09Exforeach.php}{16}{27}{\normalsize}
+この出力は次のようになる。%"
+\begin{Verbatim}
+2       //5行目の出力
+3:3rd   //６行目の出力 １回目
+0:0     //６行目の出力 2回目
+0:0     //1０行目の$i=0のときの値
+\end{Verbatim}
+\begin{itemize}\upshape
+ \item 1行目で配列を初期化し、その後、$3$番目と先頭の要素に値を代入して
+       いる。
+ \item 関数\texttt{count()}は配列の大きさ(正確には配列にある要素の数)を
+       求めるものである。2つの値しか定義していないので $2$ となる。
+ \item \texttt{foreach}で配列の要素を渡るときは定義した順に値が設定され
+       る。\Verb+count($b)+の値が$2$であったことから\Verb+$b[3]+の出力は
+       現れない。
+\end{itemize}
+ \end{Exec}
+\subsection{配列に関する関数}
+PHPには配列の処理に関するいろいろな関数(もどき)がある。
+\paragraph{\protect\texttt{list()}}
+\texttt{list()}は配列の個々の要素をいくつかの変数にまとめて代入できる。
+これは関数ではなく、言語構造である。
+\begin{Verbatim}
+list($first,$second, $third) = array(1,2,3,4,5);
+\end{Verbatim}
+この結果は、変数\Verb+$first+、\Verb+$second+と\Verb+$third+にそれぞれ
+\texttt{1,2,3}が代入される。途中に変数を書かなければ、その分は飛ばされる。
+\begin{Verbatim}
+list($first, , $third) = array(1,2,3,4,5);
+\end{Verbatim}
+この場合は変数\Verb+$first+と\Verb+$third+だけ代入が行われる。
+\paragraph{\protect\texttt{array\textunderscore pop()}と
+\protect\texttt{array\textunderscore push()}}
+\Verb+array_pop()+はもとの配列から最後の要素を取り除いて配列の大きさ
+を一つ少なくし、取り除いた要素を戻り値とする。\Verb+array_push()+は与
+えられた引数を順に配列の最後に付け加えて配列の大きさを増加させる。
+\begin{Verbatim}
+$a = array(1,2,3,4);
+print array_pop($a);  //４が出力される
+array_push($a,10,20); //$a は array(1,2,3,10,20)となる
+\end{Verbatim}
+配列の先頭に対して要素を取り出したり(\Verb+array_shift()+)、追加する
+(\Verb+array_unshift()+)することもできる。
+\paragraph{配列のキーと値の存在の判定}
+\Verb+in_array($needle, $array)+は与えられた配列(\Verb+$array+)内に指定
+した値(\Verb+$needle+)が存在するかを調べる関数である。値の型まで比較する
+ためには省略可能な3番目の引数を\Verb+TRUE+にすればよい。存在すれば
+\Verb+TRUE+が返る。
+
+\Verb+array_key_exists($needle, $array)+は与えられた配列(\Verb+$array+)内に指定
+したキー(\Verb+$needle+)が存在するかを調べる関数である。存在すれば
+\Verb+TRUE+が返る。
+\paragraph{並べ替え}
+PHPには配列を並べ替える関数がいくつか用意されている。\Verb+sort()+は各要
+素を昇順に並べかえる。降順に並べ替えるには\Verb+rsort()+関数を用いる。
+このほか、連想配列のキーで並べ替える\Verb+ksort()+と\Verb+krsort()+関数、
+ユーザー指定の比較関数を用いて並べ替える\Verb+usort()+関数などがある。詳
+しくはPHPユーザー会のマニュアルを参考にすること。
+\paragraph{配列からランダムな値を取り出す}
+\Verb+shuffle()+は与えられた配列の要素をランダムに並べ替える関数である。
+配列をそのままにしておきたい場合には\Verb+array_rand()+関数を用いる。こ
+の関数は取り出すキーの値を返す。
+
+\paragraph{配列の切り出しと追加}配列の要素の一部を取り出して別の配列にし
+たり(\Verb+array_slice()+)、配列の一部を別の要素に置き換えたり
+(\Verb+array_splice()+) できる。
+
+\Verb+array_slice($array, $start, $length)+は与えられた配列\Verb+$array+
+の\Verb+$start+の位置から長さ\Verb+$length+の部分を配列として返す関数で
+ある。
+\begin{itemize}
+ \item \Verb+$length+が与えられないときは、配列の最後まで切り取られる。 
+ \item 元の配列は変化しない。
+ \item \Verb+$start+の値が負のときは、配列の最後から数えた位置となる。
+\end{itemize}
+\begin{Verbatim}
+$a = array(0,1,2,3,4,5);
+$res = array_slice($a,3);// $res は array(3,4,5), $a は変化しない
+$res = array_slice($a,-2);// $res は array(4,5)
+$res = array_slice($a,-3,2);// $res は array(3,4)
+\end{Verbatim}
+\Verb+array_splice($array, $start, $length, $replace)+ は配列\Verb+$array+
+の\Verb+$start+の位置から長さ\Verb+$length+の部分を切り取り戻り値とする。
+切り取られた部分には配列\Verb+$replace+の要素が入る。なお、引数
+\Verb+$start+については\Verb+array_slice()+と同じ扱いとなる。
+\begin{Verbatim}
+$a = array(0,1,2,3,4,5);
+$r = array_splice($a,3,1,array("a","b"));// $r は array(3)
+	// $a は array(0,1,2,"a","b", 4, 5)
+\end{Verbatim}
+\input 09prob-03.tex
+\iffalse
+Interactive shell
+
+print_r($res);
+Array
+(
+    [0] => 3
+    [1] => 4
+    [2] => 5
+)
+print_r($a);
+Array
+(
+    [0] => 0
+    [1] => 1
+    [2] => 2
+    [3] => 3
+    [4] => 4
+    [5] => 5
+)
+$res = array_slice($a,-2);
+print_r($res);
+Array
+(
+    [0] => 4
+    [1] => 5
+)
+$res = array_slice($a,-3,2);
+print_r($res);
+Array
+(
+    [0] => 3
+    [1] => 4
+)
+
+$r = array_splice($a,3,1,array("a","b"));
+print_r($r);
+Array
+(
+    [0] => 3
+)
+print_r($a);
+Array
+(
+    [0] => 0
+    [1] => 1
+    [2] => 2
+    [3] => a
+    [4] => b
+    [5] => 4
+    [6] => 5
+)
+var_dump($a);
+array(7) {
+  [0]=>
+  int(0)
+  [1]=>
+  int(1)
+  [2]=>
+  int(2)
+  [3]=>
+  string(1) "a"
+  [4]=>
+  string(1) "b"
+  [5]=>
+  int(4)
+  [6]=>
+  int(5)
+}
+\fi
+\section{関数}
+\subsection{PHPの関数の特徴}
+PHPの関数の特徴は次のとおりである。
+\begin{itemize}
+ \item 関数はキーワード\texttt{function} に引き続いて\texttt{()}内に、仮
+       引数のリストを書く。そのあとに\texttt{\{\}}内にプログラム本体を書
+       く。
+ \item 引数は値渡しである。参照渡しをするときは仮引数の前に\texttt{\&}を
+       付ける。
+ \item 関数のオーバーロードはサポートされない。
+ \item 関数の宣言を取り消せない。
+ \item 仮引数の後に値を書くことができる。この値は引数がなかった場合のデ
+       フォルトの値となる。デフォルトの値を与えた仮引数の後にデフォルト
+       の値がない仮引数を置くことはできない。
+ \item 関数は使用される前に定義する必要はない。
+ \item 関数内で関数を定義できる。関数内で定義された関数はグローバルスコー
+       プに存在する。ただし、外側の関数が実行されないと定義はされない。
+ \item 関数内の変数はすべてローカルである。
+ \item 関数の外で定義された変数は参照できない。関数外で宣言された変数を
+       参照するためにはスーパーグローバル\Verb+$GLOBAL+を利用する。
+ \item 関数の戻り値は \texttt{return}文の後の式の値である。複数の値を関
+       数の戻り値にしたいときは配列にして返せばよい。
+\end{itemize}
+なお、PHP 7 では関数の仮引数や戻り値に対して型を宣言できるようになった。
+使用できる型には\Verb+array+、\Verb+bool+、\Verb+float+、\Verb+string+ な
+どがある。詳しくは PHP のサイトで確認すること。
+
+ %\subsection{変数のスコープ}
+%PHP の変数はローカルなスコープしか持たない。
+%関数外で定義された変数も、関数内から参照できない。
+%関数内での変数は外部からの参照できない。
+
+PHPには外部ファイルを読み込むための関数\texttt{include()}と一度だけ指定
+されたファイルを読み込む\texttt{require\_once()}がある。このファイルの中
+で定義された変数は、読み込むテキストを直接記述したときと同じである。
+\subsection{関数の定義の例}
+\begin{Exec}\upshape
+ 次の例はユーザー定義関数の使用例である。
+\LISTN{09Exfunction.php}{1}{last}{\normalsize}
+\begin{itemize}
+ \item 1行目の関数では3番目の引数が参照渡し、4番目の引数にデフォルト値
+       が設定されている。 
+ \item 6行目の関数\texttt{isset()}は与えられた変数に値が設定されている
+       かを調べる関数である。
+ \item ここでは\Verb+$x+は仮引数ではないのでローカルな変数となり、
+       \Verb+isset($x)+は\texttt{false}となる。\Verb+!isset($x)+は
+       \texttt{true}となるので変数\Verb+$x+には
+       \Verb+"defined in function"+が代入される。
+ \item 9行目ではデフォルトの引数のチェックのための部分である。
+ \item 変数に値を代入して、呼び出し元の変数が変わ
+       るかのチェックをする(11行目から13行目)。
+ \item 14行目は初めの二つの仮引数を配列にして戻り値としている。
+\end{itemize}
+この関数の動作をチェックするのが残りの部分である。
+ \iffalse
+ \begin{listingcont}
+$a = 10;
+$as = array(1,2);
+$b = 15;
+$x = "\$x is defined at top level";
+ \end{listingcont}
+ \fi
+ ここでは、関数に渡す引数の値を設定している。
+ \iffalse
+ \begin{listingcont}
+example($a, $as, $b, true);
+print "\$a = $a\n";
+print_r($as);  
+print "\$b = $b\n";
+ \end{listingcont}
+\fi
+20行目で呼び出した関数内での出力結果は次のようになる。
+\begin{Verbatim}
+$a = 10
+Array
+(
+    [0] => 1
+    [1] => 2
+)
+$b = 15
+$x = defined in function
+$GLOBALS['x'] = $x is defined at top level
+\end{Verbatim}
+\begin{itemize}
+ \item 仮引数の値は正しく渡されている。
+ \item 6行目は判定が\texttt{true}になるのでここで新たに値が設定され、そ
+       れが7行目で出力される。
+ \item デフォルトの仮引数に対して\texttt{true}が渡されているので、9行目
+       が実行される。スーパーグローバル\Verb+$GLOBAL+にはグローバルスコー
+       プ内の変数が格納されている。ここでは19行目に現れる変数の値が表示
+       される。
+\end{itemize}
+21行目から23行目の出力は次のようになる。
+\begin{Verbatim}
+$a = 10
+Array
+(
+    [0] => 1
+    [1] => 2
+)
+$b = 30
+\end{Verbatim}
+\begin{itemize}
+ \item 初めの2つの引数は配列であっても書き直されていない。11行目と12行目
+       の設定は戻り値にしか反映されない。
+ \item 参照渡しの変数\Verb+$b+は書き直されている。
+\end{itemize}
+ \iffalse
+ \begin{listingcont}
+list($resa) = example($a, $as, $b);
+print "\$resa = $resa\n";
+?>
+ \end{listingcont}
+ \fi
+ \begin{itemize}
+ \item 24行目の関数呼び出しはデフォルトの引数がないので、引数\Verb+$f+の
+       値が\texttt{false}に設定され、9行目は実行されない。
+ \item \texttt{list()}は配列である右辺の値のうち先頭から順に指定された変
+       数に代入するので関数内の11行目で計算された値を変数\Verb+$resa+に
+       代入することになる。
+ \end{itemize}
+この部分の結果は次のとおりである。
+\begin{Verbatim}
+$a = 10
+Array
+(
+    [0] => 1
+    [1] => 2
+)
+$b = 30
+$x = defined in function
+$resa = 20
+\end{Verbatim}
+\end{Exec}
+\iffalse\else
+\subsection{可変関数}
+文字列が代入された変数を用いて、その文字列を変数名にできる可変変数と同様
+に、文字列が代入された変数の後に\texttt{()}をつけると、その文字列の関数
+を呼び出すことができる。
+\begin{Exec}\upshape
+次のリストは可変変数の利用例である。
+\begin{Verbatim}[numbers=left]
+<?php
+function add($a, $b) { return $a+$b;}
+function sub($a, $b) { return $a-$b;}
+
+$a = 5;
+$b = 2;
+$f = "add";
+print "$f($a,$b) = " . $f($a,$b) ."\n";// add(5,2) = 7
+
+$f = "sub";
+print "$f($a,$b) = " . $f($a,$b) ."\n";// sub(5,2) = 3
+?>
+\end{Verbatim}
+\begin{itemize}\upshape
+ \item 2行目と3行目で2つの関数\texttt{add()}と
+       \texttt{sub()}を定義している。
+ \item 7行目で変数\Verb+$f+に文字列\Verb+"add"+を代入して、8行目で可変
+       関数として呼び出すと、関数\texttt{add}が呼び出されていることがわ
+       かる。
+ \item 同様に、変数\Verb+$f+に文字列\Verb+"sub"+を代入して、可変
+       関数として呼び出すと、関数\texttt{sub}が呼び出されていることがわ
+       かる。
+\end{itemize}
+\end{Exec}
+\fi
+%\subsection{}

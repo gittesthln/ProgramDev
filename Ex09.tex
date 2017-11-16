@@ -1,2 +1,159 @@
 \ProblemNN{
+\input 09prob-01.tex
+\vspace{0.1\textheight}
+\input 09prob-02.tex
+\vspace{0.1\textheight}
+\input 09prob-03.tex
+	 \begin{Prob}\upshape
+		次のPHPのプログラムリストを実行した結果について下記の問いに答えよ。
+		
+					\input 09testPHP.tex					
+	 \begin{enumerate}
+		\item \Must
+	このリストを実行した結果について報告しなさい。なお、このプログラムは
+					PHPの文法を理解するためのものなので、警告などが表示され
+					るので、その内容についても報告、考察すること。
+\vspace{0.1\textheight}
+		\item \Must 上記のプログラムをJavaScriptに直して実行し、その結果を報告す
+					る(変数名の\$は省略する。６行目はコメントアウトすること)。また、
+					正しく動かない場合には修正して実行可能なものとすること。
+\vspace{0.1\textheight}
+		\item 上記の2つのことからJavaScriptとPHPにおける文法の異なる点を一覧
+					の形でまとめなさい。
+	 \end{enumerate}
+ \begin{tabular}[t]{|p{0.1\textwidth}|p{0.85\textwidth}|}\hline
+	\multicolumn{1}{|c|}{項目}&\multicolumn{1}{c|}{説明}\\\hline
+\rule{0em}{3\baselineskip} & \\\hline
+\rule{0em}{3\baselineskip} & \\\hline
+\rule{0em}{3\baselineskip} & \\\hline
+\rule{0em}{3\baselineskip} & \\\hline
+\rule{0em}{3\baselineskip} & \\\hline
+\rule{0em}{3\baselineskip} & \\\hline
+\rule{0em}{3\baselineskip} & \\\hline
+\rule{0em}{3\baselineskip} & \\\hline
+\rule{0em}{3\baselineskip} & \\\hline
+\end{tabular}
+\end{Prob}
 }
+\RubricC{
+復習の目的はJavaScript と PHP の文法上の違いを理解することである。
+具体的な項目についてはルーブリック評価表の内容を確認すること。
+}
+{
+{\RProbNoM{1}{0.2}}{10}
+ {
+ {PHPとJavaScriptの\Verb+if(変数)+ の結果の違いを具体例を交えて十分に挙げている。}
+ {PHPとJavaScriptの\Verb+==+ の結果の違いを具体例を交えて十分に挙げている。}
+ {挙げた項目それぞれに正しい考察がある。}
+ }
+ {
+ {\Verb+if("0")+の結果がある。}
+ {\Verb+if(空の配列)+の結果がある。}
+ {2つの内容が同じ配列の比較の結果がる。}
+ {空の配列と数$0$の比較の結果がある。}
+ {2つの文字列\Verb+"00"+と\Verb+"0"+の比較の結果がある。}
+ {そのほか結果が異なる例を挙げている。}
+ {挙げた項目それぞれに考察があるが、一部間違っているところがある。}
+ }
+ {
+ {PHPとJavaScriptの\Verb+if(変数)+ の結果の違いがないか具体例がない。}
+ {PHPとJavaScriptの\Verb+==+ の結果の違いがないか具体例がない。}
+ {挙げた項目それぞれに考察がないかほとんど間違っている。}
+ }
+ {\RProbNoM{2}{0.2}}{5}
+ {
+ {\Verb+var\textunderscore dump+の結果のキャプチャがある。}
+ {適切な大きさの実行結果がわかる画面がある。}
+ {解説、考察が十分にある。}
+ }
+ {
+ {\Verb+var\textunderscore dump+の結果のキャプチャがあるが少し見にくい。}
+ {実行結果がわかる画面が少し見にくい。}
+ {解説、考察が少し不十分である。}
+ }
+ {
+ {\Verb+var\textunderscore dump+の結果のキャプチャがないか見にくい。}
+ {実行結果がわかる画面がないか見にくい。}
+ {解説、考察がないか不十分である。}
+ }
+ {問題3}{12}
+ {
+ {\Verb+array\textunderscore splice()+による書き直しがすべて正しい。}
+ {書き直した結果に関する十分な実行結果がある。}
+ {正しい解説、考察が十分にある。}
+ }
+ {
+ {\Verb+array\textunderscore pop()+の\newline\Verb+array\textunderscore splice()+による書き直しが正しい。}
+ {\Verb+array\textunderscore push()+の\newline\Verb+array\textunderscore splice()+による書き直しが正しい。}
+ {\Verb+array\textunderscore shift()+の\newline\Verb+array\textunderscore splice()+による書き直しが正しい。}
+ {\Verb+array\textunderscore unshift()+の\newline\Verb+array\textunderscore splice()+による書き直しが正しい。}
+ {書き直した結果に関する実行結果がある。}
+ {解説、考察があるが少し不十分である。}
+ }
+ {
+ {\Verb+array\textunderscore pop()+の\newline\Verb+array\textunderscore splice()+による書き直しがないか間違っ
+ ている。}
+ {\Verb+array\textunderscore push()+の\newline\Verb+array\textunderscore splice()+による書き直しがないか間違っ
+ ている。}
+ {\Verb+array\textunderscore shift()+の\newline\Verb+array\textunderscore splice()+による書き直しがないか間違っ
+ ている。}
+ {\Verb+array\textunderscore unshift()+の\newline\Verb+array\textunderscore splice()+による書き直しがないか間違っ
+ ている。}
+ {書き直した結果に関する実行結果がないか不十分である。}
+ {解説、考察がないか不十分である。}
+ }
+ {\RProbNoM{4.1}{0.2}}{5}
+ {
+ {実行結果がすべて正しい。}
+ {実行結果のキャプチャ画面が読みやすく、適切な大きさである。}
+ {考察が十分にある。}
+ }
+ {
+ {実行結果の一部が正しくない。}
+ {実行結果のキャプチャ画面が読みやすくなく、適切な大きさではない。}
+ {考察が少し足りないか一部間違っている。}
+ }
+ {
+ {実行結果が正しくないか全くない。}
+ {実行結果のキャプチャ画面がないか、適切な大きさではない。}
+ {考察がないか間違っている。}
+ }
+ {\RProbNoM{4.2}{0.2}}{10}
+ {
+ {JavaScriptに直したプログラムの文法エラーについて十分な指摘がある。}
+ {JavaScriptに書き直したプログラムが実行できるように最小の修正を行ってい
+ る。}
+ {書き直したJavaScriptのプログラムの実行結果が正しい。}
+ {考察が十分にある。}
+ }
+ {
+ {JavaScriptに直したプログラムにおける関数の宣言位置を直している。}
+ {JavaScriptに書き直したプログラムの実行できるように修正した結果の実行結
+ 果が正しい。}
+ {適切な考察がある。}
+ }
+ {
+ {JavaScriptに直したプログラムの文法エラーについて指摘がないか不十分であ
+ る。}
+ {JavaScriptに書き直したプログラムが実行できるように修正を行ってい
+ ないか、余計な部分を追加している。}
+ {考察が十分にある。}
+ }
+ {問題4.3}{15}
+ {
+ {2つのプログラムの実行結果から判る文法上の指摘が十分にある。}
+ {比較結果の内容が十分にあり、説明も適切である。}
+ }
+ {
+ {文字列の連接に関する指摘がある。}
+ {関数の不足する引数や多すぎる引数に対する処理について正しい指摘がある。}
+ {関数の宣言位置に関する指摘が正しい。}
+ {変数のスコープルールに関する指摘が正しい。}
+ {そのほか、文法や処理の違いに関する指摘がある。}
+ {比較結果の内容があり、説明もほとんど正しい。}
+ }
+ {
+ {2つのプログラムの実行結果から判る文法上の指摘が不十分であるかない。}
+ {比較結果の内容や説明ががないか不十分である。}
+ }
+ }
