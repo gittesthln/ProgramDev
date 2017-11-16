@@ -1,0 +1,9 @@
+\beamer@endinputifotherversion {3.36pt}
+\beamer@sectionintoc {1}{前回のレポートから}{2}{0}{1}
+\beamer@sectionintoc {2}{Event}{5}{0}{2}
+\beamer@subsectionintoc {2}{1}{イベント概説}{5}{0}{2}
+\beamer@subsectionintoc {2}{2}{イベント処理の方法}{7}{0}{2}
+\beamer@subsectionintoc {2}{3}{HTML における代表的なイベント}{10}{0}{2}
+\beamer@subsubsectionintoc {2}{3}{1}{マウスイベント}{12}{0}{2}
+\beamer@subsectionintoc {2}{4}{DOM Level 2 のイベント処理モデル}{16}{0}{2}
+\beamer@subsectionintoc {2}{5}{イベント処理の例}{18}{0}{2}

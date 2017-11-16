@@ -3,7 +3,7 @@
 \title{ソフトウェア開発\\第8回目授業}
 \author{平野 照比古}
 \institute{}
-\date{2016/11/18}
+\date{2017/11/17}
 \newtheorem{Prob}{解説}
 \newcommand{\Elm}[1]{\texttt{<#1>}}
 \setbeamercovered{transparent}
@@ -16,59 +16,35 @@
 \newcommand{\HTML}{HTML文書}
 \begin{document}
 \frame{\maketitle}
-\iffalse
-\section{前回授業の補足}
-\subsection{DOM4におけるプロパティ}
-\begin{frame}
- \begin{table}[ht]
-\caption{DOM要素に対するプロパティ(1)}
-\begin{center}
- \begin{tabular}{|c|m{20zw}|}
-  \hline
-プロパティ名  &
- \hspace*{\fill}説{\hfill}明\hspace*{\fill}\rule{0em}{0em}\\ \hline
-\DOMP{firstChild} &指定された要素の先頭にある子要素 \\ \hline
-\DOMP{lastChild} & 指定された要素の最後にある子要素\\ \hline
-\DOMP{nextSibling} & 指定された子要素の次の要素\\ \hline
-\DOMP{previousSibling} & 現在の子要素の前にある要素\\ \hline
-\DOMP{parentNode} & 現在の要素の親要素\\ \hline
-\DOMP{hasChildNodes} &その要素が子要素を持つ場合は\texttt{true}持たない
-      場合は\texttt{false}である。\\ \hline
-\DOMP{nodeName}& その要素の要素名前\\ \hline
-\DOMP{nodeType}& 要素の種類($1$は普通の要素、$3$はテキストノード)\\ \hline
-\DOMP{nodeValue}&(テキスト)ノードの値 \\ \hline
-\DOMP{childNodes}& 子要素の配列\\ \hline
- \end{tabular}
-\end{center}
-\end{table}
-\end{frame}
-\begin{frame}
- \begin{table}[ht]
-\caption{DOM要素に対するプロパティ(2)---DOM4}
-\begin{center}
- \begin{tabular}{|c|m{17zw}|}
-  \hline
-プロパティ名  &
- \hspace*{\fill}説{\hfill}明\hspace*{\fill}\rule{0em}{0em}\\ \hline
-\DOMP{children}& 子要素のうち通常の要素だけからなる要素の配列\\ \hline
-\DOMP{firstElementChild} &指定された要素の先頭にある通常の要素である子要素\\ \hline
-\DOMP{lastElementChild} & 指定された要素の最後にある通常の要素である子要素\\ \hline
-\DOMP{nextElementSibling} & 指定された子要素の次の通常の要素\\ \hline
-\DOMP{previousElementSibling} & 現在の子要素の前にある通常の要素\\ \hline
- \end{tabular}
-\end{center}
-\end{table}
-\end{frame}
-\begin{frame}[containsverbatim]
-\frametitle{\texttt{childNodes} と \texttt{children}}
+\section{前回のレポートから}
+ \begin{frame}[containsverbatim]
+  \frametitle{CSSの\protect\texttt{nth-child}について}
+  \begin{itemize}
+   \item おおむね解答は正しかった。
+   \item \texttt{nth-child}に現れる\texttt{n}は$0,1,2\dots$と変化する。
+         (言及者が少なかった。)
+   \item 下からの要素を指定するためには\texttt{nth-last-child}を用いる。
+  \end{itemize}
+ \end{frame}
+ \begin{frame}[containsverbatim]
+  \frametitle{プルダウンメニュー作成の関数}
 \begin{itemize}
- \item \texttt{childNodes}:テキストノードを含むすべての子要素のリスト
- \item \texttt{children}:要素のリスト。テキストノードは含まない。
+ \item 引数に親要素を与えていない解答が目立った。
+ \item 作成した\Elm{select}を関数の戻り値にしていない。\\
+       後で、要素を参照する必要があるので戻り値はあった方がよい。
+ \item この後で一つの例を与える。
 \end{itemize}
-したがって、前回の課題のうち手打ちのほうは要素間に空白(改行も含む)がある
- ので\texttt{childNodes} と \texttt{children}の数は異なる。
+ \end{frame}
+ \begin{frame}[containsverbatim]
+   \frametitle{子要素の数について}
+   \begin{itemize}
+    \item 直接、要素をエディタで記述したものには\Elm{option}の前後に改行
+          や空白があるので、そこがテキストノードとなる。
+    \item プログラムで作成した場合には意識的にテキストノードを入れないと
+          そのようなものが入らない。
+   \end{itemize}
 \end{frame}
-\fi
+
 \section{Event}
 \subsection{イベント概説}
 \begin{frame}[containsverbatim]
@@ -166,7 +142,7 @@ WebブラウザはHTML文書を次のような順序で解釈し、実行する
 \end{enumerate}
 \end{frame}
 \subsubsection{マウスイベント}
-\newcommand{\ElmJ}{\texttt}
+%\newcommand{\ElmJ}{\texttt}
 \newcommand{\ShowRaw}[4]{%
 #2&%#3&
 #4&#1\\\hline}
