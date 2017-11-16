@@ -152,10 +152,7 @@ Array
        \texttt{var\_dump()} を用いるとよい
 \end{itemize}
 \end{Exec}
- \begin{Prob}\upshape
-  実行例\ref{PHPsubstitute}で \texttt{print\_r()} 関数の代わりに
-   \texttt{var\_dump()} 関数を用いて出力がどのように変わるか確認しなさい。
- \end{Prob}
+\input 09prob-02.tex
  \fi
  \iffalse\else
  \subsection{可変変数}
@@ -488,11 +485,7 @@ $a = array(0,1,2,3,4,5);
 $r = array_splice($a,3,1,array("a","b"));// $r は array(3)
 	// $a は array(0,1,2,"a","b", 4, 5)
 \end{Verbatim}
-\begin{Prob}\upshape
-\Verb+array_splice()+関数を用いて、\Verb+array_pop()+、
- \Verb+array_push()+、\Verb+array_shift()+、\\\Verb+array_unshift()+関数
- を実現しなさい。 
-\end{Prob}
+\input 09prob-03.tex
 \iffalse
 Interactive shell
 
