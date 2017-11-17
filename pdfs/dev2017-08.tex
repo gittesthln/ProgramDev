@@ -449,30 +449,30 @@ CSSファイル、JavaScriptファイルが外部ファイル
 \end{frame}
 \begin{frame}[containsverbatim]
 \frametitle{日付--リスト(1)}
-\LISTNN{09-03pulldown.html}{1}{17}{\footnotesize}
+\LISTNN{09-03pulldown.html}{1}{16}{\footnotesize}
  このJavaScriptのプログラムは8行目で定義されている
        \texttt{window.onload}のイベントハンドラーの中に入っている。
 
 \end{frame}
 \begin{frame}[containsverbatim]
 \frametitle{日付--リスト(1)---解説}
- 9行目から17行目では指定された範囲の値を選択できるプルダウンメニュー
+ 9行目から16行目では指定された範囲の値を選択できるプルダウンメニュー
        を作成する関数\texttt{makeSelectNumber()}を定義
 \begin{itemize}
  \item 引数は順に、下限値(\texttt{from})、上限値(\texttt{to})、数字の前
        後に付ける文字列(\texttt{prefix}と\texttt{suffix})、プルダウンメ
        ニュ－の\texttt{id}属性の属性値(\texttt{id})と親要素
        (\texttt{parent})
- \item 11行目で\texttt{select}要素を作成。作成のために
-       \texttt{makeElm}関数(18行目以降で定義)を呼びだす。
- \item 12行目から15行目で\texttt{option}要素を順に作成
- \item 14行目でプルダウンメニューに表示される文字列をテキストノードを作
+ \item 10行目で\texttt{select}要素を作成。作成のために
+       \texttt{makeElm}関数(17行目以降で定義)を呼びだす。
+ \item 11行目から14行目で\texttt{option}要素を順に作成
+ \item 13行目でプルダウンメニューに表示される文字列をテキストノードを作
        成(関数\texttt{makeTextNode()})。
 \end{itemize}
 \end{frame}
 \begin{frame}[containsverbatim]
 \frametitle{日付--リスト(2)}
-\LISTNN{09-03pulldown.html}{18}{26}{\footnotesize}
+\LISTNN{09-03pulldown.html}{17}{27}{\footnotesize}
 \end{frame}
 \begin{frame}[containsverbatim]
 \frametitle{日付--リスト(2)---解説}
@@ -480,31 +480,28 @@ CSSファイル、JavaScriptファイルが外部ファイル
 \begin{itemize}
  \item 引数は順に、要素名(\texttt{name})、属性値のリスト
        (\texttt{attribs})と親要素の指定
- \item 19行目で指定された要素を作成
- \item 21行目から23行目で与えられた属性とその属性値がメンバーになっているオ
+ \item 18行目で指定された要素を作成
+ \item 19行目から21行目で与えられた属性とその属性値がメンバーになっているオ
        ブジェクトの値を順に選んで属性値を設定
- \item 24行目では指定された親オブジェクトが有効な場合には、作成した要素
+ \item 22行目では指定された親オブジェクトが有効な場合には、作成した要素
        を子要素に付け加えている。
- \item 25行目で作成した要素を戻り値としている。
+ \item 23行目で作成した要素を戻り値としている。
+ \item 25行目から27行目で関数\texttt{makeTextNode()}は指定された文字列
+			 を基にテキストノードを作成し、指定された親要素の子要素に設定して
+			 いる。
 \end{itemize}
 \end{frame}
 \begin{frame}[containsverbatim]
 \frametitle{日付--リスト(3)}
-\LISTNN{09-03pulldown.html}{27}{29}{\footnotesize}
-関数\texttt{makeTextNode()}は指定された文字列を基にテキストノードを作成
- し、指定された親要素の子要素に設定している。
-\end{frame}
-\begin{frame}[containsverbatim]
-\frametitle{日付--リスト(4)}
-\LISTNN{09-03pulldown.html}{30}{36}{\footnotesize}
+\LISTNN{09-03pulldown.html}{28}{34}{\footnotesize}
 59行目の\texttt{form}要素内にプルダウンメニューを作成する。プルダウンメ
  ニューで表示される日付は実行当日になるように設定される。
 \end{frame}
 \begin{frame}[containsverbatim]
-\frametitle{日付--リスト(4)---解説}
+\frametitle{日付--リスト(3)---解説}
 \begin{itemize}
- \item 30行目では\texttt{form}要素を得ている。
- \item 31行目と32行目ではそれぞれ年、月のプルダウンメニューを作成して
+ \item 28行目では\texttt{form}要素を得ている。
+ \item 29行目と30行目ではそれぞれ年、月のプルダウンメニューを作成して
        \texttt{form}要素の子要素にしている。
  \item 日については28日から31日まであるプルダウンメニューを4つ作成して配
        列に格納している。
@@ -513,45 +510,45 @@ CSSファイル、JavaScriptファイルが外部ファイル
 \end{itemize}
 \end{frame}
 \begin{frame}[containsverbatim]
-\frametitle{日付--リスト(5)}
-\LISTNN{09-03pulldown.html}{37}{42}{\footnotesize}
+\frametitle{日付--リスト(4)}
+\LISTNN{09-03pulldown.html}{35}{40}{\footnotesize}
 ここでは、実行時の日付がプルダウンメニューの初期値として表示されるように
  している。
 \end{frame}
 \begin{frame}[containsverbatim]
-\frametitle{日付--リスト(5)---解説}
+\frametitle{日付--リスト(4)---解説}
 \begin{itemize}
  \item \texttt{Date()}オブジェクトを引数なしでよぶと、実行時の時間が得ら
        れる。この時間は1970年1月1日午前0時(GMT)からの経過時間であり、単位はミリ秒。
- \item 38行目で年を得ている。\texttt{Date}オブジェクトには
+ \item 36行目で年を得ている。\texttt{Date}オブジェクトには
        \texttt{getYear()}というメソッドも存在するが、これは西暦の下2桁し
        か返さないので使わないこと。
- \item 39行目で月を得ている。\texttt{getMonth()}メソッドの戻り値は
+ \item 37行目で月を得ている。\texttt{getMonth()}メソッドの戻り値は
        $0$(1月)から $11$(12月)であることに注意
- \item 41行目と42行目では、得られた年と月をそれぞれのプルダウンメニュー
+ \item 39行目と40行目では、得られた年と月をそれぞれのプルダウンメニュー
        に設定している。月の値を1増やしていることに注意
 \end{itemize}
 \end{frame}
 \begin{frame}[containsverbatim]
-\frametitle{リスト(6)}
-\LISTNN{09-03pulldown.html}{43}{54}{\footnotesize}
+\frametitle{リスト(5)}
+\LISTNN{09-03pulldown.html}{41}{52}{\footnotesize}
 \end{frame}
 \begin{frame}[containsverbatim]
-\frametitle{リスト(6)---解説}
+\frametitle{リスト(5)---解説}
 プルダウンメニューの値が変化したイベント(\texttt{change})ハンド
  ラーを登録している。
 \begin{itemize}
  \item イベントハンドラーは\texttt{form}要素につけている。
- \item 47行目で、現在の日を保存している。
- \item 48行目で、現在、プルダウンメニューで設定されている年月の日数を求
+ \item 42行目で、現在表示している日を保存している。
+ \item 43行目で、現在、プルダウンメニューで設定されている年月の日数を求
        めている。
  \item この日数と現在表示されている日数のプルダウンメニューの日数が異な
-       る場合には(49行目)子ノードを入れ替える(50行目)。さらに、初期値を
-       現在のままか、月の最終日の小さいほうに設定する(51行目)。
+       る場合には(44行目)子ノードを入れ替える(45行目)。さらに、初期値を
+       現在のままか、月の最終日の小さいほうに設定する(46行目)。
 \end{itemize}
 \end{frame}
 \begin{frame}[containsverbatim]
-\frametitle{リスト(6)---解説(続き)}
+\frametitle{リスト(5)---解説(続き)}
 \begin{itemize}
  \item \texttt{Date()}オブジェクトに年、月、日(さらに、時、分、秒もオプ
        ションの引数として与えられる)を与えて、経過時間を得るとができる。
@@ -563,12 +560,12 @@ CSSファイル、JavaScriptファイルが外部ファイル
        る。
  \item 44行目ではこの日数を持つプルダウンメニューを子要素として追加して
        いる。
- \item 45行目で、日の選択する値を設定している。
+ \item 46行目で、日の選択する値を設定している。
 \end{itemize}
 \end{frame}
 \begin{frame}[containsverbatim]
-\frametitle{リスト(7)}
-\LISTNN{09-03pulldown.html}{55}{last}{\footnotesize}
+\frametitle{リスト(6)}
+\LISTNN{09-03pulldown.html}{53}{last}{\footnotesize}
 ここではHTML文書内で表示される要素を記述している。
 ここでは\texttt{body}要素内に\texttt{form}要素があるだけである。
 \end{frame}
