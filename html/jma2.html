@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF8"/>
+    <script type="text/ecmascript">
+      let Area = {
+      "全国":               {value:"000", name:"all"},
+      "北海道地方（北西部）": {value:"201", name:"all"},
+      "宗谷地方":            {value:"301", name:"201"},
+      "上川・留萌地方":      {value:"302", name:"201"},
+      "北海道地方（東部）":   {value:"202", name:"all"},
+      "網走・北見・紋別地方": {value:"303", name:"202"},
+      "釧路・根室・十勝地方": {value:"304", name:"202"},
+      "北海道地方（南西部）": {value:"203", name:"all"},
+      "胆振・日高地方":      {value:"305", name:"203"},
+      "石狩・空知・後志地方": {value:"306", name:"203"},
+      "渡島・檜山地方":      {value:"307", name:"203"},
+      "東北地方（北部）":    {value:"204", name:"all"},
+      "青森県":             {value:"308", name:"204"},
+      "秋田県":             {value:"309", name:"204"},
+      "岩手県":             {value:"310", name:"204"},
+      "東北地方（南部）":    {value:"205", name:"all"},
+      "山形県":             {value:"311", name:"205"},
+      "宮城県":             {value:"312", name:"205"},
+      "福島県":             {value:"313", name:"205"},
+      "関東地方":           {value:"206", name:"all"},
+      "茨城県":             {value:"314", name:"206"},
+      "群馬県":             {value:"315", name:"206"},
+      "栃木県":             {value:"316", name:"206"},
+      "埼玉県":             {value:"317", name:"206"},
+      "千葉県":              {value:"318", name:"206"},
+      "東京都":             {value:"319", name:"206"},
+      "神奈川県":            {value:"320", name:"206"},
+      "甲信地方":           {value:"207", name:"all"},
+      "山梨県":             {value:"321", name:"207"},
+      "長野県":             {value:"322", name:"207"},
+      "北陸地方（東部）":    {value:"208", name:"all"},
+      "新潟県":             {value:"323", name:"208"},
+      "北陸地方（西部）":    {value:"209", name:"all"},
+      "富山県":             {value:"324", name:"209"},
+      "石川県":             {value:"325", name:"209"},
+      "福井県":             {value:"326", name:"209"},
+      "東海地方":           {value:"210", name:"all"},
+      "静岡県":             {value:"327", name:"210"},
+      "岐阜県":             {value:"328", name:"210"},
+      "愛知県":             {value:"329", name:"210"},
+      "三重県":             {value:"330", name:"210"},
+      "近畿地方":           {value:"211", name:"all"},
+      "大阪府":             {value:"331", name:"211"},
+      "兵庫県":             {value:"332", name:"211"},
+      "京都府":             {value:"333", name:"211"},
+      "滋賀県":             {value:"334", name:"211"},
+      "奈良県":             {value:"335", name:"211"},
+      "和歌山県":           {value:"336", name:"211"},
+      "中国地方":           {value:"212", name:"all"},
+      "島根県":             {value:"337", name:"212"},
+      "広島県":             {value:"338", name:"212"},
+      "鳥取県":             {value:"339", name:"212"},
+      "岡山県":             {value:"340", name:"212"},
+      "山口県":             {value:"345", name:"212"},
+      "四国地方":           {value:"213", name:"all"},
+      "香川県":             {value:"341", name:"213"},
+      "愛媛県":             {value:"342", name:"213"},
+      "徳島県":             {value:"343", name:"213"},
+      "高知県":             {value:"344", name:"213"},
+      "九州地方（北部）":    {value:"214", name:"all"},
+      "山口県":             {value:"345", name:"214"},
+      "福岡県":             {value:"346", name:"214"},
+      "佐賀県":             {value:"347", name:"214"},
+      "長崎県":             {value:"348", name:"214"},
+      "熊本県":             {value:"349", name:"214"},
+      "九州地方（南部）":    {value:"215", name:"all"},
+      "宮崎県":             {value:"351", name:"215"},
+      "鹿児島県":           {value:"352", name:"215"},
+      "奄美地方":           {value:"216", name:"all"},
+      "鹿児島県2":           {value:"352", name:"216"},
+      "沖縄本島地方":       {value:"217", name:"all"},
+      "沖縄本島地方2":       {value:"353", name:"217"},
+      "大東島地方":         {value:"218", name:"all"},
+      "大東島地方2":         {value:"354", name:"218"},
+      "宮古・八重山地方":    {value:"219", name:"all"},
+      "宮古島地方":         {value:"355", name:"219"},
+      "八重山地方":         {value:"356", name:"219"}
+      }
+      function makeElm(elm, Attribs, P, Events) {
+        let Element = document.createElement(elm);
+        setAttribs(Element, Attribs);
+        setEvents(Element, Events);
+        if(P) P.appendChild(Element);
+        return Element;
+      }
+      function setAttribs(Elm, Attribs) {
+        for(let attrib in Attribs){
+          Elm.setAttribute(attrib, Attribs[attrib]);
+        }
+      }
+      function setEvents(elm, Events) {
+        for(let event in Events) {
+        elm.addEventListener(
+          event, Events[event][0], Events[event][1]);
+        }
+      }
+      window.onload = function(){
+        let Form = document.getElementById("pulldown");
+        let selects = {"all":makeElm("select", {}, Form,
+          {"click":[function(E){
+            if(Form.children.length>1)
+              Form.replaceChild(selects[E.target.value],Form.children[1]);
+          },false]})};
+        selects["000"] = makeElm("select");
+        let List = {};
+        for(let opt in Area) {
+          if(selects[Area[opt].name] === undefined) {
+            selects[Area[opt].name] = makeElm("select");
+          }        
+          let o = makeElm("option", 
+            {"value": Area[opt].value}, selects[Area[opt].name]);
+          o.innerText = opt.split(/\d/);
+          if(List[opt] === undefined &&Area[opt].name !== "all") {
+            List[opt] = 1;
+            o = makeElm("option",
+              {"value": Area[opt].value}, selects["000"]);
+            o.innerText = opt.split(/\d/)[0];
+          }
+      }
+      Form.appendChild(selects["000"]);
+    }
+        
+</script>
+    <body>
+      <form id="pulldown"></form>
+    </body>
+</hatml>
