@@ -8,7 +8,7 @@ Google Maps がこの技術を利用したことで一気に認知度が高ま�
 では検索する用語の一部を入力していると検索用語の候補が出てくる。これも
 Ajaxを使用している(と考えられる)。
 
-Ajax の機能は \texttt{XMLHTTPRequest}という機能を用いて実現されている。
+Ajax の機能は \texttt{XMLHTTPRequest}というオブジェクトの機能を用いて実現されている。
 \begin{Exec}\upshape\label{WhatDay}
 次の例は実行例\ref{pulldownDate}で日付が変わったときに、その日の記念日を
  メニューの下部に示すものである。記念日のデータは
@@ -58,7 +58,7 @@ Ajax の機能は \texttt{XMLHTTPRequest}という機能を用いて実現され
        在するようにしている。
 
 \end{itemize}
- \begin{table}
+ \begin{table}[ht]
 	\caption{XMLHttpRequestの通信の状態
 \protect\footnote{\protect\texttt{https://developer.mozilla.org/ja/docs/Web/API/XMLHttpRequest}
 	より引用}} \label{XMLHttpRequestRes}
@@ -73,12 +73,8 @@ Ajax の機能は \texttt{XMLHTTPRequest}という機能を用いて実現され
 4&\Verb+DONE+&一連の動作が完了した。\\\hline
 		\end{tabular}
  \end{table}
-\begin{Prob}\upshape
- 表\ref{XMLHttpRequestRes}の状態は\texttt{XMLHttpRequest}オブジェクトの
- プロパティである。\\たとえば、\texttt{XMLHttpRequest.DONE}で利用できる。
- 残りのものについてもこの方法で利用できることを確認しなさい。
-\end{Prob}
-次のリストはAjaxで呼び出されるPHPのプログラムである。
+\input 17dev10-05.tex
+ 次のリストはAjaxで呼び出されるPHPのプログラムである。
 \LISTN{aniversary.php}{1}{last}{\normalsize}
 \begin{itemize}
  \item 2行目で内部で処理をするエンコーディングを\texttt{UTF8}にしている。
@@ -150,10 +146,7 @@ Ajax の機能は \texttt{XMLHTTPRequest}という機能を用いて実現され
  \item 20行目で得られた情報をストリームに出力している。
 \end{itemize}
 \end{Exec}
-\begin{Prob}\upshape
-上のHTMLのリストの85行目の\texttt{<p>}と\texttt{</p>}の空白を取り除い
- たら正しく動かなくなることを確認せよ。
-\end{Prob}
+\input 17dev10-06.tex
 なお、構造化されたデータとしてはXML形式でもよいが、より軽量なJSONで与え
 ることも可能である。このときは、\texttt{JSON.parse()}でJavaScriptのオブ
 ジェクトに直せばよい。

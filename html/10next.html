@@ -1,9 +1,9 @@
 <script type="text/javascript">
 //<![CDATA[
-var Storage = window.localStorage;
-//var Storage = window.sessionStorage;
+let Storage = window.localStorage;
+//let Storage = window.sessionStorage;
 window.onload = function() {
-  var AccessList, Message = document.getElementById("message");
+  let AccessList, Message = document.getElementById("message");
   appendMessage(Message, "新しいページです");
   if(Storage["access"]) {
     AccessList = JSON.parse(Storage["access"]);
@@ -18,7 +18,7 @@ window.onload = function() {
   });
 }
 function appendMessage(P, Mess) {
-  var div = document.createElement("div");
+  let div = document.createElement("div");
   P.appendChild(div);
   div.appendChild(document.createTextNode(Mess));
 }

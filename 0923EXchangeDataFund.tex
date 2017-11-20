@@ -8,7 +8,7 @@ Webページにおいてサーバーにデータを送る方法には\texttt{POS
 
 \texttt{windows.onload =function()}内に次のコードを追加する。
 \begin{Verbatim}
-    var Form = document.getElementsByTagName("form")[0];
+    let Form = document.getElementsByTagName("form")[0];
     Form.setAttribute("method","POST");
     Form.setAttribute("action","09sendData.php");
 \end{Verbatim}
@@ -28,15 +28,16 @@ HTMLの要素に対しては次のことを行う。
  のリストは次の通りである。
 \LISTN{09sendData.php}{1}{last}{\normalsize}
 \begin{itemize}
- \item 2行目から10行目の間はヒアドキュメント形式でHTML文書の初めの部分を
-       出力させている。
+ \item 2行目から10行目のヒアドキュメント形式でHTML文書の初めの部分を
+       出力している。
  \item \Verb+method="POST"+で呼び出されたときには\texttt{form}要素内の
-       \texttt{name}属性が指定されたものの値がスーパーグローバル
-       \Verb+$_POST+内の連想配列としてアクセスができる。
+       \texttt{name}属性が指定されたものの値は\texttt{name}属性の属性値
+       をキーとしてスーパーグローバル\Verb+$_POST+の連想配列として値が得
+       られる。
  \item 11行目から13行目でそれらの値を\texttt{table}要素内の要素として出
        力している。
 \end{itemize}
-出力された結果は次のようになる。
+出力結果は次のようになる。
 \VerbatimInput{09sendData.res}
 \end{Exec}
 なお、\Verb+method="PUT"+で呼び出した場合にはスーパーグローバル
@@ -44,29 +45,17 @@ HTMLの要素に対しては次のことを行う。
 \Verb+method="POST"+でも\Verb+method="PUT"+で呼び出された場合の
 \Verb+$_POST+や\Verb+$_GET+の代わりに使用できる。
 
-\Verb+type="submit"+の\texttt{input}要素は、ボタンが押されたときに直ちに、
+\Verb+type="submit"+の\texttt{input}要素はボタンであり、押されると直ちに
 \texttt{action}属性で指定された処理が呼び出される。通常は、サーバーにデー
 タを送る前に最低限のエラーチェックを行い、エラーがない場合にだけサーバー
 と通信するのが良い。
-\begin{Prob}\upshape
- \texttt{PUT}と\texttt{GET}を用いたHTMLファイルで実行後のURLがどうなって
- いるか確認しなさい。
- さらに、実行例\ref{dataexchange}のPHPのプログラムを直接URLに記述して呼び出した
- らどうなるか。また、
-   \Verb+Form.setAttribute("method","POST");+
- の部分を\Verb+Form.setAttribute("method","PUT");+に変更して\texttt{PUT}
- による通信の場合について調べよ。
-\end{Prob}
+\input 17dev10-01.tex
 \section{スパーグローバルの補足}
-スパーグローバルのうち、これまでに説明してこなかったものについて解説をす
-る。
+スパーグローバルのうち、これまでに説明してこなかったものについて解説をする。
 \paragraph{\texttt{\$\_SERVER}}
 この変数はサーバーにアクセスしたときのクライ
 アントの情報などを提供する。具体的な内容はクライアントごとに異なる。
-\begin{Prob}\upshape
- \texttt{foreach}構文を用いて\Verb+$_SERVER+の内容を表示し、どのようなも
- のが送られている確認せよ。
-\end{Prob}
+\input 17dev10-02.tex
 \paragraph{\texttt{\$\_COOKIE}}
 COOKIE とはWebサーバー側からクライアント側に一時的にデータを保存させる仕
 組みである。サーバーと通信するたびに、これらのデータがクライアント側から
@@ -92,13 +81,14 @@ PHPではセッションを開始するための関数\texttt{session\_start()}�
 サーバーが管理することとなる。
 なお、この機能はCOOKIEの機能を利用して実現されている。
 \section{Web Storage}
-HTML5から独立した規格である Web Storage には localStoarage と sessionStorage の2種類
-のオブジェクトがある。これらのオブジェクトは文字列をキーに、文字列の値を持つ Storage オブジェクト
+HTML5から独立した規格である Web Storage には \ElmJ{localStoarage} と
+\ElmJ{sessionStorage} の2種類のオブジェクトがある。これらのオブジェクト
+は文字列をキーに、文字列の値を持つ \ElmJ{Storage} オブジェクト
 である。同一の出身(プロトコルやポート番号も含む)のすべてのドキュメント
-が同じ localStorage と sessionStorage を共有する。sessionStorage のデー
-タは意識的に消さない限り存在する。
+が同じ \ElmJ{localStorage} と \ElmJ{sessionStorage} を共有する。
+\ElmJ{sessionStorage} のデータは意識的に消さない限り存在する。
 %
-これに対し、sessionStorageはウインドウやブラウザが閉じられると消滅する。
+これに対し、\texttt{sessionStorage} はウインドウやブラウザが閉じられると消滅する。
 
 これにより、セッション間の情報の移動や以前の訪れたことのあるページの情報
 の保存を可能にしている。
@@ -130,7 +120,9 @@ HTML5から独立した規格である Web Storage には localStoarage と sess
 				行目)後、アクセス時間をすべて表示している(22行目から24行目)。
 \begin{itemize}
  \item 配列の\texttt{forEach}メソッドは、配列の個々の要素に対して引数で
-				与えられた関数を実行する。
+			 与えられた関数を実行する。
+ \item 値が\ElmJ{undefined}である要素に対して
+			 は実行されない。
  \item このメソッドの戻り値はない。
  \item 引数で渡される関数の引数
 				は3つあり、処理する配列の現在の値(\texttt{D})、配列の位置
@@ -156,38 +148,20 @@ HTML5から独立した規格である Web Storage には localStoarage と sess
 \end{Exec}
 このリストは呼び出す前のページのものとほとんど変わらないが、アクセス時間
 の表示が今回のものを含めて４つだけ表示されるようになっている
-(15行目から１８行目)。
+(15行目から18行目)。
 \begin{itemize}
- \item 前のリストの22行目で\Verb+AccessList.forEach+となっている部分が
-			 \Verb+AccessList.every+となっている。
+ \item 前のリストの22行目の\Verb+AccessList.forEach+が
+			 \Verb+AccessList.every+となっている\footnote{\ElmJ{forEach}と同様
+			 に値が\ElmJ{undefined}の要素に対しては実行されない。}。
  \item この配列のメソッドは引き渡された関数をすべての要素を順に適用し、
 			 戻り値の論理積を返す。
  \item どこかのところで\Verb+false+となれば全体の論理積は\Verb+false+と
 			 なるので実行はそこで打ち切られる。
  \item 論理和を求める\Verb+some+という配列のメソッドもある。
 \end{itemize}
- \begin{Prob}\upshape
-	このリストで次のことを行いなさい。
-	\begin{enumerate}
-	 \item デベロッパーツールから「Application」タブ(Chrome の場合)を開き、
-				 Local Storage の内容を確認する。\label{Storage1}
-	 \item このページのタブを閉じ、いったんブラウザを終了してから再度、こ
-				 のページを開いたときに、以前のデータがそのまま表示されることを
-				 確認する。\label{Storage2}
-	 \item localStorage の代わりにsessionStorageに変更したとき(リストの3行
-				 目をコメントにし、４行目のコメントを外す)に、
-				 \ref{Storage1}と\ref{Storage2}がどのように変わるか
-				 調べる。
-	 \item \Verb+AccessList.every+となっている部分を
-	\Verb+AccessList.some+でも正しく実行できるようにする。
-	\end{enumerate}
-\end{Prob}
-
+\input 17dev10-03.tex
 すでに、いくつかのサイトではこ
 の機能を用いており、その開発者ツールで見ることが可能である。これらのデー
 タの形式は文字列である。構造化されたデータはJSON形式で保存するのがよいで
 あろう。
-\begin{Prob}\upshape
-いくつかのサイトにおいてStorageが利用されているか、どのようなデータ
- が保存されているか調べよ。
-\end{Prob}
+\input 17dev10-04.tex
