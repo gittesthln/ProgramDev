@@ -7,18 +7,16 @@
 //<![CDATA[
   window.onload = function(){
     function makeSelectNumber(from, to, prefix, suffix, id, parent){
-      var i, option;
-      var Select = makeElm("select", {"id":id}, parent);
-      for(i=from; i<=to; i++) {
-        option = makeElm("option",{ "value":i}, Select);
+      let Select = makeElm("select", {"id":id}, parent);
+      for(let i=from; i<=to; i++) {
+        let option = makeElm("option",{ "value":i}, Select);
         makeTextNode(prefix+i+suffix,option);
       }
       return Select;
     };
     function makeElm(name, attribs, parent) {
-      var elm = document.createElement(name);
-      var attrib;
-      for(attrib in attribs) {
+      let elm = document.createElement(name);
+      for(let attrib in attribs) {
         elm.setAttribute(attrib,attribs[attrib]);
       };
       if(parent) parent.appendChild(elm);
@@ -27,41 +25,28 @@
     function makeTextNode(text,parent) {
         parent.appendChild(document.createTextNode(text));
     };
-    var i, today = new Date();
-    var y = today.getFullYear();
-    var m = today.getMonth();
-    var d;
-    var Form  = document.getElementById("menu");
-    var Year  = makeSelectNumber(2000,2020,"","年","year", Form);
-    var Month = makeSelectNumber(1,12,"","月","month", Form);
-    var Days = [];
-    for(i=28; i<=31; i++) {
-      Days[i] = makeSelectNumber(1,i,"","日","day");
+    let Form  = document.getElementById("menu");
+    let Year  = makeSelectNumber(2000,2020,"","年","year", Form);
+    let Month = makeSelectNumber(1,12,"","月","month", Form);
+    let Days = [];
+    for(let d=28; d<=31; d++) {
+      Days[d] = makeSelectNumber(1,d,"","日","day");
     }
-    Year.value = y;
-    Month.value = m+1;
-    d = new Date(y, m+1,0).getDate();
+    let today = new Date();
+    Year.value = today.getFullYear();
+    Month.value = today.getMonth()+1;
+    let d = new Date(Year.value, Month.value,0).getDate();
     Form.appendChild(Days[d]);
     Form.children[2].value = today.getDate();
-    var changePulldown = function(){
-      var d2 = Form.children[2].value
+    let changePulldown = function(){
+      let d2 = Form.children[2].value
       d = new Date(Year.value, Month.value, 0).getDate();
       if( d != Form.children[2].children.length) {
         Form.replaceChild(Days[d],Form.children[2]);
         d2 = Math.min(Form.children[2].length, d2);
         Form.children[2].value = d2;
       }
-      var xmlHttpObj = null;
-      if(window.XMLHttpRequest) {
-        xmlHttpObj = new XMLHttpRequest();
-      } else if(window.ActiveXObject ) {
-        xmlHttpObj = new ActiveXObject("Msxml2.XMLHTTP");//IE6
-      } else {
-        try {
-          xmlHttpObj = new ActiveXObject("Microsoft.XMLHTTP");//IE5
-        } catch(e) {
-        }
-      }
+      let  xmlHttpObj = new XMLHttpRequest();
       if(xmlHttpObj) {
         xmlHttpObj.onreadystatechange = function(){
           if(xmlHttpObj.readyState == 4 && xmlHttpObj.status == 200) {

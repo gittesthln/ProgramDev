@@ -1,29 +1,32 @@
-<script type="text/javascript">
-//<![CDATA[
-let Storage = window.localStorage;
-//let Storage = window.sessionStorage;
-window.onload = function() {
-  let AccessList, Message = document.getElementById("message");
-  appendMessage(Message, "新しいページです");
-  if(Storage["access"]) {
-    AccessList = JSON.parse(Storage["access"]);
-  } else {
-    AccessList = [];
-    appendMessage(Message, "初めてのアクセスです");
-  }
-  appendMessage(Message, "今までのアクセス時間です");
-  AccessList.every(function(D, index, A) {
-    appendMessage(Message, new Date(D-0));
-    return index < 3;
-  });
-}
-function appendMessage(P, Mess) {
-  let div = document.createElement("div");
-  P.appendChild(div);
-  div.appendChild(document.createTextNode(Mess));
-}
-//]]
-</script>
+<!DOCTYPE html>
+<head>
+  <meta charset="UTF-8"/>
+  <script type="text/javascript">
+    //<![CDATA[
+    let Storage = window.localStorage;
+    //let Storage = window.sessionStorage;
+    window.onload = function() {
+      let AccessList, Message = document.getElementById("message");
+      appendMessage(Message, "新しいページです");
+      if(Storage["access"]) {
+        AccessList = JSON.parse(Storage["access"]);
+      } else {
+        AccessList = [];
+        appendMessage(Message, "初めてのアクセスです");
+      }
+      appendMessage(Message, "今までのアクセス時刻です");
+      AccessList.every(function(D, index, A) {
+        appendMessage(Message, new Date(D-0));
+        return index < 3;
+      });
+    }
+    function appendMessage(P, Mess) {
+      let div = document.createElement("div");
+      P.appendChild(div);
+      div.appendChild(document.createTextNode(Mess));
+    }
+    //]]
+  </script>
 </head>
 <body>
   <div  id="message"/>

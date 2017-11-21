@@ -18,7 +18,7 @@ window.onload = function() {
   }
   AccessList.unshift(D.getTime());
   Storage["access"] = JSON.stringify(AccessList);
-  appendMessage(Message, "今までのアクセス時間です");
+  appendMessage(Message, "今までのアクセス時刻です");
   AccessList.forEach(function(D, i, A) {
     appendMessage(Message, new Date(D));
   });
