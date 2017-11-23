@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>オブジェクトリテラルから作成</title>
+<script type="text/ecmascript">
+//<![CDATA[
+  window.onload = function(){
+    function makeSelectNumber(from, to, prefix, suffix, id, parent){
+      let Select = makeElm("select", {"id":id}, parent);
+      for(let i=from; i<=to; i++) {
+        let option = makeElm("option",{ "value":i}, Select);
+        makeTextNode(prefix+i+suffix,option);
+      }
+      return Select;
+    };
+    function makeSelectFromObj(Obj, id, parent){
+      let Select = makeElm("select", {"id":id}, parent);
+      for(let opt in Obj) {
+        let option = makeElm("option",{"value":opt}, Select);
+        makeTextNode(Obj[opt],option);
+      }
+      return Select;
+    };
+    function makeRadioFromObj(Obj, id, name, parent){
+      let Div = makeElm("div", {"id":id}, parent);
+      for(let opt in Obj) {
+        let radio = makeElm("input",
+          {"value":opt, type:"radio", name:name}, Div);
+        makeTextNode(Obj[opt],Div);
+      }
+      return Div;
+    };
+    function makeElm(name, attribs, parent) {
+      let elm = document.createElement(name);
+      for(let attrib in attribs) {
+        elm.setAttribute(attrib,attribs[attrib]);
+      };
+      if(parent) parent.appendChild(elm);
+      return elm;
+    }
+    function makeTextNode(text,parent) {
+        parent.appendChild(document.createTextNode(text));
+    };
+    let Form  = document.getElementById("menu");
+    let Data = {"red": "赤", "orange":"橙", "yellow":"黄色", "green":"緑"}
+    makeSelectFromObj(Data, "color", Form);
+    makeRadioFromObj(Data, "colorRadio", "Radio", Form);
+  }
+//]]>
+</script>
+</head>
+<body>
+  <form id="menu"></form>
+</body>
+</html> 
