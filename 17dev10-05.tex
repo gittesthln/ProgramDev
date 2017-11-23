@@ -1,5 +1,8 @@
 \begin{Prob}\upshape
- 表\ref{XMLHttpRequestRes}の状態は\texttt{XMLHttpRequest}オブジェクトの
- プロパティである。\\たとえば、\texttt{XMLHttpRequest.DONE}で利用できる。
- 残りのものについてもこの方法で利用できることを確認しなさい。
+ \texttt{XMLHttpRequest}オブジェクトのプロパティの値が利用できる確認しな
+ さい。
+ \ifText 例えば、52行目の\Verb+xmlHttpObj.readyState == 4+において
+ 4の代わりに\texttt{XMLHttpRequest.DONE}を用いて正しく実行されることや、
+ 51行目と52行目の間で\ElmJ{readyState}の値を出力することで確認できる。
+ \fi
 \end{Prob}

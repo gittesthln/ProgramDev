@@ -1,7 +1,144 @@
 \ProblemNN{
 \input 17dev10-01.tex
+\ \vspace{0.1\textheight}
 \input 17dev10-02.tex
-\input 17dev10-03.tex
+\ \vspace{0.1\textheight}
+\input 17dev10-03.tex%\\[0.05\textheight]
+\ \Newpage
 \input 17dev10-04.tex
+\ \vspace{0.2\textheight}
 \input 17dev10-06.tex
+}
+\RubricC{
+今回の復習の内容はサーバーとの間でのデータのやり取りの基本を理解すること
+である。
+\begin{itemize}
+ \item \ElmJ{POST}と\ElmJ{PUT}による通信方法の違い
+ \item HTML5 で導入された\texttt{WebStorage}の使い方の基本
+ \item 非同期通信の理解と利用の基礎
+\end{itemize}
+}
+{
+{\RProbNoM{1}{0.5}}{6}
+{
+{\texttt{PUT}と\texttt{POST}の際のURLの違いについて正しく指摘している。}
+{\texttt{PUT}と\texttt{POST}の際のURLの違いの考察が適切である。}
+{\texttt{PUT}の場合についてURLを直接記述した実行結果においてフォーム内で
+定めた値以外を指定するなど十分に行っている。}
+{\texttt{PUT}の場合についてURLを直接記述したときの問題点の指摘があり、考
+察も適切である。}
+{実行結果のキャプチャでURLの部分などが見やすく量も十分にある。}
+}
+{
+{\texttt{PUT}と\texttt{POST}の際のURLの違いについての指摘が少し不十分で
+ある。}
+{\texttt{PUT}と\texttt{POST}の際のURLの違いの考察が少し不十分である。}
+{\texttt{PUT}の場合についてURLを直接記述した実行結果がフォーム内で与える
+データだけである。}
+{\texttt{PUT}の場合についてURLを直接記述したときの問題点の指摘が不十分で
+あるか、考察が不十分である。}
+{実行結果のキャプチャに見にくい部分があるか少し足りない。}
+}
+{
+{\texttt{PUT}と\texttt{POST}の際のURLの違いについての指摘がないか不十分で
+ある。}
+{\texttt{PUT}と\texttt{POST}の際のURLの違いの考察がないか不十分である。}
+{\texttt{PUT}の場合についてURLを直接記述した実行結果が足りないか全くない。}
+{\texttt{PUT}の場合についてURLを直接記述したときの問題点の指摘がない
+か、考察がない。}
+{実行結果のキャプチャがないか重要な部分が見にくい。}
+}
+{\RProbNoM{2}{0.5}}{6}
+{
+{\texttt{\$\_SERVER}で表示される内容についての報告が十分にある。}
+{\texttt{\$\_SERVER}で表示される内容についてセキュリティ上の面からの考察を含
+めて十分にある。}
+}
+{
+{\texttt{\$\_SERVER}で表示される内容についての報告が少し足りない。}
+{\texttt{\$\_SERVER}で表示される内容についてセキュリティ上の面からの考察がな
+い。}
+{\texttt{\$\_SERVER}で表示される内容についてのその他の項目について十分な考察
+が足りない。}
+}
+{
+{\texttt{\$\_SERVER}で表示される内容についての報告が少し足りない。}
+{\texttt{\$\_SERVER}で表示される内容についてセキュリティ上の面からの考察がな
+い。}
+{\texttt{\$\_SERVER}で表示される内容についてのその他の項目について十分な考察
+が足りない。}
+}
+{問題\hspace*{1zw}\newline\hspace*{0.5zw}{3.1～3.3}\newline\hspace*{0.7zw}\Must}{8}
+{
+{\texttt{localStorage}の値の確認が十分にある。}
+{ブラウザをいったん閉じた後の\texttt{localStorage}の値の確認が十分にある。}
+{\texttt{sessionStorage}に変えたときに\texttt{localStorage}との違いが判
+る確認が十分にある。}
+{\texttt{sessionStorage}と\texttt{localStorage}との違いがに関する考察が
+十分にある。}
+}
+{
+{\texttt{localStorage}の値の確認が少し足りない。}
+{ブラウザをいったん閉じた後の\texttt{localStorage}の値の確認が少し足りな
+い。}
+{\texttt{sessionStorage}に変えたときに\texttt{localStorage}との違いが判
+る確認が少し足りない。}
+{\texttt{sessionStorage}と\texttt{localStorage}との違いがに関する考察がある。}
+}
+{
+{\texttt{localStorage}の値の確認が足りないか全くない。}
+{ブラウザをいったん閉じた後の\texttt{localStorage}の値の確認がないか足りな
+い。}
+{\texttt{sessionStorage}に変えたときに\texttt{localStorage}との違いが判
+る確認がないか足りない。}
+{\texttt{sessionStorage}と\texttt{localStorage}との違いがに関する考察が
+ない。}
+}
+{問題3.4}{5}
+{
+{配列のメソッド\ElmJ{every}を\ElmJ{some}に直したプログラムが正しく動作す
+る。}
+{プログラムの解説と考察が適切である。}
+}
+{
+{配列のメソッド\ElmJ{every}を\ElmJ{some}に直したプログラムが一部正しく動
+作しない。}
+{プログラムの解説と考察がないか足りない。}
+}
+{
+{配列のメソッド\ElmJ{every}を\ElmJ{some}に直したプログラムが正しく動
+作しない。}
+{プログラムの解説と考察が足りないか全くない。}
+}
+{問題4}{5}
+{
+{WebStorageが使用されているサイトの報告があり、キャプチャ画面も適切であ
+る。}
+{WebStorageの内容について十分な考察がある。}
+}
+{
+{WebStorageが使用されているサイトの報告がある。}
+{キャプチャしている場所が正しい。}
+{キャプチャ画面が少し見にくく、内容が確認できない。}
+{WebStorageの内容について考察が少し足りない。}
+}
+{
+{WebStorageが使用されていないサイトの報告である。}
+{キャプチャしている画面が見にくい。}
+{キャプチャする場所が間違っている。}
+{WebStorageの内容について考察がないか不十分である。}
+}
+{\RProbNoM{5}{0.2}}{5}
+{
+{空白がないと正しく動かない適切なキャプチャ画面がある。}
+{考察が正しい。}
+}
+{
+{空白がないと正しく動かないキャプチャ画面の内容が確認しづらい。}
+{考察が少し不十分である。}
+}
+{
+{空白がないと正しく動かないキャプチャ画面の内容が間違っているかない。}
+{考察が不十分であるかない。}
+}
 }

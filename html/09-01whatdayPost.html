@@ -54,9 +54,10 @@
                 xmlHttpObj.responseText;
           } 
         }
-        xmlHttpObj.open("GET",
-          `./aniversary.php?month=${Month.value}&day=${d2}`,true);
-        xmlHttpObj.send(null);
+        xmlHttpObj.open("POST", "./aniversaryPost.php",true);
+        xmlHttpObj.setRequestHeader("Content-type",
+                                    "application/x-www-form-urlencoded");
+        xmlHttpObj.send(`month=${Month.value}&day=${d2}`);
       }
     }
     Form.addEventListener("change", changePulldown,false);

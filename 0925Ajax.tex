@@ -37,7 +37,7 @@ Ajax の機能は \texttt{XMLHTTPRequest}というオブジェクトの機能を
 	れたデータは文字列となる。このほかに\texttt{responXML}でXMLデー
 	タが得られる。
  \end{itemize}
- \item 57行目から759目が通信の開始する。ここでは、\texttt{GET}で行うので、
+ \item 57行目から59目が通信の開始する。ここでは、\texttt{GET}で行うので、
        URLの後に必要なデータを付ける。
  \item \texttt{GET}では送るデータ本体がないので、通信終了のため
        \texttt{null}を送信する。\texttt{POST}のときはここでデータ本体を
@@ -49,6 +49,8 @@ Ajax の機能は \texttt{XMLHTTPRequest}というオブジェクトの機能を
        \texttt{<p>}と\texttt{</p>}の間に空白を設けて、テキストノードが存
        在するようにしている。
 \end{itemize}
+ 表\ref{XMLHttpRequestRes}の状態は\texttt{XMLHttpRequest}オブジェクトの
+ プロパティである。たとえば、\texttt{XMLHttpRequest.DONE}で利用できる。
  \begin{table}[ht]
 	\caption{XMLHttpRequestの通信の状態
 \protect\footnote{\protect\texttt{https://developer.mozilla.org/ja/docs/Web/API/XMLHttpRequest}
@@ -141,3 +143,19 @@ Ajax の機能は \texttt{XMLHTTPRequest}というオブジェクトの機能を
 ることも可能である。このときは、\texttt{JSON.parse()}でJavaScriptのオブ
 ジェクトに直せばよい。
 \input 17dev10-06.tex
+
+Ajax の通信で大きなデータを渡すためには\texttt{POST}で行う行う。この例
+においては57行目から59行目の部分を次のように変更すれば\texttt{POST}で通
+信できる。
+\LISTN{09-01whatdayPOST.html}{57}{60}{\normalsize}
+\begin{itemize}
+ \item \ElmJ{open}メソッドの一番目の引数を\Verb+"POST"+に変更し、2番目の
+			 引数を呼び出すURLにする。URLには\Verb+"GET"+のときのようにデータ
+			 を記述しない。
+ \item その後、\ElmJ{setRequestHeader}メソッドで\Verb+Content-type+を指定
+			 する。
+ \item その後、\Verb+send+メソッドで\Verb+GET+のときと同じ形式でデータを
+			 送信する。
+ \item 受け取る側のPHPのプログラムでは\Verb+$_GET+のところを
+			 \Verb+$_POST+に変更する。
+\end{itemize}
