@@ -1,6 +1,6 @@
 \chapter{jQuery}
 \section{jQueryとは}
-jQuery の開発元\footnote{\texttt{https://jQuery.com}参照日:2016/11/19}に
+jQuery の開発元\footnote{\texttt{https://jQuery.com}参照日:2017/11/26}に
 は次のように書かれている。
 \begin{quotation}
 jQuery is a fast, small, and feature-rich JavaScript library. It makes
@@ -11,15 +11,47 @@ jQuery is a fast, small, and feature-rich JavaScript library. It makes
  JavaScript.
  \end{quotation}
 jQuery はJavaScriptのライブラリーであり、これまでに解説してきた
-JavaScriptの使い方を簡単にすることを目的としている。2016年11月19日現在、
-jQuery は ver. 3.1.1 が最新のものとなっている。ver. 3.0 は2016年6月9日に
-リリースされた。それまで提供されていた ver. 1(最終は 1.12.4) と
-ver. 2(最終は2.2.4)は重大な訂正(critical support patch)しか行わないと記さ
-れている。
+JavaScriptの使い方を簡単にすることを目的としている。2017年11月26日現在、
+jQuery は ver. 3.2.1 が最新のものとなっている。
+%ver. 3.0 は2016年6月9日に%
+%リリースされた。それまで提供されていた ver. 1(最終は 1.12.4) と
+%ver. 2(最終は2.2.4)は重大な訂正(critical support patch)しか行わないと記さ
+%れている。
 
-また、配布されているライブラリーはコメントなどがそのまま入っているものと、
+\section{jQueryの利用方法}
+jQuery は\href{jquery.com}{jquery.com}のページの右上にある「Download
+jQuery」をクリックすることでダウンロードのページに行くと次の2つの最新版
+のダウンロードが可能となる。
+
+Download the compressed, production jQuery 3.2.1
+
+Download the uncompressed, development jQuery 3.2.1
+
+これらのファイルの違いはコメントなどがそのまま入っているもの(uncompressed)と、
 コメントを取り除き、変数名などを短いものに置き換えて、ファイルサイズを小
-さくしたものの2種類がある。
+さくしたもの(compressed)の2種類がある。通常は compressed　バージョンを用
+いる。ダウンロードしたファイルを取り込む\Elm{script}要素を記述すれば利用できる。
+
+jQuery のファイルをローカルにダウンロードしないでCDN(Contents Deliverly
+Network)を利用する方法がある。CDNとはライブラリーをネットワークからダウ
+ンロードできるようにしてい
+るサイトのことである。jQuery では\href{code.jquery.com}{code.jquery.com}
+を開いて必要とされるバージョンのところをクリックすることで CDN を安全に利用する
+\Elm{script}要素の記述がクリップボードにコピーされる\footnote{コピーがうまくいかな
+かったら手作業で行うこと。}。jQuery の compressed の最新
+版は minified をクリックすることで得られる。
+次のようなテキストがコピーされる。
+\begin{Verbatim}
+<script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+\end{Verbatim}
+\begin{Prob}
+ \upshape
+ CDNを利用する利点について述べなさい。また、CDN を利用して配布されている
+ ライブラリーにどのようなものがあるか調べなさい。
+\end{Prob}
 \newcounter{Func}
 \newcommand{\FuncRef}[1]{%
 \refstepcounter{Func}\label{#1}({\bfseries 機能\arabic{Func}})}
@@ -152,7 +184,8 @@ jQueryではAjaxの処理に関するいろいろな方法を提供している�
   \hline
   \texttt{url}&サーバーのアドレス\\ \hline
   \texttt{data}&\texttt{"GET"}のときはURLの後に続けるデータ。
-      \texttt{"POST"}のときは\texttt{null}\\ \hline
+%      \texttt{"POST"}のときは\texttt{null}
+      \\ \hline
   \texttt{dataType}&戻り値のデータの型を指定する。\texttt{"text"}、
       \texttt{"html"}、\texttt{"script"}、      
 \texttt{"json"}、\texttt{"xml"}などがある\\ \hline
@@ -165,40 +198,67 @@ jQueryではAjaxの処理に関するいろいろな方法を提供している�
 \end{center}
 \end{table}
 \section{jQuery のサンプル}
- \begin{Exec}\upshape
+ \begin{Exec}\upshape\label{ExjQuery}
   次の例は実行例\ref{WhatDay}をjQueryを用いて書き直したもので
  ある。
  \LISTN{09-01whatday-jquery.html}{1}{last}{\normalsize}
  \begin{itemize}
+  \item 7行目でローカルに保存した\texttt{jQuery}のライブラリーを読み込ん
+        でいる。
   \item 10行目の\texttt{\$(window).redy()}はドキュメントが解釈されたとき
 	に引数の関数が呼び出されるイベントである。ここでの要素の参照は機
 	能\ref{ObjSelector}を用いている。
   \item 11行目から21行目は連続した番号を値に持つプルダウンメニューを作成
 	する関数である。仕様は以前と同じである。
+ \LISTN{09-01whatday-jquery.html}{11}{20}{\normalsize}
 	\begin{itemize}
-	 \item 13行目では\texttt{<select>}要素を作成し、同時に属性も設定
+	 \item 12行目では\texttt{<select>}要素を作成し、同時に属性も設定
 	       している(機能\ref{HTMLText})。
-	 \item 15行目から19行目で\texttt{<option>}要素を定義し、
+	 \item 14行目から18行目で\texttt{<option>}要素を定義し、
 	       \texttt{<select>}要素の子要素にしている。なお、15行目と16
-	       行目は\texttt{appendTo()}メソッドを用いると18行目のコメン
+	       行目は\texttt{appendTo()}メソッドを用いると17行目のコメン
 	       トアウトしてあるように記述することができる。
 	\end{itemize}
-  \item 22行目から31行目も依然とほとんど同じである。25行目では機能
+  \item 21行目から34行目も依然とほとんど同じである。24行目では機能
 	\ref{HTMLText}を用いて要素を参照している。
-  \item 32行目、33行目と36行目はプルダウンメニューの初期値を本日に設定し
+  \item 31行目、32行目と35行目はプルダウンメニューの初期値を本日に設定し
 	ている。
-  \item 37行目から54行目はプルダウンメニュが変化したときに呼び出される関
+  \item 36行目から53行目はプルダウンメニュが変化したときに呼び出される関
 	数を定義している。
 	\begin{itemize}
-	 \item jQueryのメソッドを用いていることをのぞけは38行目から43行
-	       目までは以前と同じである。40行目のセレクタは\texttt{id}が
+	 \item jQueryのメソッドを用いていることを除けば37行目から42行
+	       目までは以前と同じである。39行目のセレクタは\texttt{id}が
 	       \texttt{day}(\texttt{\#day})の下にある
 	       \texttt{<option>}要素を選択し、その数を\texttt{length}で
 	       調べている。
-	 \item 44行目から53行目はAjaxの処理を定義している。ブラウザによ
-	       る違いに対する対処や、XMLHTTPRequestの処理部分が大幅に減っ
+	 \item 43行目から52行目はAjaxの処理を定義している。
+ \LISTN{09-01whatday-jquery.html}{43}{53}{\normalsize}
+\begin{itemize}
+ \item 44行目では通信の方法を\texttt{GET}に指定している。
+ \item 45行目では通信の相手のファイルを指定している。呼び出されるファイ
+       ルは106ページのものがそのまま使える。
+ \item 46行目では送信のデータを定義している。通信方法が\texttt{GET}の場
+       合でも jQuery ではこのように分けて書いてよい。
+ \item 47行目ではサーバーから返されるデータの形式を指定している。
+ \item 49行目から50行目ではサーバーとの通信が成功した場合の処理を指定し
+       ている。引数がサーバーから送られたデータとなる。\texttt{json}を指定す
+       るとこの値はオブジェクトになっている。
+ \item 51行目では通信にエラーが発生したときの処理を指定している。
+\end{itemize}
+         %ブラウザによる違いに対する対処や、
+         XMLHTTPRequestの処理部分が大幅に減っ
 	       ていて見やすいコードになっていることがわかる。
 	\end{itemize}
  \end{itemize}
  \end{Exec}
-
+ \begin{Prob}\upshape
+  実行例\ref{ExjQuery}に関して次の問いに答えよ。
+\begin{enumerate}
+   \item 送信メソッドを\texttt{POST}に変更して実行しなさい。
+   \item メニューを作成終了後に変数\texttt{Form}をコンソールに出力させて
+         その構造を調べなさい。変数\texttt{Form}の値と
+         \texttt{document.getElementById("menu")}で得られるものが同じか
+         どうかに注意すること。
+   \item   実行例\ref{ExGoogleMaps}をjQueryを用いて書き直しなさい。
+\end{enumerate}
+ \end{Prob}

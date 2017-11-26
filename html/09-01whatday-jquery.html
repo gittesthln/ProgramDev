@@ -4,38 +4,37 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <title>今日は何の日(jQuery版)</title>
 
-<script type="text/ecmascript" src="jquery-3.1.1.min.js"></script>
+<script type="text/ecmascript" src="jquery-3.2.1.min.js"></script>
 <script type="text/ecmascript">
 //<![CDATA[
 $(window).ready(function(){
     function makeSelectNumber(from, to, prefix, suffix, id, parent){
-      var i, option;
-      var Select = $("<select/>", {"id":id});
+      let Select = $("<select/>", {"id":id});
       if(parent) parent.append(Select);//$(parent).append(Select);
-      for(i=from; i<=to; i++) {
+      for(let i=from; i<=to; i++) {
         option = $("<option/>",{"value":i,"text":prefix+i+suffix});
         Select.append(option);
 //          $("<option/>",{"value":i,"text":prefix+i+suffix}).appendTo(Select);
       }
       return Select;
     };
-    var i, today = new Date();
-    var y = today.getFullYear();
-    var m = today.getMonth();
-    var Form  = $("#menu");
-    var Year  = makeSelectNumber(2000,2020,"","年","year", Form);
-    var Month = makeSelectNumber(1,12,"","月","month", Form);
-    var Days = [];
-    for(i=28; i<=31; i++) {
+    let today = new Date();
+    let y = today.getFullYear();
+    let m = today.getMonth();
+    let Form  = $("#menu");
+    let Year  = makeSelectNumber(2000,2020,"","年","year", Form);
+    let Month = makeSelectNumber(1,12,"","月","month", Form);
+    let Days = [];
+    for(let i=28; i<=31; i++) {
       Days[i] = makeSelectNumber(1,i,"","日","day");
     }
     Year.val(y);     //$("#year").val(y);
     Month.val(m+1);  //$("#month").val(m+1);
-    var d = new Date(y, m+1,0).getDate();
+    let d = new Date(y, m+1,0).getDate();
     Form.append(Days[d]);
     $("#day").val(today.getDate());
-    var changePulldown = function(){
-      var d2 = $("#day").val();
+    let changePulldown = function(){
+      let d2 = $("#day").val();
       d = new Date(Year.val(), Month.val(), 0).getDate();
       if( d != $("#day option").length) {
         $("#day").replaceWith(Days[d]);

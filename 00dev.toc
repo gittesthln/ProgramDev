@@ -128,49 +128,50 @@
 \contentsline {section}{\numberline {10.4}Ajax}{103}{section.10.4}
 \contentsline {chapter}{\numberline {第11回}jQuery}{109}{chapter.11}
 \contentsline {section}{\numberline {11.1}jQueryとは}{109}{section.11.1}
-\contentsline {section}{\numberline {11.2}jQueryの基本}{109}{section.11.2}
-\contentsline {subsection}{\numberline {11.2.1}jQuery()関数とjQueryオブジェクト}{109}{subsection.11.2.1}
-\contentsline {subsection}{\numberline {11.2.2}jQueryオブジェクトのメソッド}{110}{subsection.11.2.2}
-\contentsline {paragraph}{HTML属性の取得と設定}{110}{section*.25}
-\contentsline {paragraph}{CSS属性の取得と設定}{110}{section*.26}
-\contentsline {paragraph}{HTMLフォーム要素の値の取得と設定}{110}{section*.27}
+\contentsline {section}{\numberline {11.2}jQueryの利用方法}{109}{section.11.2}
+\contentsline {section}{\numberline {11.3}jQueryの基本}{110}{section.11.3}
+\contentsline {subsection}{\numberline {11.3.1}jQuery()関数とjQueryオブジェクト}{110}{subsection.11.3.1}
+\contentsline {subsection}{\numberline {11.3.2}jQueryオブジェクトのメソッド}{110}{subsection.11.3.2}
+\contentsline {paragraph}{HTML属性の取得と設定}{111}{section*.25}
+\contentsline {paragraph}{CSS属性の取得と設定}{111}{section*.26}
+\contentsline {paragraph}{HTMLフォーム要素の値の取得と設定}{111}{section*.27}
 \contentsline {paragraph}{要素のコンテンツの取得と設定}{111}{section*.28}
-\contentsline {section}{\numberline {11.3}ドキュメントの構造の変更}{111}{section.11.3}
-\contentsline {section}{\numberline {11.4}イベントハンドラーの取り扱い}{111}{section.11.4}
-\contentsline {section}{\numberline {11.5}Ajaxの処理}{112}{section.11.5}
-\contentsline {section}{\numberline {11.6}jQuery のサンプル}{112}{section.11.6}
-\contentsline {chapter}{\numberline {第12回}JavaScriptライブラリーの配布}{115}{chapter.12}
-\contentsline {section}{\numberline {12.1}jQueryのコードを読む}{115}{section.12.1}
-\contentsline {section}{\numberline {12.2}JavaScriptファイルの短縮化}{116}{section.12.2}
-\contentsline {subsection}{\numberline {12.2.1}JavaScriptファイルの短縮化について}{116}{subsection.12.2.1}
-\contentsline {subsection}{\numberline {12.2.2}短縮化の例}{118}{subsection.12.2.2}
-\contentsline {section}{\numberline {12.3}Webサイトの効率化}{121}{section.12.3}
-\contentsline {subsection}{\numberline {12.3.1}Contents Deliverly Network(CDN)}{121}{subsection.12.3.1}
-\contentsline {subsection}{\numberline {12.3.2}CSS Sprite}{122}{subsection.12.3.2}
-\contentsline {chapter}{\numberline {第13回}XMLファイルの処理}{123}{chapter.13}
-\contentsline {section}{\numberline {13.1}XMLファイルとは}{123}{section.13.1}
-\contentsline {subsection}{\numberline {13.1.1}W3CにおけるXMLの解説}{123}{subsection.13.1.1}
-\contentsline {subsection}{\numberline {13.1.2}XMLファイルの例}{124}{subsection.13.1.2}
-\contentsline {subsubsection}{GPXファイルの構造}{124}{section*.29}
-\contentsline {subsubsection}{GPXファイルの例}{124}{section*.30}
-\contentsline {subsubsection}{地球の形}{125}{section*.31}
-\contentsline {section}{\numberline {13.2}Google Mapsにおける\texttt {Polyline}の表示}{126}{section.13.2}
-\contentsline {section}{\numberline {13.3}ブラウザでの処理}{126}{section.13.3}
-\contentsline {section}{\numberline {13.4}PHPによる処理}{131}{section.13.4}
-\contentsline {chapter}{\numberline {第14回}システム開発のためのヒント}{133}{chapter.14}
-\contentsline {section}{\numberline {14.1}コードの構造}{133}{section.14.1}
-\contentsline {subsection}{\numberline {14.1.1}良いコードとは}{133}{subsection.14.1.1}
-\contentsline {subsection}{\numberline {14.1.2}プログラムとデータの分離}{133}{subsection.14.1.2}
-\contentsline {section}{\numberline {14.2}コードの管理}{134}{section.14.2}
-\contentsline {subsection}{\numberline {14.2.1}複数でシステム開発をするときの問題点}{134}{subsection.14.2.1}
-\contentsline {subsection}{\numberline {14.2.2}バージョン管理の概念}{135}{subsection.14.2.2}
-\contentsline {subsection}{\numberline {14.2.3}バージョン管理ソフトの概要}{135}{subsection.14.2.3}
-\contentsline {subsection}{\numberline {14.2.4}gitの使い方}{135}{subsection.14.2.4}
-\contentsline {subsubsection}{git の特徴}{136}{section*.32}
-\contentsline {subsubsection}{git のインストール}{136}{section*.33}
-\contentsline {subsubsection}{初期設定}{136}{section*.34}
-\contentsline {paragraph}{ユーザーネームの登録}{136}{section*.35}
-\contentsline {paragraph}{メールアドレスの登録}{136}{section*.36}
-\contentsline {paragraph}{SSH Keyの登録}{136}{section*.37}
-\contentsline {subsubsection}{GitHub のアカウントの取得}{137}{section*.38}
-\contentsline {subsubsection}{リポジトリの作成と運用}{137}{section*.39}
+\contentsline {section}{\numberline {11.4}ドキュメントの構造の変更}{111}{section.11.4}
+\contentsline {section}{\numberline {11.5}イベントハンドラーの取り扱い}{111}{section.11.5}
+\contentsline {section}{\numberline {11.6}Ajaxの処理}{112}{section.11.6}
+\contentsline {section}{\numberline {11.7}jQuery のサンプル}{112}{section.11.7}
+\contentsline {chapter}{\numberline {第12回}JavaScriptライブラリーの配布}{117}{chapter.12}
+\contentsline {section}{\numberline {12.1}jQueryのコードを読む}{117}{section.12.1}
+\contentsline {section}{\numberline {12.2}JavaScriptファイルの短縮化}{119}{section.12.2}
+\contentsline {subsection}{\numberline {12.2.1}JavaScriptファイルの短縮化について}{119}{subsection.12.2.1}
+\contentsline {subsection}{\numberline {12.2.2}短縮化の例}{119}{subsection.12.2.2}
+\contentsline {section}{\numberline {12.3}Webサイトの効率化}{124}{section.12.3}
+\contentsline {subsection}{\numberline {12.3.1}Contents Deliverly Network(CDN)}{124}{subsection.12.3.1}
+\contentsline {subsection}{\numberline {12.3.2}CSS Sprite}{124}{subsection.12.3.2}
+\contentsline {chapter}{\numberline {第13回}XMLファイルの処理}{125}{chapter.13}
+\contentsline {section}{\numberline {13.1}XMLファイルとは}{125}{section.13.1}
+\contentsline {subsection}{\numberline {13.1.1}W3CにおけるXMLの解説}{125}{subsection.13.1.1}
+\contentsline {subsection}{\numberline {13.1.2}XMLファイルの例}{126}{subsection.13.1.2}
+\contentsline {subsubsection}{GPXファイルの構造}{126}{section*.29}
+\contentsline {subsubsection}{GPXファイルの例}{126}{section*.30}
+\contentsline {subsubsection}{地球の形}{127}{section*.31}
+\contentsline {section}{\numberline {13.2}Google Mapsにおける\texttt {Polyline}の表示}{128}{section.13.2}
+\contentsline {section}{\numberline {13.3}ブラウザでの処理}{128}{section.13.3}
+\contentsline {section}{\numberline {13.4}PHPによる処理}{133}{section.13.4}
+\contentsline {chapter}{\numberline {第14回}システム開発のためのヒント}{135}{chapter.14}
+\contentsline {section}{\numberline {14.1}コードの構造}{135}{section.14.1}
+\contentsline {subsection}{\numberline {14.1.1}良いコードとは}{135}{subsection.14.1.1}
+\contentsline {subsection}{\numberline {14.1.2}プログラムとデータの分離}{135}{subsection.14.1.2}
+\contentsline {section}{\numberline {14.2}コードの管理}{136}{section.14.2}
+\contentsline {subsection}{\numberline {14.2.1}複数でシステム開発をするときの問題点}{136}{subsection.14.2.1}
+\contentsline {subsection}{\numberline {14.2.2}バージョン管理の概念}{137}{subsection.14.2.2}
+\contentsline {subsection}{\numberline {14.2.3}バージョン管理ソフトの概要}{137}{subsection.14.2.3}
+\contentsline {subsection}{\numberline {14.2.4}gitの使い方}{137}{subsection.14.2.4}
+\contentsline {subsubsection}{git の特徴}{138}{section*.32}
+\contentsline {subsubsection}{git のインストール}{138}{section*.33}
+\contentsline {subsubsection}{初期設定}{138}{section*.34}
+\contentsline {paragraph}{ユーザーネームの登録}{138}{section*.35}
+\contentsline {paragraph}{メールアドレスの登録}{138}{section*.36}
+\contentsline {paragraph}{SSH Keyの登録}{138}{section*.37}
+\contentsline {subsubsection}{GitHub のアカウントの取得}{139}{section*.38}
+\contentsline {subsubsection}{リポジトリの作成と運用}{139}{section*.39}
