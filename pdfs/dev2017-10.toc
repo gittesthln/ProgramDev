@@ -1,0 +1,9 @@
+\beamer@endinputifotherversion {3.36pt}
+\beamer@sectionintoc {1}{前回の演習問題}{2}{0}{1}
+\beamer@subsectionintoc {1}{1}{問題1}{2}{0}{1}
+\beamer@sectionintoc {2}{PHP入門--続き}{3}{0}{2}
+\beamer@subsectionintoc {2}{1}{関数}{3}{0}{2}
+\beamer@sectionintoc {3}{サーバーとのデータ－の交換(1)}{15}{0}{3}
+\beamer@sectionintoc {4}{Web Storage}{25}{0}{4}
+\beamer@sectionintoc {5}{サーバーとのデータ－の交換--Ajax}{31}{0}{5}
+\beamer@subsectionintoc {5}{1}{Ajax}{31}{0}{5}
