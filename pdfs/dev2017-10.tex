@@ -38,9 +38,53 @@
  やすい。
 \end{frame}
 \begin{frame}[containsverbatim]
- \frametitle{問題3}
- \Verb+array_splice()+
+ \frametitle{問題3--\Verb+array\_splice()+の仕様}
+
+ \Verb+array array_splice ( array &$input , +\\
+ \Verb+int $offset [, int $length = count($input)+
+ \Verb+[, mixed $replacement = array() ]] )+
+ \begin{itemize}
+  \item input 入力の配列。
+  \item offset offset が正の場合、削除される部分は 配列 input の最初から
+        指定オフセットのぶんだけ進んだ位置\\
+        offset が負の場合、削除される部分は、 input の末尾から数えた位置
+  \item length length が省略された場合、 offset から配列の最後までが全て
+        削除\\
+        length が指定され、正の場合、複数の要素が削除\\
+        負の length が指定された場合、削除される部分の末尾の位置は配列の
+        末尾を基準にして計算されます。\\
+        length にゼロを指定した場合は、どの要素も削除しません。
+  \item replacement
+配列 replacement が指定された場合、 削除された要素は、この配列の要素で置換
+ \end{itemize}
 \end{frame}
+ \begin{frame}[containsverbatim]
+  \frametitle{問題2}
+  \LISTNN{09pop-push.php}{1}{last}{\small}
+ \end{frame}
+\subsection{問題3}
+ \begin{frame}[containsverbatim]
+  \frametitle{問題3}
+  \VerbatimInput[fontsize=\scriptsize]{../09testPHP.php}
+ \end{frame}
+ \begin{frame}[containsverbatim]
+  \frametitle{問題3--結果}
+  \begin{itemize}
+   \item PHPでは\texttt{+}数として加法
+   \item 文字列は数として正しいところまで変換
+   \item \texttt{1:}では\"内の変数は値に置き換えられる
+   \item \texttt{2:}では\Verb+"2:"+の部分は数の$2$に変換、その後加法が行
+         われ、$9$となる。改行コードは数の$0$に変換
+   \item \texttt{3:}では\Verb+"3:".$A+の部分は\Verb+"3:2"+になり、
+         \texttt{+}で$3+5$が計算される。
+   \item PHPでは引数が少ないと警告が出る。多い方は無視
+   \item \Verb+sum2()+内では\Verb+$A+などは関数内で値が定義されていない
+         ので警告が出る
+  \end{itemize}
+ \end{frame}
+ \begin{frame}[containsverbatim]
+  \frametitle{}
+ \end{frame}
 \section{PHP入門--続き}
  \input dev2016-09php2.tex
 \section{サーバーとのデータ－の交換(1)}
@@ -54,7 +98,7 @@
  \frametitle{\texttt{POST}による送信}
  \texttt{windows.onload =function()}内に次のコードを追加する。
  \begin{Verbatim}
-    var Form = document.getElementsByTagName("form")[0];
+    let Form = document.getElementsByTagName("form")[0];
     Form.setAttribute("method","POST");
     Form.setAttribute("action","09sendData.php");
  \end{Verbatim}
@@ -222,8 +266,8 @@
 var Storage = window.localStorage;
 //var Storage = window.sessionStorage;
 window.onload = function() {
-  var AccessList, Message = document.getElementById("message");
-  var D = new Date();
+  let AccessList, Message = document.getElementById("message");
+  let D = new Date();
   if(Storage["access"]) {
     AccessList = JSON.parse(Storage["access"]);
   } else {
@@ -243,7 +287,7 @@ window.onload = function() {
  \frametitle{WebStrageの例(3)}
   \begin{Verbatim}[numbers=left, fontsize=\small]
 function appendMessage(P, Mess) {
-  var div = document.createElement("div");
+  let div = document.createElement("div");
   P.appendChild(div);
   div.appendChild(document.createTextNode(Mess));
 }
@@ -298,42 +342,34 @@ Ajax の機能はこのオブジェクトを用いて実現
 \end{frame}
 \begin{frame}[containsverbatim]
 \frametitle{リスト(1)}
-\LISTNN{09-01whatday.html}{46}{53}{\normalsize}
+\LISTNN{09-01whatday.html}{42}{48}{\normalsize}
 \end{frame}
 \begin{frame}[containsverbatim]
 \frametitle{リスト---概要}
 \begin{itemize}
- \item 以前のものとは46行目以降が異なっている。イベントハンドラーを関数とし
-       て定義している。
- \item 47行目から52行目は以前と同じプルダウンメニューの処理である。
+ \item 以前のものとは41行目から61行目が異なっている。
+ \item イベントハンドラーを関数として定義している。
+ \item 42行目から48行目は以前と同じプルダウンメニューの処理である。
 \end{itemize}
 \end{frame}
 \begin{frame}[containsverbatim]
 \frametitle{リスト(2)--- XMLHttpRequestオブジェクトの生成}
-\LISTNN{09-01whatday.html}{54}{63}{\small}
+\LISTNN{09-01whatday.html}{49}{63}{\small}
 \end{frame}
 \begin{frame}[containsverbatim]
 \frametitle{\texttt{XMLHttpRequest}の作成}
-54行目から63行目は裏でサーバーと通信をするための
+49行目でサーバーと通信をするための
 \texttt{XMLHttpRequest}オブジェクトを作成している。
-\begin{itemize}
- \item 古いバージョンのIEは別のオブジェクトで通信をするので、ブラウザが
-       \texttt{XMLHttpRequest}メソッドを持つか確認し(55行目)、持っている
-       場合はそのオブジェクトを新規作成する(56行目)。
- \item 57行目から63行目は古いIEのためのコードである。
- \item このようにブラウザの機能の違いで処理を変えることをクロスブラウザ
-       対策という。通常はブラウザがその機能を持つかどうかで判断する。
-\end{itemize}
 \end{frame}
 \begin{frame}[containsverbatim]
 \frametitle{リスト(3)--- コールバック関数の登録}
-\LISTNN{09-01whatday.html}{65}{80}{\scriptsize}
+\LISTNN{09-01whatday.html}{51}{56}{\scriptsize}
 \end{frame}
 \begin{frame}[containsverbatim]
 \frametitle{イベントハンドラーの説明}
-\texttt{XMLHttRequest}が生成できていたら(65行目)、このオブジェクトが
+\texttt{XMLHttRequest}が生成できていたら(50行目)、このオブジェクトが
        生成する\texttt{onreadystatechange}イベントのイベントハンドラーを
-       登録する(66行目から71行目)。
+       登録する(51行目から56行目)。
  \begin{itemize}
   \item \texttt{XMLHttRequest}の\texttt{readyState}は通信の状態を表す。
 	$4$ は通信終了を意味する。
@@ -347,23 +383,23 @@ Ajax の機能はこのオブジェクトを用いて実現
 %\begin{frame}[containsverbatim]
 \frametitle{通信の開始}
 \begin{itemize}
- \item 72行目から73行目が通信の開始する。ここでは、\texttt{GET}で行うので、
+ \item 57行目から59行目が通信の開始する。ここでは、\texttt{GET}で行うので、
        URLの後に必要なデータを付ける。
  \item \texttt{GET}では送るデータ本体がないので、通信の終了をのため
        \texttt{null}を送信する。\texttt{POST}のときはここでデータ本体を
        送る。
- \item プルダウンメニューが変化したときのイベントハンドラーを登録し(77行
+ \item プルダウンメニューが変化したときのイベントハンドラーを登録し(62行
        目)、最後に現在の日付データをサーバーに要求する。、
 \end{itemize}
 \end{frame}
 \begin{frame}[containsverbatim]
 \frametitle{リスト(4)---HTML文書}
-\LISTNN{09-01whatday.html}{83}{86}{\normalsize}
+\LISTNN{09-01whatday.html}{63}{71}{\normalsize}
 \end{frame}
 \begin{frame}[containsverbatim]
 \frametitle{送られてきたデータの処理}
 \begin{itemize}
- \item 得られたデータは85行目の\texttt{p}要素の中に入れる(68行目から69行
+ \item 得られたデータは70行目の\texttt{p}要素の中に入れる(53行目から54行
        目)。
  \item この要素の\texttt{firstChild}を指定しているので85行目には
        \texttt{<p>}と\texttt{</p>}の間に空白を設けて、テキストノードが存
