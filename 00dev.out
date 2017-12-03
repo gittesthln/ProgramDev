@@ -113,27 +113,19 @@
 \BOOKMARK [1][-]{section.11.5}{イベントハンドラーの取り扱い}{chapter.11}% 113
 \BOOKMARK [1][-]{section.11.6}{Ajaxの処理}{chapter.11}% 114
 \BOOKMARK [1][-]{section.11.7}{jQuery のサンプル}{chapter.11}% 115
-\BOOKMARK [0][-]{chapter.12}{JavaScriptライブラリーの配布}{}% 116
-\BOOKMARK [1][-]{section.12.1}{jQueryのコードを読む}{chapter.12}% 117
-\BOOKMARK [1][-]{section.12.2}{JavaScriptファイルの短縮化}{chapter.12}% 118
-\BOOKMARK [2][-]{subsection.12.2.1}{JavaScriptファイルの短縮化について}{section.12.2}% 119
-\BOOKMARK [2][-]{subsection.12.2.2}{短縮化の例}{section.12.2}% 120
-\BOOKMARK [1][-]{section.12.3}{Webサイトの効率化}{chapter.12}% 121
-\BOOKMARK [2][-]{subsection.12.3.1}{Contents Deliverly Network\(CDN\)}{section.12.3}% 122
-\BOOKMARK [2][-]{subsection.12.3.2}{CSS Sprite}{section.12.3}% 123
-\BOOKMARK [0][-]{chapter.13}{XMLファイルの処理}{}% 124
-\BOOKMARK [1][-]{section.13.1}{XMLファイルとは}{chapter.13}% 125
-\BOOKMARK [2][-]{subsection.13.1.1}{W3CにおけるXMLの解説}{section.13.1}% 126
-\BOOKMARK [2][-]{subsection.13.1.2}{XMLファイルの例}{section.13.1}% 127
-\BOOKMARK [1][-]{section.13.2}{Google MapsにおけるPolylineの表示}{chapter.13}% 128
-\BOOKMARK [1][-]{section.13.3}{ブラウザでの処理}{chapter.13}% 129
-\BOOKMARK [1][-]{section.13.4}{PHPによる処理}{chapter.13}% 130
-\BOOKMARK [0][-]{chapter.14}{システム開発のためのヒント}{}% 131
-\BOOKMARK [1][-]{section.14.1}{コードの構造}{chapter.14}% 132
-\BOOKMARK [2][-]{subsection.14.1.1}{良いコードとは}{section.14.1}% 133
-\BOOKMARK [2][-]{subsection.14.1.2}{プログラムとデータの分離}{section.14.1}% 134
-\BOOKMARK [1][-]{section.14.2}{コードの管理}{chapter.14}% 135
-\BOOKMARK [2][-]{subsection.14.2.1}{複数でシステム開発をするときの問題点}{section.14.2}% 136
-\BOOKMARK [2][-]{subsection.14.2.2}{バージョン管理の概念}{section.14.2}% 137
-\BOOKMARK [2][-]{subsection.14.2.3}{バージョン管理ソフトの概要}{section.14.2}% 138
-\BOOKMARK [2][-]{subsection.14.2.4}{gitの使い方}{section.14.2}% 139
+\BOOKMARK [0][-]{chapter.12}{XMLファイルの処理}{}% 116
+\BOOKMARK [1][-]{section.12.1}{XMLファイルとは}{chapter.12}% 117
+\BOOKMARK [2][-]{subsection.12.1.1}{W3CにおけるXMLの解説}{section.12.1}% 118
+\BOOKMARK [2][-]{subsection.12.1.2}{XMLファイルの例}{section.12.1}% 119
+\BOOKMARK [1][-]{section.12.2}{Google MapsにおけるPolylineの表示}{chapter.12}% 120
+\BOOKMARK [1][-]{section.12.3}{ブラウザでの処理}{chapter.12}% 121
+\BOOKMARK [1][-]{section.12.4}{PHPによる処理}{chapter.12}% 122
+\BOOKMARK [0][-]{chapter.13}{システム開発のためのヒント}{}% 123
+\BOOKMARK [1][-]{section.13.1}{コードの構造}{chapter.13}% 124
+\BOOKMARK [2][-]{subsection.13.1.1}{良いコードとは}{section.13.1}% 125
+\BOOKMARK [2][-]{subsection.13.1.2}{プログラムとデータの分離}{section.13.1}% 126
+\BOOKMARK [1][-]{section.13.2}{コードの管理}{chapter.13}% 127
+\BOOKMARK [2][-]{subsection.13.2.1}{複数でシステム開発をするときの問題点}{section.13.2}% 128
+\BOOKMARK [2][-]{subsection.13.2.2}{バージョン管理の概念}{section.13.2}% 129
+\BOOKMARK [2][-]{subsection.13.2.3}{バージョン管理ソフトの概要}{section.13.2}% 130
+\BOOKMARK [2][-]{subsection.13.2.4}{gitの使い方}{section.13.2}% 131
