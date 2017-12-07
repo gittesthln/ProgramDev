@@ -3,7 +3,7 @@
 \title{ソフトウェア開発\\第11回目授業}
 \author{平野 照比古}
 \institute{}
-\date{2016/12/9}
+\date{2017/12/8}
 \newtheorem{Prob}{解説}
 \newcommand{\Elm}[1]{\texttt{<#1>}}
 \setbeamercovered{transparent}
@@ -16,11 +16,122 @@
 \newcommand{\HTML}{HTML文書}
 \begin{document}
 \frame{\maketitle}
+\section{前回のレポートから}
+ \begin{frame}[containsverbatim]
+  \frametitle{問題1}
+  \begin{itemize}
+   \item \texttt{PUT}ではURLにパラメータが記述される
+   \item 直接記述してもサーバーのプログラムが起動される
+   \item したがって、元のページでデータのチェックをしても、呼び出しの方
+         でもデータのチェックをする必要がある。
+   \item \texttt{POST}では直接見えないが、呼び出し側で直接記述が可能
+         (前回のAjax通信を\texttt{POST}で行うところを参照)
+  \end{itemize}
+ \end{frame}
+ \begin{frame}[containsverbatim]
+  \frametitle{問題2}
+  \begin{itemize}
+   \item ブラウザのバージョンで内容が異なる。
+   \item 最近のブラウザはそれほど多くの情報を与えないようである。
+   \item セキュリティに関する考察が欲しい。
+  \end{itemize}
+ \end{frame}
+ \section{前回補足}
+\begin{frame}[containsverbatim]
+\frametitle{Ajaxで呼び出されるPHPのプログラム}
+\LISTNN{aniversary.php}{1}{last}{\scriptsize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{Ajaxで呼び出されるPHPのプログラム--解説}
+\begin{itemize}
+ \item 2行目で内部で処理をするエンコーディングを\texttt{UTF8}にしている。
+       関数、\texttt{mb\_internal\_encoding}関数を引数なしで呼び出すと
+       現在採用されているエンコーディングを得ることができる。
+ \item 4行目と5行目では月(\verb+$m+)と日(\verb+$d+)の値をそれぞれの変数
+       に設定している。
+\begin{itemize}
+ \item ここではコマンドプロンプトからもデバッグで
+       きるように、スーパーグローバル\verb+$_GET+内に値があれば
+       (\Verb+isset()+)が\Verb+true+になれば、その値を、そうでなければコ
+       マンドからの引数を設定している。
+ \item スーパーグローバル\verb+$argv+はの先頭は呼び出したファイル名であ
+       り、その後に引数が順に入る\footnote{C言語の\texttt{main}関数は通
+       常、\texttt{int main(int argc, char* argv[])}と宣言される。%
+       \texttt{argc}は\texttt{argv}の配列の大きさを表し、渡された引数の
+       リストが\texttt{argv[]}に入っている。このとき、\texttt{argv[0]}は実行
+       したときのファイル名が入る。}。
+\end{itemize}
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{\texttt{file()}関数}
+指定されたファイルを行末文字で区切って配列として返す関数\\
+\begin{itemize}
+\item 引数にはURLも指定できる。
+\item この関数は2番目の引数をとることができる。
+\begin{center}
+ \begin{tabular}{|c|m{15zw}|}\hline
+ \Verb+FILE_USE_INCLUDE_PATH+ & \Verb+include_path+ のファイルを探す\\\hline
+ \Verb+FILE_IGNORE_NEW_LINES+ & 配列の各要素の最後に改行文字を追加しない
+      \\ \hline
+  \Verb+FILE_SKIP_EMPTY_LINES+&空行を読み飛ばす \\ \hline
+ \end{tabular}
+\end{center}
+ \item \verb+file_get_contents()+はファイルの内容を一つの文字列として
+       読み込む。Webページの解析にはこちらの関数を使うとよい。
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{読み込むファイルの一部}
+\begin{Verbatim}
+1月[編集]
+1日 - 鉄腕アトムの日
+2日 - 月ロケットの日
+[中略]
+31日 - 生命保険の日、愛妻家の日
+2月[編集]
+1日 - テレビ放送記念日、ニオイの日
+2日 - 頭痛の日
+[以下略]
+\end{Verbatim}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{}
+\begin{itemize}
+ \item 月の部分の後には\texttt{[}がある。
+ \item 日の情報は\verb*+ - +で区切られている(\verb*+ +は空白を表す)。
+ \item すべての日の情報が入っている。
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{データの処理---月を探す}
+\begin{itemize}
+ \item 8行目で念のためコードを\texttt{UTF8}に変更
+ \item 関数\Verb+mb_split()+関数は第1引数に指定された文字列パターンで第2
+       引数で指定された文字列を分割して配列として返す関数
+ \item 分割を指定する文字列には正規表現が使えるので、文字\Verb+[+で分割
+       するために、\Verb+"\["+としている(9行目)。
+ \item 指定された文字列があれば配列の大きさが1より大きくなる。その行に対
+       して求める月と一致しているか判定し、等しければループを抜ける(11行
+       目)。
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{}
+\begin{itemize}
+ \item 14行目から18行目までは指定された月での指定された日の情報を探して
+       いる。日を決定する方法も月と同じである。文字列の分割は
+       \verb+"\s-\s"+となっている\footnote{これは\texttt{"\textbackslash
+       s"}ではうまく行かなかっ
+       たためである。}。
+ \item 20行目で得られた情報をストリームに出力している。
+\end{itemize}
+\end{frame}
 \section{jQuery}
 \subsection{jQueryとは}
 \begin{frame}[containsverbatim]
 \frametitle{jQueryとは}
-jQuery の開発元\footnote{\texttt{jQuery.com}参照日:2016/11/19}には次のよ
+jQuery の開発元\footnote{\texttt{jQuery.com}参照日:2017/11/29}には次のよ
  うに書かれている。
 \begin{quotation}
 jQuery is a fast, small, and feature-rich JavaScript library. It makes
@@ -32,12 +143,29 @@ jQuery is a fast, small, and feature-rich JavaScript library. It makes
 \end{quotation}
 \end{frame}
 \begin{frame}[containsverbatim]
-\frametitle{jQueryの目的}
-\begin{itemize}
- \item JavaScriptのライブラリー
- \item これまでに解説してきたJavaScriptの使い方を簡単にすることを目的
- \item 016年11月19日現在、jQuery は ver. 3.1.1 が最新
-\end{itemize}
+\frametitle{jQueryの利用法}
+\begin{enumerate}
+ \item jQuery は\href{jquery.com}{jquery.com}のページの右上にある「Download
+jQuery」をクリックすることでダウンロードのページに行く
+ \item 次の2つの最新版がダウンロード可能
+
+     Download the compressed, production jQuery 3.2.1
+
+    Download the uncompressed, development jQuery 3.2.1
+ \item ファイルの違いはコメントなどがそのまま入っているもの(uncompressed)と、
+コメントを取り除き、変数名などを短いものに置き換えて、ファイルサイズを小
+さくしたもの(compressed)
+ \item ダウンロードしたファイルを取り込む\Elm{script}要素を記述すれば利
+       用できる。
+ \item または、CDN(Contents Deliverly Network)を利用
+\begin{Verbatim}[fontsize=\small]
+<script
+ src="https://code.jquery.com/jquery-3.2.1.min.js"
+ integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+ crossorigin="anonymous"></script>
+\end{Verbatim}
+\end{enumerate}
+
 \end{frame}
 \newcounter{Func}
 \newcommand{\FuncRef}[1]{%
@@ -288,7 +416,7 @@ jQueryオブジェクトに対する多くの処理はHTMLの属性やCSSスタ�
  \end{frame}
 \begin{frame}[containsverbatim]
  \frametitle{今日は何の日---jQuery版(4)}
- \LISTN{09-01whatday-jquery.html}{37}{43}{\scriptsize}
+ \LISTN{09-01whatday-jquery.html}{37}{42}{\scriptsize}
  \end{frame}
 \begin{frame}[containsverbatim]
  \frametitle{今日は何の日---jQuery版(4)解説}
@@ -303,7 +431,7 @@ jQueryオブジェクトに対する多くの処理はHTMLの属性やCSSスタ�
  \end{frame}
 \begin{frame}[containsverbatim]
 \frametitle{今日は何の日---jQuery版(5)}
- \LISTN{09-01whatday-jquery.html}{44}{59}{\scriptsize}
+ \LISTN{09-01whatday-jquery.html}{43}{59}{\scriptsize}
  \end{frame}
 \begin{frame}[containsverbatim]
 \frametitle{今日は何の日---jQuery版(5)解説}
@@ -317,67 +445,5 @@ jQueryオブジェクトに対する多くの処理はHTMLの属性やCSSスタ�
 \frametitle{今日は何の日---jQuery版(6)}
  \LISTN{09-01whatday-jquery.html}{60}{last}{\scriptsize}
 \end{frame}
-\iffalse
-\section{jQueryのコードを読む}
-\begin{frame}[containsverbatim]
- \frametitle{jQueryファイルの違い}
-\begin{itemize}
- \item jQueryのソースファイルには\texttt{jQuery-<Version No>.js}と
-\texttt{jQuery-<Version No>.min.js}の2種類が存在
- \item \texttt{jQuery-<Version No>.min.js}は\texttt{jQuery-<Version No>.js}から
-コメントや、空白を取り除き、変数名を短いものに置き換えるという操作を行っ
-て、ファイルサイズを小さくしたもの
-\end{itemize}
-
-\end{frame}
-\begin{frame}[containsverbatim]
- \frametitle{jQuery 1.12.2.jsのソース}
- \begin{itemize}
-  \item このリストでは詳細なコメントが付いていて比較的読みやすい。
-  \item コメントを見るとクロスブラウザ対策が行われていることも見て取れる。
-  \item ソースコードの最小化のテクニックとしてグローバルなオブジェクトを短い変数
-名で置き換える
-  \item 冒頭の定義された関数
-の引数に、関数を渡している。その関数の仮引数は\texttt{window}となってい
-る。これにより、開発時はわかりやすい変数名が使えるメリットがある。
- \end{itemize}
-\end{frame}
-\begin{frame}[containsverbatim]
-\frametitle{短縮化のリスト}
-{\scriptsize
-\begin{verbatim}
-/*! jQuery v1.11.2 | (c) 2005, 2014 jQuery Foundation, Inc. | jquery.org/license */
-!function(a,b){"object"==typeof module&&"object"==typeof module.exports?
-module.exports=a.document?b(a,!0):
-function(a){if(!a.document)
-throw new Error("jQuery requires a window with a document");
-return b(a)}:b(a)
-}("undefined"!=typeof window?window:this,function(a,b){
-var c=[],d=c.slice,e=c.concat,f=c.push,g=c.indexOf,h={},
-i=h.toString,j=h.hasOwnProperty,k={},l="1.11.2",
-m=function(a,b){return new m.fn.init(a,b)},
-n=/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,
-o=/^-ms-/,
-p=/-([\da-z])/gi,
-q=function(a,b){return b.toUpperCase()};
-\end{verbatim}
-}
-\end{frame}
-\begin{frame}[containsverbatim]
-\frametitle{短縮化の方法}
-\begin{itemize}
- \item 各関数内で変数名は1文字から始めている。
- \item 関数の仮引数も\texttt{a}から付け直している。
- \item JavaScriptの固有の関数は当然のことながら変換されていない。
- \item このライブラリーは一つの関数を定義して、その場で実行している。14
-       行目の\texttt{function()}の前に\texttt{(}がついている。
- \item 短縮化されたコードではこの部分が\texttt{!function()}となっている。
-       関数オブジェクトを演算の対象とすることで実行する。
- \item そのほかにもキーワード\texttt{true}の代わりに\texttt{!0}としてい
-       る。
- \item \texttt{if()\{\}else\{\}}構文は\texttt{?}に置き換えている。
-\end{itemize}
-\end{frame}
-\fi
 \end{document}
 
