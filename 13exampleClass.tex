@@ -8,6 +8,7 @@
  \end{center}
  \caption{色の指定を見る}\label{color}
 \end{figure}
+
 この例では上下2行のテキストボックスで指定された色を左側の正方形の部分で
 示す。上はRGB形式で、下はHSL\footnote{W3CのCSS Color Module Level
 3\texttt{https://www.w3.org/TR/2011/REC-css3-color-20110607/}を参照のこ
@@ -22,22 +23,120 @@
  \item HSL形式の値は一番左(H--色相)が$0\sim359$の間で循環して変化し、残
        りの2つは$0\sim100$の間で変化する。
 \end{itemize}
-\section{ソースコード}
+\section{ソースコードの解説}
 \subsection{HTMLファイル}
 次のリストはHTMLファイルのものである。
-\LISTN{13Ex.html}{1}{last}{\normalsize}
+\LISTN{13Ex.html}{1}{last}{\small}
+\begin{itemize}
+ \item 5行目ではこのページに関する処理を定義する\JS ファイル
+       (\texttt{13Ex.js})を読み込む。
+ \item 6行目ではユーザーインターフェイスを定義している\JS ファイル
+       (\texttt{13UI.js})を読み込む。
+ \item 7行目から15行目は色を表示する部分のCSSを定義している。
+       \begin{itemize}
+        \item 9行目と10行目では表示部分の大きさ
+        \item 11行目では配置方法(横に並べる)
+        \item 12行目では上下の位置(ここでは中央に指定)
+        \item 13行目では色の表示域の周りの空白
+       \end{itemize}
+ \item 18行目と19行目では色の表示位置と値を設定するための\texttt{<div>}
+       要素を定義している。
+\end{itemize}
  \section{ユーザーインターフェイス}
  次のリストはユーザーインターフェイスのクラスを定義するものである。
-\LISTN{13UI.js}{1}{5}{\normalsize}
-\LISTN{13UI.js}{6}{10}{\normalsize}
-\LISTN{13UI.js}{11}{43}{\normalsize}
-\LISTN{13UI.js}{44}{49}{\normalsize}
-\LISTN{13UI.js}{50}{58}{\normalsize}
-\LISTN{13UI.js}{59}{65}{\normalsize}
-\LISTN{13UI.js}{66}{121}{\normalsize}
-\LISTN{13UI.js}{122}{last}{\normalsize}
+
+次のリストの部分は指定されたオブジェクトに指定できるオプションの値を変更するた
+ めの関数を定義している。
+ \LISTN{13UI.js}{1}{5}{\small}
+\begin{itemize}
+ \item 2番目の引数(\texttt{Opt})は変更する値が入っているオブジェクトであ
+       る。
+ \item 1番目の引数はキーがオブジェクト内の指定できるオプション(デフォル
+       ト値が設定されている)からなるオブジェクトである。
+ \item 3行目で指定できるキーであれば値を設定している。
+\end{itemize}
+次のリストの部分はHTML要素に対する\texttt{style}を設定するための関数である。
+\LISTN{13UI.js}{6}{10}{\small}
+\begin{itemize}
+ \item 7行目で、指定されたオプションを設定している。
+ \item 9行目でオプションのオブジェことを\texttt{style}属性の形式になるよ
+       うに変更している。
+\begin{enumerate}
+ \item オブジェクトを\texttt{JSON}形式の文字列に変換
+ \item キーなどを囲む\texttt{\{}と\texttt{\"}を取り除く
+ \item \texttt{,}と\texttt{\}}を\texttt{;}に変換
+\end{enumerate}
+\end{itemize}
+11行目から43行目のリストの部分は基本となるオブジェクト\texttt{DOMObject}を定義
+している。
+\LISTN{13UI.js}{11}{43}{\small}
+\begin{itemize}
+ \item オブジェクト内で有効な定数を定義するためにクラス式を返す関数を定
+       義しその場で実行している(43行目の\texttt{()})。
+ \item 12行目から15行目で作成する要素の名前空間のリストをオブジェクトリ
+       テラルの形で定義している。ここではHTML要素とSVG要素の名前空間があ
+       る。
+ \item 17行目から19行目で\texttt{document.getElementById()}の相当する
+       このオブジェクト用の関数を定義している。
+ \item 20行目から24行目で\texttt{document.getElementsByTagName()}の相当する
+       このオブジェクト用の関数を定義している。
+       \begin{itemize}
+        \item 21行目で指定された要素のリストを得ている。
+        \item 22行目から23行目でそのリストを\texttt{DOMObject}のリストに
+              変更している。
+        \item \ElmJ{map}は配列オブジェクト\ElmJ{Array}のメソッドで、各要
+              素に対して引数で与えられた関数を実行し、その結果からなる配
+              列を返す。
+        \item 21行目で得られたリストは配列ではないのでこのメソッドを使用
+              できない。
+        \item \ElmJ{call}は指定した関数が参照する\ElmJ{this}をその1番目
+              の引数にする。
+        \item 23行目の\texttt{(E)}以降の書き方は新しい無名関数の
+              記述方法である。
+\begin{Verbatim}
+  function(E){...}
+\end{Verbatim}
+              と書くのと同じである。
+        \item 新しい書き方と従来の書き方の一番の違いは関数内での
+              \ElmJ{this}の取り扱いである。\ElmJ{class}内のコードは
+              \texttt{strict}モードで実行される。このとき、
+              \ElmJ{function}で定義された関数内では\ElmJ{this}は
+              \ElmJ{undefined}になる。一方、簡略化された記述では
+              \ElmJ{this}の値がオブジェクト自身を指す。この違いが問題と
+              なる例はこのリストの170行目などにある。
+       \end{itemize}
+ \item 25行目から43行目はこのオブジェクトの\ElmJ{constructor}を定義して
+       いる。
+       \begin{itemize}
+        \item 引数は順に作成する要素名、その属性のリスト、親要素、イベン
+              ト処理のリスト、名前空間(デフォルトはHTML)である。
+        \item 27行目で名前空間を指定して要素を作成している。
+        \item 28行目は作成した要素に、与えられた属性を設定する関数を呼び
+              出している。
+        \item 29行目から31行目では親要素がある場合にはその子要素になるよ
+              うに指定している。
+        \item 32行目から34行目ではイベント処理を設定している。
+        \item 37行目から42行目では与えられたリストの属性を設定する関数を
+              定義している。
+       \end{itemize}
+\end{itemize}
+次のリストの部分は与えられた文字列を表示するためのクラス\texttt{divWithText}を
+定義している。
+\LISTN{13UI.js}{44}{49}{\small}
+\begin{itemize}
+ \item このクラスは\texttt{DOMObject}を継承している。
+ \item 引数は順に、表示するテキスト、親要素、属性である。
+ \item 46行目で\texttt{<div>}要素を作成し、その要素の\ElmJ{innerText}プロパティを
+       設定することで表示を可能としている
+\end{itemize}
+次のリストの部分は与えられた文字列を表示し、そのあとにテキストボックスを
+表示するためのクラス\texttt{NamedTextBox}を定義している。
+\LISTN{13UI.js}{50}{58}{\small}
+\LISTN{13UI.js}{59}{65}{\small}
+\LISTN{13UI.js}{66}{121}{\small}
+\LISTN{13UI.js}{122}{last}{\small}
  \section{ユーザーインターフェイスを引用するJavaScriptファイル}
  次のリストはユーザーインターフェイスを利用して、色の変化を見えるように
  するものである。
- \LISTN{13Ex.js}{1}{last}{\normalsize}
+ \LISTN{13Ex.js}{1}{last}{\small}
  

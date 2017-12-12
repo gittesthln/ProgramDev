@@ -152,7 +152,7 @@
 \contentsline {section}{\numberline {12.4}PHPによる処理}{125}{section.12.4}
 \contentsline {chapter}{\numberline {第13回}クラスの例}{127}{chapter.13}
 \contentsline {section}{\numberline {13.1}例の概要}{127}{section.13.1}
-\contentsline {section}{\numberline {13.2}ソースコード}{128}{section.13.2}
+\contentsline {section}{\numberline {13.2}ソースコードの解説}{128}{section.13.2}
 \contentsline {subsection}{\numberline {13.2.1}HTMLファイル}{128}{subsection.13.2.1}
 \contentsline {section}{\numberline {13.3}ユーザーインターフェイス}{128}{section.13.3}
 \contentsline {section}{\numberline {13.4}ユーザーインターフェイスを引用するJavaScriptファイル}{133}{section.13.4}
