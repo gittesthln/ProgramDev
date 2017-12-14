@@ -47,22 +47,6 @@ class divWithText extends DOMObject{
     this.elm.innerText = text;
   }
 }
-class NamedTextBox extends divWithText{
-  constructor(name, P, size="5", initValue=""){
-    super(name, P, {style:"display:inline-block;margin:5px"});
-    this.textBox = new DOMObject("input",
-         {type:"text", style:"text-align:right",
-          size:size, value:initValue},this);
-  }
-  get value(){return this.textBox.elm.value;}
-}
-class Button extends divWithText{
-  constructor(name, P, E){
-    super("", P);
-    this.button = new DOMObject("input", {type:"button", value:name},this, E);
-  }
-  get value(){return this.button.elm.value;}
-}
 class SpinBox {
   constructor(Opt, P, Events, callback) {//console.log("called");
     this.callback = callback;
@@ -100,22 +84,22 @@ class SpinBox {
   set value(val) {this.textBox.elm.value = this.values.value = val;  }
   set up(shift){
       let skip = shift?this.values.bigSkip:this.values.skip;
-      let tmpValue = this.values.value+skip;
+      this.value += skip;
       if(this.values.type=="limited"){
-          this.value = Math.min(tmpValue, this.values.max);
+          this.value = Math.min(this.value, this.values.max);
       } else {
-          this.value = (tmpValue>this.values.max)?this.values.min:tmpValue;
+          if(this.value >=this.values.max) this.value -= this.values.max;
       }
       if(this.callback) this.callback();
   }
   set down(shift){
-    let skip = shift?this.values.bigSkip:this.values.skip;
-    let tmpValue = this.value-skip;
-    if(this.values.type=="limited"){
-        this.value = Math.max(tmpValue, this.values.min);
-    } else {
-        this.value = (tmpValue<this.values.min)?this.values.max:tmpValue;
-    }
+      let skip = shift?this.values.bigSkip:this.values.skip;
+      this.value -= skip;
+      if(this.values.type=="limited"){
+          this.value = Math.max(this.value, this.values.min);
+      } else {
+          if(this.value < this.values.min) this.value += this.values.max;
+      }
     if(this.callback) this.callback()
   }
 }

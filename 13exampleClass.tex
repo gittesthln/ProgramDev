@@ -63,7 +63,7 @@
        うに変更している。
 \begin{enumerate}
  \item オブジェクトを\texttt{JSON}形式の文字列に変換
- \item キーなどを囲む\texttt{\{}と\texttt{\"}を取り除く
+ \item キーなどを囲む\texttt{\{}と\texttt{"}を取り除く%"
  \item \texttt{,}と\texttt{\}}を\texttt{;}に変換
 \end{enumerate}
 \end{itemize}
@@ -92,10 +92,7 @@
         \item \ElmJ{call}は指定した関数が参照する\ElmJ{this}をその1番目
               の引数にする。
         \item 23行目の\texttt{(E)}以降の書き方は新しい無名関数の
-              記述方法である。
-\begin{Verbatim}
-  function(E){...}
-\end{Verbatim}
+              記述方法である。\Verb+function(E){...}+
               と書くのと同じである。
         \item 新しい書き方と従来の書き方の一番の違いは関数内での
               \ElmJ{this}の取り扱いである。\ElmJ{class}内のコードは
@@ -129,6 +126,17 @@
  \item 46行目で\texttt{<div>}要素を作成し、その要素の\ElmJ{innerText}プロパティを
        設定することで表示を可能としている
 \end{itemize}
+\iffalse
+class NamedTextBox extends divWithText{
+  constructor(name, P, size="5", initValue=""){
+    super(name, P, {style:"display:inline-block;margin:5px"});
+    this.textBox = new DOMObject("input",
+         {type:"text", style:"text-align:right",
+          size:size, value:initValue},this);
+  }
+  get value(){return this.textBox.elm.value;}
+}
+
 次のリストの部分は与えられた文字列を表示し、そのあとにテキストボックスを
 表示するためのクラス\texttt{NamedTextBox}を定義している。
 \LISTN{13UI.js}{50}{58}{\small}
@@ -141,8 +149,18 @@
  \item 57行目でテキストボックスの値を読み出すゲッター\texttt{value}を定
        義している。
 \end{itemize}
+\fi
+\iffalse
+class Button extends divWithText{
+  constructor(name, P, E){
+    super("", P);
+    this.button = new DOMObject("input", {type:"button", value:name},this, E);
+  }
+  get value(){return this.button.elm.value;}
+}
+
 次のリストの部分はボタンクラスを作成するものである。
-\LISTN{13UI.js}{59}{65}{\small}
+\LISTN{13UI.js}{50}{54}{\small}
 \begin{itemize}
  \item このクラスは\texttt{divWithText}を継承している。
  \item コンストラクタの引数は順に、ボタンに表示するテキスト、親要素、ボ
@@ -150,18 +168,19 @@
  \item 61行目で親要素の設定を行っている。
  \item 62行目でボタン要素を付け加えている。
 \end{itemize}
-66行目からのリストの部分はテキストボックスに付属した値を上下するボタンを持つ
+\fi
+50行目からのリストの部分はテキストボックスに付属した値を上下するボタンを持つ
 \texttt{spinbox}のクラスを定義している。HTMLにも\texttt{spinbox}があるが
 少し機能を変えている。
 
 次のリストはこのクラスのコンストラクタの部分である。
-\LISTN{13UI.js}{66}{98}{\small}
+\LISTN{13UI.js}{50}{82}{\small}
 \begin{itemize}
  \item コンストラクタの引数は順に、オプション、親要素、イベント処理関数
        群、値が変化したときの処理関数である。
- \item 68行目は値が変化したときに呼び出される関数をオブジェクトに登録し
+ \item 52行目は値が変化したときに呼び出される関数をオブジェクトに登録し
        ている。
- \item 69行目から73行目ではこのオブジェクトのデフォルトのパラメータを定
+ \item 53行目から57行目ではこのオブジェクトのデフォルトのパラメータを定
        義している。
        \begin{itemize}
         \item \texttt{max}は設定できる値の最大値(デフォルト値は
@@ -173,51 +192,117 @@
               値の変化量(デフォルト値は$5$)
         \item \texttt{value}は初期値(デフォルト値は$0$)
         \item \texttt{type}は両端の値から外れたときの処理方法(デフォルト
-              は両端の値に固定--\texttt{\"limited\"}。値が循環的に変わる
-              \texttt{\"cyclic\"}がある)
+              は両端の値に固定--\texttt{"limited"}。値が循環的に変わる
+              \texttt{"cyclic"}がある)
        \end{itemize}
- \item 74行目から75行目でオブジェクトの周りの余白の設定をしている。
- \item 76行目で入れ物の\texttt{<div>}要素を作成している。
- \item 77行目では69行目からのデフォルトのパラメータを与えられた値に変更
+ \item 58行目から59行目でオブジェクトの周りの余白の設定をしている。
+ \item 60行目で入れ物の\texttt{<div>}要素を作成している。
+ \item 61行目では53行目からのデフォルトのパラメータを与えられた値に変更
        している。
- \item 78行目から79行目では81行目から83行目で定義されるテキストボックス
+ \item 62行目から64行目では65行目から67行目で定義されるテキストボックス
        を入れるための\texttt{<div>}要素を作成している。
- \item 81行目から83行目で定義されるテキストボックスは値を直接変更できな
-       い設定をしている(\texttt{\"readonly\"}の指定)
- \item 84行目から85行目ではテキストボックスの隣に置く上下のボタンを入れ
+ \item 66行目から67行目で定義されるテキストボックスは値を直接変更できな
+       い設定をしている(\texttt{"readonly"}の指定)
+ \item 68行目から69行目ではテキストボックスの隣に置く上下のボタンを入れ
        るための\texttt{<div>}要素を作成している。
- \item 86行目から89行目では値の上下させるボタンの表示形式を定義している。
- \item 90行目でさらにボタンのタイプ(値を増加)を設定し、91行目から92行目でボタンと
+ \item 70行目から73行目では値の上下させるボタンの表示形式を定義している。
+ \item 74行目でさらにボタンのタイプ(値を増加)を設定し、75行目から76行目でボタンと
        して機能するようなオブジェクトを追加している。この上でクリックイ
        ベントが生じたときにイベント発生時ののシフトキーの状態を
        \texttt{sipnbox}の\texttt{up}プロパティの与えている(代入で行って
-       いるが、\texttt{up}は101行目から110行目で定義されているセッターで
+       いるが、\texttt{up}は85行目から94行目で定義されているセッターで
        ある)。
- \item 94行目から97行目は値を減少させるボタンを設定している。
+ \item 77行目から82行目は値を減少させるボタンを設定している。
 \end{itemize}
 残りの部分はこのクラスのセッターまたはゲッターを定義している部分である。
-\LISTN{13UI.js}{99}{121}{\small}
+\LISTN{13UI.js}{83}{105}{\small}
 \begin{itemize}
- \item 99行目と100行目はそれぞれテキストボックスの値に関するゲッ
+ \item 83行目と84行目はそれぞれテキストボックスの値に関するゲッ
        ターとセッターである。
- \item 101行目から110行目は設定値を増大させるメソッドであり、11行目から
-       121行目は設定値を減少させるメソッドである。
- \item 102行目ではシフトキーが押されているかを判定して、変化量を決めてい
+ \item 85行目から94行目は設定値を増大させるメソッドであり、95行目から
+       104行目は設定値を減少させるメソッドである。
+ \item 86行目ではシフトキーが押されているかを判定して、変化量を決めてい
        る。
- \item 103行目で仮の値を求め、それが上限値を超えている処理を
-       \texttt{spinbox}の\texttt{type}に応じて変えている(104行目から108
-       行目)。
- \item  上限値で固定(\texttt{type}が\texttt{\"limited\"})のときは
-       上限値と仮の値の小さい方を設定している(107行目)。
- \item 値gが循環する(\texttt{type}が\texttt{\"cyclic\"})ときは
-       上限値が超えた場合、最小値を設定している(108行目)。
- \item 値の設定後の処理関数が定義されているときはその関数を呼び出す(109
+ \item 87行目で仮の値を求め、それが上限値を超えている処理を88行目から
+			 92行目で行っている。
+ % \item
+			 上限値で固定(\texttt{type}が\texttt{"limited"})のときは
+       上限値と仮の値の小さい方を設定している(99行目)。
+% \item
+			値が循環する(\texttt{type}が\texttt{"cyclic"})ときは
+       上限値が超えた場合、上限値の値を引いている(91行目)。
+ \item 値の設定後の処理関数が定義されているときはその関数を呼び出す(93
        行目)。
  \item 値が減少する場合も同様である。
 \end{itemize}
-\LISTN{13UI.js}{122}{last}{\small}
+リストの最後の部分は色の3成分を設定するクラスの定義である。
+\LISTN{13UI.js}{106}{last}{\small}
+\begin{itemize}
+ \item コンストラクタに引数は順に、左端に示すテキスト、RGB形式かHSL形式
+			 のタイプ、親要素、値が変化したときの処理関数、オブジェクトのオプ
+			 ションである。
+ \item 108行目のコメント行は、メソッド内で呼び出される無名関数内でオブ
+			 ジェクト自身を示す\ElmJ{this}が参照できないときの対処法である。
+			 \ElmJ{this}を変数(\texttt{that})に格納し、それを参照する。
+ \item 110行目から113行目は左端にテキストが表示されるようにしている。
+ \item 114行目から137行目ではタイプが\texttt{"rgb"}のときのオブジェク
+			 トを作成している。
+			 \begin{itemize}
+				\item 115行目でタイプを\texttt{"rgb"}に設定している。
+				\item 116行目から141行目でオブジェクト全体を囲む要素を作成して、
+							そこに\texttt{click}イベントの処理関数を定義している。
+				\item このオブジェクトの右端のチェックボックスにチェックがあ
+							る場合はRGBの値を一斉に増減させる。そのときは(118行目)この関
+							数で処理をする(119行目から123行目)。
+				\item 119行目から120行目でRGBの値を変化させている
+							(\texttt{this.RGB.forEach})。
+				\item それぞれの\texttt{sipnbox}にもイベントの処理関数がついてい
+							るので、2回処理させないために、121行目でイベントの伝搬を止
+							めている(\texttt{E.stopPropagation()})。
+				\item その後、登録された処理関数を呼び出している。
+			  \item 126行目から133行目では\texttt{spinbox}3つ作成のために、
+							大きさ3の配列を作成し(\texttt{new Array(3)})、それぞれに
+							\texttt{0}を設定(\texttt{fill(0)})する。この配列に
+							\texttt{forEach}を用いて\texttt{spinbox}を作成する。
+
+							\ElmJ{Array}のメソッド\ElmJ{forEach}は\ElmJ{undefined}の要
+							素に対して実行されないのでこのような処理が必要となる。
+				\item これらの\texttt{spinbox}はタイプが\texttt{"limited"}、
+							最小値が\texttt{0}、最大値が\texttt{255}、初期値を
+							\texttt{128}である。
+				\item 134行目から136行目ではRGB値を同時に変化させるかどうかのチェッ
+							クボックスを作成している。
+			 \end{itemize}
+ \item 138行目から148行目はタイプが\texttt{"hsl"}のときのオブジェク
+			 トを作成している。
+			 \begin{itemize}
+				\item 138行目でタイプを\texttt{"hsl"}に設定している。
+				\item 139行目ではオブジェクト全体を囲む要素を定義している。
+				\item 140行目から147行目では3つの\texttt{spinbox}を定義している。
+				\item 色相(H)と残りの2つでは値の範囲と取り扱いが異なるので、範囲
+							と初期値を与える配列を利用して3つの\texttt{spinbox}を作成
+							している。
+				\item 148行目でははじめの\texttt{spinbox}のタイプを
+							\texttt{"cyclic"}に修正している。
+			 \end{itemize}
+ \item 151行目では\texttt{rgb}の値をコピーして配列で返すゲッターを、
+ 152行目では\texttt{rgb}の値のセッターをを定義している。
+ \item 153行目では\texttt{hsl}の値をコピーして配列で返すゲッターを、
+ 154行目では\texttt{hsl}の値のセッターをを定義している。
+ \item 155行目から159行目ではCSS3で定義されているRGBやHSL形式に変換する
+			 メソッドを定義している。
+\end{itemize}
  \section{ユーザーインターフェイスを引用するJavaScriptファイル}
  次のリストはユーザーインターフェイスを利用して、色の変化を見えるように
  するものである。
  \LISTN{13Ex.js}{1}{last}{\small}
- 
+ \begin{itemize}
+	\item 2行目から6行目までで2つの色が設定できるオブジェクトを作成してい
+				る。一つ目はRGB形式で2つ目がHSL形式となる。区別するパラメータは
+				配列で与えている。
+	\item 7行目ではその値を左側の背景色に反映するための関数を呼び出してい
+				る。
+	\item 8行目から11行目では\texttt{spinbox}で設定された色を背景色に設定
+				する関数である。
+	\item 10行目で\texttt{spinbox}の値を文字列に変換することで行っている。
+ \end{itemize}
