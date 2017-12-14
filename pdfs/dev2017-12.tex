@@ -3,7 +3,7 @@
 \title{ソフトウェア開発\\第12回目授業}
 \author{平野 照比古}
 \institute{}
-\date{2016/12/16}
+\date{2017/12/15}
 \newtheorem{Prob}{解説}
 \newcommand{\Elm}[1]{\texttt{<#1>}}
 \setbeamercovered{transparent}
@@ -16,233 +16,375 @@
 \newcommand{\HTML}{HTML文書}
 \begin{document}
 \frame{\maketitle}
-\section{jQueryのコードを読む}
-\begin{frame}[containsverbatim]
- \frametitle{jQueryファイルの違い}
-\begin{itemize}
- \item jQueryのソースファイルには\texttt{jQuery-<Version No>.js}と
-\texttt{jQuery-<Version No>.min.js}の2種類が存在
- \item \texttt{jQuery-<Version No>.min.js}は\texttt{jQuery-<Version No>.js}から
-コメントや、空白を取り除き、変数名を短いものに置き換えるという操作を行っ
-て、ファイルサイズを小さくしたもの
-\end{itemize}
+\section{XMLファイルとは}
+ \begin{frame}[containsverbatim]
+  \frametitle{W3CにおけるXML(eXtensible Markup Language)の説明(1)}
+\begin{quote}
+ The Extensible Markup Language (XML) is a simple text-based format for
+ representing structured information: documents, data, configuration,
+ books, transactions, invoices, and much more. It was derived from an
+ older standard format called SGML (ISO 8879), in order to be more
+ suitable for Web use. 
+\end{quote}
+XMLは構造化されたデータを表現する単純なテキストベースのフォーマットであ
+る。構造化された文書とは文書、データ、構成、本、送付状やそのほかもろも
+ろのものである。
 \end{frame}
 \begin{frame}[containsverbatim]
- \frametitle{jQuery のソースコード(1)}
-\LISTN{jQuery-3.1.1.js}{1}{13}{\tiny}
-\end{frame}
-\begin{frame}[containsverbatim]
- \frametitle{jQuery のソースコード(2)}
-\LISTN{jQuery-3.1.1.js}{14}{36}{\tiny}
-\end{frame}
-\begin{frame}[containsverbatim]
- \frametitle{jQuery のソースコード(3)}
-\LISTN{jQuery-3.1.1.js}{37}{41}{\tiny}
-\end{frame}
-\begin{frame}[containsverbatim]
- \frametitle{jQuery 3.1.1.jsのソース}
- \begin{itemize}
-  \item このリストでは詳細なコメントが付いていて比較的読みやすい。
-  \item コメントを見るとクロスブラウザ対策が行われていることも見て取れる。
-  \item ソースコードの最小化のテクニックとしてグローバルなオブジェクトを短い変数
-名で置き換える
-  \item 冒頭の定義された関数
-の引数に、関数を渡している。その関数の仮引数は\texttt{window}となってい
-る。これにより、開発時はわかりやすい変数名が使えるメリットがある。
-	\item ”strict mode”で動作（41行目）
- \end{itemize}
-\end{frame}
-\begin{frame}[containsverbatim]
-\frametitle{短縮化のリスト}
-\LISTN{jQuery-3.1.1.min.js}{1}{8}{\small}
-\end{frame}
-\begin{frame}[containsverbatim]
-\frametitle{短縮化の方法}
-\begin{itemize}
- \item 各関数内で変数名は1文字から始めている。
- \item 関数の仮引数も\texttt{a}から付け直している。
- \item JavaScriptの固有の関数は当然のことながら変換されていない。
- \item このライブラリーは一つの関数を定義して、その場で実行している。14
-       行目の\texttt{function()}の前に\texttt{(}がついている。
- \item 短縮化されたコードではこの部分が\texttt{!function()}となっている。
-       関数オブジェクトを演算の対象とすることで実行する。
- \item そのほかにもキーワード\texttt{true}の代わりに\texttt{!0}としてい
-       る。
- \item \texttt{if()\{\}else\{\}}構文は\texttt{?}に置き換えている。
-\end{itemize}
-\end{frame}
-\section{JavaScriptファイルの短縮化の例}
-\begin{frame}[containsverbatim]
- \frametitle{JavaScriptファイルの短縮化ツール}
- JavaScriptの短縮化ツールとして、Googleが提供する
- Closure Compiler を紹介する。
- このサービスは次のように説明されている。
-\begin{quotation}
- The Closure Compiler is a tool for making JavaScript download and run
- faster. It is a true compiler for JavaScript. Instead of compiling from
- a source language to machine code, it compiles from JavaScript to
- better JavaScript. It parses your JavaScript, analyzes it, removes dead
- code and rewrites and minimizes what's left. It also checks syntax,
- variable references, and types, and warns about common JavaScript
- pitfalls. 
-\end{quotation}
-\end{frame}
-\begin{frame}[containsverbatim]
-\frametitle{Closure Compiler の使い方}
-使い方については次のように書かれている。
-\begin{quotation}
- You can use the Closure Compiler as:
+  \frametitle{W3CにおけるXML(eXtensible Markup Language)の説明(2)}
 
-\begin{itemize}
- \item An open source Java application that you can run from the command
-			 line.
- \item A simple web application.
- \item A RESTful API.
-\end{itemize}
-To get started with the compiler, see "How do I start" below.
-\end{quotation}
-ここでは2番目にある Web アプリケーションで行う。
-\end{frame}
-\begin{frame}[containsverbatim]
-\frametitle{Closure Compiler の Web サイト}
- サイトは\texttt{http://closure-compiler.appspot.com/home}
- \begin{figure}[ht]
-	\begin{center}
-	 \includegraphics[width=1\textwidth]{../10-01closur-compiler-home.eps}
-	\end{center}
- \caption{Closure Compiler のホームページ}\label{closure-compiler}
- \end{figure}
- 左側のテキストボックスにコードを張り付けて、「Compile」のボタンを押せば
- よい。
-\end{frame}
-\section{短縮化の例}
-\begin{frame}[containsverbatim]
- \frametitle{短縮化の例}
- 使用するファイルは9回目の授業で用いた\texttt{event.js}
- \begin{figure}[ht]
-	\begin{center}
-	 \includegraphics[width=0.9\textwidth]{../10-01closur-compiler-res01.eps}
-	\end{center}
- \caption{Closure Compiler の結果}\label{closure-compiler-res01}
- \end{figure}
-\end{frame}
-\begin{frame}[containsverbatim]
-\frametitle{短縮化の結果(1)}
- 画面の右のほうで、元のファイルの大きさが1.53KBであったのに対し、短縮化
- の結果が1.06KBとなったことがわかる。
-\end{frame}
-\begin{frame}[containsverbatim]
- \frametitle{短縮化の詳細}
-\begin{Verbatim}[fontsize=\footnotesize]
-window.onload=function(){var b=document.getElementById("Squares"),
-  e=document.getElementById("select"),
-  g=document.getElementById("colorName"),
-  f=document.getElementById("radio"),
-  h=document.getElementById("Set"),
-  c=document.getElementsByClassName("click"),
-  d=b.children[1];
-  b.children[0].style.background="red";
-  b.children[1].style.background="yellow";
-  b.children[2].style.background="blue";
-  e.style.fontSize="30px";
-\end{Verbatim}
-\end{frame}
-\begin{frame}[containsverbatim]
- \frametitle{短縮化の結果(2)}
- \begin{Verbatim}[fontsize=\footnotesize]
-  b.addEventListener("click",function(a){
-    c[0].value=a.clientX;
-    c[1].value=a.clientY;
-    c[2].value=a.pageX;
-    c[3].value=a.pageY;
-    c[4].value=window.pageXOffset;
-    c[5].value=window.pageYOffset;
-    var b=a.target.getBoundingClientRect();
-    c[6].value=a.pageX-b.left;
-    c[7].value=a.pageY-b.top;
-    g.value=a.target.style.background;d=a.target},!1);
-\end{Verbatim}
-\end{frame}
-\begin{frame}[containsverbatim]
- \frametitle{短縮化の結果(3)}
-\begin{Verbatim}[fontsize=\footnotesize]
-    f.addEventListener("click",function(a){
-      alert(a.target.tagName);
-      "DIV"===a.target.tagName&&(a.target.firstChild.checked=!0);
-      console.log("----"+f.value);
-      d.style.background=f.querySelector("input:checked").value},!1);
-    h.addEventListener("click",function(){d.style.background=g.value},!1)};
-\end{Verbatim}
- \begin{itemize}
-	\item  \texttt{if}文であったものが論理式の\Verb+&&+で置き換えられてい
-				 る。
-	\item \texttt{document.getElementById}などはそのまま短縮化、共通化さ
-れていない。
- \end{itemize}
+さらに続けて次のように記されている。
+\begin{quote}
+ If you are already familiar with HTML, you can see that XML is very
+ similar. However, the syntax rules of XML are strict: XML tools will
+ not process files that contain errors, but instead will give you error
+ messages so that you fix them. This means that almost all XML documents
+ can be processed reliably by computer software. 
 
-\end{frame}
-\begin{frame}[containsverbatim]
- \frametitle{\texttt{document.getElementById}を減らす}
- 単純に関数を置き換えただけではうまくいかない。
-  \begin{figure}[ht]
-	\begin{center}
-	 \includegraphics[width=0.9\textwidth]{../10-01closur-compiler-res03.eps}
-	\end{center}
- \caption{Closure Compiler の結果(2)}\label{closure-compiler-res02}
- \end{figure}
-\end{frame}
-\begin{frame}[containsverbatim]
- \frametitle{解説}
-ラップした関数は消えていて、もとの
- \texttt{document.getElementById}に戻っている。
-
- これを避けるためには関数の引数に
-  \texttt{document}と\texttt{document.getElementById}を渡すことで解決できる。
-\end{frame}
-\begin{frame}[containsverbatim]
- \frametitle{ソースコードの書き直し(1)}
-\begin{Verbatim}[fontsize=\footnotesize]
-  var Squares, Select, ColorName, Radio, Set;
-  (function(document,getElementById){
-      Squares   = getElementById.call(document,"Squares");
-      Select    = getElementById.call(document,"select");
-      ColorName = getElementById.call(document,"colorName");
-      Radio     = getElementById.call(document,"radio");
-      Set       = getElementById.call(document,"Set");
-	})(document,document.getElementById);
-\end{Verbatim}
-\end{frame}
-\begin{frame}[containsverbatim]
- \frametitle{ソースコードの書き直し(2)}
- \begin{figure}[ht]
-	\begin{center}
-	 \includegraphics[width=0.9\textwidth]{../10-01closur-compiler-res04.eps}
-	\end{center}
- \caption{Closure Compiler の結果(3)}\label{closure-compiler-res03}
- \end{figure}
-\end{frame}
-\begin{frame}[containsverbatim]
- \frametitle{ソースコードの書き直し(3)}
- コンパイル後の結果が1.02KBとわずかに小さくなっていることがわかる。
-
- 短縮化を効率よくするためには元のプログラムも考えて作らないといけない。
+\end{quote}
+ここにも書いてあるようにXMLの形式はHTMLの形式に似ているが、XMLの文法上に
+規則は厳格である。
 \end{frame}
  \begin{frame}[containsverbatim]
-\frametitle{注意}
-この書き直しで\texttt{document.getElementById}だけを渡せば十分と思われるかもし
- れないが、これは関数オブジェクトとなり、関数内での\texttt{this}が
-  \texttt{document}にならないので、実行時にエラーが生ずる。
+  \frametitle{HTMLとの違い}
+\begin{itemize}
+ \item すべての要素は閉じられているか、空の要素としてマーク
+ \item 空の要素は通常のように閉じられている
+			 (\texttt{<happiness></happiness>})か、特別な短い形式(\texttt{<happiness />})
+ \item XMLにおいては属性値は常に\"で囲む必要がある(\Verb+<happiness type="joy"+)
+ \item HTML では組み込まれている要素名(とその属性)の集まりがあるが、 XML
+			 ではそのようなものは存在しない(例外は \texttt{xml} で始まるもの
+			 がある)。
+ \item  HTML ではいくつかの組み込まれた文字名(エンティティ)があるが、
+				XML には次の5つのものしかない。
 
-与えられた関数を別のオブジェクトのメソッドとして実行するために、
-  \texttt{call}メソッドを用いる。
-\begin{Verbatim}[fontsize=\small]
-  (function(document,getElementById){
-      Squares   = getElementById.call(document,"Squares");
-      Select    = getElementById.call(document,"select");
-      ColorName = getElementById.call(document,"colorName");
-      Radio     = getElementById.call(document,"radio");
-      Set       = getElementById.call(document,"Set");
-	})(document,document.getElementById);
-\end{Verbatim}
+				\Verb+&lt;+(\Verb+<+), \Verb+&gt;+(\Verb+>+), \Verb+&amp;+(\Verb+&+),
+				\Verb+&quot;+(\Verb+&+), \Verb+&apos+(\Verb+'+)
+
+				XMLでは独自にエンティティを定義できる。
+\end{itemize}
+\end{frame}
+\section{XMLファイルの例}
+\subsection{GPXファイル}
+  \begin{frame}[containsverbatim]
+   \frametitle{GPXファイルとは(1)}
+   \begin{itemize}
+    \item GPSのログデータを保存する形式の一つとして普及
+    \item \texttt{http://www.topografix.com/gpx.asp}で規格を見ることが
+可能
+   \end{itemize}
+ ルート要素は\texttt{gpx}で、
+ その下の子要素としては次のようなものがある。
+\begin{itemize}
+ \item \texttt{wpt}(ウェイポイント)\\
+			 ある地点の情報
+ \item \texttt{rte}(ルート)\\
+			 子要素として地点を表す\texttt{rtept}を持つ
+ \item \texttt{trk}(トラック)\\
+			 順序付けられた地点のリスト。子要素として\texttt{trkseg}を持つ
+ \item \texttt{trkseg}は順序付けられた地点(\texttt{trkpt})のリストを持つ
+\end{itemize}
+ これらの要素はすべてある必要はない。
  \end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{GPXファイルとは(2)}
+ \texttt{wpt}と\texttt{trkpt}のおもな構成要素は次の通り
+\begin{center}
+	 \begin{tabular}{|c|c|c|}\hline
+		名称&型&\multicolumn{1}{c|}{説明}\\\hline
+		\texttt{lat}&属性 & 地点の緯度\\ \hline
+		\texttt{lon}&属性 & 地点の経度\\ \hline
+		\texttt{ele}&要素 &標高 \\ \hline
+		\texttt{time}&要素 &地点での時刻。世界標準時 \\ \hline
+ \end{tabular}
+\end{center}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{GPXファイルの例}
+ \LISTN{GIS/sample.gpx}{1}{last}{\tiny}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{内容の解説}
+ \begin{itemize}
+  \item 2行目から7行目が\texttt{gpx}のルート要素
+  \item 8行目に\texttt{trk}
+  \item 9行目と10行目にはこのルートの名前、通し番号などが存在
+  \item さらに\texttt{trkseg}が一つだけ存在
+  \item \texttt{trkseg}内には\texttt{trkpt}が存在
+
+        初めの位置の情報は次の通り
+        \begin{itemize}
+         \item 位置は北緯$35.4858026^{\circ}$(\texttt{lat})、
+               東経$139.340909^{\circ}$(\texttt{lon})
+         \item 標高$70.794189\mathrm{m}$(\texttt{ele})
+         \item 時刻 $2016-03-24T08:33:28Z$
+               (2016年3月24日8:33:28世界標準時)
+        \end{itemize}
+ \end{itemize}
+\end{frame}
+\subsection{空間位置の決定}
+\begin{frame}[containsverbatim]
+ \frametitle{地球の形}
+地球の形は測量法や測量法施行令で定められている。測量法施行令第三条では
+地球の長半径と扁平率が定められている。
+\begin{Verbatim}
+一　長半径　六百三十七万八千百三十七メートル
+二　扁平率　二百九十八・二五七二二二一〇一分の一
+\end{Verbatim}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{地球上の3次元の位置}
+ \begin{itemize}
+  \item 緯度と経度に対して扁平率を考慮して空間の位置を求める必要がある
+  \item GPXファイルのデータでは2点間の距離が小さいのと、
+地球の扁平率と高さも地球の半径$R=6378137\mathrm{m}$に対して小さい
+ \end{itemize}
+これらの理由で地球の形を球として考えて計算
+
+  経度$\lambda$、緯度$\phi$の地点の空間位置は次の通り
+				\begin{eqnarray*}
+				 x &=& R\cos\phi\cos\lambda\\
+				 y &=& R\cos\phi\sin\lambda\\
+				 z &=& R\sin\phi
+				\end{eqnarray*}
+\end{frame}
+ \section{Google Mapsにおける\texttt{Polyline}の表示}
+\begin{frame}[containsverbatim]
+ \frametitle{\texttt{Polyline}と\texttt{Polygon}オブジェクト}
+ \begin{itemize}
+  \item \texttt{Polyline}は指定した地点を折れ線でつなぐ\\
+        \texttt{new google.maps.Polyline(<option>)}で作成
+  \item \texttt{Polygon}は指定した地点を折れ線でつないだ多角形\\
+        \texttt{new google.maps.Polygn(<option>)}で作成
+ \end{itemize}
+ オプションで指定する代表的なものは次の通り
+\begin{center}
+ \begin{tabular}{|c|p{20zw}|}\hline
+  プロパティ& \multicolumn{1}{c|}{説明}\\\hline
+  \texttt{map}& 表示する地図\\ \hline
+  \texttt{path}& \texttt{LatLng}を要素とする(MVC)配列\\ \hline
+  \texttt{strokeColor}& (縁取りの)線の色\\ \hline
+  \texttt{strokeOpacity}& (縁取りの)線の色の不透明度\\ \hline
+  \texttt{strokeWeight}& (縁取りの)線の幅\\ \hline
+  \texttt{fillColor}& 塗りつぶしの色(\texttt{Polygon}のみ)\\ \hline
+  \texttt{fillOpacity}& 塗りつぶしの色の不透明度(\texttt{Polygon}のみ)\\ \hline
+ \end{tabular}
+\end{center}
+\end{frame}
+\section{XMLファイルの処理}
+\subsection{ブラウザにおける処理}
+\begin{frame}[containsverbatim]
+ \frametitle{ブラウザでの処理の制限}
+ \begin{itemize}
+  \item 通常、セキュリティのため、ブラウザのプログラムではローカルに配置
+        されたフォルダを参照できない
+  \item この例外がファイルのアップロード\\
+        ユーザの責任において指定したファイルをサーバーにアップできる
+ \end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{\texttt{FileReader}オブジェクト}
+最近のJavaScriptでは\texttt{FileReader}オブジェクトを用いることで、サー
+ バーに転送する代わりにそのファイルをブラウザ内で処理できる。
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{GPXファイル内の道のりをGoogle Maps 上に表示}
+\LISTN{GIS/show-trace.html}{1}{last}{\tiny}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{GPXファイル内の道のりをGoogle Maps 上に表示(解説)}
+ \begin{itemize}
+	\item 6行目はこのページの外部スタイルシートを読み込むことを指定
+	\item ７行目から８行目でGoogle Maps API のファイルを読み込む。ここでは
+				APIキーが表示されていないので、コンソール画面に警告が現れる。
+	\item ９行目はGPXファイルのデータを処理するJavaScriptの読み込みを指定
+	\item 12行目はGoogle Mapsの表示域
+	\item 13行目から17行目にはファイルのアップロードの要素が定義
+	\item 19行目は表示されたGPXファイルに関する情報を示す
+ \end{itemize}
+ \end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{HTMLで読み込まれるスタイルシート}
+ \LISTN{GIS/map.css}{1}{last}{\tiny}
+%\end{frame}
+%\begin{frame}[containsverbatim]
+% \frametitle{HTMLで読み込まれるスタイルシート--(解説)}
+\begin{itemize}
+ \item 地図とフォームを横並び(2行目と5行目の
+       \texttt{display:inline-block})
+ \item 表の数字を右寄せ(9行目)
+ \item 文字のところを中央ぞろえ(12行目)。
+\end{itemize}
+ \end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{外部のJavaScriptファイル}
+ \LISTN{GIS/map-new2.js}{1}{10}{\tiny}
+%\end{frame}
+%\begin{frame}[containsverbatim]
+% \frametitle{外部のJavaScriptファイル--(解説)}
+ 2行目から53行目で読み込み終了後に実行される関数を定義している。
+ \begin{itemize}
+	\item 3行目から10行目でURLの後ろにパラメータ(\Verb+?+)があるかをチェック
+	\item パラメータは\Verb+&+で区切られている
+        \begin{itemize}
+         \item \Verb+&+で分解(5行目)、
+         \item れぞれに対して(6行目の\Verb+forEach+)\Verb+=+で名
+				前と値に分割
+         \item パラメタ(変数\Verb+PARAM+)に代入
+        \end{itemize}
+ \end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{}
+\LISTN{GIS/map-new2.js}{11}{16}{\tiny}
+%\end{frame}
+%\begin{frame}[containsverbatim]
+ % \frametitle{}
+ \begin{itemize}
+  \item GPXのログ内に複数の\Verb+<trkseg>+があった場合に、それらを色
+ 分けするための色を指定
+  \item 道のりの色は後で見るように下が透けるよ
+ うに指定して(86行目)いるので、地図上と情報用の背景色が同じように見える
+ ように色を調整
+ \end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{}
+\LISTN{GIS/map-new2.js}{17}{26}{\tiny}
+  ここでは初期の地図の表示を行っている。
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{}
+\LISTN{GIS/map-new2.js}{27}{53}{\tiny}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{アップロードするファイルが変化したときのイベント処理(1)}
+ \begin{itemize}
+	\item 31行目で\Verb+FileReader+オブジェクトを作成
+	\item 32行目から50行目で、このオブジェクトが利用可能になった時のイベン
+				ト処理関数を登録(実際の起動は52行目で発生)
+	\item 33行目で読み込まれたテキストを\Verb+"text/xml"+で処理\\
+        処理をするオブジェクトが\Verb+window.DOMParser()+の
+				\Verb+parseFromString()+メソッド
+	\item この処理結果が\Verb+DOM+の構造になるので、今までの\Verb+DOM+の処
+				理が{適用}できる
+	\item 34行目で\texttt{trk}要素に分解
+	\item それぞれの\texttt{trk}要素に対して処理を行うために、
+				\texttt{Array}オブジェクトのメソッド\texttt{forEach}を用いる。
+	\item 34行目で得られたものは\texttt{HTML}コレクションなので、このメソッ
+				ドが直接適用できない。\texttt{call}メソッドを利用すること
+				で解決
+ \end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{アップロードするファイルが変化したときのイベント処理(2)}
+\begin{itemize}
+	\item 36行目で各\texttt{trk}要素内の\texttt{trkpt}要素を求め、そこから
+				各\texttt{trkpt}要素の
+				緯度、経度、時間を求めて、空間の位置を計算し(38行目から42行目)、
+				結果を配列で返している(\texttt{map}メソッドを利用)。
+ \item 空間の位置を計算しているのは道のりの長さを求めるためであるが、今回のプログラ
+				ムではそれは利用していない。
+	\item 49行目でログを表示する関数を呼び出し
+	\item 51行目は読み込みが失敗したときの関数を登録
+	\item 52行目では指定されたファイルのデータをテキストとして読み込んでい
+				る。
+ \end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{ログの情報を表示}
+ \LISTN{GIS/map-new2.js}{54}{63}{\tiny}
+\begin{itemize}
+	\item この関数の引数は、表に表示するデータ、表示するオブジェクト、
+				(14行目で定義した)背景色の指定の3つ
+	\item 55行目で作成した\texttt{tr}要素の中に、与えられたデータを表示(58
+				行目から62行目)
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{道のりを表示}
+ \LISTN{GIS/map-new2.js}{64}{last}{\tiny}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{}
+\begin{itemize}
+	\item この関数の引数は道のりの幅、不透明度である。
+	\item 69行目から76行目で道のりを構成する地点を Google Maps の地点オブ
+				ジェクトに変え、かつ、道のりの緯度、経度の最大値と最小値を求めて
+				いる。
+	\item 79行目から83行目で道のりの情報を表示する。
+	\item 84行目から90行目で与えられたデータをもとに、道のりを表示している。
+				道のりのデータはオブジェクトリテラルの形で与えられている。
+	\item 92行目から94行目では表示された道のりをすべて含む最大のズームレベ
+				ルを設定(\texttt{fitBounds}メソッド)している。
+ \end{itemize}
+\end{frame}
+  \subsection{PHPによる処理}
+\begin{frame}[containsverbatim]
+ \frametitle{GPXアイルから道のりに必要なJSONオブジェクトを作成}
+ \LISTN{GIS/getGPSData.php}{1}{9}{\tiny}
+ 与えられた緯度経度から空間の位置を求める関数である。
+ 戻り値は空間の位置を配列として返す。
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{与えられたファイルからGPXファイルを処理}
+\LISTN{GIS/getGPSDataTmp.php}{10}{17}{\tiny}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{}
+ \begin{itemize}
+%  \item ファイル\texttt{\$fn}からログ内の道程の距離を求める関数である。
+  \item XMLファイルを読み込むために\texttt{DOMDocument}のインスタン
+        スを作成(11行目)
+  \item \texttt{load}メソッドにファイル名を指定することで、DOMオブジェク
+        トに変換される(12行目)。
+  \item PHPではピリオド\texttt{.}は文字列の連接演算子なのでメソッドは
+        \texttt{->}を用いる。
+  \item \texttt{getElementsByTagName}で\texttt{trk}を取得(13行目)する。
+  \item 14行目でその数を変数\texttt{\$len}に格納
+  \item トラックごとの情報をしまうための変数を初期化(15行目と16行目)
+				いる。
+ \end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{}
+\LISTN{GIS/getGPSDAtaTmp.php}{18}{28}{\tiny}
+ 各\texttt{trk}に対して距離などを求める。
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{}
+ \begin{itemize}
+  \item \texttt{trk}の一つを変数\texttt{\$trk}に格納している。呼び出しに注意(19行
+        目)
+  \item \texttt{\$trk}に含まれる\texttt{trkpt}のリストを得る(20行目)。
+  \item 極端に短いログは省く(22行目)。
+  \item ログ内の地点の範囲を示す変数を初期化(24、25行目)
+  \item 地点の情報をしまう配列を初期化(26行目)
+  \item 初めの位置の空間座標を変数\texttt{\$ppos}に格納(27行目)
+  \item 積算距離の変数を初期化(28行目)
+ \end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{}
+ \LISTN{GIS/getGPSDAtaTmp.php}{29}{44}{\tiny}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{}
+ \begin{itemize}
+  \item 各\texttt{trkpt}から緯度と経度を取り出し(31、32行目)、
+  今までの範囲外ならば範囲を更新(33行目から36行目)
+  \item 緯度と経度を配列に追加(37行目)し、空間の位置を計算(38行目)
+  \item ひとつ前の点との差を求め(39行目から41行目)、距離を計算(42行目)
+  \item ひとつ前の点を更新(43行目)
+ \end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{}
+\LISTN{GIS/getGPSDAtaTmp.php}{45}{last}{\tiny}
+  \begin{itemize}
+  \item 移動がほとんどないトラックは登録しない(45行目)。
+  \item 登録するトラックをJSON形式で作成(48行目から49行目)
+  \item 関数\texttt{implode}は配列の要素を与えられた文字列を挟んで出力
+  \end{itemize}
+\end{frame}
 \end{document}
