@@ -61,7 +61,7 @@ class Button extends divWithText{
     super("", P);
     this.button = new DOMObject("input", {type:"button", value:name},this, E);
   }
-  get value(){return this.textBox.elm.value;}
+  get value(){return this.button.elm.value;}
 }
 class SpinBox {
   constructor(Opt, P, Events, callback) {//console.log("called");
