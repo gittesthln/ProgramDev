@@ -1,9 +1,9 @@
 \input devHead.tex
 \SetTheme{AnnArbor} %11
-\title{ソフトウェア開発\\第13回目授業}
+\title{ソフトウェア開発\\第13回目授業(補講)}
 \author{平野 照比古}
 \institute{}
-\date{2017/1/6}
+\date{2017/12/27}
 \newtheorem{Prob}{解説}
 \newcommand{\Elm}[1]{\texttt{<#1>}}
 \setbeamercovered{transparent}
@@ -16,375 +16,309 @@
 \newcommand{\HTML}{HTML文書}
 \begin{document}
 \frame{\maketitle}
-\section{XMLファイルとは}
+\section{クラスの例}
  \begin{frame}[containsverbatim]
-  \frametitle{W3CにおけるXML(eXtensible Markup Language)の説明(1)}
-\begin{quote}
- The Extensible Markup Language (XML) is a simple text-based format for
- representing structured information: documents, data, configuration,
- books, transactions, invoices, and much more. It was derived from an
- older standard format called SGML (ISO 8879), in order to be more
- suitable for Web use. 
-\end{quote}
-XMLは構造化されたデータを表現する単純なテキストベースのフォーマットであ
-る。構造化された文書とは文書、データ、構成、本、送付状やそのほかもろも
-ろのものである。
-\end{frame}
-\begin{frame}[containsverbatim]
-  \frametitle{W3CにおけるXML(eXtensible Markup Language)の説明(2)}
-
-さらに続けて次のように記されている。
-\begin{quote}
- If you are already familiar with HTML, you can see that XML is very
- similar. However, the syntax rules of XML are strict: XML tools will
- not process files that contain errors, but instead will give you error
- messages so that you fix them. This means that almost all XML documents
- can be processed reliably by computer software. 
-
-\end{quote}
-ここにも書いてあるようにXMLの形式はHTMLの形式に似ているが、XMLの文法上に
-規則は厳格である。
-\end{frame}
+  \frametitle{例の概要}
+\begin{figure}[ht]
+ \begin{center}
+  \includegraphics[width=0.5\textwidth]{../13Ex.eps}
+ \end{center}
+ \caption{色の指定を見る}\label{color}
+ \begin{itemize}
+  \item 上下2行のテキストボックスで指定された色を左側の正方形の部分で表
+        示
+  \item 上はRGB形式で、下はHSL\footnote{CSS Color Module Level
+3 \texttt{https://www.w3.org/TR/2011/REC-css3-color-20110607/}を参照}形式で色を指定
+ \end{itemize}
+\end{figure}
+ \end{frame}
  \begin{frame}[containsverbatim]
-  \frametitle{HTMLとの違い}
-\begin{itemize}
- \item すべての要素は閉じられているか、空の要素としてマーク
- \item 空の要素は通常のように閉じられている
-			 (\texttt{<happiness></happiness>})か、特別な短い形式(\texttt{<happiness />})
- \item XMLにおいては属性値は常に\"で囲む必要がある(\Verb+<happiness type="joy"+)
- \item HTML では組み込まれている要素名(とその属性)の集まりがあるが、 XML
-			 ではそのようなものは存在しない(例外は \texttt{xml} で始まるもの
-			 がある)。
- \item  HTML ではいくつかの組み込まれた文字名(エンティティ)があるが、
-				XML には次の5つのものしかない。
-
-				\Verb+&lt;+(\Verb+<+), \Verb+&gt;+(\Verb+>+), \Verb+&amp;+(\Verb+&+),
-				\Verb+&quot;+(\Verb+&+), \Verb+&apos+(\Verb+'+)
-
-				XMLでは独自にエンティティを定義できる。
-\end{itemize}
-\end{frame}
-\section{XMLファイルの例}
-\subsection{GPXファイル}
-  \begin{frame}[containsverbatim]
-   \frametitle{GPXファイルとは(1)}
-   \begin{itemize}
-    \item GPSのログデータを保存する形式の一つとして普及
-    \item \texttt{http://www.topografix.com/gpx.asp}で規格を見ることが
-可能
-   \end{itemize}
- ルート要素は\texttt{gpx}で、
- その下の子要素としては次のようなものがある。
-\begin{itemize}
- \item \texttt{wpt}(ウェイポイント)\\
-			 ある地点の情報
- \item \texttt{rte}(ルート)\\
-			 子要素として地点を表す\texttt{rtept}を持つ
- \item \texttt{trk}(トラック)\\
-			 順序付けられた地点のリスト。子要素として\texttt{trkseg}を持つ
- \item \texttt{trkseg}は順序付けられた地点(\texttt{trkpt})のリストを持つ
-\end{itemize}
- これらの要素はすべてある必要はない。
- \end{frame}
-\begin{frame}[containsverbatim]
-\frametitle{GPXファイルとは(2)}
- \texttt{wpt}と\texttt{trkpt}のおもな構成要素は次の通り
-\begin{center}
-	 \begin{tabular}{|c|c|c|}\hline
-		名称&型&\multicolumn{1}{c|}{説明}\\\hline
-		\texttt{lat}&属性 & 地点の緯度\\ \hline
-		\texttt{lon}&属性 & 地点の経度\\ \hline
-		\texttt{ele}&要素 &標高 \\ \hline
-		\texttt{time}&要素 &地点での時刻。世界標準時 \\ \hline
- \end{tabular}
-\end{center}
-\end{frame}
-\begin{frame}[containsverbatim]
-\frametitle{GPXファイルの例}
- \LISTN{GIS/sample.gpx}{1}{last}{\tiny}
-\end{frame}
-\begin{frame}[containsverbatim]
- \frametitle{内容の解説}
- \begin{itemize}
-  \item 2行目から7行目が\texttt{gpx}のルート要素
-  \item 8行目に\texttt{trk}
-  \item 9行目と10行目にはこのルートの名前、通し番号などが存在
-  \item さらに\texttt{trkseg}が一つだけ存在
-  \item \texttt{trkseg}内には\texttt{trkpt}が存在
-
-        初めの位置の情報は次の通り
-        \begin{itemize}
-         \item 位置は北緯$35.4858026^{\circ}$(\texttt{lat})、
-               東経$139.340909^{\circ}$(\texttt{lon})
-         \item 標高$70.794189\mathrm{m}$(\texttt{ele})
-         \item 時刻 $2016-03-24T08:33:28Z$
-               (2016年3月24日8:33:28世界標準時)
-        \end{itemize}
- \end{itemize}
-\end{frame}
-\subsection{空間位置の決定}
-\begin{frame}[containsverbatim]
- \frametitle{地球の形}
-地球の形は測量法や測量法施行令で定められている。測量法施行令第三条では
-地球の長半径と扁平率が定められている。
-\begin{Verbatim}
-一　長半径　六百三十七万八千百三十七メートル
-二　扁平率　二百九十八・二五七二二二一〇一分の一
-\end{Verbatim}
-\end{frame}
-\begin{frame}[containsverbatim]
- \frametitle{地球上の3次元の位置}
- \begin{itemize}
-  \item 緯度と経度に対して扁平率を考慮して空間の位置を求める必要がある
-  \item GPXファイルのデータでは2点間の距離が小さいのと、
-地球の扁平率と高さも地球の半径$R=6378137\mathrm{m}$に対して小さい
- \end{itemize}
-これらの理由で地球の形を球として考えて計算
-
-  経度$\lambda$、緯度$\phi$の地点の空間位置は次の通り
-				\begin{eqnarray*}
-				 x &=& R\cos\phi\cos\lambda\\
-				 y &=& R\cos\phi\sin\lambda\\
-				 z &=& R\sin\phi
-				\end{eqnarray*}
-\end{frame}
- \section{Google Mapsにおける\texttt{Polyline}の表示}
-\begin{frame}[containsverbatim]
- \frametitle{\texttt{Polyline}と\texttt{Polygon}オブジェクト}
- \begin{itemize}
-  \item \texttt{Polyline}は指定した地点を折れ線でつなぐ\\
-        \texttt{new google.maps.Polyline(<option>)}で作成
-  \item \texttt{Polygon}は指定した地点を折れ線でつないだ多角形\\
-        \texttt{new google.maps.Polygn(<option>)}で作成
- \end{itemize}
- オプションで指定する代表的なものは次の通り
-\begin{center}
- \begin{tabular}{|c|p{20zw}|}\hline
-  プロパティ& \multicolumn{1}{c|}{説明}\\\hline
-  \texttt{map}& 表示する地図\\ \hline
-  \texttt{path}& \texttt{LatLng}を要素とする(MVC)配列\\ \hline
-  \texttt{strokeColor}& (縁取りの)線の色\\ \hline
-  \texttt{strokeOpacity}& (縁取りの)線の色の不透明度\\ \hline
-  \texttt{strokeWeight}& (縁取りの)線の幅\\ \hline
-  \texttt{fillColor}& 塗りつぶしの色(\texttt{Polygon}のみ)\\ \hline
-  \texttt{fillOpacity}& 塗りつぶしの色の不透明度(\texttt{Polygon}のみ)\\ \hline
- \end{tabular}
-\end{center}
-\end{frame}
-\section{XMLファイルの処理}
-\subsection{ブラウザにおける処理}
-\begin{frame}[containsverbatim]
- \frametitle{ブラウザでの処理の制限}
- \begin{itemize}
-  \item 通常、セキュリティのため、ブラウザのプログラムではローカルに配置
-        されたフォルダを参照できない
-  \item この例外がファイルのアップロード\\
-        ユーザの責任において指定したファイルをサーバーにアップできる
- \end{itemize}
-\end{frame}
-\begin{frame}[containsverbatim]
- \frametitle{\texttt{FileReader}オブジェクト}
-最近のJavaScriptでは\texttt{FileReader}オブジェクトを用いることで、サー
- バーに転送する代わりにそのファイルをブラウザ内で処理できる。
-\end{frame}
-\begin{frame}[containsverbatim]
- \frametitle{GPXファイル内の道のりをGoogle Maps 上に表示}
-\LISTN{GIS/show-trace.html}{1}{last}{\tiny}
-\end{frame}
-\begin{frame}[containsverbatim]
- \frametitle{GPXファイル内の道のりをGoogle Maps 上に表示(解説)}
- \begin{itemize}
-	\item 6行目はこのページの外部スタイルシートを読み込むことを指定
-	\item ７行目から８行目でGoogle Maps API のファイルを読み込む。ここでは
-				APIキーが表示されていないので、コンソール画面に警告が現れる。
-	\item ９行目はGPXファイルのデータを処理するJavaScriptの読み込みを指定
-	\item 12行目はGoogle Mapsの表示域
-	\item 13行目から17行目にはファイルのアップロードの要素が定義
-	\item 19行目は表示されたGPXファイルに関する情報を示す
- \end{itemize}
- \end{frame}
-\begin{frame}[containsverbatim]
- \frametitle{HTMLで読み込まれるスタイルシート}
- \LISTN{GIS/map.css}{1}{last}{\tiny}
-%\end{frame}
-%\begin{frame}[containsverbatim]
-% \frametitle{HTMLで読み込まれるスタイルシート--(解説)}
-\begin{itemize}
- \item 地図とフォームを横並び(2行目と5行目の
-       \texttt{display:inline-block})
- \item 表の数字を右寄せ(9行目)
- \item 文字のところを中央ぞろえ(12行目)。
-\end{itemize}
- \end{frame}
-\begin{frame}[containsverbatim]
- \frametitle{外部のJavaScriptファイル}
- \LISTN{GIS/map-new2.js}{1}{10}{\tiny}
-%\end{frame}
-%\begin{frame}[containsverbatim]
-% \frametitle{外部のJavaScriptファイル--(解説)}
- 2行目から53行目で読み込み終了後に実行される関数を定義している。
- \begin{itemize}
-	\item 3行目から10行目でURLの後ろにパラメータ(\Verb+?+)があるかをチェック
-	\item パラメータは\Verb+&+で区切られている
-        \begin{itemize}
-         \item \Verb+&+で分解(5行目)、
-         \item れぞれに対して(6行目の\Verb+forEach+)\Verb+=+で名
-				前と値に分割
-         \item パラメタ(変数\Verb+PARAM+)に代入
-        \end{itemize}
- \end{itemize}
-\end{frame}
-\begin{frame}[containsverbatim]
- \frametitle{}
-\LISTN{GIS/map-new2.js}{11}{16}{\tiny}
-%\end{frame}
-%\begin{frame}[containsverbatim]
- % \frametitle{}
- \begin{itemize}
-  \item GPXのログ内に複数の\Verb+<trkseg>+があった場合に、それらを色
- 分けするための色を指定
-  \item 道のりの色は後で見るように下が透けるよ
- うに指定して(88行目)いるので、地図上と情報用の背景色が同じように見える
- ように色を調整
- \end{itemize}
-\end{frame}
-\begin{frame}[containsverbatim]
- \frametitle{}
-\LISTN{GIS/map-new2.js}{17}{26}{\tiny}
-  ここでは初期の地図の表示を行っている。
-\end{frame}
-\begin{frame}[containsverbatim]
- \frametitle{}
-\LISTN{GIS/map-new2.js}{27}{53}{\tiny}
-\end{frame}
-\begin{frame}[containsverbatim]
- \frametitle{アップロードするファイルが変化したときのイベント処理(1)}
- \begin{itemize}
-	\item 31行目で\Verb+FileReader+オブジェクトを作成
-	\item 32行目から50行目で、このオブジェクトが利用可能になった時のイベン
-				ト処理関数を登録(実際の起動は52行目で発生)
-	\item 33行目で読み込まれたテキストを\Verb+"text/xml"+で処理\\
-        処理をするオブジェクトが\Verb+window.DOMParser()+の
-				\Verb+parseFromString()+メソッド
-	\item この処理結果が\Verb+DOM+の構造になるので、今までの\Verb+DOM+の処
-				理が{\color{red}適用}できる
-	\item 34行目で\texttt{trk}要素に分解
-	\item それぞれの\texttt{trk}要素に対して処理を行うために、
-				\texttt{Array}オブジェクトのメソッド\texttt{forEach}を用いる。
-	\item 34行目で得られたものは\texttt{HTML}コレクションなので、このメソッ
-				ドが直接適用できない。\texttt{call}メソッドを利用すること
-				で解決
- \end{itemize}
-\end{frame}
-\begin{frame}[containsverbatim]
- \frametitle{アップロードするファイルが変化したときのイベント処理(2)}
-\begin{itemize}
-	\item 36行目で各\texttt{trk}要素内の\texttt{trkpt}要素を求め、そこから
-				各\texttt{trkpt}要素の
-				緯度、経度、時間を求めて、空間の位置を計算し(38行目から42行目)、
-				結果を配列で返している(\texttt{map}メソッドを利用)。
- \item 空間の位置を計算しているのは道のりの長さを求めるためであるが、今回のプログラ
-				ムではそれは利用していない。
-	\item 49行目でログを表示する関数を呼び出し
-	\item 51行目は読み込みが失敗したときの関数を登録
-	\item 52行目では指定されたファイルのデータをテキストとして読み込んでい
-				る。
- \end{itemize}
-\end{frame}
-\begin{frame}[containsverbatim]
- \frametitle{ログの情報を表示}
- \LISTN{GIS/map-new2.js}{54}{63}{\tiny}
-\begin{itemize}
-	\item この関数の引数は、表に表示するデータ、表示するオブジェクト、
-				(14行目で定義した)背景色の指定の3つ
-	\item 55行目で作成した\texttt{tr}要素の中に、与えられたデータを表示(58
-				行目から62行目)
-\end{itemize}
-\end{frame}
-\begin{frame}[containsverbatim]
- \frametitle{道のりを表示}
- \LISTN{GIS/map-new2.js}{64}{last}{\tiny}
-\end{frame}
-\begin{frame}[containsverbatim]
- \frametitle{}
-\begin{itemize}
-	\item この関数の引数は道のりの幅、不透明度である。
-	\item 69行目から76行目で道のりを構成する地点を Google Maps の地点オブ
-				ジェクトに変え、かつ、道のりの緯度、経度の最大値と最小値を求めて
-				いる。
-	\item 79行目から83行目で道のりの情報を表示する。
-	\item 84行目から90行目で与えられたデータをもとに、道のりを表示している。
-				道のりのデータはオブジェクトリテラルの形で与えられている。
-	\item 92行目から94行目では表示された道のりをすべて含む最大のズームレベ
-				ルを設定(\texttt{fitBounds}メソッド)している。
- \end{itemize}
-\end{frame}
-  \subsection{PHPによる処理}
-\begin{frame}[containsverbatim]
- \frametitle{GPXアイルから道のりに必要なJSONオブジェクトを作成}
- \LISTN{GIS/getGPSData.php}{1}{9}{\tiny}
- 与えられた緯度経度から空間の位置を求める関数である。
- 戻り値は空間の位置を配列として返す。
-\end{frame}
-\begin{frame}[containsverbatim]
- \frametitle{与えられたファイルからGPXファイルを処理}
-\LISTN{GIS/getGPSDataTmp.php}{10}{17}{\tiny}
-\end{frame}
-\begin{frame}[containsverbatim]
- \frametitle{}
- \begin{itemize}
-%  \item ファイル\texttt{\$fn}からログ内の道程の距離を求める関数である。
-  \item XMLファイルを読み込むために\texttt{DOMDocument}のインスタン
-        スを作成(11行目)
-  \item \texttt{load}メソッドにファイル名を指定することで、DOMオブジェク
-        トに変換される(12行目)。
-  \item PHPではピリオド\texttt{.}は文字列の連接演算子なのでメソッドは
-        \texttt{->}を用いる。
-  \item \texttt{getElementsByTagName}で\texttt{trk}を取得(13行目)する。
-  \item 14行目でその数を変数\texttt{\$len}に格納
-  \item トラックごとの情報をしまうための変数を初期化(15行目と16行目)
-				いる。
- \end{itemize}
-\end{frame}
-\begin{frame}[containsverbatim]
- \frametitle{}
-\LISTN{GIS/getGPSDAtaTmp.php}{18}{28}{\tiny}
- 各\texttt{trk}に対して距離などを求める。
-\end{frame}
-\begin{frame}[containsverbatim]
- \frametitle{}
- \begin{itemize}
-  \item \texttt{trk}の一つを変数\texttt{\$trk}に格納している。呼び出しに注意(19行
-        目)
-  \item \texttt{\$trk}に含まれる\texttt{trkpt}のリストを得る(20行目)。
-  \item 極端に短いログは省く(22行目)。
-  \item ログ内の地点の範囲を示す変数を初期化(24、25行目)
-  \item 地点の情報をしまう配列を初期化(26行目)
-  \item 初めの位置の空間座標を変数\texttt{\$ppos}に格納(27行目)
-  \item 積算距離の変数を初期化(28行目)
- \end{itemize}
-\end{frame}
-\begin{frame}[containsverbatim]
- \frametitle{}
- \LISTN{GIS/getGPSDAtaTmp.php}{29}{44}{\tiny}
-\end{frame}
-\begin{frame}[containsverbatim]
- \frametitle{}
- \begin{itemize}
-  \item 各\texttt{trkpt}から緯度と経度を取り出し(31、32行目)、
-  今までの範囲外ならば範囲を更新(33行目から36行目)
-  \item 緯度と経度を配列に追加(37行目)し、空間の位置を計算(38行目)
-  \item ひとつ前の点との差を求め(39行目から41行目)、距離を計算(42行目)
-  \item ひとつ前の点を更新(43行目)
- \end{itemize}
-\end{frame}
-\begin{frame}[containsverbatim]
- \frametitle{}
-\LISTN{GIS/getGPSDAtaTmp.php}{45}{last}{\tiny}
+  \frametitle{色を変える操作}
   \begin{itemize}
-  \item 移動がほとんどないトラックは登録しない(45行目)。
-  \item 登録するトラックをJSON形式で作成(48行目から49行目)
-  \item 関数\texttt{implode}は配列の要素を与えられた文字列を挟んで出力
+   \item れぞれのテキストボックスの値は▲をクリックすると増加し、▼をクリッ
+       クすると1ずつ減少
+   \item シフトキーを押しながらクリックすると5ずつ変化
+   \item RGB形式の値は$0\sim255$の間で変化する。上限または下限の範囲を超え
+       る場合は上限または下限の値にのままで一番右のチェックボックスを
+       チェックすると3つの値が同時に増減
+   \item HSL形式の値は一番左(H--色相)が$0\sim359$の間で循環して変化し、残
+       りの2つは$0\sim100$の間で変化
   \end{itemize}
-\end{frame}
+ \end{frame}
+\section{ソースコードの解説}
+\subsection{HTMLファイル}
+ \begin{frame}[containsverbatim]
+  \frametitle{HTMLファイルのソース}
+\LISTN{13Ex.html}{1}{last}{\footnotesize}
+ \end{frame}
+ \begin{frame}[containsverbatim]
+  \frametitle{HTMLファイルのソース--解説}
+\begin{itemize}
+ \item 5行目ではこのページに関する処理を定義する JavaScript ファイル
+       (\texttt{13Ex.js})を読み込む。
+ \item 6行目ではユーザーインターフェイスを定義しているJavaScript ファイル
+       (\texttt{13UI.js})を読み込む。
+ \item 7行目から15行目は色を表示する部分のCSSを定義している。
+       \begin{itemize}
+        \item 9行目と10行目では表示部分の大きさ
+        \item 11行目では配置方法(横に並べる)
+        \item 12行目では上下の位置(ここでは中央に指定)
+        \item 13行目では色の表示域の周りの空白
+       \end{itemize}
+ \item 18行目と19行目では色の表示位置と値を設定するための\texttt{<div>}
+       要素を定義
+\end{itemize}
+ \end{frame}
+ \section{ユーザーインターフェイス}
+ \begin{frame}[containsverbatim]
+  \frametitle{オブジェクトのオプションの値を変更する関数}
+ \LISTN{13UI.js}{1}{5}{\footnotesize}
+\begin{itemize}
+ \item 2番目の引数(\texttt{Opt})は変更する値が入っているオブジェクト
+ \item 1番目の引数はキーがオブジェクト内の指定できるオプション(デフォル
+       ト値が設定されている)からなるオブジェクト
+ \item 3行目で指定できるキーであれば値を設定
+\end{itemize}
+ \end{frame}
+ \begin{frame}[containsverbatim]
+  \frametitle{TML要素の\texttt{style}を設定する関数}
+\LISTN{13UI.js}{6}{10}{\footnotesize}
+\begin{itemize}
+ \item 7行目で、指定されたオプションを設定
+ \item 9行目でオプションのオブジェことを\texttt{style}属性の形式になるよ
+       うに変更
+\begin{enumerate}
+ \item オブジェクトを\texttt{JSON}形式の文字列に変換
+ \item キーなどを囲む\texttt{\{}と\texttt{"}を取り除く%"
+ \item \texttt{,}と\texttt{\}}を\texttt{;}に変換
+\end{enumerate}
+\end{itemize}
+ \end{frame}
+ \begin{frame}[containsverbatim]
+  \frametitle{基本となるオブジェクト\texttt{DOMObject}(1)}
+\LISTN{13UI.js}{11}{15}{\footnotesize}
+\begin{itemize}
+ \item オブジェクト内で有効な定数を定義するためにクラス式を返す関数を定
+       義しその場で実行している(43行目の\texttt{()})。
+ \item 12行目から15行目で作成する要素の名前空間のリストをオブジェクトリ
+       テラルの形で定義している。ここではHTML要素とSVG要素の名前空間があ
+       る。
+\end{itemize}
+ \end{frame}
+ \begin{frame}[containsverbatim]
+  \frametitle{基本となるオブジェクト\texttt{DOMObject}(2)}
+\LISTN{13UI.js}{16}{24}{\footnotesize}
+ \end{frame}
+ \begin{frame}[containsverbatim]
+  \frametitle{基本となるオブジェクト\texttt{DOMObject}--解説(2)}
+\begin{itemize}
+ \item 17行目から19行目で\texttt{document.getElementById()}に相当するこ
+       のオブジェクト用の関数を定義
+ \item 20行目から24行目で\texttt{document.getElementsByTagName()}の相当する
+       このオブジェクト用の関数を定義
+       \begin{itemize}
+        \item 21行目で指定された要素のリストを得ている。
+        \item 22行目から23行目でそのリストを\texttt{DOMObject}のリストに
+              変更
+        \item \ElmJ{map}は配列オブジェクト\ElmJ{Array}のメソッドで、各要
+              素に対して引数で与えられた関数を実行し、その結果からなる配
+              列を返す。
+        \item 21行目で得たリストは配列ではないのでこのメソッドを使用不可
+        \item \ElmJ{call}は指定した関数が参照する\ElmJ{this}をその1番目
+              の引数にする。
+        \item 23行目の\texttt{(E)}以降の書き方は新しい無名関数の
+              記述方法。\Verb+function(E){...}+と書くのと同じ。
+       \end{itemize}
+\end{itemize}
+ \end{frame}
+ \begin{frame}[containsverbatim]
+  \frametitle{基本となるオブジェクト\texttt{DOMObject}--解説(2 続き)}
+\begin{itemize}
+        \item 新しい記述一番の違いは関数内での
+              \ElmJ{this}の取り扱い。
+        \item \ElmJ{class}内のコードは\texttt{strict}モードで実行
+        \item \ElmJ{function}で定義された関数内では\ElmJ{this}は
+              \ElmJ{undefined}
+        \item 簡略化された記述では\ElmJ{this}の値がオブジェクト自身
+        \item この違いが問題となる例はこのリストの170行目などにある。
+\end{itemize}
+ \end{frame}
+ \begin{frame}[containsverbatim]
+  \frametitle{基本となるオブジェクト\texttt{DOMObject}(3)}
+\LISTN{13UI.js}{25}{43}{\footnotesize}
+ \end{frame}
+ \begin{frame}[containsverbatim]
+  \frametitle{基本となるオブジェクト\texttt{DOMObject}--解説(3)}
+ 25行目から43行目はこのオブジェクトの\ElmJ{constructor}を定義して
+       いる。
+       \begin{itemize}
+        \item 引数は順に作成する要素名、その属性のリスト、親要素、イベン
+              ト処理のリスト、名前空間(デフォルトはHTML)
+        \item 27行目で名前空間を指定して要素を作成
+        \item 28行目は作成した要素に、与えられた属性を設定する関数を呼び
+              出している。
+        \item 29行目から31行目では親要素がある場合にはその子要素になるよ
+              うに指定
+        \item 32行目から34行目ではイベント処理を設定
+        \item 37行目から42行目では与えられたリストの属性を設定する関数を
+              定義
+       \end{itemize}
+ \end{frame}
+ \begin{frame}[containsverbatim]
+  \frametitle{}
+ \end{frame}
 \end{document}
+ \begin{frame}[containsverbatim]
+  \frametitle{}
+ \end{frame}
+次のリストの部分はを定義している。
+次のリストの部分はHである。
+11行目から43行目のリストの部分はを定義
+している。
+次のリストの部分は与えられた文字列を表示するためのクラス\texttt{divWithText}を
+定義している。
+\LISTN{13UI.js}{44}{49}{\small}
+\begin{itemize}
+ \item このクラスは\texttt{DOMObject}を継承している。
+ \item コンストラクタの引数は順に、表示するテキスト、親要素、属性である。
+ \item 46行目で\texttt{<div>}要素を作成し、その要素の\ElmJ{innerText}プロパティを
+       設定することで表示を可能としている
+\end{itemize}
+
+50行目からのリストの部分はテキストボックスに付属した値を上下するボタンを持つ
+\texttt{spinbox}のクラスを定義している。HTMLにも\texttt{spinbox}があるが
+少し機能を変えている。
+
+次のリストはこのクラスのコンストラクタの部分である。
+\LISTN{13UI.js}{50}{82}{\small}
+\begin{itemize}
+ \item コンストラクタの引数は順に、オプション、親要素、イベント処理関数
+       群、値が変化したときの処理関数である。
+ \item 52行目は値が変化したときに呼び出される関数をオブジェクトに登録し
+       ている。
+ \item 53行目から57行目ではこのオブジェクトのデフォルトのパラメータを定
+       義している。
+       \begin{itemize}
+        \item \texttt{max}は設定できる値の最大値(デフォルト値は
+              JavaScriptで扱うことができる最大値)
+        \item \texttt{mix}は設定できる値の最小値(デフォルト値は
+              JavaScriptで扱うことができる最小値)
+        \item \texttt{skip}は値の変化量(デフォルト値は$1$)
+        \item \texttt{bigSkip}はシフトキーを押しながらクリックしたときの
+              値の変化量(デフォルト値は$5$)
+        \item \texttt{value}は初期値(デフォルト値は$0$)
+        \item \texttt{type}は両端の値から外れたときの処理方法(デフォルト
+              は両端の値に固定--\texttt{"limited"}。値が循環的に変わる
+              \texttt{"cyclic"}がある)
+       \end{itemize}
+ \item 58行目から59行目でオブジェクトの周りの余白の設定をしている。
+ \item 60行目で入れ物の\texttt{<div>}要素を作成している。
+ \item 61行目では53行目からのデフォルトのパラメータを与えられた値に変更
+       している。
+ \item 62行目から64行目では65行目から67行目で定義されるテキストボックス
+       を入れるための\texttt{<div>}要素を作成している。
+ \item 66行目から67行目で定義されるテキストボックスは値を直接変更できな
+       い設定をしている(\texttt{"readonly"}の指定)
+ \item 68行目から69行目ではテキストボックスの隣に置く上下のボタンを入れ
+       るための\texttt{<div>}要素を作成している。
+ \item 70行目から73行目では値の上下させるボタンの表示形式を定義している。
+ \item 74行目でさらにボタンのタイプ(値を増加)を設定し、75行目から76行目でボタンと
+       して機能するようなオブジェクトを追加している。この上でクリックイ
+       ベントが生じたときにイベント発生時ののシフトキーの状態を
+       \texttt{sipnbox}の\texttt{up}プロパティの与えている(代入で行って
+       いるが、\texttt{up}は85行目から94行目で定義されているセッターで
+       ある)。
+ \item 77行目から82行目は値を減少させるボタンを設定している。
+\end{itemize}
+残りの部分はこのクラスのセッターまたはゲッターを定義している部分である。
+\LISTN{13UI.js}{83}{105}{\small}
+\begin{itemize}
+ \item 83行目と84行目はそれぞれテキストボックスの値に関するゲッ
+       ターとセッターである。
+ \item 85行目から94行目は設定値を増大させるメソッドであり、95行目から
+       104行目は設定値を減少させるメソッドである。
+ \item 86行目ではシフトキーが押されているかを判定して、変化量を決めてい
+       る。
+ \item 87行目で仮の値を求め、それが上限値を超えている処理を88行目から
+			 92行目で行っている。
+ % \item
+			 上限値で固定(\texttt{type}が\texttt{"limited"})のときは
+       上限値と仮の値の小さい方を設定している(99行目)。
+% \item
+			値が循環する(\texttt{type}が\texttt{"cyclic"})ときは
+       上限値が超えた場合、上限値の値を引いている(91行目)。
+ \item 値の設定後の処理関数が定義されているときはその関数を呼び出す(93
+       行目)。
+ \item 値が減少する場合も同様である。
+\end{itemize}
+リストの最後の部分は色の3成分を設定するクラスの定義である。
+\LISTN{13UI.js}{106}{last}{\small}
+\begin{itemize}
+ \item コンストラクタに引数は順に、左端に示すテキスト、RGB形式かHSL形式
+			 のタイプ、親要素、値が変化したときの処理関数、オブジェクトのオプ
+			 ションである。
+ \item 108行目のコメント行は、メソッド内で呼び出される無名関数内でオブ
+			 ジェクト自身を示す\ElmJ{this}が参照できないときの対処法である。
+			 \ElmJ{this}を変数(\texttt{that})に格納し、それを参照する。
+ \item 110行目から113行目は左端にテキストが表示されるようにしている。
+ \item 114行目から137行目ではタイプが\texttt{"rgb"}のときのオブジェク
+			 トを作成している。
+			 \begin{itemize}
+				\item 115行目でタイプを\texttt{"rgb"}に設定している。
+				\item 116行目から141行目でオブジェクト全体を囲む要素を作成して、
+							そこに\texttt{click}イベントの処理関数を定義している。
+				\item このオブジェクトの右端のチェックボックスにチェックがあ
+							る場合はRGBの値を一斉に増減させる。そのときは(118行目)この関
+							数で処理をする(119行目から123行目)。
+				\item 119行目から120行目でRGBの値を変化させている
+							(\texttt{this.RGB.forEach})。
+				\item それぞれの\texttt{sipnbox}にもイベントの処理関数がついてい
+							るので、2回処理させないために、121行目でイベントの伝搬を止
+							めている(\texttt{E.stopPropagation()})。
+				\item その後、登録された処理関数を呼び出している。
+			  \item 126行目から133行目では\texttt{spinbox}3つ作成のために、
+							大きさ3の配列を作成し(\texttt{new Array(3)})、それぞれに
+							\texttt{0}を設定(\texttt{fill(0)})する。この配列に
+							\texttt{forEach}を用いて\texttt{spinbox}を作成する。
+
+							\ElmJ{Array}のメソッド\ElmJ{forEach}は\ElmJ{undefined}の要
+							素に対して実行されないのでこのような処理が必要となる。
+				\item これらの\texttt{spinbox}はタイプが\texttt{"limited"}、
+							最小値が\texttt{0}、最大値が\texttt{255}、初期値を
+							\texttt{128}である。
+				\item 134行目から136行目ではRGB値を同時に変化させるかどうかのチェッ
+							クボックスを作成している。
+			 \end{itemize}
+ \item 138行目から148行目はタイプが\texttt{"hsl"}のときのオブジェク
+			 トを作成している。
+			 \begin{itemize}
+				\item 138行目でタイプを\texttt{"hsl"}に設定している。
+				\item 139行目ではオブジェクト全体を囲む要素を定義している。
+				\item 140行目から147行目では3つの\texttt{spinbox}を定義している。
+				\item 色相(H)と残りの2つでは値の範囲と取り扱いが異なるので、範囲
+							と初期値を与える配列を利用して3つの\texttt{spinbox}を作成
+							している。
+				\item 148行目でははじめの\texttt{spinbox}のタイプを
+							\texttt{"cyclic"}に修正している。
+			 \end{itemize}
+ \item 151行目では\texttt{rgb}の値をコピーして配列で返すゲッターを、
+ 152行目では\texttt{rgb}の値のセッターをを定義している。
+ \item 153行目では\texttt{hsl}の値をコピーして配列で返すゲッターを、
+ 154行目では\texttt{hsl}の値のセッターをを定義している。
+ \item 155行目から159行目ではCSS3で定義されているRGBやHSL形式に変換する
+			 メソッドを定義している。
+\end{itemize}
+ \section{ユーザーインターフェイスを引用するJavaScriptファイル}
+ 次のリストはユーザーインターフェイスを利用して、色の変化を見えるように
+ するものである。
+ \LISTN{13Ex.js}{1}{last}{\small}
+ \begin{itemize}
+	\item 2行目から6行目までで2つの色が設定できるオブジェクトを作成してい
+				る。一つ目はRGB形式で2つ目がHSL形式となる。区別するパラメータは
+				配列で与えている。
+	\item 7行目ではその値を左側の背景色に反映するための関数を呼び出してい
+				る。
+	\item 8行目から11行目では\texttt{spinbox}で設定された色を背景色に設定
+				する関数である。
+	\item 10行目で\texttt{spinbox}の値を文字列に変換することで行っている。
+ \end{itemize}
