@@ -3,3 +3,4 @@
 \beamer@sectionintoc {2}{ソースコードの解説}{4}{0}{2}
 \beamer@subsectionintoc {2}{1}{HTMLファイル}{4}{0}{2}
 \beamer@sectionintoc {3}{ユーザーインターフェイス}{6}{0}{3}
+\beamer@sectionintoc {4}{ユーザーインターフェイスを引用するJavaScriptファイル}{32}{0}{4}

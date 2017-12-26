@@ -165,39 +165,30 @@
        \end{itemize}
  \end{frame}
  \begin{frame}[containsverbatim]
-  \frametitle{}
- \end{frame}
-\end{document}
- \begin{frame}[containsverbatim]
-  \frametitle{}
- \end{frame}
-次のリストの部分はを定義している。
-次のリストの部分はHである。
-11行目から43行目のリストの部分はを定義
-している。
-次のリストの部分は与えられた文字列を表示するためのクラス\texttt{divWithText}を
-定義している。
-\LISTN{13UI.js}{44}{49}{\small}
+  \frametitle{与えられた文字列を表示するためのクラス\texttt{divWithText}}
+\LISTN{13UI.js}{44}{49}{\footnotesize}
 \begin{itemize}
- \item このクラスは\texttt{DOMObject}を継承している。
- \item コンストラクタの引数は順に、表示するテキスト、親要素、属性である。
+ \item このクラスは\texttt{DOMObject}を継承
+ \item コンストラクタの引数は順に、表示するテキスト、親要素、属性の3つ
  \item 46行目で\texttt{<div>}要素を作成し、その要素の\ElmJ{innerText}プロパティを
        設定することで表示を可能としている
 \end{itemize}
+ \end{frame}
+ \begin{frame}[containsverbatim]
+  \frametitle{\texttt{SpinBox}のクラス--\texttt{constructor}(1)}
+HTMLにも\texttt{spinbox}があるが少し機能を変えている。
 
-50行目からのリストの部分はテキストボックスに付属した値を上下するボタンを持つ
-\texttt{spinbox}のクラスを定義している。HTMLにも\texttt{spinbox}があるが
-少し機能を変えている。
-
-次のリストはこのクラスのコンストラクタの部分である。
-\LISTN{13UI.js}{50}{82}{\small}
+  このクラスのコンストラクタの部分である。
+  \LISTN{13UI.js}{50}{57}{\footnotesize}
+ \end{frame}
+ \begin{frame}[containsverbatim]
+  \frametitle{\texttt{spinbox}クラス--\texttt{constructor}解説(1)}
 \begin{itemize}
  \item コンストラクタの引数は順に、オプション、親要素、イベント処理関数
-       群、値が変化したときの処理関数である。
- \item 52行目は値が変化したときに呼び出される関数をオブジェクトに登録し
-       ている。
+       群、値が変化したときの処理関数
+ \item 52行目は値が変化したときに呼び出される関数をオブジェクトに登録
  \item 53行目から57行目ではこのオブジェクトのデフォルトのパラメータを定
-       義している。
+       義
        \begin{itemize}
         \item \texttt{max}は設定できる値の最大値(デフォルト値は
               JavaScriptで扱うことができる最大値)
@@ -211,49 +202,72 @@
               は両端の値に固定--\texttt{"limited"}。値が循環的に変わる
               \texttt{"cyclic"}がある)
        \end{itemize}
- \item 58行目から59行目でオブジェクトの周りの余白の設定をしている。
- \item 60行目で入れ物の\texttt{<div>}要素を作成している。
+\end{itemize}
+ \end{frame}
+ \begin{frame}[containsverbatim]
+  \frametitle{\texttt{SpinBox}のクラス--\texttt{constructor}(2)}
+  \LISTN{13UI.js}{58}{64}{\footnotesize}
+ \begin{itemize}
+  \item 58行目から59行目でオブジェクトの周りの余白の設定
+  \item 60行目で入れ物の\texttt{<div>}要素を作成
  \item 61行目では53行目からのデフォルトのパラメータを与えられた値に変更
-       している。
  \item 62行目から64行目では65行目から67行目で定義されるテキストボックス
-       を入れるための\texttt{<div>}要素を作成している。
+       を入れるための\texttt{<div>}要素を作成
+ \end{itemize}
+ \end{frame}
+ \begin{frame}[containsverbatim]
+  \frametitle{\texttt{SpinBox}のクラス--\texttt{constructor}(2)}
+  \LISTN{13UI.js}{65}{82}{\footnotesize}
+ \end{frame}
+ \begin{frame}[containsverbatim]
+  \frametitle{\texttt{spinbox}クラス--解説(2)}
+\begin{itemize}
  \item 66行目から67行目で定義されるテキストボックスは値を直接変更できな
        い設定をしている(\texttt{"readonly"}の指定)
  \item 68行目から69行目ではテキストボックスの隣に置く上下のボタンを入れ
-       るための\texttt{<div>}要素を作成している。
- \item 70行目から73行目では値の上下させるボタンの表示形式を定義している。
+       るための\texttt{<div>}要素を作成
+ \item 70行目から73行目では値の上下させるボタンの表示形式を定義
  \item 74行目でさらにボタンのタイプ(値を増加)を設定し、75行目から76行目でボタンと
-       して機能するようなオブジェクトを追加している。この上でクリックイ
+       して機能するようなオブジェクトを追加。この上でクリックイ
        ベントが生じたときにイベント発生時ののシフトキーの状態を
        \texttt{sipnbox}の\texttt{up}プロパティの与えている(代入で行って
        いるが、\texttt{up}は85行目から94行目で定義されているセッターで
        ある)。
- \item 77行目から82行目は値を減少させるボタンを設定している。
+ \item 77行目から82行目は値を減少させるボタンを設定
 \end{itemize}
-残りの部分はこのクラスのセッターまたはゲッターを定義している部分である。
-\LISTN{13UI.js}{83}{105}{\small}
+ \end{frame}
+ \begin{frame}[containsverbatim]
+  \frametitle{セッターとゲッターを定義(1)--値の増加の処理}
+\LISTN{13UI.js}{83}{94}{\footnotesize}
+ \end{frame}
+ \begin{frame}[containsverbatim]
+  \frametitle{セッターとゲッターを定義--解説}
 \begin{itemize}
  \item 83行目と84行目はそれぞれテキストボックスの値に関するゲッ
-       ターとセッターである。
+       ターとセッター
  \item 85行目から94行目は設定値を増大させるメソッドであり、95行目から
-       104行目は設定値を減少させるメソッドである。
- \item 86行目ではシフトキーが押されているかを判定して、変化量を決めてい
-       る。
+       104行目は設定値を減少させるメソッド
+ \item 86行目ではシフトキーが押されているかを判定して、変化量を決定
  \item 87行目で仮の値を求め、それが上限値を超えている処理を88行目から
 			 92行目で行っている。
- % \item
+ \item
 			 上限値で固定(\texttt{type}が\texttt{"limited"})のときは
-       上限値と仮の値の小さい方を設定している(99行目)。
-% \item
-			値が循環する(\texttt{type}が\texttt{"cyclic"})ときは
+       上限値と仮の値の小さい方を設定(99行目)。
+\item		値が循環する(\texttt{type}が\texttt{"cyclic"})ときは
        上限値が超えた場合、上限値の値を引いている(91行目)。
  \item 値の設定後の処理関数が定義されているときはその関数を呼び出す(93
        行目)。
- \item 値が減少する場合も同様である。
 \end{itemize}
-リストの最後の部分は色の3成分を設定するクラスの定義である。
-\LISTN{13UI.js}{106}{last}{\small}
-\begin{itemize}
+ \end{frame}
+ \begin{frame}[containsverbatim]
+  \frametitle{セッターとゲッターを定義--値の減少の処理}
+\LISTN{13UI.js}{95}{103}{\footnotesize}
+  値が減少する場合も同様
+ \end{frame}
+ \begin{frame}[containsverbatim]
+  \frametitle{色の3成分を設定するクラス(1)}
+\LISTN{13UI.js}{106}{113}{\footnotesize}
+ \begin{itemize}
  \item コンストラクタに引数は順に、左端に示すテキスト、RGB形式かHSL形式
 			 のタイプ、親要素、値が変化したときの処理関数、オブジェクトのオプ
 			 ションである。
@@ -261,25 +275,39 @@
 			 ジェクト自身を示す\ElmJ{this}が参照できないときの対処法である。
 			 \ElmJ{this}を変数(\texttt{that})に格納し、それを参照する。
  \item 110行目から113行目は左端にテキストが表示されるようにしている。
- \item 114行目から137行目ではタイプが\texttt{"rgb"}のときのオブジェク
-			 トを作成している。
+ \end{itemize}
+ \end{frame}
+ \begin{frame}[containsverbatim]
+  \frametitle{色の3成分を設定するクラス(2)}
+\LISTN{13UI.js}{114}{125}{\footnotesize}
+\end{frame}
+ \begin{frame}[containsverbatim]
+  \frametitle{色の3成分を設定するクラス--タイプ\texttt{"rgb"}解説(1)}
 			 \begin{itemize}
-				\item 115行目でタイプを\texttt{"rgb"}に設定している。
+				\item 115行目でタイプを\texttt{"rgb"}に設定
 				\item 116行目から141行目でオブジェクト全体を囲む要素を作成して、
-							そこに\texttt{click}イベントの処理関数を定義している。
-				\item このオブジェクトの右端のチェックボックスにチェックがあ
-							る場合はRGBの値を一斉に増減させる。そのときは(118行目)この関
-							数で処理をする(119行目から123行目)。
-				\item 119行目から120行目でRGBの値を変化させている
-							(\texttt{this.RGB.forEach})。
+							そこに\texttt{click}イベントの処理関数を定義
+				\item 右端のチェックボックスにチェックがあ
+							る場合はRGBの値を一斉に増減。そのときは(118行目)この関
+							数で処理(119行目から123行目)。
+				\item 119行目から120行目でRGBの値を変化(\texttt{this.RGB.forEach})。
 				\item それぞれの\texttt{sipnbox}にもイベントの処理関数がついてい
 							るので、2回処理させないために、121行目でイベントの伝搬を止
-							めている(\texttt{E.stopPropagation()})。
+							める(\texttt{E.stopPropagation()})。
 				\item その後、登録された処理関数を呼び出している。
+			 \end{itemize}
+ \end{frame}
+ \begin{frame}[containsverbatim]
+  \frametitle{色の3成分を設定するクラス--タイプ\texttt{"rgb"}(2)}
+\LISTN{13UI.js}{126}{137}{\footnotesize}
+\end{frame}
+ \begin{frame}[containsverbatim]
+  \frametitle{色の3成分を設定するクラス--タイプ\texttt{"rgb"}解説(2)}
+			 \begin{itemize}
 			  \item 126行目から133行目では\texttt{spinbox}3つ作成のために、
 							大きさ3の配列を作成し(\texttt{new Array(3)})、それぞれに
 							\texttt{0}を設定(\texttt{fill(0)})する。この配列に
-							\texttt{forEach}を用いて\texttt{spinbox}を作成する。
+							\texttt{forEach}を用いて\texttt{spinbox}を作成
 
 							\ElmJ{Array}のメソッド\ElmJ{forEach}は\ElmJ{undefined}の要
 							素に対して実行されないのでこのような処理が必要となる。
@@ -287,10 +315,15 @@
 							最小値が\texttt{0}、最大値が\texttt{255}、初期値を
 							\texttt{128}である。
 				\item 134行目から136行目ではRGB値を同時に変化させるかどうかのチェッ
-							クボックスを作成している。
+							クボックスを作成
 			 \end{itemize}
- \item 138行目から148行目はタイプが\texttt{"hsl"}のときのオブジェク
-			 トを作成している。
+ \end{frame}
+ \begin{frame}[containsverbatim]
+  \frametitle{色の3成分を設定するクラス--タイプ\texttt{"rgb"}(2)}
+\LISTN{13UI.js}{138}{150}{\footnotesize}
+\end{frame}
+ \begin{frame}[containsverbatim]
+  \frametitle{色の3成分を設定するクラス--タイプ\texttt{"hsl"}}
 			 \begin{itemize}
 				\item 138行目でタイプを\texttt{"hsl"}に設定している。
 				\item 139行目ではオブジェクト全体を囲む要素を定義している。
@@ -301,6 +334,14 @@
 				\item 148行目でははじめの\texttt{spinbox}のタイプを
 							\texttt{"cyclic"}に修正している。
 			 \end{itemize}
+ \end{frame}
+ \begin{frame}[containsverbatim]
+  \frametitle{色の3成分を設定するクラス(3)}
+\LISTN{13UI.js}{151}{last}{\footnotesize}
+\end{frame}
+ \begin{frame}[containsverbatim]
+  \frametitle{色の3成分を設定するクラス(3)--解説}
+  \begin{itemize}
  \item 151行目では\texttt{rgb}の値をコピーして配列で返すゲッターを、
  152行目では\texttt{rgb}の値のセッターをを定義している。
  \item 153行目では\texttt{hsl}の値をコピーして配列で返すゲッターを、
@@ -308,10 +349,14 @@
  \item 155行目から159行目ではCSS3で定義されているRGBやHSL形式に変換する
 			 メソッドを定義している。
 \end{itemize}
+ \end{frame}
  \section{ユーザーインターフェイスを引用するJavaScriptファイル}
- 次のリストはユーザーインターフェイスを利用して、色の変化を見えるように
- するものである。
- \LISTN{13Ex.js}{1}{last}{\small}
+ \begin{frame}[containsverbatim]
+  \frametitle{色の変化を見えるようにする}
+ \LISTN{13Ex.js}{1}{last}{\footnotesize}
+ \end{frame}
+ \begin{frame}[containsverbatim]
+  \frametitle{色の変化を見えるようにする--(解説)}
  \begin{itemize}
 	\item 2行目から6行目までで2つの色が設定できるオブジェクトを作成してい
 				る。一つ目はRGB形式で2つ目がHSL形式となる。区別するパラメータは
@@ -321,4 +366,8 @@
 	\item 8行目から11行目では\texttt{spinbox}で設定された色を背景色に設定
 				する関数である。
 	\item 10行目で\texttt{spinbox}の値を文字列に変換することで行っている。
- \end{itemize}
+ \end{itemize} \end{frame}
+\end{document}
+ \begin{frame}[containsverbatim]
+  \frametitle{}
+ \end{frame}
