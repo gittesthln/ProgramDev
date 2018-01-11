@@ -173,3 +173,11 @@
 \contentsline {paragraph}{SSH Keyの登録}{140}{section*.37}
 \contentsline {subsubsection}{GitHub のアカウントの取得}{141}{section*.38}
 \contentsline {subsubsection}{リポジトリの作成と運用}{141}{section*.39}
+\contentsline {chapter}{\numberline {第15回}JavaScriptライブラリーの配布}{143}{chapter.15}
+\contentsline {section}{\numberline {15.1}jQueryのコードを読む}{143}{section.15.1}
+\contentsline {section}{\numberline {15.2}JavaScriptファイルの短縮化}{145}{section.15.2}
+\contentsline {subsection}{\numberline {15.2.1}JavaScriptファイルの短縮化について}{145}{subsection.15.2.1}
+\contentsline {subsection}{\numberline {15.2.2}短縮化の例}{145}{subsection.15.2.2}
+\contentsline {section}{\numberline {15.3}Webサイトの効率化}{150}{section.15.3}
+\contentsline {subsection}{\numberline {15.3.1}Contents Deliverly Network(CDN)}{150}{subsection.15.3.1}
+\contentsline {subsection}{\numberline {15.3.2}CSS Sprite}{150}{subsection.15.3.2}

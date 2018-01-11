@@ -135,3 +135,11 @@
 \BOOKMARK [2][-]{subsection.14.2.2}{バージョン管理の概念}{section.14.2}% 135
 \BOOKMARK [2][-]{subsection.14.2.3}{バージョン管理ソフトの概要}{section.14.2}% 136
 \BOOKMARK [2][-]{subsection.14.2.4}{gitの使い方}{section.14.2}% 137
+\BOOKMARK [0][-]{chapter.15}{JavaScriptライブラリーの配布}{}% 138
+\BOOKMARK [1][-]{section.15.1}{jQueryのコードを読む}{chapter.15}% 139
+\BOOKMARK [1][-]{section.15.2}{JavaScriptファイルの短縮化}{chapter.15}% 140
+\BOOKMARK [2][-]{subsection.15.2.1}{JavaScriptファイルの短縮化について}{section.15.2}% 141
+\BOOKMARK [2][-]{subsection.15.2.2}{短縮化の例}{section.15.2}% 142
+\BOOKMARK [1][-]{section.15.3}{Webサイトの効率化}{chapter.15}% 143
+\BOOKMARK [2][-]{subsection.15.3.1}{Contents Deliverly Network\(CDN\)}{section.15.3}% 144
+\BOOKMARK [2][-]{subsection.15.3.2}{CSS Sprite}{section.15.3}% 145
