@@ -1,0 +1,132 @@
+\chapter{ガイダンス}
+\section{受講に関する注意}
+この授業に関する注意は次の通りである。
+\begin{itemize}
+ \item 11年度以前の学生に対しては「アルゴリズムとデータ構造」の読み替え
+       科目となっている。
+ \item JavaScript を通常の計算機言語として利用するための解説を行う。
+ \item 進度が今までのプログラミングの授業より早いので復習をよくすること。
+ \item パソコンを授業に持参す必要がある場合はその旨、前回の授業で指示
+       する。
+  \item 配布された復習用の課題は用紙に解答を直接記入するか、印刷したものを添付して次
+        回の授業の前日の木曜日10時までに6階の平野のレポートボックスに提
+        出する。
+ \item 復習用課題と同時に配布されるルーブリック評価表も自己評価を付けて
+       提出のこと。
+ \item 復習課題とそのルーブリック評価表は次回の授業の開始時に添削、評価
+       をしたものを返却する。
+ \item 復習用課題は10回程度を予定している。成績評価の60\%を占める。
+\item 最終回の授業に試験を行う。成績評価の40\%を占める。
+ \item 配布資料等は\texttt{http://www.hilano.org/hilano-lab}で公開する予
+       定
+\end{itemize}
+\section{参考図書}
+
+\begin{enumerate}
+ \item E. Brown, 初めてのJavaScript　第3版, --ES2015以降の最新ウェブ開発, オラ
+       イリージャパン\label{ES2016}
+ \item D. Crockford, JavaScript: The Good Parts 「良いパー
+	 ツ」によるベストプラ クティス, オライリージャパン\label{goodparats}
+ \item David Flanagan, JavaScript 第6 版, オライリージャパン\label{JS6}
+ \item David Flanagan, JavaScript クイックリファレンス第6 版, オ\label{JS6ref}
+	 ライリージャパン
+ \item Nicholas C. Zakas, ハイパフォーマンスJavaScript, オライリー
+	 ジャパン\label{JSPerformance}
+ \item Nicholas C. Zakas, メンテナブルJavaScript 　読みやすく保守しやすいJavaScript 
+コードの作法, オライリージャパン
+\end{enumerate}
+\section{シラバス}
+この授業のシラバスは次のように予定している。
+\begin{center}
+\begin{tabular}{|c|m{25zw}|}\hline
+ 授業回数&\multicolumn{1}{c|}{内容}\\\hline
+ 第1回&授業のガイダンスとブラウザの開発者モードについて \newline
+     JavaScriptの実行環境の確認\\\hline
+ 第2回&JavaScript が取り扱うデータ\newline
+     データの型と演算子に関する注意など\\\hline
+ 第3回& 関数の定義方法と変数のスコープ\\\hline
+ 第4回& オブジェクトの定義とクラス\\\hline
+ 第5回&オブジェクトの詳細\newline
+     関数によるオブジェクトの定義、エラー処理\\\hline
+ 第6回&正規表現と文字列の処理  \\\hline
+ 第7回&DOMの利用\newline
+     HTML文書、CSSと DOM の基礎\\\hline
+ 第8回&イベント処理 \newline
+     イベントモデルとイベント処理の例\\\hline
+ 第9回&PHP超入門\newline
+       PHPに関する簡単なプログラム\\\hline
+ 第10回&サーバーとのデータの交換\newline
+     PHP入門の続きとサーバーとのデータ交換の基礎\\\hline
+ 第11回&jQuery \newline
+     DOMの処理を簡単にするライブラリーの紹介\\   \hline
+ 第12回&XMLファイルの処理\newline
+     JavaScript と PHP によるXMLファイルの処理の例\\\hline
+ 第13回&クラスの例\\\hline
+ 第14回&システム開発のヒント\\\hline
+ 第15回&最終試験と解説\\ \hline
+\end{tabular}
+\end{center}
+%\newpage
+\section{JavaScriptの実行環境}
+\input 00prefice.tex
+\section{strict モードについて}
+ECMAScript の改訂版 \ES \footnote{ES6 とも呼ばれる。今後、EcmaScript の
+バージョンは規格が制定された年号を用いることとなった。}では\Strict とい
+う厳密な解釈をするモードが導入された。このモードでは従来見つけにくい
+単純なバグがエラーとなる。主な違いは次のとおりである。
+\begin{center}
+  \begin{tabular}{|m{20zw}|c|c|}\hline
+   &非\Strict & {\Strict}\\\hline
+   変数の宣言&必要ではない&必要\\ \hline
+   書き込み不可なプロパティへの代入&エラーが発生しない&エラーが発生\\
+   \hline
+   関数の\Verb+arguments+オブジェクトの値の変更&可能&不可能 \\ \hline
+   関数の\Verb+arguments.caller+&参照可能&エラーが発生 \\ \hline
+   関数の\Verb+arguments.callee+&参照可能&エラーが発生 \\ \hline
+   8進リテラル(\Verb+0+で始まる数)&使用可能&エラーが発生 \\ \hline
+ \end{tabular}
+\end{center}
+プログラムを\Strict にするためには先頭に\Verb+"use strict;"+
+を記述する。
+\section{第1回目復習課題}
+\begin{Prob}\upshape
+ 各自が使用しているブラウザにおいてJavaScriptの文が直接実行できるコンソール
+ が開けること、コンソールで「\texttt{1+2}」と入力すると、計算結果が
+ 表示されることを確認すること。
+\end{Prob}
+\begin{Prob}\label{FisatJS}\upshape
+ 次のコードを拡張子が\Verb+html+のファイルで作成する。それ
+ をブラウザで開き、デベロッパーツールのコンソールから\Verb+foo();+と入力
+ したときと、その後、コンソールで\texttt{i}と入力したときの結果を確認す
+ ること。{同様のことを９行目の\Verb+i+の宣言を省いて行うこと}
+
+ また、\Strict に変更し(7行目の後に「\Verb+"use strict";+」を追
+ 加する)、9行目の変数の宣言の行を取り除
+ くとエラーが発生することを確認すること。
+\LISTN{01example.html}{1}{last}{\normalsize}
+\end{Prob}
+コードの簡単な説明
+\begin{itemize}
+ \item 1行目 HTML5におけるHTML文書の宣言
+ \item 4行目 このファイルの文字コード(エンコーディング)を UTF-8 に指定
+ \item 6行目 スクリプトの開始の要素。プログラミング言語がECMAScriptであ
+       ることを宣言
+ \item 7行目 \texttt{//}は行末までの部分をコメントにするJavaScriptの記法。
+残りの部分はこれ以降12行目までは通常の文字として解釈することを指定
+       (\texttt{CDATA}セクションの開始)。
+
+      7行目と13行目を消去したらどうなるのか確認すること
+またその理由も考えること\footnote{最近のブラウザではエラーが起きないかも
+       しれない。}。
+ \item 8行目は関数\Verb+foo()+の宣言。13行目までがこの関数の定義範囲
+ \item 9行目は変数 \texttt{i}の宣言(従来のJavaScriptでは\texttt{var}を用
+       いて宣言していたが、この授業では\ES で新しく導入された\texttt{let}だけ
+       を用いる。)
+ \item 10行目 C言語などでおなじみの繰り返しの指定
+ \item 11行目 引数内の式をコンソールに出力。ここでは\ES で導入された文字
+       列の中に式を埋め込むことができるテンプレートリテラル形式(バックク
+       オート\Verb+@+の上にある文字で挟む)で記述し
+       ている。
+ \item 14行目はメッセージボックスにコンソールを開くことを指示。
+\end{itemize}
+開発者ツールを開き、コンソールから\Verb+foo();+を入力する。

@@ -154,7 +154,7 @@ Array
 \end{Exec}
 \input 09prob-02.tex
  \fi
- \iffalse\else
+ \iffalse%\else
  \subsection{可変変数}
  ある変数の値が文字列のとき、その前に\Verb+$+をつけると、その文字列が変
  数名として使える。
@@ -319,7 +319,7 @@ PHPの配列は \texttt{array()}関数で作成する。配列にはC言語な�
  次のリストは配列の取り扱いに関する簡単な例である。
 \LISTNN{09DefArray.php}{2}{6}{\normalsize}
 \begin{itemize}
- \item 1行目で４つの値を持つ配列を定義
+ \item 1行目で3つの値を持つ配列を定義
  \item ２行目で別の変数に値を代入
  \item ３行目で初めの配列の先頭の値を変更
  \item ４行目と５行目で配列の内容を出力するために\Verb+print_r()+関数を
@@ -332,14 +332,12 @@ Array
     [0] => 5
     [1] => 10
     [2] => 20
-    [3] => 30
 )
 Array
 (
     [0] => 0
     [1] => 10
     [2] => 20
-    [3] => 30
 )
 \end{Verbatim}
 \Verb+$b=$a+で代入された変数\Verb+$b+は\Verb+$a+とは別の領域が割り当てら
@@ -415,29 +413,29 @@ blue:青
 \subsection{配列に関する関数}
 PHPには配列の処理に関するいろいろな関数(もどき)がある。
 \paragraph{\protect\texttt{list()}}
-\texttt{list()}は配列の個々の要素をいくつかの変数にまとめて代入できる。
-これは関数ではなく、言語構造である。
+配列の個々の要素を変数にまとめて代入する。これは関数ではなく、言語構造である。
 \begin{Verbatim}
 list($first,$second, $third) = array(1,2,3,4,5);
 \end{Verbatim}
-この結果は、変数\Verb+$first+、\Verb+$second+と\Verb+$third+にそれぞれ
-\texttt{1,2,3}が代入される。途中に変数を書かなければ、その分は飛ばされる。
+結果は、変数\Verb+$first+、\Verb+$second+と\Verb+$third+にそれぞれ
+\texttt{1,2,3}が代入される。途中に変数がなければ、その分は飛ばされる。
+次の例では変数\Verb+$first+と\Verb+$third+だけ代入が行われる。
+
 \begin{Verbatim}
 list($first, , $third) = array(1,2,3,4,5);
 \end{Verbatim}
-この場合は変数\Verb+$first+と\Verb+$third+だけ代入が行われる。
 \paragraph{\protect\texttt{array\textunderscore pop()}と
 \protect\texttt{array\textunderscore push()}}
-\Verb+array_pop()+はもとの配列から最後の要素を取り除いて配列の大きさ
-を一つ少なくし、取り除いた要素を戻り値とする。\Verb+array_push()+は与
-えられた引数を順に配列の最後に付け加えて配列の大きさを増加させる。
+関数\Verb+array_pop()+は引数の配列から最後の要素を取り除き、
+その要素を戻り値とする。関数\Verb+array_push()+は2番目以降で与
+えられた引数を順に初めの引数の配列の最後に付け加える。
 \begin{Verbatim}
 $a = array(1,2,3,4);
 print array_pop($a);  //４が出力される
 array_push($a,10,20); //$a は array(1,2,3,10,20)となる
 \end{Verbatim}
-配列の先頭に対して要素を取り出したり(\Verb+array_shift()+)、追加する
-(\Verb+array_unshift()+)することもできる。
+配列の先頭の要素の取り出し(\Verb+array_shift()+)や、配列の先頭に要素を追加
+(\Verb+array_unshift()+)する関数がある。
 \paragraph{配列のキーと値の存在の判定}
 \Verb+in_array($needle, $array)+は与えられた配列(\Verb+$array+)内に指定
 した値(\Verb+$needle+)が存在するかを調べる関数である。値の型まで比較する
@@ -690,7 +688,7 @@ $x = defined in function
 $resa = 20
 \end{Verbatim}
 \end{Exec}
-\iffalse\else
+\iffalse%\else
 \subsection{可変関数}
 文字列が代入された変数を用いて、その文字列を変数名にできる可変変数と同様
 に、文字列が代入された変数の後に\texttt{()}をつけると、その文字列の関数
