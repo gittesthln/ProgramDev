@@ -4,7 +4,6 @@
 \contentsline {section}{\numberline {1.3}シラバス}{2}{section.1.3}
 \contentsline {section}{\numberline {1.4}JavaScriptの実行環境}{2}{section.1.4}
 \contentsline {section}{\numberline {1.5}strict モードについて}{3}{section.1.5}
-\contentsline {section}{\numberline {1.6}第1回目復習課題}{3}{section.1.6}
 \contentsline {chapter}{\numberline {第2回}JavaScriptのデータとプログラミングの基礎}{5}{chapter.2}
 \contentsline {section}{\numberline {2.1}データーの型}{5}{section.2.1}
 \contentsline {subsection}{\numberline {2.1.1}プリミティブデータ型}{5}{subsection.2.1.1}
