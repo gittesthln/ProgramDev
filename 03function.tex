@@ -245,9 +245,9 @@ function func1(a) {
        \Verb+func1()+の仮引数\Verb+a+ と\Verb+func1()+のローカル変数
        \Verb+b+、\Verb+func2()+のローカル変数\Verb+G2+と\Verb+c+が利用で
        きる。
- \item グローバル変数\texttt{G2}と\Verb+func1()+で定義された\Verb+c+は
-       \Verb+func2()+では同名の\texttt{G2}と
-       \Verb+c+が宣言されているために隠参照できない。
+ \item \Verb+func2()+では同名の\texttt{G2}と
+       \Verb+c+が宣言されているため、グローバル変数\texttt{G2}と
+       \Verb+func1()+で定義された\Verb+c+は参照できない。
 \end{itemize}
 このように内側で定義された関数は自分自身の中で定義されたローカル変数があ
 るかを探し、見つからない場合には一つ上のレベルでの変数を探す。これがスコー
@@ -644,5 +644,5 @@ function f3() {
 \begin{Prob}\upshape
  実行例\ref{functionsReturnLocalValue}において、\ElmJ{for}文の代わりに
  \ElmJ{while}文に書き換えたときに正しく動作するようにせよ。ただし、直前
- のリストぼように即時実行関数を用いないで実現すること。
+ のリストのように即時実行関数を用いないで実現すること。
 \end{Prob}

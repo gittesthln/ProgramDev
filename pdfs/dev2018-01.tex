@@ -9,17 +9,18 @@
 \section{受講に関する注意}
 \subsection{授業について}
 \begin{frame}
- \frametitle{授業内容 -- その1}
+ \frametitle{授業内容 -- 概略}
 \begin{itemize}
  \item JavaScript を通常の計算機言語として利用するための解説を10回の講義
        で行う。
+ \item 残りの授業はシステム開発のケーススタディとする。
  \item 進度が今までのプログラミングの授業より早いので復習をよくすること。
  \item パソコンを授業に持参す必要がある場合はその旨、前回の授業で指示
        する。
 \end{itemize}
 \end{frame}
 \begin{frame}
- \frametitle{授業内容 -- その2}
+ \frametitle{授業内容 -- 復習用課題}
 \begin{itemize}
    \item 配布された復習用の課題は用紙に解答を直接記入するか、印刷したものを添付して次
         回の授業の前日の木曜日10時までに6階の平野のレポートボックスに提
@@ -28,15 +29,16 @@
        提出
  \item レポートの内容はルーブリック評価表の「標準的」の項目を参照するこ
        と。
- \item 復習課題とそのルーブリック評価表は次回の授業の開始時に添削、評価
-       をしたものを返却する。
+ \item レポート課題に関して(必須)が付いているものは必ず解答すること。
 \end{itemize}
 \end{frame}
 \begin{frame}[containsverbatim]
- \frametitle{授業内容 -- その3}
+ \frametitle{授業内容 -- その他}
 \begin{itemize}
+ \item 復習課題とそのルーブリック評価表は次回の授業の開始時に添削、評価
+       をしたものを返却する。
  \item 復習課題の提出方法はメール提出に変更する場合もある。
- \item 復習用課題は10回程度を予定している。成績評価の60\%を占める。
+ \item 復習用課題のレポート評価は成績評価の60\%を占める。
 \item 最終回の授業に試験を行う。成績評価の40\%を占める。
  \item 配布資料等は\texttt{http://www.hilano.org/hilano-lab}で公開する予
        定である。
@@ -120,8 +122,10 @@
 ドが導入
  \item このモードでは従来見つけにくい単純なバグがエラーとな
 る
- \item プログラムを\Strict にするためには先頭に\Verb+"use strict;"+
+ \item プログラムを\Strict にするためにはプログラムの先頭に\Verb+"use strict";+
        を記述
+ \item 関数の定義の直後に\Verb+"use strict";+を記述するとその関数内は
+       \Strict になる。
 \end{itemize}
 \end{frame}
 \begin{frame}[containsverbatim]
