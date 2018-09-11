@@ -25,156 +25,156 @@
 \contentsline {section}{\numberline {2.6}組み込みオブジェクト}{12}{section.2.6}
 \contentsline {subsection}{\numberline {2.6.1}組み込み関数}{12}{subsection.2.6.1}
 \contentsline {subsection}{\numberline {2.6.2}\texttt {Math}オブジェクト}{13}{subsection.2.6.2}
-\contentsline {subsection}{\numberline {2.6.3}\texttt {Dateオブジェクト}}{14}{subsection.2.6.3}
-\contentsline {section}{\numberline {2.7}第2回目復習課題}{16}{section.2.7}
-\contentsline {chapter}{\numberline {第3回}関数}{17}{chapter.3}
-\contentsline {section}{\numberline {3.1}今回の内容}{17}{section.3.1}
-\contentsline {section}{\numberline {3.2}関数の定義方法と呼び出し}{17}{section.3.2}
-\contentsline {subsection}{\numberline {3.2.1}簡単な関数の例}{17}{subsection.3.2.1}
-\contentsline {subsection}{\numberline {3.2.2}仮引数への代入}{18}{subsection.3.2.2}
-\contentsline {subsection}{\numberline {3.2.3}可変引数をとる関数}{19}{subsection.3.2.3}
-\contentsline {subsection}{\numberline {3.2.4}変数のスコープ}{20}{subsection.3.2.4}
-\contentsline {section}{\numberline {3.3}JavaScriptにおける関数の特徴}{23}{section.3.3}
-\contentsline {subsection}{\numberline {3.3.1}関数もデータ}{23}{subsection.3.3.1}
-\contentsline {subsection}{\numberline {3.3.2}コールバック関数}{23}{subsection.3.3.2}
-\contentsline {subsection}{\numberline {3.3.3}自己実行関数}{24}{subsection.3.3.3}
-\contentsline {section}{\numberline {3.4}クロージャ}{25}{section.3.4}
-\contentsline {subsection}{\numberline {3.4.1}クロージャの例 -- 変数を隠す}{25}{subsection.3.4.1}
-\contentsline {subsection}{\numberline {3.4.2}クロージャの例 -- 無名関数をその場で実行する}{26}{subsection.3.4.2}
-\contentsline {chapter}{\numberline {第4回}オブジェクト}{29}{chapter.4}
-\contentsline {section}{\numberline {4.1}配列とオブジェクト}{29}{section.4.1}
-\contentsline {section}{\numberline {4.2}オブジェクトリテラルとJSON}{31}{section.4.2}
-\contentsline {section}{\numberline {4.3}クラス}{32}{section.4.3}
-\contentsline {subsection}{\numberline {4.3.1}クラスの宣言とインスタンスの生成}{32}{subsection.4.3.1}
-\contentsline {subsection}{\numberline {4.3.2}クラスメソッド}{34}{subsection.4.3.2}
-\contentsline {subsection}{\numberline {4.3.3}継承}{36}{subsection.4.3.3}
-\contentsline {subsection}{\numberline {4.3.4}\texttt {instanceof}演算子}{36}{subsection.4.3.4}
-\contentsline {subsection}{\numberline {4.3.5}静的メソッド}{37}{subsection.4.3.5}
-\contentsline {chapter}{\numberline {第5回}オブジェクトの詳細}{39}{chapter.5}
-\contentsline {section}{\numberline {5.1}\texttt {class}の実体}{39}{section.5.1}
-\contentsline {section}{\numberline {5.2}オブジェクト属性}{39}{section.5.2}
-\contentsline {subsection}{\numberline {5.2.1}\ElmJ {class}属性}{40}{subsection.5.2.1}
-\contentsline {subsection}{\numberline {5.2.2}\ElmJ {extensible}属性}{40}{subsection.5.2.2}
-\contentsline {subsection}{\numberline {5.2.3}\ElmJ {prototye}属性}{42}{subsection.5.2.3}
-\contentsline {subsection}{\numberline {5.2.4}\texttt {prototype}の使用例}{42}{subsection.5.2.4}
-\contentsline {section}{\numberline {5.3}関数によるオブジェクトの継承}{43}{section.5.3}
-\contentsline {section}{\numberline {5.4}\ElmJ {WeakMap}によるインスタンスの安全性の確保}{44}{section.5.4}
-\contentsline {section}{\numberline {5.5}エラーオブジェクトについて}{47}{section.5.5}
-\contentsline {subsection}{\numberline {5.5.1}エラー処理の例}{47}{subsection.5.5.1}
-\contentsline {subsection}{\numberline {5.5.2}エラーからの復帰}{49}{subsection.5.5.2}
-\contentsline {chapter}{\numberline {第6回}正規表現}{51}{chapter.6}
-\contentsline {section}{\numberline {6.1}正規表現オブジェクトの記述方法}{51}{section.6.1}
-\contentsline {paragraph}{リテラル文字}{51}{section*.8}
-\contentsline {paragraph}{文字クラス}{52}{section*.9}
-\contentsline {paragraph}{繰り返し}{52}{section*.10}
-\contentsline {paragraph}{非貪欲な繰り返し}{52}{section*.11}
-\contentsline {paragraph}{選択、グループ化、参照}{53}{section*.12}
-\contentsline {paragraph}{一致位置の指定}{53}{section*.13}
-\contentsline {paragraph}{フラグ}{53}{section*.14}
-\contentsline {section}{\numberline {6.2}文字列のパターンマッチングメソッド}{55}{section.6.2}
-\contentsline {chapter}{\numberline {第7回}DOMの利用}{59}{chapter.7}
-\contentsline {section}{\numberline {7.1}HTML文書の構成}{59}{section.7.1}
-\contentsline {section}{\numberline {7.2}CSSの利用}{61}{section.7.2}
-\contentsline {section}{\numberline {7.3}DOMとは}{64}{section.7.3}
-\contentsline {section}{\numberline {7.4}DOM のメソッドとプロパティ}{64}{section.7.4}
-\contentsline {subsection}{\numberline {7.4.1}DOMのメソッド}{64}{subsection.7.4.1}
-\contentsline {subsection}{\numberline {7.4.2}DOMの要素のプロパティ}{68}{subsection.7.4.2}
-\contentsline {chapter}{\numberline {第8回}イベント}{69}{chapter.8}
-\contentsline {section}{\numberline {8.1}イベント概説}{69}{section.8.1}
-\contentsline {section}{\numberline {8.2}イベント処理の方法}{69}{section.8.2}
-\contentsline {section}{\numberline {8.3}DOM Level 2 のイベント処理モデル}{70}{section.8.3}
-\contentsline {section}{\numberline {8.4}HTML における代表的なイベント}{70}{section.8.4}
-\contentsline {subsection}{\numberline {8.4.1}ドキュメントの\texttt {onload}イベント}{70}{subsection.8.4.1}
-\contentsline {subsection}{\numberline {8.4.2}マウスイベント}{71}{subsection.8.4.2}
-\contentsline {section}{\numberline {8.5}イベント処理の例}{72}{section.8.5}
-\contentsline {chapter}{\numberline {第9回}PHPの超入門}{81}{chapter.9}
-\contentsline {section}{\numberline {9.1}Web サーバーの基礎知識}{81}{section.9.1}
-\contentsline {subsection}{\numberline {9.1.1}サーバーの重要な設定項目}{81}{subsection.9.1.1}
-\contentsline {subsection}{\numberline {9.1.2}CGI}{81}{subsection.9.1.2}
-\contentsline {subsection}{\numberline {9.1.3}Webサーバーのインストール}{81}{subsection.9.1.3}
-\contentsline {paragraph}{XAMPP}{82}{section*.15}
-\contentsline {section}{\numberline {9.2}PHPとは}{82}{section.9.2}
-\contentsline {section}{\numberline {9.3}PHPプログラムの書き方}{82}{section.9.3}
-\contentsline {section}{\numberline {9.4}データの型}{82}{section.9.4}
-\contentsline {section}{\numberline {9.5}変数}{83}{section.9.5}
-\contentsline {subsection}{\numberline {9.5.1}定義済み変数}{84}{subsection.9.5.1}
-\contentsline {section}{\numberline {9.6}文字列}{85}{section.9.6}
-\contentsline {subsection}{\numberline {9.6.1}文字列の定義方法}{85}{subsection.9.6.1}
-\contentsline {subsection}{\numberline {9.6.2}文字列を取り扱う関数}{86}{subsection.9.6.2}
-\contentsline {section}{\numberline {9.7}式と文}{86}{section.9.7}
-\contentsline {section}{\numberline {9.8}配列}{88}{section.9.8}
-\contentsline {subsection}{\numberline {9.8.1}配列の基礎}{88}{subsection.9.8.1}
-\contentsline {subsection}{\numberline {9.8.2}配列に関する制御構造}{89}{subsection.9.8.2}
-\contentsline {subsection}{\numberline {9.8.3}配列に関する関数}{91}{subsection.9.8.3}
-\contentsline {paragraph}{\texttt {list()}}{91}{section*.16}
-\contentsline {paragraph}{\texttt {array\textunderscore pop()}と\texttt {array\textunderscore push()}}{91}{section*.17}
-\contentsline {paragraph}{配列のキーと値の存在の判定}{91}{section*.18}
-\contentsline {paragraph}{並べ替え}{92}{section*.19}
-\contentsline {paragraph}{配列からランダムな値を取り出す}{92}{section*.20}
-\contentsline {paragraph}{配列の切り出しと追加}{92}{section*.21}
-\contentsline {section}{\numberline {9.9}関数}{92}{section.9.9}
-\contentsline {subsection}{\numberline {9.9.1}PHPの関数の特徴}{92}{subsection.9.9.1}
-\contentsline {subsection}{\numberline {9.9.2}関数の定義の例}{93}{subsection.9.9.2}
-\contentsline {chapter}{\numberline {第10回}サーバーとのデータのやり取り}{97}{chapter.10}
-\contentsline {section}{\numberline {10.1}サーバーとのデータ交換の基本}{97}{section.10.1}
-\contentsline {section}{\numberline {10.2}スパーグローバルの補足}{99}{section.10.2}
-\contentsline {paragraph}{\texttt {\$\_SERVER}}{99}{section*.22}
-\contentsline {paragraph}{\texttt {\$\_COOKIE}}{99}{section*.23}
-\contentsline {paragraph}{\texttt {\$\_SESSION}}{99}{section*.24}
-\contentsline {section}{\numberline {10.3}Web Storage}{99}{section.10.3}
-\contentsline {section}{\numberline {10.4}Ajax}{103}{section.10.4}
-\contentsline {chapter}{\numberline {第11回}jQuery}{109}{chapter.11}
-\contentsline {section}{\numberline {11.1}jQueryとは}{109}{section.11.1}
-\contentsline {section}{\numberline {11.2}jQueryの利用方法}{109}{section.11.2}
-\contentsline {section}{\numberline {11.3}jQueryの基本}{110}{section.11.3}
-\contentsline {subsection}{\numberline {11.3.1}jQuery()関数とjQueryオブジェクト}{110}{subsection.11.3.1}
-\contentsline {subsection}{\numberline {11.3.2}jQueryオブジェクトのメソッド}{110}{subsection.11.3.2}
-\contentsline {paragraph}{HTML属性の取得と設定}{111}{section*.25}
-\contentsline {paragraph}{CSS属性の取得と設定}{111}{section*.26}
-\contentsline {paragraph}{HTMLフォーム要素の値の取得と設定}{111}{section*.27}
-\contentsline {paragraph}{要素のコンテンツの取得と設定}{111}{section*.28}
-\contentsline {section}{\numberline {11.4}ドキュメントの構造の変更}{111}{section.11.4}
-\contentsline {section}{\numberline {11.5}イベントハンドラーの取り扱い}{111}{section.11.5}
-\contentsline {section}{\numberline {11.6}Ajaxの処理}{112}{section.11.6}
-\contentsline {section}{\numberline {11.7}jQuery のサンプル}{112}{section.11.7}
-\contentsline {chapter}{\numberline {第12回}XMLファイルの処理}{117}{chapter.12}
-\contentsline {section}{\numberline {12.1}XMLファイルとは}{117}{section.12.1}
-\contentsline {subsection}{\numberline {12.1.1}W3CにおけるXMLの解説}{117}{subsection.12.1.1}
-\contentsline {subsection}{\numberline {12.1.2}XMLファイルの例}{118}{subsection.12.1.2}
-\contentsline {subsubsection}{GPXファイルの構造}{118}{section*.29}
-\contentsline {subsubsection}{GPXファイルの例}{118}{section*.30}
-\contentsline {subsubsection}{地球の形}{119}{section*.31}
-\contentsline {section}{\numberline {12.2}Google Mapsにおける\texttt {Polyline}の表示}{120}{section.12.2}
-\contentsline {section}{\numberline {12.3}ブラウザでの処理}{120}{section.12.3}
-\contentsline {section}{\numberline {12.4}PHPによる処理}{125}{section.12.4}
-\contentsline {chapter}{\numberline {第13回}クラスの例}{127}{chapter.13}
-\contentsline {section}{\numberline {13.1}例の概要}{127}{section.13.1}
-\contentsline {section}{\numberline {13.2}ソースコードの解説}{128}{section.13.2}
-\contentsline {subsection}{\numberline {13.2.1}HTMLファイル}{128}{subsection.13.2.1}
-\contentsline {section}{\numberline {13.3}ユーザーインターフェイス}{128}{section.13.3}
-\contentsline {section}{\numberline {13.4}ユーザーインターフェイスを引用するJavaScriptファイル}{136}{section.13.4}
-\contentsline {chapter}{\numberline {第14回}システム開発のためのヒント}{137}{chapter.14}
-\contentsline {section}{\numberline {14.1}コードの構造}{137}{section.14.1}
-\contentsline {subsection}{\numberline {14.1.1}良いコードとは}{137}{subsection.14.1.1}
-\contentsline {subsection}{\numberline {14.1.2}プログラムとデータの分離}{137}{subsection.14.1.2}
-\contentsline {section}{\numberline {14.2}コードの管理}{138}{section.14.2}
-\contentsline {subsection}{\numberline {14.2.1}複数でシステム開発をするときの問題点}{138}{subsection.14.2.1}
-\contentsline {subsection}{\numberline {14.2.2}バージョン管理の概念}{139}{subsection.14.2.2}
-\contentsline {subsection}{\numberline {14.2.3}バージョン管理ソフトの概要}{139}{subsection.14.2.3}
-\contentsline {subsection}{\numberline {14.2.4}gitの使い方}{139}{subsection.14.2.4}
-\contentsline {subsubsection}{git の特徴}{140}{section*.32}
-\contentsline {subsubsection}{git のインストール}{140}{section*.33}
-\contentsline {subsubsection}{初期設定}{140}{section*.34}
-\contentsline {paragraph}{ユーザーネームの登録}{140}{section*.35}
-\contentsline {paragraph}{メールアドレスの登録}{140}{section*.36}
-\contentsline {paragraph}{SSH Keyの登録}{140}{section*.37}
-\contentsline {subsubsection}{GitHub のアカウントの取得}{141}{section*.38}
-\contentsline {subsubsection}{リポジトリの作成と運用}{141}{section*.39}
-\contentsline {chapter}{\numberline {第15回}JavaScriptライブラリーの配布}{143}{chapter.15}
-\contentsline {section}{\numberline {15.1}jQueryのコードを読む}{143}{section.15.1}
-\contentsline {section}{\numberline {15.2}JavaScriptファイルの短縮化}{145}{section.15.2}
-\contentsline {subsection}{\numberline {15.2.1}JavaScriptファイルの短縮化について}{145}{subsection.15.2.1}
-\contentsline {subsection}{\numberline {15.2.2}短縮化の例}{145}{subsection.15.2.2}
-\contentsline {section}{\numberline {15.3}Webサイトの効率化}{150}{section.15.3}
-\contentsline {subsection}{\numberline {15.3.1}Contents Deliverly Network(CDN)}{150}{subsection.15.3.1}
-\contentsline {subsection}{\numberline {15.3.2}CSS Sprite}{150}{subsection.15.3.2}
+\contentsline {subsection}{\numberline {2.6.3}\texttt {Dateオブジェクト}}{13}{subsection.2.6.3}
+\contentsline {section}{\numberline {2.7}第2回目復習課題}{17}{section.2.7}
+\contentsline {chapter}{\numberline {第3回}関数}{19}{chapter.3}
+\contentsline {section}{\numberline {3.1}今回の内容}{19}{section.3.1}
+\contentsline {section}{\numberline {3.2}関数の定義方法と呼び出し}{19}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}簡単な関数の例}{19}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2}仮引数への代入}{20}{subsection.3.2.2}
+\contentsline {subsection}{\numberline {3.2.3}可変引数をとる関数}{21}{subsection.3.2.3}
+\contentsline {subsection}{\numberline {3.2.4}変数のスコープ}{22}{subsection.3.2.4}
+\contentsline {section}{\numberline {3.3}JavaScriptにおける関数の特徴}{25}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}関数もデータ}{25}{subsection.3.3.1}
+\contentsline {subsection}{\numberline {3.3.2}コールバック関数}{25}{subsection.3.3.2}
+\contentsline {subsection}{\numberline {3.3.3}自己実行関数}{26}{subsection.3.3.3}
+\contentsline {section}{\numberline {3.4}クロージャ}{27}{section.3.4}
+\contentsline {subsection}{\numberline {3.4.1}クロージャの例 -- 変数を隠す}{27}{subsection.3.4.1}
+\contentsline {subsection}{\numberline {3.4.2}クロージャの例 -- 無名関数をその場で実行する}{28}{subsection.3.4.2}
+\contentsline {chapter}{\numberline {第4回}オブジェクト}{31}{chapter.4}
+\contentsline {section}{\numberline {4.1}配列とオブジェクト}{31}{section.4.1}
+\contentsline {section}{\numberline {4.2}オブジェクトリテラルとJSON}{33}{section.4.2}
+\contentsline {section}{\numberline {4.3}クラス}{34}{section.4.3}
+\contentsline {subsection}{\numberline {4.3.1}クラスの宣言とインスタンスの生成}{34}{subsection.4.3.1}
+\contentsline {subsection}{\numberline {4.3.2}クラスメソッド}{36}{subsection.4.3.2}
+\contentsline {subsection}{\numberline {4.3.3}継承}{38}{subsection.4.3.3}
+\contentsline {subsection}{\numberline {4.3.4}\texttt {instanceof}演算子}{38}{subsection.4.3.4}
+\contentsline {subsection}{\numberline {4.3.5}静的メソッド}{39}{subsection.4.3.5}
+\contentsline {chapter}{\numberline {第5回}オブジェクトの詳細}{41}{chapter.5}
+\contentsline {section}{\numberline {5.1}\texttt {class}の実体}{41}{section.5.1}
+\contentsline {section}{\numberline {5.2}オブジェクト属性}{41}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1}\ElmJ {class}属性}{42}{subsection.5.2.1}
+\contentsline {subsection}{\numberline {5.2.2}\ElmJ {extensible}属性}{42}{subsection.5.2.2}
+\contentsline {subsection}{\numberline {5.2.3}\ElmJ {prototye}属性}{44}{subsection.5.2.3}
+\contentsline {subsection}{\numberline {5.2.4}\texttt {prototype}の使用例}{44}{subsection.5.2.4}
+\contentsline {section}{\numberline {5.3}関数によるオブジェクトの継承}{45}{section.5.3}
+\contentsline {section}{\numberline {5.4}\ElmJ {WeakMap}によるインスタンスの安全性の確保}{46}{section.5.4}
+\contentsline {section}{\numberline {5.5}エラーオブジェクトについて}{49}{section.5.5}
+\contentsline {subsection}{\numberline {5.5.1}エラー処理の例}{49}{subsection.5.5.1}
+\contentsline {subsection}{\numberline {5.5.2}エラーからの復帰}{51}{subsection.5.5.2}
+\contentsline {chapter}{\numberline {第6回}正規表現}{53}{chapter.6}
+\contentsline {section}{\numberline {6.1}正規表現オブジェクトの記述方法}{53}{section.6.1}
+\contentsline {paragraph}{リテラル文字}{53}{section*.8}
+\contentsline {paragraph}{文字クラス}{54}{section*.9}
+\contentsline {paragraph}{繰り返し}{54}{section*.10}
+\contentsline {paragraph}{非貪欲な繰り返し}{54}{section*.11}
+\contentsline {paragraph}{選択、グループ化、参照}{55}{section*.12}
+\contentsline {paragraph}{一致位置の指定}{55}{section*.13}
+\contentsline {paragraph}{フラグ}{55}{section*.14}
+\contentsline {section}{\numberline {6.2}文字列のパターンマッチングメソッド}{57}{section.6.2}
+\contentsline {chapter}{\numberline {第7回}DOMの利用}{61}{chapter.7}
+\contentsline {section}{\numberline {7.1}HTML文書の構成}{61}{section.7.1}
+\contentsline {section}{\numberline {7.2}CSSの利用}{63}{section.7.2}
+\contentsline {section}{\numberline {7.3}DOMとは}{66}{section.7.3}
+\contentsline {section}{\numberline {7.4}DOM のメソッドとプロパティ}{66}{section.7.4}
+\contentsline {subsection}{\numberline {7.4.1}DOMのメソッド}{66}{subsection.7.4.1}
+\contentsline {subsection}{\numberline {7.4.2}DOMの要素のプロパティ}{70}{subsection.7.4.2}
+\contentsline {chapter}{\numberline {第8回}イベント}{71}{chapter.8}
+\contentsline {section}{\numberline {8.1}イベント概説}{71}{section.8.1}
+\contentsline {section}{\numberline {8.2}イベント処理の方法}{71}{section.8.2}
+\contentsline {section}{\numberline {8.3}DOM Level 2 のイベント処理モデル}{72}{section.8.3}
+\contentsline {section}{\numberline {8.4}HTML における代表的なイベント}{72}{section.8.4}
+\contentsline {subsection}{\numberline {8.4.1}ドキュメントの\texttt {onload}イベント}{72}{subsection.8.4.1}
+\contentsline {subsection}{\numberline {8.4.2}マウスイベント}{73}{subsection.8.4.2}
+\contentsline {section}{\numberline {8.5}イベント処理の例}{74}{section.8.5}
+\contentsline {chapter}{\numberline {第9回}PHPの超入門}{83}{chapter.9}
+\contentsline {section}{\numberline {9.1}Web サーバーの基礎知識}{83}{section.9.1}
+\contentsline {subsection}{\numberline {9.1.1}サーバーの重要な設定項目}{83}{subsection.9.1.1}
+\contentsline {subsection}{\numberline {9.1.2}CGI}{83}{subsection.9.1.2}
+\contentsline {subsection}{\numberline {9.1.3}Webサーバーのインストール}{83}{subsection.9.1.3}
+\contentsline {paragraph}{XAMPP}{84}{section*.15}
+\contentsline {section}{\numberline {9.2}PHPとは}{84}{section.9.2}
+\contentsline {section}{\numberline {9.3}PHPプログラムの書き方}{84}{section.9.3}
+\contentsline {section}{\numberline {9.4}データの型}{84}{section.9.4}
+\contentsline {section}{\numberline {9.5}変数}{85}{section.9.5}
+\contentsline {subsection}{\numberline {9.5.1}定義済み変数}{86}{subsection.9.5.1}
+\contentsline {section}{\numberline {9.6}文字列}{87}{section.9.6}
+\contentsline {subsection}{\numberline {9.6.1}文字列の定義方法}{87}{subsection.9.6.1}
+\contentsline {subsection}{\numberline {9.6.2}文字列を取り扱う関数}{88}{subsection.9.6.2}
+\contentsline {section}{\numberline {9.7}式と文}{88}{section.9.7}
+\contentsline {section}{\numberline {9.8}配列}{90}{section.9.8}
+\contentsline {subsection}{\numberline {9.8.1}配列の基礎}{90}{subsection.9.8.1}
+\contentsline {subsection}{\numberline {9.8.2}配列に関する制御構造}{91}{subsection.9.8.2}
+\contentsline {subsection}{\numberline {9.8.3}配列に関する関数}{93}{subsection.9.8.3}
+\contentsline {paragraph}{\texttt {list()}}{93}{section*.16}
+\contentsline {paragraph}{\texttt {array\textunderscore pop()}と\texttt {array\textunderscore push()}}{93}{section*.17}
+\contentsline {paragraph}{配列のキーと値の存在の判定}{93}{section*.18}
+\contentsline {paragraph}{並べ替え}{94}{section*.19}
+\contentsline {paragraph}{配列からランダムな値を取り出す}{94}{section*.20}
+\contentsline {paragraph}{配列の切り出しと追加}{94}{section*.21}
+\contentsline {section}{\numberline {9.9}関数}{94}{section.9.9}
+\contentsline {subsection}{\numberline {9.9.1}PHPの関数の特徴}{94}{subsection.9.9.1}
+\contentsline {subsection}{\numberline {9.9.2}関数の定義の例}{95}{subsection.9.9.2}
+\contentsline {chapter}{\numberline {第10回}サーバーとのデータのやり取り}{99}{chapter.10}
+\contentsline {section}{\numberline {10.1}サーバーとのデータ交換の基本}{99}{section.10.1}
+\contentsline {section}{\numberline {10.2}スパーグローバルの補足}{101}{section.10.2}
+\contentsline {paragraph}{\texttt {\$\_SERVER}}{101}{section*.22}
+\contentsline {paragraph}{\texttt {\$\_COOKIE}}{101}{section*.23}
+\contentsline {paragraph}{\texttt {\$\_SESSION}}{101}{section*.24}
+\contentsline {section}{\numberline {10.3}Web Storage}{101}{section.10.3}
+\contentsline {section}{\numberline {10.4}Ajax}{105}{section.10.4}
+\contentsline {chapter}{\numberline {第11回}jQuery}{111}{chapter.11}
+\contentsline {section}{\numberline {11.1}jQueryとは}{111}{section.11.1}
+\contentsline {section}{\numberline {11.2}jQueryの利用方法}{111}{section.11.2}
+\contentsline {section}{\numberline {11.3}jQueryの基本}{112}{section.11.3}
+\contentsline {subsection}{\numberline {11.3.1}jQuery()関数とjQueryオブジェクト}{112}{subsection.11.3.1}
+\contentsline {subsection}{\numberline {11.3.2}jQueryオブジェクトのメソッド}{112}{subsection.11.3.2}
+\contentsline {paragraph}{HTML属性の取得と設定}{113}{section*.25}
+\contentsline {paragraph}{CSS属性の取得と設定}{113}{section*.26}
+\contentsline {paragraph}{HTMLフォーム要素の値の取得と設定}{113}{section*.27}
+\contentsline {paragraph}{要素のコンテンツの取得と設定}{113}{section*.28}
+\contentsline {section}{\numberline {11.4}ドキュメントの構造の変更}{113}{section.11.4}
+\contentsline {section}{\numberline {11.5}イベントハンドラーの取り扱い}{113}{section.11.5}
+\contentsline {section}{\numberline {11.6}Ajaxの処理}{114}{section.11.6}
+\contentsline {section}{\numberline {11.7}jQuery のサンプル}{114}{section.11.7}
+\contentsline {chapter}{\numberline {第12回}XMLファイルの処理}{119}{chapter.12}
+\contentsline {section}{\numberline {12.1}XMLファイルとは}{119}{section.12.1}
+\contentsline {subsection}{\numberline {12.1.1}W3CにおけるXMLの解説}{119}{subsection.12.1.1}
+\contentsline {subsection}{\numberline {12.1.2}XMLファイルの例}{120}{subsection.12.1.2}
+\contentsline {subsubsection}{GPXファイルの構造}{120}{section*.29}
+\contentsline {subsubsection}{GPXファイルの例}{120}{section*.30}
+\contentsline {subsubsection}{地球の形}{121}{section*.31}
+\contentsline {section}{\numberline {12.2}Google Mapsにおける\texttt {Polyline}の表示}{122}{section.12.2}
+\contentsline {section}{\numberline {12.3}ブラウザでの処理}{122}{section.12.3}
+\contentsline {section}{\numberline {12.4}PHPによる処理}{127}{section.12.4}
+\contentsline {chapter}{\numberline {第13回}クラスの例}{129}{chapter.13}
+\contentsline {section}{\numberline {13.1}例の概要}{129}{section.13.1}
+\contentsline {section}{\numberline {13.2}ソースコードの解説}{130}{section.13.2}
+\contentsline {subsection}{\numberline {13.2.1}HTMLファイル}{130}{subsection.13.2.1}
+\contentsline {section}{\numberline {13.3}ユーザーインターフェイス}{130}{section.13.3}
+\contentsline {section}{\numberline {13.4}ユーザーインターフェイスを引用するJavaScriptファイル}{138}{section.13.4}
+\contentsline {chapter}{\numberline {第14回}システム開発のためのヒント}{139}{chapter.14}
+\contentsline {section}{\numberline {14.1}コードの構造}{139}{section.14.1}
+\contentsline {subsection}{\numberline {14.1.1}良いコードとは}{139}{subsection.14.1.1}
+\contentsline {subsection}{\numberline {14.1.2}プログラムとデータの分離}{139}{subsection.14.1.2}
+\contentsline {section}{\numberline {14.2}コードの管理}{140}{section.14.2}
+\contentsline {subsection}{\numberline {14.2.1}複数でシステム開発をするときの問題点}{140}{subsection.14.2.1}
+\contentsline {subsection}{\numberline {14.2.2}バージョン管理の概念}{141}{subsection.14.2.2}
+\contentsline {subsection}{\numberline {14.2.3}バージョン管理ソフトの概要}{141}{subsection.14.2.3}
+\contentsline {subsection}{\numberline {14.2.4}gitの使い方}{141}{subsection.14.2.4}
+\contentsline {subsubsection}{git の特徴}{142}{section*.32}
+\contentsline {subsubsection}{git のインストール}{142}{section*.33}
+\contentsline {subsubsection}{初期設定}{142}{section*.34}
+\contentsline {paragraph}{ユーザーネームの登録}{142}{section*.35}
+\contentsline {paragraph}{メールアドレスの登録}{142}{section*.36}
+\contentsline {paragraph}{SSH Keyの登録}{142}{section*.37}
+\contentsline {subsubsection}{GitHub のアカウントの取得}{143}{section*.38}
+\contentsline {subsubsection}{リポジトリの作成と運用}{143}{section*.39}
+\contentsline {chapter}{\numberline {第15回}JavaScriptライブラリーの配布}{145}{chapter.15}
+\contentsline {section}{\numberline {15.1}jQueryのコードを読む}{145}{section.15.1}
+\contentsline {section}{\numberline {15.2}JavaScriptファイルの短縮化}{147}{section.15.2}
+\contentsline {subsection}{\numberline {15.2.1}JavaScriptファイルの短縮化について}{147}{subsection.15.2.1}
+\contentsline {subsection}{\numberline {15.2.2}短縮化の例}{147}{subsection.15.2.2}
+\contentsline {section}{\numberline {15.3}Webサイトの効率化}{152}{section.15.3}
+\contentsline {subsection}{\numberline {15.3.1}Contents Deliverly Network(CDN)}{152}{subsection.15.3.1}
+\contentsline {subsection}{\numberline {15.3.2}CSS Sprite}{152}{subsection.15.3.2}

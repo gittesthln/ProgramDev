@@ -14,7 +14,7 @@ JavaScript の方には大きく分けて\KeyItem{プリミティブ型}と\KeyI
  \ElmJ{Number} & 64ビット浮動小数点形式だけ\\ \hline
  \ElmJ{String} & \KeyItem{文字列型}、文字のデータ型はない。ダブルク
      オート(\Verb+"+)か%" 
-     シングルクオート(\Verb+'+)で囲む。ES2015では文字列内に式
+     シングルクオート(\Verb+'+)で囲む。\ES では文字列内に式
      の結果を埋め込むことができるテンプレートリテラル形式(バッククオート
      \Verb+`+ではさむ\footnotemark{})が追加された。\\ \hline
  \ElmJ{Boolean}& \ElmJ{true} か \ElmJ{false} の値のみ\\ \hline
@@ -124,7 +124,8 @@ JavaScriptの変数の特徴は次の通りである。
  \item 変数名はアルファベットまたは\Verb+_+(アンダースコア)で始まる英数
        字または\Verb+_+ が続く文字列
  \item 大文字と小文字は区別される。
- \item 変数の宣言は \texttt{let} で行う。\texttt{var}でもできるが、問題
+ \item 変数の宣言は\ES で採用された \texttt{let} で行う。従来の
+       宣言方法の \texttt{var}　にはいくつかの問題
        があるのでこの授業では使用しない。
  \item 宣言時に初期化ができる。\ES で導入された\texttt{const}による変数
        の宣言では初期化時の値の変更ができない。
