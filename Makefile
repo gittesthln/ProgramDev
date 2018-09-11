@@ -1,6 +1,6 @@
 LATEX = platex
 DVIPS = dvips -Ppdf
-DVIPDF = dvipdfmx
+DVIPDF = dvipdfmx -S -P 0x0008
 O	=	64
 GS = gswin$(O)c -dNOPAUSE -dBATCH -sDEVICE=pdfwrite 
 SLOPTION = -dDEVICEWIDTHPOINTS=363 -dDEVICEHEIGHTPOINTS=273

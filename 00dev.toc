@@ -4,7 +4,6 @@
 \contentsline {section}{\numberline {1.3}シラバス}{2}{section.1.3}
 \contentsline {section}{\numberline {1.4}JavaScriptの実行環境}{2}{section.1.4}
 \contentsline {section}{\numberline {1.5}strict モードについて}{3}{section.1.5}
-\contentsline {section}{\numberline {1.6}第1回目復習課題}{3}{section.1.6}
 \contentsline {chapter}{\numberline {第2回}JavaScriptのデータとプログラミングの基礎}{5}{chapter.2}
 \contentsline {section}{\numberline {2.1}データーの型}{5}{section.2.1}
 \contentsline {subsection}{\numberline {2.1.1}プリミティブデータ型}{5}{subsection.2.1.1}
@@ -98,26 +97,24 @@
 \contentsline {section}{\numberline {9.3}PHPプログラムの書き方}{82}{section.9.3}
 \contentsline {section}{\numberline {9.4}データの型}{82}{section.9.4}
 \contentsline {section}{\numberline {9.5}変数}{83}{section.9.5}
-\contentsline {subsection}{\numberline {9.5.1}可変変数}{84}{subsection.9.5.1}
-\contentsline {subsection}{\numberline {9.5.2}定義済み変数}{85}{subsection.9.5.2}
+\contentsline {subsection}{\numberline {9.5.1}定義済み変数}{84}{subsection.9.5.1}
 \contentsline {section}{\numberline {9.6}文字列}{85}{section.9.6}
 \contentsline {subsection}{\numberline {9.6.1}文字列の定義方法}{85}{subsection.9.6.1}
 \contentsline {subsection}{\numberline {9.6.2}文字列を取り扱う関数}{86}{subsection.9.6.2}
-\contentsline {section}{\numberline {9.7}式と文}{87}{section.9.7}
+\contentsline {section}{\numberline {9.7}式と文}{86}{section.9.7}
 \contentsline {section}{\numberline {9.8}配列}{88}{section.9.8}
 \contentsline {subsection}{\numberline {9.8.1}配列の基礎}{88}{subsection.9.8.1}
-\contentsline {subsection}{\numberline {9.8.2}配列に関する制御構造}{90}{subsection.9.8.2}
+\contentsline {subsection}{\numberline {9.8.2}配列に関する制御構造}{89}{subsection.9.8.2}
 \contentsline {subsection}{\numberline {9.8.3}配列に関する関数}{91}{subsection.9.8.3}
 \contentsline {paragraph}{\texttt {list()}}{91}{section*.16}
-\contentsline {paragraph}{\texttt {array\textunderscore pop()}と\texttt {array\textunderscore push()}}{92}{section*.17}
-\contentsline {paragraph}{配列のキーと値の存在の判定}{92}{section*.18}
+\contentsline {paragraph}{\texttt {array\textunderscore pop()}と\texttt {array\textunderscore push()}}{91}{section*.17}
+\contentsline {paragraph}{配列のキーと値の存在の判定}{91}{section*.18}
 \contentsline {paragraph}{並べ替え}{92}{section*.19}
 \contentsline {paragraph}{配列からランダムな値を取り出す}{92}{section*.20}
 \contentsline {paragraph}{配列の切り出しと追加}{92}{section*.21}
-\contentsline {section}{\numberline {9.9}関数}{93}{section.9.9}
-\contentsline {subsection}{\numberline {9.9.1}PHPの関数の特徴}{93}{subsection.9.9.1}
-\contentsline {subsection}{\numberline {9.9.2}関数の定義の例}{94}{subsection.9.9.2}
-\contentsline {subsection}{\numberline {9.9.3}可変関数}{96}{subsection.9.9.3}
+\contentsline {section}{\numberline {9.9}関数}{92}{section.9.9}
+\contentsline {subsection}{\numberline {9.9.1}PHPの関数の特徴}{92}{subsection.9.9.1}
+\contentsline {subsection}{\numberline {9.9.2}関数の定義の例}{93}{subsection.9.9.2}
 \contentsline {chapter}{\numberline {第10回}サーバーとのデータのやり取り}{97}{chapter.10}
 \contentsline {section}{\numberline {10.1}サーバーとのデータ交換の基本}{97}{section.10.1}
 \contentsline {section}{\numberline {10.2}スパーグローバルの補足}{99}{section.10.2}

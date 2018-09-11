@@ -2,36 +2,46 @@
 \title{ソフトウェア開発\\第1回目授業}
 \author{平野 照比古}
 \institute{}
-\date{2017/9/22}
+\date{2018/9/287}
 \begin{document}
 \frame{\maketitle}
 %\frame{\tableofcontents}
 \section{受講に関する注意}
 \subsection{授業について}
 \begin{frame}
- \frametitle{授業内容}
+ \frametitle{授業内容 -- 概略}
 \begin{itemize}
- \item 11年度以前の学生に対しては「アルゴリズムとデータ構造」の読み替え
-       科目
- \item JavaScript を通常の計算機言語として利用するための解説を行う。
+ \item JavaScript を通常の計算機言語として利用するための解説を10回の講義
+       で行う。
+ \item 残りの授業はシステム開発のケーススタディとする。
  \item 進度が今までのプログラミングの授業より早いので復習をよくすること。
  \item パソコンを授業に持参す必要がある場合はその旨、前回の授業で指示
        する。
 \end{itemize}
 \end{frame}
 \begin{frame}
- \frametitle{授業内容(続き)}
+ \frametitle{授業内容 -- 復習用課題}
 \begin{itemize}
-  \item 配布された復習用の課題は用紙に解答を直接記入するか、印刷したものを添付して次
+   \item 配布された復習用の課題は用紙に解答を直接記入するか、印刷したものを添付して次
         回の授業の前日の木曜日10時までに6階の平野のレポートボックスに提
         出
- \item 復習用課題と同時に配布されるルーブリック評価表も自己評価を付けて
+ \item 復習用課題と同時に配布されるルーブリック評価表も{\bfseries 自己評価を付けて}
        提出
- \item 復習課題とそのルーブリック評価表は次回の授業の開始時に添削、評価をして返却する。
- \item 復習用課題は10回程度を予定している。成績評価の40\%を占める。
-\item 最終回の授業に試験を行う。成績評価の60\%を占める。
+ \item レポートの内容はルーブリック評価表の「標準的」の項目を参照するこ
+       と。
+ \item レポート課題に関して(必須)が付いているものは必ず解答すること。
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{授業内容 -- その他}
+\begin{itemize}
+ \item 復習課題とそのルーブリック評価表は次回の授業の開始時に添削、評価
+       をしたものを返却する。
+ \item 復習課題の提出方法はメール提出に変更する場合もある。
+ \item 復習用課題のレポート評価は成績評価の60\%を占める。
+\item 最終回の授業に試験を行う。成績評価の40\%を占める。
  \item 配布資料等は\texttt{http://www.hilano.org/hilano-lab}で公開する予
-       定
+       定である。
 \end{itemize}
 \end{frame}
 \subsection{参考図書}
@@ -82,9 +92,9 @@
      PHP入門の続きとサーバーとのデータ交換の基礎\\\hline
  第11回&jQuery \newline
      DOMの処理を簡単にするライブラリーの紹介\\   \hline
- 第12回&JavaScriptライブラリーの配布\newline
-     jQueryのコードの短縮化、Webサイトの効率化 \\\hline
- 第13回&XMLファイルの処理\\\hline
+ 第12回&XMLファイルの処理\newline
+     JavaScript と PHP によるXMLファイルの処理の例\\\hline
+ 第13回&クラスの例\\\hline
  第14回&システム開発のヒント\\\hline
  第15回&最終試験と解説\\ \hline
 \end{tabular}
@@ -96,9 +106,9 @@
  \frametitle{JavaScriptの実行方法}
  最近のブラウザはJavaScriptの統合環境を提供している。
  \begin{itemize}
-  \item Opera の開発者用ツール、FireFoxのWeb開発、Chromeのデベロッパーツー
-ル、Internet Explorer の開発者ツールなどはJavaScriptにおけるプログラミン
-グにおいてデバッグなどの統合環境を提供している。
+  \item Chromeのデベロッパーツー
+ル、FireFoxのWeb開発、Internet Explorer の開発者ツールなどはJavaScriptに
+        おけるプログラミングにおいてデバッグなどの統合環境を提供
   \item これらのツールは「F12」
 または「Control+Shift+I」というショートカットキーで表示、非表示ができる。
   \item このときに表示されるタブの内容は名前が
@@ -112,8 +122,10 @@
 ドが導入
  \item このモードでは従来見つけにくい単純なバグがエラーとな
 る
- \item プログラムを\Strict にするためには先頭に\Verb+"use strict;"+
+ \item プログラムを\Strict にするためにはプログラムの先頭に\Verb+"use strict";+
        を記述
+ \item 関数の定義の直後に\Verb+"use strict";+を記述するとその関数内は
+       \Strict になる。
 \end{itemize}
 \end{frame}
 \begin{frame}[containsverbatim]

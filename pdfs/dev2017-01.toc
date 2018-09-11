@@ -1,5 +1,0 @@
-\beamer@sectionintoc {1}{受講に関する注意}{2}{0}{1}
-\beamer@subsectionintoc {1}{1}{授業について}{2}{0}{1}
-\beamer@subsectionintoc {1}{2}{参考図書}{4}{0}{1}
-\beamer@sectionintoc {2}{シラバス}{5}{0}{2}
-\beamer@sectionintoc {3}{JavaScriptの実行方法}{7}{0}{3}
