@@ -21,7 +21,7 @@ PersonF.prototype = {
    `${this.hometown}で生まれました。`;
   },
   get age(){
-    let today = new Date();console.log(x);
+    let today = new Date();//console.log(x);
     let age = today.getFullYear() - this.birthday.year;
     if(today.getTime() <
          new Date(today.getFullYear(),

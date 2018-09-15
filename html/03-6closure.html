@@ -21,8 +21,7 @@ let foo = (function () {
 
 function f2() {
   let a = [];
-  let i;
-  for(i=0; i<3; i++) {
+  for(let i=0; i<3; i++) {
     a[i] = function() {
       return i;
     };

@@ -1,0 +1,543 @@
+%\input devHeadMalmoe.tex
+%\input devHeadGoettingen.tex
+\input devHeadCambridgeUS.tex
+\title{ソフトウェア開発\\第6回目授業}
+\author{平野 照比古}
+\institute{}
+\date{2017/10/27}
+\begin{document}
+\frame{\maketitle}
+%\frame{\tableofcontents}
+\section{前回のレポートから}
+\subsection{クラスの\ElmJ{extensible}属性}
+\begin{frame}
+ \frametitle{クラスの\ElmJ{extensible}属性}
+ \begin{itemize}
+	\item \texttt{PersonF}のほうで行っている解答が少しあった。
+	\item \ElmJ{class}のほうで起このうこと
+	\item 結果は同じ
+	\item 関数のほうを\ElmJ{freeze}してもインスタンスは\ElmJ{freeze}されな
+				いことを確認してほしい。
+ \end{itemize}
+\end{frame}
+\subsection{\texttt{Person}クラスの\ElmJ{prototype}}
+\begin{frame}[containsverbatim]
+ \frametitle{\texttt{Person}クラスの\ElmJ{prototype}}
+ \begin{itemize}
+	\item 関数で定義したクラスとクラスによる定義の違いを認識してほしい。
+	\item 両者の比較をしてある解答は非常に少なかった。
+  \item \ElmJ{prototype}内にメソッドが存在する
+  \item インスタンス内の\Verb+__proto__+はコンストラクタの
+        \texttt{prototype}への参照
+\begin{Verbatim}
+>p = new Person("foo",2001,4,1);
+{}
+>p.__proto__=== Person.prototype;
+true
+\end{Verbatim}
+\end{itemize}
+\end{frame}
+\subsection{\ElmJ{WeakMap}を利用したクラス}
+\begin{frame}
+ \frametitle{\ElmJ{WeakMap}を利用したクラス(1)}
+ \begin{itemize}
+	\item \texttt{p.name}の型は\Verb+"string"+なので、インスタンスの値がコ
+				ピーされて戻ってくる。その値を\ElmJ{delete}しているのでメソッド
+				は消去されない。
+	\item \texttt{p.birthday}の戻り値はオブジェクトなので、その参照が返る。
+				したがって、参照先のデータは書き直せてしまう。
+ \end{itemize}
+\end{frame}
+
+\begin{frame}[containsverbatim]
+ \frametitle{\ElmJ{WeakMap}を利用したクラス(2)}
+ \texttt{p.birthday}のプロパティを書き直せなくするには次の方法がある。
+ \begin{itemize}
+	\item コンストラクタ内でオブジェクトを\ElmJ{freeze}する。
+	\item \texttt{birthday}オブジェクトの内容をコピーして返す。
+\end{itemize}
+\begin{Verbatim}[fontsize=\scriptsize]
+  get birthday2(){
+    return {
+      year:properties.get(this).birthday.year,
+      month:properties.get(this).birthday.month,
+      day:properties.get(this).birthday.day};
+ }
+\end{Verbatim}
+\ElmJ{for(... in ...)}では次のように記述する。
+\begin{Verbatim}[fontsize=\scriptsize]
+  get birthday3(){
+    let res = {};
+    let obj = properties.get(this).birthday;
+    for(let key in obj) {
+      res[key] = obj[key];
+    }
+    return res;
+  }
+\end{Verbatim}
+\end{frame}
+ \begin{frame}[containsverbatim]
+  \frametitle{別解}
+  一般に、ある値がまたオブジェクトになっていたらその中もコピーする必要が
+  ある。それをしない方法として、一旦、JSON オブジェクトで文字列に変換し、
+  再びオブジェクトに戻すという方法がある。
+\begin{Verbatim}[fontsize=\small]
+  get birthday4(){
+    return JSON.parse(JSON.stringify(properties.get(this).birthday));
+  }
+\end{Verbatim}
+ \end{frame}
+	\subsection{クラスの継承におけるエラーチェック}
+\begin{frame}
+ \frametitle{クラスの継承におけるエラーチェック}
+ \texttt{Person}クラスで行っている例が目立った。
+\end{frame}
+\subsection{エラーチェックの厳密化}
+\begin{frame}
+ \frametitle{エラーチェックの厳密化}
+\begin{itemize}
+ \item 小数のチェック
+ \item 名前が空
+ \item 年が負
+\end{itemize}
+ などいろいろな工夫があってよい解答がいくつがあった。
+
+ エラーチェックはなるべく早い段階で行うほうが手間がかからないので、その
+ 手段を本日の授業で解説する。
+\end{frame}
+ \section{正規表現}
+ \subsection{正規表現の定義}
+\begin{frame}
+ \frametitle{正規表現とは}
+\begin{itemize}
+ \item 文字列のパターンを表すオブジェクト
+ \item JavaScriptでは
+\texttt{RegExp}クラスが正規表現を表す。
+ \item JavaScript の正規表現は Perl 5の書式に近いもの
+\end{itemize}
+\end{frame}
+\begin{frame}
+ \frametitle{正規表現のオブジェクトの生成}
+\begin{itemize}
+ \item \texttt{RegExp()}コンストラクタで生成できる
+ \item 通常は特殊なリテラルを使って記述する
+ \item 正規表現リテラルは文字列をスラッシュ(\texttt{/})で囲んで記述
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{正規表現のオブジェクトの生成の例}
+\begin{Verbatim}
+let pattern = new RegExp("^s");
+let pattern = /^s/;
+\end{Verbatim}
+\begin{itemize}
+ \item これらの正規表現はどちらも\texttt{s}で始まる文字列を表す
+ \item これを\texttt{s}で始まる文字列にマッチするという。
+ \item 正規表現内の文字には通常の文
+字(ここでは\texttt{s})を表すものと、特別な意味を持つ文字(ここでは
+\Verb+^+)がある。
+\end{itemize}
+\end{frame}
+\subsection{リテラル文字}
+\begin{frame}[containsverbatim]
+ \frametitle{メタ文字}
+正規表現では次の文字は特別な意味を持つ。
+\begin{Verbatim}
+^ $ . * + ? = ! | \ / ( ) [ ] { }
+\end{Verbatim}
+\begin{itemize}
+ \item これらの文字をそのまま文字として使いたい場合はその前にバックスラッシュ
+(\Verb+\+)を付ける。
+ \item 英数字の前にバックスラッシュを付けると別な意味になる
+場合がある
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{正規表現のリテラル文字}
+\begin{center}
+ \begin{tabular}{|c|m{20zw}|}\hline
+  文字&\multicolumn{1}{c|}{意味}\\\hline
+  英数字&通常の文字 \\\hline
+  \Verb+\0+&NULL 文字(\Verb+\u0000+) \\ \hline
+  \Verb+\t+& タブ(\Verb+\u0009+)\\ \hline
+  \Verb+\n+& 改行(\Verb+\u000A+)\\ \hline
+  \Verb+\v+& 垂直タブ(\Verb+\u000B+)\\ \hline
+  \Verb+\f+& 改ページ(\Verb+\u000C+)\\ \hline
+  \Verb+\r+& 復帰(\Verb+\u000D+)\\ \hline
+  \Verb+\xnn+& 16進数 \texttt{nn} で指定されたASCII文字(\Verb+\x0A+ は
+      \Verb+\n+と同じ)\\ \hline
+  \Verb+\uxxxx+&16進数 \texttt{xxxx} で指定されたUnicode 文字
+      (\Verb+\u000D+は\Verb+\r+と同じ)\\ \hline
+  \Verb+\cX+& 制御文字(\Verb+\cC+ は\Verb+\u0003+と同じ)\\ \hline
+ \end{tabular}
+\end{center}
+\end{frame}
+\subsection{文字クラス}
+\begin{frame}[containsverbatim]
+ \frametitle{文字クラス}
+\begin{center}
+ \begin{tabular}{|c|m{20zw}|}\hline
+  文字&\multicolumn{1}{c|}{意味}\\\hline
+  \texttt{[...]}&\texttt{[]}内の任意の1文字\\\hline
+  \Verb+[^...]+& \texttt{[]}内以外の任意の1文字\\ \hline
+  \Verb+.+& 改行(Unicodeの行末文字)以外の任意の1文字\Verb+[^\n]+と同じ\\ \hline
+  \Verb+\w+& 任意の単語文字。\Verb+[A-Za-z0-9]+と同じ\\ \hline
+  \Verb+\W+& 任意の単語文字以外の文字。\Verb+[^A-Za-z0-9]+と同じ\\ \hline
+  \Verb+\s+& 任意のUnicode空白文字\\ \hline
+  \Verb+\S+& 任意のUnicode空白文字以外の文字\\ \hline
+  \Verb+\d+& 任意の数字。\Verb+[0-9]+ と同じ\\ \hline
+  \Verb+\D+&任意の数字以外の文字。\Verb+[^0-9]+ と同じ\\\hline
+  \Verb+\[\b]+& リテラルバックスペース\\ \hline
+ \end{tabular}
+\end{center}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{文字クラスの例}
+\begin{itemize}
+ \item \Verb+\d\d+は2桁の10進数にマッチ
+ \item 先頭に\Verb+0+が来てもよい。
+ \item 先頭に\Verb+0+が来る場合を除くのであれば\Verb+[1-9]\d+となる。
+\end{itemize}
+一般には、同じパターンの繰り返しが必要になることが多い。
+\end{frame}
+\subsection{繰り返しの指定}
+\begin{frame}[containsverbatim]
+ \frametitle{繰り返しの指定}
+\begin{center}
+ \begin{tabular}{|c|m{20zw}|}\hline
+  文字&\multicolumn{1}{c|}{意味}\\\hline
+\Verb+{m,n}+&直前の項目の\texttt{m}回から\texttt{n}回までの繰り返し\\\hline
+\Verb+{m,}+&直前の項目の\texttt{m}回以上の繰り返し\\\hline
+\Verb+{m}+&直前の項目の\texttt{m}回の繰り返し\\\hline
+\Verb+?+&直前の項目の0回(なし)か1回の繰り返し。\Verb+{0,1}+と同じ\\\hline
+\Verb-+-&直前の項目の1回以上の繰り返し。\Verb+{1,}+と同じ\\\hline
+\Verb+*+&直前の項目の0回以上の繰り返し。\Verb+{0,}+と同じ\\\hline
+\end{tabular}
+\end{center}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{繰り返しの指定の例}
+\begin{itemize}
+ \item 4桁の10進数のパターンは\Verb+\d\d\d\d+
+ \item 繰り返しを使うと\Verb+\d{4}+
+ \item 1桁以上の10進数は\Verb-\d+-
+ \item 先頭が\texttt{0}でないようにすると、\Verb+[1-9]\d*+
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{貪欲な繰り返し}
+\begin{itemize}
+ \item 通常、正規表現において繰り返しはできるだけ長く一致するように繰り返しが行
+われる。
+ \item これを貪欲な繰り返しという。
+ \item \Verb+"aaaaab"+という文字
+列に対し、正規表現 \Verb-/\a+/- がマッチする部分は \Verb+aaaaa+ の長さ5
+の文字列
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{非貪欲な繰り返し}
+\begin{itemize}
+ \item できるだけ短い文字列のマッチで済ませる繰り返しを、非貪欲な繰
+り返しという
+ \item これを指定するには繰り返し指定の後に\Verb+?+を付ける。
+ \item \Verb-??-、\Verb-+?-、\Verb-*?-、\Verb-{1,5}?- などのように記述す
+       る。
+ \item \Verb+"aaaaab"+という文字
+列に対し、正規表現 \Verb-/\a+?/- がマッチする部分は \Verb+a+ の長さ1
+の文字列
+ \item 正規表現 \Verb-/\a+?b/- がマッチする部分は全体の
+\Verb+"aaaaab"+
+ \item これはマッチが開始する位置が、この文字列の先頭か
+ら始まるためである。
+\end{itemize}
+\end{frame}
+\subsection{グループ化と参照}
+\begin{frame}[containsverbatim]
+ \frametitle{選択、グループ化、参照}
+\begin{center}
+ \begin{tabular}{|c|m{20zw}|}\hline
+  文字&\multicolumn{1}{c|}{意味}\\\hline
+\Verb+|+&この記号の左右のどちらかを選択する\\\hline
+\Verb+(...)+&正規表現のグループ化をする。これにより、
+      \Verb-*-,\Verb-+-,\Verb-|-などの対象がグループ化されたものにな
+      る。また、グループに一致した文字列を記憶して後で参照できる。\\\hline
+\Verb+(?:..)+&グループ化しか行わない。一致した文字列を記憶しない。\\\hline
+\Verb+\n+&グループ番号\Verb+n+で指定された部分表現に一致する。グループ番
+      号は左から数えた\Verb+(+の数である。ただし、\Verb+(?+は数えない。\\\hline
+\end{tabular}
+\end{center}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{選択、グループ化の例}
+\begin{itemize}\upshape
+ \item \Verb-(J|j)ava(S|s)cript- は 
+\Verb-JavaScript-, 
+\Verb-Javascript-,
+\Verb-javaScript-,
+\Verb-javascript- の4つにマッチ
+ \item \Verb/[+-]?\d+/ は符号つき(なくてもよい)10進数とマッチする。
+ \item \Verb/[+-]?/により、符号がなくてもよい
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{一致位置の指定}
+\begin{center}
+ \begin{tabular}{|c|m{20zw}|}\hline
+  文字&\multicolumn{1}{c|}{意味}\\\hline
+\Verb+^+&文字列の先頭\\\hline
+\Verb+$+&文字列の最後\\\hline
+\Verb+\b+&単語境界。\Verb+\w+と\Verb+\W+の間の位置。\Verb+[\b]+との違い
+      に注意\\\hline
+\Verb+\B+&単語境界以外\\\hline
+\Verb+(?=p)+&後に続く文字列が\Verb+p+に一致することが必要。\\\hline
+\Verb+(?!p)+&後に続く文字列が\Verb+p+に一致しないことが必要。\\\hline
+\end{tabular}
+\end{center}
+最後の2つは \Verb+Java+ にはマッチさせたいが \Verb+JavaScript+ にはマッ
+チさせたくないときなどに使用できる。
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{フラグ}
+\begin{center} 
+ \begin{tabular}{|c|m{20zw}|}\hline
+  文字&\multicolumn{1}{c|}{意味}\\\hline
+\Verb+i+&大文字と小文字を区別しない\\\hline
+\Verb+g+&グローバル検索をする。初めに一致したものだけでなくすべてを検索
+      する。\\\hline
+\Verb+m+&複数行モードにする。\Verb+^+は文字列の先頭だけでなく、行の先頭
+      に,、\Verb+$+は文字列の末尾と行の末尾に一致する。\\\hline
+\end{tabular}
+\end{center}
+\begin{itemize}
+ \item \Verb+g+のフラグはパターンマッチした部分文字列を置き換えるメソッド内でし
+か意味を持たない。
+ \item フラグを書く位置は正規表現リテラルを表す\Verb+/..../+ の後に書く。
+ \item たとえば、\Verb+/javascript/ig+ である。これは \Verb+JaVaSCRipt+
+       などにマッチする。
+\end{itemize}
+\end{frame}
+\section{文字列のパターンマッチングとその利用}
+\subsection{\protect\texttt{String}オブジェクトのメソッド}
+\begin{frame}[containsverbatim]
+ \frametitle{\protect\texttt{String}オブジェクトのメソッド}
+\begin{center}
+ \begin{tabular}{|c|c|m{18zw}|}\hline
+  文字&\multicolumn{1}{c|}{引数}&\multicolumn{1}{c|}{意味}\\\hline
+\Verb+match()+&正規表現&引数の正規表現にマッチした部分を文字列の配列で返
+	  す。見つからない場合は\Verb+null+が変える。
+          \Verb+g+フラグがない場合の補足は下の例を参照。\\\hline
+\Verb+replace()+&\multicolumn{1}{m{6zw}|}{正規表現、\newline 置換テキスト}&\Verb+g+フラグがあれば一致した部
+	  分すべてを、ない場合は、はじめのところだ
+	  け置換した文字列を返す。\newline
+          置換文字列の中でグループ化した部分文字列を
+	  \Verb+$1+,\Verb+$2+,...で参照できる。\\\hline
+\Verb+search()+&正規表現&正規表現に一致した位置を返す。見つからない場合
+	  は$-1$を返す。\Verb+g+フラグは無視される。\\\hline
+\Verb+split()+&\multicolumn{1}{m{5zw}|}{正規表現、\newline 分割最大数}&正規表現のある位置で文字列を分割する。
+	  2番目の引数はオプション\\\hline
+\end{tabular}
+\end{center}
+\end{frame}
+\subsection{メソッドの実行例}
+\begin{frame}[containsverbatim]
+ \frametitle{メソッドの実行例}
+４桁の数字にマッチする正規表現オブジェクトを作成する。
+\begin{Verbatim}
+let ex = /\d\d\d\d/;
+undefined
+\end{Verbatim}
+この正規表現に対し、それぞれのメソッドを適用させる。
+\begin{Verbatim}
+>"20144567".search(ex);
+0
+>"20144567".match(ex);
+["2014"]
+>"20144567".replace(ex,"AA");
+"AA4567"
+\end{Verbatim}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{実行例の解説}
+\begin{itemize}
+ \item 検索対象の文字列はすべて数字からなるのでこの正規表現にマッチする
+       位置は$0$である。
+ \item マッチした文字列は先頭から4文字
+ \item \Verb+"AA"+で置き換えると先頭の４文字が置き換えられる。
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{メソッドの実行例--\protect\texttt{g}フラグ}
+正規表現に\Verb+g+フラグをつけて同じようなことをする。
+\begin{Verbatim}
+>let exg = /\d\d\d\d/g;
+undefined
+>"20144567".search(exg);
+0
+>"20144567".match(exg);
+["2014", "4567"]
+>"20144567".replace(exg,"AA");
+"AAAA"
+\end{Verbatim}
+\Verb+g+フラグがあるので\Verb+match()+や\Verb+replace()+が複数回実行されているこ
+ とがわかる。
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{マッチした文字列の利用}
+\begin{Verbatim}
+>"aaa bbb".replace(/(\w*)\s*(\w*)/,"$2,$1");
+"bbb,aaa"
+\end{Verbatim}
+\begin{itemize}
+ \item 英数字からなる2つの文字列(\Verb+(\w*)+)の順序を入れ替えて、その間に
+ \Verb+,+を挿入する。
+ \item \Verb+$1+ は文字列 \Verb+aaa+に、
+\Verb+$2+ は文字列 \Verb+bbb+にマッチしている。
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{文字列のあとを参照}
+文中の \Verb+Java+ を \Verb+JavaScript+ に変えるものである。
+
+\Verb+JavaScript+ を{\Verb+JavaScriptScript+} にしないために
+\Verb+(?!p)+を用いる。
+\begin{Verbatim}
+>"JavaとJavaScriptは全く違う言語です。".
+  replace(/Java(?!Script)/,"JavaScript");
+"JavaScriptとJavaScriptは全く違う言語です。"
+\end{Verbatim}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{貪欲さと非貪欲さの確認}
+\begin{Verbatim}
+>"aaaaab".match(/a+/);
+["aaaaa"]
+>"aaaaab".match(/a+?/);
+["a"]
+\end{Verbatim}
+\begin{itemize}
+ \item 上の例は貪欲なので\Verb+a+の繰り返しの部分を最大限の位置でマッチ
+ \item 下の例は非貪欲なので最小限の長さの部分にしかマッチしていない
+\end{itemize}
+\begin{Verbatim}
+>"aaaaab".match(/a+?b/);
+["aaaaab"]
+\end{Verbatim}
+\begin{itemize}
+ \item \Verb+ab+ にマッチしていない
+ \item 初めに先頭の\Verb+a+にマッチしたので\Verb+b+が来るところまでマッチ
+\end{itemize}
+
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{前方参照}
+\begin{Verbatim}
+>"abcdbcc".search(/((.)\2).*\1/);
+-1
+\end{Verbatim}
+\begin{itemize}
+ \item \Verb+(.)+の部分は左かっこが２番目にあるので、\Verb+\2+で参照でき
+       る。したがって、\Verb+(.)\2+は同じ文字が２つ続いていることを意味
+       する。この部分全体が再び\Verb+()+でくくられているので、その部分は
+       \Verb+\1+で参照できる。
+ \item したがってこの正規表現は、同じ文字の繰り返しが２回現れる文字列に
+       マッチする。
+ \item 文字列\Verb+"abcdbcc"+には同じ文字が連続して現れるのが末尾の
+       \Verb+"cc"+しかないので、この文字列にはマッチしない(戻り値が$-1$
+       である)。
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{前方参照(2)}
+\begin{Verbatim}
+>"abccbcc".search(/((.)\2).*\1/);
+2
+>"abccbcc".match(/((.)\2).*\1/);
+["ccbcc", "cc", "c"]
+\end{Verbatim}
+\begin{itemize}
+ \item この文字列では\Verb+cc+という同じ文字を繰り返した部分が2か所ある
+       のでマッチする。
+ \item はじめの\Verb+cc+の位置が先頭から$2$番目なので戻
+       り値が$2$
+ \item \Verb+match()+を行うと、\Verb+cc+ではさまれた部分文字列が戻り値の
+       配列の先頭に、以下、\Verb+\1+と\Verb+\2+にマッチした部分文字列が
+       配列に入っている。
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{前方参照(3)}
+\begin{Verbatim}
+>"abccbcckkccaaMMaa".match(/((.)\2).*\1/);
+["ccbcckkcc", "cc", "c"]
+\end{Verbatim}
+\begin{itemize}
+ \item この例では\Verb+cc+が部分文字列に3か所現れている。
+ \item マッチした部分は1番は
+ じめと3番目の\Verb+cc+にはさまれた部分である。これは貪欲なマッチのため
+       である。
+ \item この文字列には\Verb+aa+ではさまれた部分文字列も存在するが、
+       \Verb+g+フラグが付いていないのではじめにマッチしたものしか戻っ
+       てこない。
+ \item そのあとの配列には\Verb+\1+と\Verb+\2+が入っている。
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{前方参照(4)}
+\begin{Verbatim}
+>"abccbcckkccaaMMaa".match(/((.)\2).*\1/g);
+["ccbcckkcc", "aaMMaa"]
+\end{Verbatim}
+\Verb+g+フラグを付けるとマッチした部分文字列の配列が戻ってくるが、フラグ
+ がなかったときのように\Verb+\1+などの情報は得られない。
+\begin{Verbatim}
+>"abccbcckkccaaMMaa".match(/((.)\2).*?\1/g);
+["ccbcc", "aaMMaa"]
+\end{Verbatim}
+この例は非貪欲でグローバルなマッチである。非貪欲にすると一番目と2番目の
+ \Verb+cc+ にはさまれた部分と \Verb+aa+ ではさまれた部分がそれぞれマッチする。
+\end{frame}
+\iffalse\else
+\begin{frame}[containsverbatim]
+\frametitle{\protect\texttt{split()}における正規表現の利用(1)}
+\begin{Verbatim}
+>" 1, 2 , 3   ,  4".split(/\s*,\s*/);
+[" 1", "2", "3", "4"]
+\end{Verbatim}
+\begin{itemize}
+ \item $0$個以上の空白、\Verb+,+$0$個以上の空白で分割
+ \item \Verb+1+の前にある空白が除去できていない
+\end{itemize} 
+\end{frame}
+\fi
+\iffalse\else
+\begin{frame}[containsverbatim]
+\frametitle{\protect\texttt{split()}における正規表現の利用(2)}
+\begin{Verbatim}
+>" 1, 2 , 3   ,  4".split(/\W+/);
+["", "1", "2", "3", "4"]
+\end{Verbatim}
+\begin{itemize}
+ \item 非単語文字の1個以上の並びで分割
+ \item 先頭の空白で分割されているので、
+ 分割された初めの文字列はから文字列\Verb+""+
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{\protect\texttt{split()}における正規表現の利用(3)}
+\begin{Verbatim}
+>" 1, 2 , 3   ,  4".replace(/\s/,"").split(/\W+/);
+["1", "2", "3", "4"]
+\end{Verbatim}
+先頭の分割文字列が空文字になるのを防ぐために、初めに空白文字を空文字に置
+ き換えて(取り除いて)いる。その文字列に対し非単語文字列で分割しているの
+ で空文字が分割結果に表れない。
+\end{frame}
+\fi
+\begin{frame}[containsverbatim]
+ \frametitle{今日の演習}
+正規表現に関する演習を行います。
+\end{frame}
+\end{document}
+
+
