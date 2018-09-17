@@ -5,18 +5,7 @@
 <title>クラスの例</title>
 <script type="text/ecmascript">
 //<![CDATA[
-class Person{
-  constructor(){
-    this.name = "foo";
-    this.birthday = {
-      year : 2001,
-      month : 4,
-      day : 1
-    };
-    this["hometown"] = "神奈川";
-  }
-}
-function Person2(name, year, month, day, hometown="神奈川"){
+function Person(name, year, month, day, hometown="神奈川"){
     this.name = name;
     this.birthday = {
       year : year,
