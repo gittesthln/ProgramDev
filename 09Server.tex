@@ -1,9 +1,35 @@
 %-*- coding: utf-8 -*-
 \chapter{PHPの超入門}
 \section{Web サーバーの基礎知識}
+\subsection{HTTPプロトコルの基礎}
+ Web ページとサーバー間の通信には \texttt{http}(hypertext transfer
+ protocol) または \texttt{https} が
+ 用いられる。これらのプロトコルには次のようなメソッドが定義されている。
+	\begin{table}[htb]
+	 \caption{httpのよく使われるメソッド}
+ \begin{center}
+	\begin{tabular}{|c|l|}\hline
+	 \ElmJ{GET} & 指定されたリソースを要求する。\\\hline
+	 \ElmJ{POST}& 指定されたURIのリソースを作成する。\\ \hline
+	 \ElmJ{PUT}& 指定されたリソースを置き換えたり、集めたりする。\\ \hline
+	 \ElmJ{DELETE}& 指定したリソースを消去する。\\ \hline
+	 \ElmJ{HEAD}& 指定したリソースのHTTPヘッダーの部分だけ要求する。\\ \hline
+	\end{tabular}
+ \end{center}
+	\end{table}
+
+	後で見るように、これらのメソッドの定義を無視してサーバーのデータを操作
+	したり、クライアント側に返すことも可能である。サーバーと
+	クライアント側のやり取りを提供するWebサービス(Web API)ではメソッドに即
+	した設計が求められている。このような設計思想で作られた API は RESTfull
+	なAPIと呼ばれているようである\footnote{
+	\texttt{https://ja.wikipedia.org/wiki/Representational\textunderscore
+	State\textunderscore Transfer}}。
 \subsection{サーバーの重要な設定項目}
-Web サーバーは hypertext transfer protocol(HTTP) を利用して、クライアン
-トプログラム(Webブラウザなど)からの要求を処理する。Apache はこのサービスを提供す
+Web サーバーは HTTPプロトコルを利用して、クライアン
+トプログラム(Webブラウザなど)からの要求を処理する。
+%
+Apache はこのサービスを提供す
 るものとして有名である。Apache の設定ファ
 イル \texttt{httpd.conf} の中で設定される重要な項目は
 次のとおりである。
@@ -28,9 +54,10 @@ IANA(Internet Assigned Numbers Authority)は DNS Root, IPアドレスやイン�
  \item ドキュメントルート：Apache では Webサーバーに直接要求できるファイルはこのフォルダ
        (ディレクトリ)の下にあるものだけである。
 \end{itemize}
- なお、HTTPのSystem ポート番号は80番となっている\footnote{ポート番号の一覧は次のところにある。\\
+ なお、HTTPのポート番号は80番、HTTPSのポート番号は443番となっている\footnote{ポート番号の一覧は次のところにある。\\
 %
  \texttt{https://www.iana.org/assignments/}\texttt{service-names-port-numbers/service-names-port-numbers.xhtml}}。
+
 
 \subsection{CGI}
 Common Gateway Interface(CGI)とはWebコンテンツを動的に生成する標

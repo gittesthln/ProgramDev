@@ -1,4 +1,5 @@
 \section{サーバーとのデータ交換の基本}
+\iftrue
 Webページにおいてサーバーにデータを送る方法には\texttt{POST}と
 \texttt{PUT}の2通りの方法がある。
 \begin{Exec}\upshape\label{dataexchange}
@@ -26,14 +27,18 @@ HTMLの要素に対しては次のことを行う。
 \texttt{action}属性で指定されたプログラムが呼び出される。ここではWebペー
  ジと同じ場所にある\texttt{09sendData.php}が呼び出される。このファイル
  のリストは次の通りである。
-\LISTN{09sendData.php}{1}{last}{\normalsize}
+ \LISTN{09sendData.php}{1}{last}{\normalsize}
+ \newcommand{\POST}{\texttt{\textdollar\textunderscore POST}}
 \begin{itemize}
  \item 2行目から10行目のヒアドキュメント形式でHTML文書の初めの部分を
        出力している。
  \item \Verb+method="POST"+で呼び出されたときには\texttt{form}要素内の
-       \texttt{name}属性が指定されたものの値は\texttt{name}属性の属性値
-       をキーとしてスーパーグローバル\Verb+$_POST+の連想配列として値が得
-       られる。
+       \texttt{name}属性が指定されたものの値が\texttt{name}属性の属性値
+       をキーとしてスーパーグローバル\POST の連想配列として値が得
+       られる\footnote{スーパーグローバル\POST に格納されるデータ
+       はフォームの中のデータである。生の\POST データを得るには関数
+       \texttt{file\textunderscore get\textunderscore contents}でファイ
+       ル名に\texttt{php://input}を指定する。}。
  \item 11行目から13行目でそれらの値を\texttt{table}要素内の要素として出
        力している。
 \end{itemize}
@@ -165,3 +170,5 @@ HTML5から独立した規格である Web Storage には \ElmJ{localStoarage} �
 タの形式は文字列である。構造化されたデータはJSON形式で保存するのがよいで
 あろう。
 \input 17dev10-04.tex
+\else
+\fi
