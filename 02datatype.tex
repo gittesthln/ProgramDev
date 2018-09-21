@@ -5,7 +5,7 @@ JavaScript の方には大きく分けて\KeyItem{プリミティブ型}と\KeyI
 ミティブ型}の2種類がある。変数や値の型を知りたいときは\ElmJ{typeof} 演算子を使う。
 \subsection{プリミティブデータ型}
 表\ref{primitivedata}はJavaScriptにおける\KeyItem{プリミティブデータ型}の一覧であ
-る。
+る。\\[-1.3\baselineskip]
  \begin{table}[ht]
   \caption{プリミティブデータ型}\label{primitivedata}
 \begin{center}
@@ -15,7 +15,7 @@ JavaScript の方には大きく分けて\KeyItem{プリミティブ型}と\KeyI
  \ElmJ{String} & \KeyItem{文字列型}、文字のデータ型はない。ダブルク
      オート(\Verb+"+)か%" 
      シングルクオート(\Verb+'+)で囲む。\ES では文字列内に式
-     の結果を埋め込むことができるテンプレートリテラル形式(バッククオート
+     の値を埋め込み可能なテンプレートリテラル形式(バッククオート
      \Verb+`+ではさむ\footnotemark{})が追加された。\\ \hline
  \ElmJ{Boolean}& \ElmJ{true} か \ElmJ{false} の値のみ\\ \hline
  \ElmJ{undefined} & 変数の値が定義されていないことを示す\\ \hline
@@ -23,9 +23,9 @@ JavaScript の方には大きく分けて\KeyItem{プリミティブ型}と\KeyI
      ト\\ \hline
 \end{tabular}
 \end{center}
- \end{table}
+ \end{table}\vspace*{-1\baselineskip}
 \footnotetext{キーボードの\Verb+@+の上にある文字}
-\subsubsection{Number型}
+\paragraph{Number型}
 数を表現する方法(数値リテラル)としては次のものがある。
 \begin{itemize}
  \item{\bfseries \KeyItem{整数リテラル}} 10進整数は通常通りの形式である。
@@ -53,7 +53,8 @@ JavaScript の方には大きく分けて\KeyItem{プリミティブ型}と\KeyI
        文字列を数値に変換できない場合や \Verb+0/0+ などの結果としてこの値が設定さ
        れる。
 \end{itemize}
-\subsubsection{String型}
+なお、計算の途中でこれらの値が得られてもプログラムの実行は中断されない。
+\paragraph{String型}
 文字列は\Verb+"+ または \Verb+'+ ではさむ。%"
 1文字だけの文字の型はない。テンプレートリテラルは文字列
 の中に式の値を埋め込むことができる。テンプレートリテラルはバッククオート
@@ -73,30 +74,35 @@ JavaScript の方には大きく分けて\KeyItem{プリミティブ型}と\KeyI
  \begin{tabular}{|c|m{28zw}|}\hline
  メンバー&\multicolumn{1}{c|}{説明} \\\hline
   \ElmJP{length} &文字列の長さ\\ \hline
-\ElmJF{indexOf}{needle,start}& 与えられた文字列内に\Verb+needle+が
+\ElmJF{indexOf}{needle,start}& 文字列内に\Verb+needle+が
       初めて現れる位置を返す。\Verb+start+の引数があれば、その位
       置以降から調べる。見つからない場合は$-1$を返す。\\\hline
-\ElmJF{lastIndexOf}{needle,start}& 与えられた文字列内に\Verb+needle+が
-      一番最後に現れる位置を返す。\Verb+start+の引数があれば、指定された
+%\ElmJF{indexOf}{needle,start}& 文字列内で\Verb+start+以降に\Verb+needle+が
+%      初めて現れる位置を返す。\Verb+start+がない場合は先頭から
+%      調べる。見つからない場合は$-1$を返す。\\\hline
+\ElmJF{lastIndexOf}{needle,start}& 文字列内に\Verb+needle+が
+      一番最後に現れる位置を返す。\Verb+start+の引数があれば、その
       位置以前から調べる。見つからない場合は$-1$を返す。\\\hline
   \ElmJF{split}{separator,limit}&\Verb+separator+の文字列(ま
-      たは正規表現)で与え
-      られた文字列を分割し、配列で返す。\Verb+separator+の部分は返されない。
+      たは正規表現)で
+      文字列を分割し、配列で返す。\Verb+separator+の部分は返されない。
       2番目の引数はオプションで、分割する最大数を返す。\\ \hline
-  \ElmJF{substring}{start,end}&与えられた文字列の\Verb+start+から
+  \ElmJF{substring}{start,end}&文字列の\Verb+start+から
       \Verb+end+の前の位置までの部分文字列を返す。\\ \hline
-  \ElmJF{slice}{start,end}&与えられた文字列の\Verb+start+から
+  \ElmJF{slice}{start,end}&文字列の\Verb+start+から
       \Verb+end+の前の位置までの部分文字列を返す。値が負のときは文字列
       末尾から数えた位置を表す。\\ \hline
 \end{tabular}
 \end{center}
 \end{table}
+%
+\newpage
 \input prob02-01string.tex
-\subsubsection{Bool型}
+\paragraph{Bool型}
 \ElmJ{true} と \ElmJ{false} の2つの値をとる。この2つは予約語である。論理
 式の結果としてこれらの値が設定されたり、論理値が必要なところでこれらの値
 に設定される。詳しくは\ref{operator}を参照のこと。
-\subsubsection{\protect\ElmJ{undefined}と\protect\ElmJ{null}}
+\paragraph{\protect\ElmJ{undefined}と\protect\ElmJ{null}}
 \ElmJ{undefined}は値が存在しないことを示す読み出し可能な変数である。
 変数が宣言されたのに値が設定されていないときの初期値や、戻り値が定義され
 ていない関数の戻り値はこの値になる。
@@ -264,7 +270,7 @@ Math.floor(1/3) =>0
 \end{Verbatim}
 \end{itemize}
 \subsection{論理演算子と比較演算子}
-\subsubsection{論理演算子}
+\paragraph{論理演算子}
 Boolean 型に対して使用できる演算子は次の3つである。
 \begin{itemize}
  \item \Verb+!+ 論理否定
@@ -288,7 +294,9 @@ Boolean 型に対して使用できる演算子は次の3つである。
 \begin{Verbatim}
 let a=1; true ||(a=3); 
 \end{Verbatim}
-\subsubsection{比較演算子}
+%\ \vspace*{-2\baselineskip}
+\paragraph%\subsubsection
+{比較演算子}
 比較演算子は比較の結果、Boolean の値を返す演算である。C言語と同様の比較
 演算子が使用できる。\texttt{>,>=,<,<=}などがある。等しいことを比較するためには
 \Verb+==+(等価比較演算子)のほかに 型変換を伴わない等価比較演算子
@@ -392,7 +400,7 @@ Mon Nov 02 2015 10:10:20 GMT+0900 (東京 (標準時))
 \input prob02-04Date.tex
 %
 \clearpage
-\section{第2回目復習課題}
+%\section{第2回目復習課題}
 %
 \Answertrue
 %

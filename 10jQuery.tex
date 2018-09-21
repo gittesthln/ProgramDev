@@ -55,8 +55,8 @@ Network)を利用する方法がある。CDNとはライブラリーをネット
 \newcounter{Func}
 \newcommand{\FuncRef}[1]{%
 \refstepcounter{Func}\label{#1}({\bfseries 機能\arabic{Func}})}
-\section{jQueryの基本}
-\subsection{jQuery()関数とjQueryオブジェクト}
+%\section{jQueryの基本}
+\section{jQuery()関数とjQueryオブジェクト}
 jQueryライブラリーは\texttt{jQuery()}というグローバル関数を一つだけ定義
 する。この関数の短縮形として、\texttt{\$}というグローバル関数も定義する。
 jQuery() 関数はコンストラクタではない。
@@ -86,7 +86,7 @@ jQuery() 関数の呼び出し方は引数の型により返される要素群�
 
        引数の関数はドキュメントがロードされ、DOMが操作で可能になった時に実行される。
 \end{itemize}
-\subsection{jQueryオブジェクトのメソッド}
+\section{jQueryオブジェクトのメソッド}
 jQueryオブジェクトに対する多くの処理はHTMLの属性やCSSスタイルの値を設定
 したり、読み出したりすることである。
 \begin{itemize}
