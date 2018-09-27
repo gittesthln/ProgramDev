@@ -1,24 +1,26 @@
 \input devHeadDarmstadt.tex
-\newcommand{\ElmJ}{\texttt}
+%\newcommand{\ElmJ}{\texttt}
 \title{ソフトウェア開発\\第2回目授業}
 \author{平野 照比古}
 \institute{}
-\date{2017/9/29}
+\date{2018/10/5}
 \begin{document}
 \frame{\maketitle}
 %\frame{\tableofcontents}
-\section{前回のレポートから}
+\section{前回のレポートから}\subsection{}
 \begin{frame}[containsverbatim]
- \frametitle{レポートの形式}
+ \frametitle{レポートの形式(再掲)}
  \begin{itemize}
   \item 一番上に復習問題の用紙を置き、全体をステープラで止める。表紙は不
         要。
   \item 問題の結果をそのまま手書きでもよい。
-  \item キャプチャ亜画像を印刷したときは、関係する説明文や考察も同じ用紙
+  \item キャプチャや画像を印刷したときは、関係する説明文や考察も同じ用紙
         に記述すること。
-  \item ブラウザを全画面表示してものをキャプチャしないこと。必要な結果が
-        入る範囲で表示のサイズを決めること。
-  \item ルーブリック評価は点数を除いて必ず自己評価をすること。採点結果と
+  \item ブラウザを全画面表示してものをキャプチャしないこと。アクティブウィ
+        ンドウだけのキャプチャすること。
+  \item 必要な結果が入る範囲でウィンドウの表示のサイズを決めること。また、
+        キャプチャ内の文字が読める程度にすること。
+  \item ルーブリック評価は点数も含めて必ず自己評価をすること。採点結果と
         の差がなくなるようにするためである。
  \end{itemize}
 \end{frame}
@@ -106,12 +108,13 @@ JavaScriptで扱う数は64ビット浮動小数点形式
        文字列を数値に変換できない場合や \Verb+0/0+ などの結果としてこの値が設定さ
        れる。
 \end{itemize}
+ 計算の途中でこれらの値が得られてもプログラムの実行は中断されない。
 \end{frame}
 \begin{frame}[containsverbatim]
  \frametitle{String型}
 文字列に関する情報や操作には次のようなものがある。
 \begin{center}
- \begin{tabular}{|c|m{12zw}|}\hline
+  \begin{tabular}{|c|m{14zw}|}\hline
  メンバー&\multicolumn{1}{c|}{説明} \\\hline
   \Verb+length+ &文字列の長さ\\ \hline
 \Verb+indexOf(needle,start)+& \Verb+needle+が与えられた文字列内にあ
@@ -120,13 +123,13 @@ JavaScriptで扱う数は64ビット浮動小数点形式
 \Verb+lastIndexOf(needle,start)+& \Verb+needle+が与えられた文字列内にあ
       ればそれが一番最後に現れる位置を返す。\Verb+start+の引数がある場合
       には、指定された位置以前から調べる。見つからない場合は$-1$を返す。\\\hline
-\end{tabular}
+  \end{tabular}
 \end{center}
 \end{frame}
 \begin{frame}[containsverbatim]
  \frametitle{String型}
 \begin{center}
- \begin{tabular}{|c|m{12zw}|}\hline
+ \begin{tabular}{|c|m{14zw}|}\hline
  メンバー&\multicolumn{1}{c|}{説明} \\\hline
   \Verb+split(separator,limit)+&\Verb+separator+で与えられた文字列で与え
       られた文字列を分けて配列で返す。セパレーターの部分は返されない。
@@ -138,16 +141,20 @@ JavaScriptで扱う数は64ビット浮動小数点形式
 \end{frame}
 \begin{frame}[containsverbatim]
  \frametitle{Bool型}
-\Verb+true+ と \Verb+false+ の2つの値をとる。この2つは予約語である。論理
-式の結果としてこれらの値が設定されたり、論理値が必要なところでこれらの値
-に設定される。詳しくは後述する。
+ \begin{itemize}
+  \item \Verb+true+ と \Verb+false+ の2つの値をとる。
+  \item この2つは予約語
+  \item 論理式の結果としてこれらの値が設定されたり、論理値が必要なところ
+        でこれらの値に設定される。
+ \end{itemize}
 \end{frame}
 \begin{frame}[containsverbatim]
  \frametitle{\texttt{undefined}}
-値が存在しないことを示す読み出し可能な変数である。
-
-変数が宣言されたのに値
-が設定されていない場合などはこの値に初期化される。
+ \begin{itemize}
+  \item 値が存在しないことを示す読み出し可能な変数
+  \item 変数が宣言されたのに値が設定されていない場合などはこの値に初期化
+  \item 関数に戻り値を指定しないと気の値
+ \end{itemize}
 \end{frame}
 \begin{frame}[containsverbatim]
  \frametitle{\texttt{null}}
@@ -177,8 +184,9 @@ JavaScriptで扱う数は64ビット浮動小数点形式
  \item 変数名はアルファベットまたは\Verb+_+(アンダースコア)で始まる英数
        字または\Verb+_+で始まる文字列
  \item 大文字と小文字は区別される。
- \item 変数の宣言は \texttt{let} で行う。
- \item 従来の\texttt{var}は問題があるのでこの授業では使用しない。
+ \item 変数の宣言は \texttt{let} または \texttt{const} で行う。
+ \item \texttt{const}による変数の宣言では初期化時の値の変更ができない。
+ \item 従来の宣言方法の\texttt{var}は問題があるのでこの授業では使用しない。
  \item 宣言時に初期化ができる。
  \item 非\Strict のときは変数は宣言をしなくても使用できる。初期化してい
        ない変数を使うとエラーが起こる。詳しくは後述する。
@@ -200,7 +208,7 @@ let b = [1,2,3];
  \Verb+b+ は\Verb+b[0]=1,b[1]=2,b[2]=3+ となる配列で初期化
 \end{frame}
 \begin{frame}[containsverbatim]
- \frametitle{配列に関する注意}
+ \frametitle{配列に関する注意(1)}
 \begin{itemize}
  \item 配列の各要素のデータの型は同じでなくてもよい。
  \item 実行時に配列の大きさを自由に変えられる。
@@ -209,6 +217,41 @@ let b = [1,2,3];
 let a=[1,[2,3,4],"a"];
 \end{Verbatim}
 \end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{配列に関する注意(2)}
+配列の変数の代入は参照
+\begin{Verbatim}
+>let a = [0,1,2,3,4];
+>let b = a;  //別の変数への代入
+>b;
+(5) [0, 1, 2, 3, 4]  // a と同じ内容が表示
+>b[3]= b[3]*10;      // 4番目の要素を10倍 [0, 1, 2, 30, 4]となる
+30
+>a;
+(5) [0, 1, 2, 30, 4] // a も b と同じ値の要素を持つ
+\end{Verbatim}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{分割代入}
+ 配列の要素の一部をまとめて別の変数に代入する。
+\begin{Verbatim}
+>\Verb+[a,,b,...c] = [0,1,2,3,4,5,6,7];
+a ==> 0
+b ==> 2
+c ==> [3, 4, 5, 6, 7]
+\end{Verbatim}
+       \begin{itemize}
+        \item  変数\Verb+a+には0番目の、\Verb+b+には3番目の、\Verb+c+に
+               は4番目以降の配列の要素が代入される。
+        \item \Verb+a+ と \Verb+b+ の間に\Verb+,,+がある
+       ので2番目の要素は代入されない。
+        \item 4番目以降の要素はまとめて変数\Verb+c+に代入
+       \end{itemize}
+ 配列が関数の戻り値のとき、戻り値の必要なところだけ利用す
+       るために便利な機能
+
+ \Verb+...+は展開演算子と呼ばれ、配列に対して要素を並べたものを表す。
 \end{frame}
 \subsection{配列のメソッド}
 \begin{frame}[containsverbatim]
@@ -314,7 +357,20 @@ let a=1; true ||(a=3);
  また、\Verb+NaN == NaN+ の結果は \Verb+false+ である。値が \Verb+NaN+ で
 あるかどうかを調べる関数がある。
 \end{frame}
-\section{組み込みオブジェクト}
+\section{制御構造}
+\begin{frame}[containsverbatim]
+ \frametitle{制御構造}
+ \begin{itemize}
+  \item C言語などと同様に\ElmJ{if}文、\ElmJ{for}文、\ElmJ{while}
+文、\ElmJ{switch}文がある。
+  \item 使い方は同様なのでここでは説明をしない。
+  \item Java やC++のように
+\ElmJ{for}文の初期化のところに現れる変数を\ElmJ{let}を用いて宣言すること
+もできる。
+  \item この宣言された変数に関するJavaScript特有の注意は次回解説
+ \end{itemize}
+\end{frame}
+ \section{組み込みオブジェクト}
 \subsection{組み込み関数}
 \begin{frame}[containsverbatim]
  \frametitle{組み込み関数}
