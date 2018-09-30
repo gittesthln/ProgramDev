@@ -16,6 +16,8 @@
   \AnsShow{4-"5"}{$-1$}{演算子が\texttt{-}なので右の文字列が数に変換される。}
   \AnsShow{4+"ff"}{\texttt{"4ff"}}{前と同様}
   \AnsShow{4+"0xff"}{\texttt{"40xff"}}{前と同様}
+  \AnsShow{4-"0xff"}{\texttt{$-251$}{\texttt{"0xff"}が$255$と解釈されて
+  計算される。}
   \AnsShow{4+parseInt("ff")}{\texttt{NaN}}{文字列内に数として正しく変換され
 	  るものがないので\texttt{parseInt()}の戻り値が \texttt{NaN}となり、
 	  これ以降の数の演算は\texttt{NaN}となる。}

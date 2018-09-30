@@ -53,24 +53,24 @@ JavaScript の方には大きく分けて\KeyItem{プリミティブ型}と\KeyI
        文字列を数値に変換できない場合や \Verb+0/0+ などの結果としてこの値が設定さ
        れる。
 \end{itemize}
-なお、計算の途中でこれらの値が得られてもプログラムの実行は中断されない。
+なお、計算の途中結果がこれらの値になってもプログラムの実行は中断されない
+(問題\ref{overflow}を参照)。\vspace{-1.3\baselineskip}
 \paragraph{String型}
-文字列は\Verb+"+ または \Verb+'+ ではさむ。%"
+文字列はダブルクオート(\Verb+"+) または シングルクオート(\Verb+'+) ではさむ。%"
 1文字だけの文字の型はない。テンプレートリテラルは文字列
 の中に式の値を埋め込むことができる。テンプレートリテラルはバッククオート
-(\Verb+`+)ではさむ。埋め込む式は\texttt{\$\{2+3\}}のように記述する。
-\begin{Verbatim}
-`2+3=${2+3}`  => "2+3=5"
-\end{Verbatim}
-文字列に関する演算子としては、2つの文字列をつなげる\KeyItem{連接演算子}
-がある。JavaScript では\ElmJ{+}を用いる。詳しくは\ref{operator}を参照の
-こと。
+(\Verb+`+)ではさむ。埋め込む式は\texttt{\$\{2+3\}}のように\$ の
+後に\{と\}の間に式を記述する。たとえば\Verb-`2+3=${2+3}`- は \Verb-"2+3=5"- という文字列になる。%\\[-1.1\baselineskip]
 
-\KeyItem{文字列}に関する情報(プロパティ)や操作(メソッド)として次の
-ものがある\footnote{この表にある正規表現については後日解説をする}。
+2つの文字列をつなげる\KeyItem{連接演算子}\ElmJ{+}ついては
+\ref{operator}節で説明する。
+
+表\ref{methodString}は\KeyItem{文字列}に関する情報(プロパティ)や操作(メソッ
+ド)の一部である。この表にある正規表現については第\ref{regEx}
+回で解説をする。\vspace{-0.7\baselineskip}
 \begin{table}[ht]
- \caption{文字列のメソッドとプロパティ}\label{methodStrig}
-\begin{center}\ \\[-0.015\textheight]
+ \caption{文字列のメソッドとプロパティ}\label{methodString}
+\begin{center}\ \\[-0.02\textheight]
  \begin{tabular}{|c|m{28zw}|}\hline
  メンバー&\multicolumn{1}{c|}{説明} \\\hline
   \ElmJP{length} &文字列の長さ\\ \hline
@@ -92,16 +92,15 @@ JavaScript の方には大きく分けて\KeyItem{プリミティブ型}と\KeyI
   \ElmJF{slice}{start,end}&文字列の\Verb+start+から
       \Verb+end+の前の位置までの部分文字列を返す。値が負のときは文字列
       末尾から数えた位置を表す。\\ \hline
-\end{tabular}
+\end{tabular}\\[-1.5\baselineskip]\ 
 \end{center}
 \end{table}
-%
-\newpage
+%\newpage
 \input prob02-01string.tex
 \paragraph{Bool型}
 \ElmJ{true} と \ElmJ{false} の2つの値をとる。この2つは予約語である。論理
 式の結果としてこれらの値が設定されたり、論理値が必要なところでこれらの値
-に設定される。詳しくは\ref{operator}を参照のこと。
+に設定される。詳しくは\ref{operator}を参照のこと。\\[-1.5\baselineskip]
 \paragraph{\protect\ElmJ{undefined}と\protect\ElmJ{null}}
 \ElmJ{undefined}は値が存在しないことを示す読み出し可能な変数である。
 変数が宣言されたのに値が設定されていないときの初期値や、戻り値が定義され
@@ -110,9 +109,9 @@ JavaScript の方には大きく分けて\KeyItem{プリミティブ型}と\KeyI
 
 \Verb+typeof null+ の値が \Verb+"object"+であることを示すように、オブジェ
 クトが存在しないことを示す特別なオブジェクト値（であると同時にオブジェク
-トでもある）である。
+トでもある）である。\\[-1.5\baselineskip]
 \subsection{非プリミティブ型}
-プリミティブ型以外のデータ型は「オブジェクト」がある。JavaScriptでは
+プリミティブ型以外のデータ型は「オブジェクト」である。JavaScriptでは
 次のようなオブジェクトが定義されている。\texttt{()}内はオブジェク
 ト(を作成するコンストラクタ)の名称である。
 \begin{itemize}
@@ -130,13 +129,12 @@ JavaScriptの変数の特徴は次の通りである。
  \item 変数名はアルファベットまたは\Verb+_+(アンダースコア)で始まる英数
        字または\Verb+_+ が続く文字列
  \item 大文字と小文字は区別される。
- \item 変数の宣言は\ES で採用された \texttt{let} で行う。従来の
+ \item 変数の宣言は\ES で採用された \texttt{let} で行う\footnote{従来の
        宣言方法の \texttt{var} にはいくつかの問題
-       があるのでこの授業では使用しない。
- \item 宣言時に初期化ができる。\ES で導入された\texttt{const}による変数
-       の宣言では初期化時の値の変更ができない。
- \item 非\Strict のときは変数は宣言をしなくても使用できる。初期化してい
-       ない変数を演算の対象として使用するとエラーが起こる。詳しくは後述する。
+       があるのでこの授業では使用しない。}。宣言時に初期化ができる。
+ \item \ES で導入された\texttt{const}で変数宣言を行うと変数の値は変更できない。
+ \item 非\Strict では変数の宣言はしなくてもよい。初期化してい
+       ない変数を演算の対象とするとエラーが起こる。詳しくは後述する。
  \item 変数に保存するデータの型には制限がない。途中で変更することもでき
        る。
 \end{itemize}
@@ -153,9 +151,9 @@ let b = [1,2,3]; //要素が3つある配列
 \Verb+b[0]=1,b[1]=2,b[2]=3+ となる。
 次のことに注意する必要がある。
 \begin{itemize}
- \item 配列の各要素のデータの型は同じでなくてもよい。
  \item 実行時に配列の大きさを自由に変えられる。
- \item 配列の要素に配列を置くことができる。
+ \item 配列の各要素のデータの型は同じでなくてもよい。
+ たとえば配列の要素の一部に配列を置くことができる。
 \begin{Verbatim}
 let a=[1,[2,3,4],"a"];
 \end{Verbatim}
@@ -222,25 +220,28 @@ c ==> [3, 4, 5, 6, 7]
   \Verb+unshift()+&配列の最初の要素を削除し、その値を返す。
 %XS      配列をキューと して利用できる。
       \\ \hline
-  \Verb+slice(start,end)+&\Verb+start+から\Verb+end+の前の位置にある要素を取
-      り出した配列を返す。元の配列は変化しない。\\ \hline
-  \Verb+splice(start,No,i1,i2,...)+&\Verb+start+の位置から\Verb+No+の要素を取
-      り除き、その位置に\Verb+i1,i2,...+以下の要素を付け加える。元の配列
-      を変更する。\\ \hline
+  \Verb+slice(start,end)+&\Verb+start+から\Verb+end+の前の位置にある要素
+      までからなる配列を返す。%元の配列は変化しない。
+      \\ \hline
+  \Verb+splice(start,No,i1,i2,...)+&
+      \Verb+start+から\Verb+end+の位置に
+      ある要素からなる配列を返す。元の配列からこれらの要素を取り除き、その位置
+      に\Verb+i1,i1,...+以下の要素を付け加える。%元の配列を変更する。
+      \\ \hline
   \Verb+indexOf(value,start)+&配列の要素で\texttt{value}に等しい
       (\texttt{===})ものを探し、その位置を返す。見つからない場合は
       \texttt{-1}を返す。
-      オプションの引数\texttt{start}はそのインデックス以降から探す。
+      オプションの引数\texttt{start}はその位置以降から探すことを指定する。
       \\ \hline
   \Verb+lastIndexOf(value,start)+&配列の要素で\texttt{value}に等しいもの
       を後ろから探し、その位置を返す。見つからない場合は\texttt{-1}を返す。
-      オプションの引数\texttt{start}はそのインデックス以前から探す。
+      オプションの引数\texttt{start}はその位置以前から探すことを指定する。
       \\ \hline
 \end{tabular}
 %\end{center}
 \end{table}
 
-配列のメソッドとしてはこのほかに、引数に処理をする関数を与えるものがある。それらについ
+配列のメソッドとしてはこのほかに、処理をする関数を引数として与えるものがある。それらについ
 ては関数のところで解説をする。
 \input prob02-03.tex
 \section{演算子}\label{operator}
@@ -315,37 +316,45 @@ let a=1; true ||(a=3);
 \Verb+NaN === NaN+ の結果は \Verb+false+ である。値が \Verb+NaN+ で
 あるかを調べるには関数\ElmJ{isNaN()}を用いる。
 \section{制御構造}
-JavaScript ではC言語などと同様に\ElmJ{if}文、\ElmJ{for}文、\ElmJ{while}
-文、\ElmJ{switch}文がある。使い方は同様なのでここでは説明をしない。また、
+JavaScript でも C 言語などと同様に\ElmJ{if}文、\ElmJ{for}文、\ElmJ{while}
+文、\ElmJ{switch}文がある。使い方も同様である。また、
 Java やC++のように
-\ElmJ{for}文の初期化のところに現れる変数を\ElmJ{let}を用いて宣言すること
-もできる。このの宣言された変数に関するJavaScript特有の注意は次回解説をする。
+\ElmJ{for}文の初期化のところで変数を\ElmJ{let}を用いて宣言すること
+ができる。このように宣言された変数に関するJavaScript特有の注意は次回解説をする。
 \section{組み込みオブジェクト}
 \subsection{組み込み関数}
-JavaScript に組み込まれている代表的な関数としては次のものがある。
-\begin{itemize}
- \item \Verb+parseInt(string,radix)+ \Verb+string+(文字列)と
+表\ref{systemFunction}はJavaScript に組み込まれている代表的な関数である。
+\begin{table}[ht]
+ \caption{\JS における組み込み関数}\label{systemFunction}
+ \begin{center}
+	\begin{tabular}{|c|m{25zw}|}\hline%
+  {名称}&\multicolumn{1}{c|}{説明}\\\hline
+ \Verb+parseInt(string,radix)+& \Verb+string+(文字列)と
        \Verb+radix+(基数、省略したときは$10$)をとり、先頭から見て正しい
-       整数表現のところまで整数に変換する。
- \item \ElmJ{parseFloat(string)} \Verb+string+(文字列)
+       整数表現のところまで整数に変換する。\\\hline
+ \ElmJ{parseFloat(string)} &\Verb+string+(文字列)
        をとり、先頭から見て正しい
-       浮動小数点表現のところまで浮動小数に変換する。
- \item \Verb+isNaN(N)+ \Verb+N+ が数であれば \Verb+false+、そうでなければ
-       \Verb+true+ を返す。
- \item \Verb+isFinite(N)+ \Verb+N+ が数値または数値に変換できる値でかつ
-       \Verb+Infinity+ または \Verb+-Infinity+ でないときに \Verb+true+、
-       そうでないとき、\Verb+false+ を返す。
- \item \ElmJ{encodeURIComponent(string)} \texttt{string}を URLエンコー
+       浮動小数点表現のところまで浮動小数に変換する。  \\ \hline
+ \Verb+isNaN(N)+ &\Verb+N+ が数であれば \Verb+false+、そうでなければ
+       \Verb+true+ を返す。\\\hline
+ \Verb+isFinite(N)+ &\Verb+N+ が数値または数値に変換できる値でかつ
+       \Verb+Infinity+ または \Verb+-Infinity+ でないときに \ElmJ{true}、
+       そうでないとき、\ElmJ{false} を返す。 \\ \hline
+ \ElmJ{encodeURIComponent(string)}& \texttt{string}を URIエンコー
 			 ドする。ブラウザの日本語を含む字句検索の結果のアドレス
-			 バーに\%で始まる文字列がURLエンコードした結果である。 
- \item \ElmJ{decodeURIComponent(string)}
-			 \ElmJ{encodeURIComponent(string)}の逆の操作をする。
- \item \ElmJ{encodeURI(string)} \texttt{string} をURIエンコーディングす
-			 る。この関数はプロトコル部分などはエンコードしない。
- \item \ElmJ{decodeURI(string)} \ElmJ{encodeURI(string)} の逆の操作をす
-			 る。
-\end{itemize}
-%このほかにも関数があるが、省略する。
+			 バーに\%で始まる文字列がURIエンコードした結果である。 \\ \hline
+ \ElmJ{decodeURIComponent(string)}&
+			 \ElmJ{encodeURIComponent(string)}の逆の操作をする。 \\ \hline
+ \ElmJ{encodeURI(string)} &\texttt{string} をURIエンコーディングす
+			 る。この関数はプロトコル部分などはエンコードしない。 \\ \hline
+ \ElmJ{decodeURI(string)}& \ElmJ{encodeURI(string)} の逆の操作をす
+			 る。 \\ \hline
+  \end{tabular}
+ \end{center}
+ \end{table}
+
+ このほかにもいくつか関数があるが、非推奨であるか使い方に注意するものなので省略する。
+ \clearpage
 \subsection{\protect\texttt{Math}オブジェクト}
 \ElmJ{Math}オブジェクトには数学的な定数の定義(円周率など)や三角関数など
 の関数が定義されている。表\ref{JSMath}はそれらのプロパティや関数をまとめ
@@ -371,20 +380,23 @@ NaN
 %\newpage
 %\clearpage
 \subsection{\protect\texttt{Dateオブジェクト}}
-日付や時間に関するデータを扱うコンストラクタ関数である。
+\ElmJ{Date}オブジェクトは日付や時間に関するデータを扱うコンストラクタ関
+数である。その実体は1970年1月1日午前0時(世界標準時)
+\footnote{この時刻をUNIXエポックという。}からのミリ秒単位の経
+過時間である。
+
 引数の数や型によりいくつかの異なる日付と日時のオブジェクトが作成できる。
-\input 00Date.tex
 \begin{itemize}
- \item 引数なしの場合は現在の日付と日時を用いて作成
+ \item 引数なしの場合は現在の日付と日時を用いて作成する。
 \begin{Verbatim}
 >new Date()
 Thu Oct 01 2015 13:17:46 GMT+0900 (東京 (標準時))
 \end{Verbatim}
  \item 引数が数値の場合は世界標準時(UTC)において1970年1月1日0時からの経
-       過時間をミリ秒単位で作成
- \item 引数が文字列の場合は日時を示す文字列に基づいて作成(次の例を参照)
+       過時間をミリ秒単位で作成する。
+ \item 引数が文字列の場合は日時を示す文字列に基づいて作成する(次の例を参照)。
  \item 引数の数が2つ以上7つの場合は年、月、日、時、分、秒、ミリ秒の順が
-       指定されたとして作成。ない引数は0と解釈される。
+       指定されたとして作成する。ない引数は0と解釈される。
 
        また、月の値は\texttt{0} が1月を表す。
 \begin{Verbatim}
@@ -399,6 +411,11 @@ Mon Nov 02 2015 10:10:20 GMT+0900 (東京 (標準時))
        場合でも、正しく作成される。たとえば日の値が0のときは指定した月の
        1日の1日前、つまり前の月の最終日と解釈される。
 \end{itemize}
+\newpage
+表\ref{JSDate}は\ElmJ{Date}オブジェクトのメソッドを示したものである。
+\input 00Date.tex
+
+詳しい解説は[\ref{ES2016},第15章]にある。
 %\newpage
 \input prob02-04Date.tex
 %

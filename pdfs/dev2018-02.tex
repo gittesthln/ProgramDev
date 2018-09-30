@@ -74,7 +74,9 @@
  Number & 浮動小数点数だけ\\ \hline
  String & 文字列型、1文字だけのデータ型はない。ダブルクオート(\Verb+"+)
      か%"
-     シングルクオート(\Verb+'+)で囲む。\\ \hline
+     シングルクオート(\Verb+'+)で囲む。\ES では文字列内に式
+     の値を埋め込み可能なテンプレートリテラル形式(バッククオート
+     \Verb+`+ではさむ)が追加\\ \hline
  Boolean& \Verb+true+ か \Verb+false+ の値のみ\\ \hline
  \Verb+undefined+ & 変数の値が定義されていないことを示す\\ \hline
  \Verb+null+& \Verb+null+という値しか取ることができない特別なオブジェク
@@ -111,7 +113,21 @@ JavaScriptで扱う数は64ビット浮動小数点形式
  計算の途中でこれらの値が得られてもプログラムの実行は中断されない。
 \end{frame}
 \begin{frame}[containsverbatim]
- \frametitle{String型}
+ \frametitle{String型のリテラル}
+ \begin{itemize}
+  \item 文字列はダブルクオート(\Verb+"+) 
+　　　または シングルクオート(\Verb+'+) ではさむ。%"
+  \item 1文字だけの文字の型はない。
+  \item テンプレートリテラルは文字列の中に式の値を埋め込むことができる。
+  \item テンプレートリテラルはバッククオート(\Verb+`+)ではさむ。
+  \item 埋め込む 式は\texttt{\$\{2+3\}}のように\$ の
+        後に\{と\}の間に式を記述
+  \item \Verb-`2+3=${2+3}`- は \Verb-"2+3=5"- という文字列になる。
+  \item 2つの文字列をつなげる連接演算子\ElmJ{+}ついては後述
+ \end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{String型のプロパティとメソッド(1)}
 文字列に関する情報や操作には次のようなものがある。
 \begin{center}
   \begin{tabular}{|c|m{14zw}|}\hline
@@ -127,15 +143,18 @@ JavaScriptで扱う数は64ビット浮動小数点形式
 \end{center}
 \end{frame}
 \begin{frame}[containsverbatim]
- \frametitle{String型}
+ \frametitle{String型のプロパティとメソッド(2)}
 \begin{center}
- \begin{tabular}{|c|m{14zw}|}\hline
+ \begin{tabular}{|c|m{16zw}|}\hline
  メンバー&\multicolumn{1}{c|}{説明} \\\hline
   \Verb+split(separator,limit)+&\Verb+separator+で与えられた文字列で与え
       られた文字列を分けて配列で返す。セパレーターの部分は返されない。
       2番目の引数はオプションで分割する最大数を返す。\\ \hline
   \Verb+substring(start,end)+&与えられた文字列の\Verb+start+から
       \Verb+end+の位置までの部分文字列を返す。\\ \hline
+  \Verb+slice(start,end)+&文字列の\Verb+start+から
+      \Verb+end+の前の位置までの部分文字列を返す。値が負のときは文字列
+      末尾から数えた位置を表す。\\ \hline
 \end{tabular}
 \end{center}
 \end{frame}
@@ -189,9 +208,8 @@ JavaScriptで扱う数は64ビット浮動小数点形式
  \item 従来の宣言方法の\texttt{var}は問題があるのでこの授業では使用しない。
  \item 宣言時に初期化ができる。
  \item 非\Strict のときは変数は宣言をしなくても使用できる。初期化してい
-       ない変数を使うとエラーが起こる。詳しくは後述する。
- \item 変数に保存するデータの型には制限がない。途中で変更することもでき
-       る。
+       ない変数を使うとエラーが起こる。詳しくは後述
+ \item 変数に保存するデータの型には制限がない。途中で変更することも可能
 \end{itemize}
 \end{frame}
 \section{配列}
@@ -255,7 +273,7 @@ c ==> [3, 4, 5, 6, 7]
 \end{frame}
 \subsection{配列のメソッド}
 \begin{frame}[containsverbatim]
- \frametitle{配列のメソッド}
+ \frametitle{配列のメソッド(1)}
 \begin{center}
  \begin{tabular}{|c|m{20zw}|}\hline
  メンバー&\multicolumn{1}{c|}{説明} \\\hline
@@ -272,17 +290,25 @@ c ==> [3, 4, 5, 6, 7]
 \end{center}
 \end{frame}
 \begin{frame}[containsverbatim]
- \frametitle{配列のメソッド}
-\begin{center}
- \begin{tabular}{|c|m{12zw}|}\hline
-   \Verb+slice(start,end)+&\Verb+start+から\Verb+end+の前の位置にある要素を取
-      り出した配列を返す。元の配列は変化しない。\\ \hline
+ \frametitle{配列のメソッド(2)}
+\hspace*{-2zw}
+ \begin{tabular}{|c|m{16zw}|}\hline
+   \Verb+slice(start,end)+&\Verb+start+から\Verb+end+の前の位置にある要
+  素までからなる配列を返す。%元の配列は変化しない。
+  \\ \hline
   \Verb+splice(start,end,i1,i2,...)+&\Verb+start+から\Verb+end+の位置に
-      ある要素を取
-      り出した配列を返す。元の配列からこれらのデータを取り除き、その位置
-      に\Verb+i1,i1,...+以下の要素を付け加える。\\ \hline
+      ある要素までからなる配列を返す。元の配列からこれらの要素を取り除き、その位置
+      に\Verb+i1,i1,...+以下の要素を追加\\ \hline
+  \Verb+indexOf(value,start)+&配列の要素で\texttt{value}に等しい
+      (\texttt{===})ものを探し、その位置を返す。見つからない場合は
+      \texttt{-1}を返す。
+      オプションの引数\texttt{start}はその位置以降から探すことを指定
+      \\ \hline
+  \Verb+lastIndexOf(value,start)+&配列の要素で\texttt{value}に等しいもの
+      を後ろから探し、その位置を返す。見つからない場合は\texttt{-1}を返す。
+      オプションの引数\texttt{start}はその位置以前から探すことを指定
+      \\ \hline
 \end{tabular}
-\end{center}
 \end{frame}
 \section{演算子}
 \subsection{代入、四則演算}
@@ -373,24 +399,31 @@ let a=1; true ||(a=3);
  \section{組み込みオブジェクト}
 \subsection{組み込み関数}
 \begin{frame}[containsverbatim]
- \frametitle{組み込み関数}
-JavaScript に初めから組み込まれている関数としては次のものがある。
-\begin{itemize}
- \item \Verb+parseInt(string,radix)+ \Verb+string+(文字列)と
-       \Verb+radix+(基数、省略したときは$10$)をとり、先頭から見て正しい
-       整数表現のところまで整数に変換する。
- \item \Verb+parseFloat(string)+ \Verb+string+(文字列)
-       をとり、先頭から見て正しい
-       浮動小数点表現のところまで浮動小数に変換する。
- \item \Verb+isNaN(N)+ \Verb+N+ が数であれば \Verb+true+、そうでなければ
-       \Verb+false+ を返す関数
- \item \Verb+isFinite(N)+ \Verb+N+ が数値または数値に変換できる値でかつ
-       \Verb+Infinity+ または \Verb+-Infinity+ でないときに \Verb+true+、
-       そうでないとき、\Verb+false+ を返す。
-\end{itemize}
-このほかにも関数があるが、省略する。
+ \frametitle{組み込み関数}\hspace*{-2zw}\small
+	\begin{tabular}{|c|m{20zw}|}\hline%
+  {名称}&\multicolumn{1}{c|}{説明}\\\hline
+ \Verb+parseInt(string,radix)+& 引数は\Verb+string+(文字列)と
+       \Verb+radix+(基数、デフォルトは$10$)。先頭から見て正しい
+       整数表現の場所まで整数に変換\\\hline
+ \ElmJ{parseFloat(string)} &引数は\Verb+string+(文字列)。
+       先頭から見て正しい浮動小数点表現の場所まで変換  \\ \hline
+ \Verb+isNaN(N)+ &\Verb+N+ が数であれば \Verb+false+、そうでなければ
+       \Verb+true+ を返す。\\\hline
+ \Verb+isFinite(N)+ &\Verb+N+ が数値または数値に変換できる値でかつ
+       \Verb+Infinity+ または \Verb+-Infinity+ でないときに \ElmJ{true}、
+       そうでないとき、\ElmJ{false} を返す。 \\ \hline
+ \ElmJ{encodeURIComponent(string)}& \texttt{string}を URIエンコー
+			 ドする。%ブラウザの日本語を含む字句検索のアドレス
+			 %バーの\%を含む文字列がURIエンコードした結果
+       \\ \hline
+ \ElmJ{decodeURIComponent(string)}&
+			 \ElmJ{encodeURIComponent(string)}の逆の操作 \\ \hline
+ \ElmJ{encodeURI(string)} &\texttt{string} をURIエンコーディングす
+			 る。プロトコル部分などはエンコードしない。 \\ \hline
+ \ElmJ{decodeURI(string)}& \ElmJ{encodeURI(string)} の逆の操作\\ \hline
+  \end{tabular}
 \end{frame}
-
+\subsection{組み込みオブジェクト}
 \begin{frame}[containsverbatim]
  \frametitle{組み込みオブジェクト}
 \begin{itemize}

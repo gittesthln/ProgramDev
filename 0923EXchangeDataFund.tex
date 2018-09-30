@@ -35,10 +35,15 @@ HTMLの要素に対しては次のことを行う。
  \item \Verb+method="POST"+で呼び出されたときには\texttt{form}要素内の
        \texttt{name}属性が指定されたものの値が\texttt{name}属性の属性値
        をキーとしてスーパーグローバル\POST の連想配列として値が得
-       られる\footnote{スーパーグローバル\POST に格納されるデータ
-       はフォームの中のデータである。生の\POST データを得るには関数
+       られる。これはフォームの中のデータを
+       \texttt{application/x-www-form-urlencoded} あるいは
+       \texttt{multipart/form-data} に
+       よりエンコードされたもの\footnote{\protect\texttt{GET}メソッドでデータを
+       送るときにはURIの後に\protect\texttt{?name=value}+を付ける。この形式が
+       \protect\texttt{x-www-form-urlencoded} である。}を、フォームの個々の値に戻して格納する。
+       生の\POST データを得るには関数
        \texttt{file\textunderscore get\textunderscore contents}でファイ
-       ル名に\texttt{php://input}を指定する。}。
+       ル名に\texttt{php://input}を指定する。
  \item 11行目から13行目でそれらの値を\texttt{table}要素内の要素として出
        力している。
 \end{itemize}
@@ -56,7 +61,7 @@ HTMLの要素に対しては次のことを行う。
 と通信するのが良い。
 \input 17dev10-01.tex
 \section{スパーグローバルの補足}
-スパーグローバルのうち、これまでに説明してこなかったものについて解説をする。
+スパーグローバルのうち、これまでに説明していないものについて解説をする。
 \paragraph{\texttt{\$\_SERVER}}
 この変数はサーバーにアクセスしたときのクライ
 アントの情報などを提供する。具体的な内容はクライアントごとに異なる。
@@ -125,13 +130,12 @@ HTML5から独立した規格である Web Storage には \ElmJ{localStoarage} �
 				行目)後、アクセス時間をすべて表示している(22行目から24行目)。
 \begin{itemize}
  \item 配列の\texttt{forEach}メソッドは、配列の個々の要素に対して引数で
-			 与えられた関数を実行する。
+			 与えられた関数を実行する。このメソッドの戻り値はない。
  \item 値が\ElmJ{undefined}である要素に対して
 			 は実行されない。
- \item このメソッドの戻り値はない。
  \item 引数で渡される関数の引数
-				は3つあり、処理する配列の現在の値(\texttt{D})、配列の位置
-			 (\texttt{i})と処理する配列(\texttt{A})である。したがって、
+				は、処理する配列の現在の値(\texttt{D})、配列の位置
+			 (\texttt{i})と処理する配列(\texttt{A})の3つである。したがって、
 			 \texttt{A[i]}と\texttt{D}は同じ値である。
  \item 処理結果を配列に戻したければ\texttt{A[i]}に値を代入すればよい。
 \end{itemize}

@@ -50,8 +50,7 @@
       if(xmlHttpObj) {
         xmlHttpObj.onreadystatechange = function(){
           if(xmlHttpObj.readyState == 4 && xmlHttpObj.status == 200) {
-            document.getElementById("details").firstChild.nodeValue = 
-                xmlHttpObj.responseText;
+            document.getElementById("details").innerText = xmlHttpObj.responseText;
           } 
         }
         xmlHttpObj.open("GET",
@@ -67,6 +66,6 @@
 </head>
 <body>
   <form id="menu"></form>
-  <p id="details"> </p>
+  <p id="details"></p>
 </body>
 </html> 

@@ -17,13 +17,13 @@ Ajax の機能は \texttt{XMLHTTPRequest}というオブジェクトの機能を
 \LISTN{09-01whatday.html}{1}{last}{\normalsize}
 \begin{itemize}
  \item 実行例\ref{pulldownDate}とは41行目以降が異なっている。
- \item イベントハンドラーを関数として定義している(41行目から61行目)。
+ \item イベントハンドラーを関数として定義している(41行目から60行目)。
  \item 42行目から48行目は以前と同じプルダウンメニューの処理である。
  \item 49行目では裏でサーバーと通信をするための
        \texttt{XMLHttpRequest}オブジェクトを作成している。
  \item \texttt{XMLHttpRequest}が生成できたら(50行目)、このオブジェクトの
        \texttt{onreadystatechange}イベントのイベントハンドラーを
-       登録する(51行目から56行目)。
+       登録する(51行目から55行目)。
  \begin{itemize}
   \item \texttt{XMLHttpRequest}の\texttt{readyState}は通信の状態を表す。
 	$4$ は通信終了を意味する。これらの値については表\ref{XMLHttpRequestRes}を参照
@@ -37,17 +37,18 @@ Ajax の機能は \texttt{XMLHTTPRequest}というオブジェクトの機能を
 	れたデータは文字列となる。このほかに\texttt{responXML}でXMLデー
 	タが得られる。
  \end{itemize}
- \item 57行目から59目が通信の開始する。ここでは、\texttt{GET}で行うので、
+ \item 56行目から58目が通信の開始する。ここでは、\texttt{GET}で行うので、
        URLの後に必要なデータを付ける。
  \item \texttt{GET}では送るデータ本体がないので、通信終了のため
        \texttt{null}を送信する。\texttt{POST}のときはここでデータ本体を
        送る。
  \item プルダウンメニューが変化したときのイベントハンドラーを登録し(62行
        目)、最後に現在の日付データをサーバーに要求する(63行目)。
- \item 得られたデータは70行目の\texttt{p}要素の中に入れる(53行目から54行
-       目)。この要素の\texttt{firstChild}を指定しているので
-       \texttt{<p>}と\texttt{</p>}の間に空白を設けて、テキストノードが存
-       在するようにしている。
+ \item 得られたデータは69行目の\texttt{p}要素のテキスト
+       (\texttt{innerText})として代入する(53行目)。
+       %この要素の\texttt{firstChild}を指定しているので
+       %\texttt{<p>}と\texttt{</p>}の間に空白を設けて、テキストノードが存
+      % 在するようにしている。
 \end{itemize}
  表\ref{XMLHttpRequestRes}の状態は\texttt{XMLHttpRequest}オブジェクトの
  プロパティである。たとえば、\texttt{XMLHttpRequest.DONE}で利用できる。
@@ -80,7 +81,8 @@ Ajax の機能は \texttt{XMLHTTPRequest}というオブジェクトの機能を
        きるように、スーパーグローバル\Verb+$_GET+内に値があれば
        (\Verb+isset()+)が\Verb+true+になれば、その値を、そうでなければコ
        マンドからの引数を設定している。
- \item スーパーグローバル\Verb+$argv+はの先頭は呼び出したファイル名であ
+ \item コマンドから実行したときの引数はスーパーグローバル\Verb+$argv+に
+       格納される。一番目は呼び出したファイル名であ
        り、その後に引数が順に入る\footnote{C言語の\texttt{main}関数は通
        常、\texttt{int main(int argc, char* argv[])}と宣言される。%
        \texttt{argc}は\texttt{argv}の配列の大きさを表し、渡された引数の

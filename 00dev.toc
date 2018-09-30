@@ -12,7 +12,7 @@
 \contentsline {paragraph}{Bool型}{7}{section*.4}
 \contentsline {paragraph}{\ElmJ {undefined}と\ElmJ {null}}{7}{section*.5}
 \contentsline {subsection}{\numberline {2.1.2}非プリミティブ型}{7}{subsection.2.1.2}
-\contentsline {section}{\numberline {2.2}変数}{8}{section.2.2}
+\contentsline {section}{\numberline {2.2}変数}{7}{section.2.2}
 \contentsline {section}{\numberline {2.3}配列}{8}{section.2.3}
 \contentsline {subsection}{\numberline {2.3.1}配列の宣言と初期化}{8}{subsection.2.3.1}
 \contentsline {subsection}{\numberline {2.3.2}配列のメソッド}{9}{subsection.2.3.2}
@@ -20,7 +20,7 @@
 \contentsline {subsection}{\numberline {2.4.1}代入、四則演算}{10}{subsection.2.4.1}
 \contentsline {subsection}{\numberline {2.4.2}論理演算子と比較演算子}{11}{subsection.2.4.2}
 \contentsline {paragraph}{論理演算子}{11}{section*.6}
-\contentsline {paragraph}{比較演算子}{12}{section*.7}
+\contentsline {paragraph}{比較演算子}{11}{section*.7}
 \contentsline {section}{\numberline {2.5}制御構造}{12}{section.2.5}
 \contentsline {section}{\numberline {2.6}組み込みオブジェクト}{12}{section.2.6}
 \contentsline {subsection}{\numberline {2.6.1}組み込み関数}{12}{subsection.2.6.1}
