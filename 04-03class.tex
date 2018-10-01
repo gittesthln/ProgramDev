@@ -104,9 +104,9 @@ class Person{
 実行例は次のとおりである。文字列が必要なときに呼び出されることがわかる。
 \begin{Verbatim}
 >p.toString();//toString()の明示的呼び出し
-"fooさんは2001年4月1日に}神奈川で生まれました。"
+"fooさんは2001年4月1日に神奈川で生まれました。"
 >`${p}`;      //暗黙のtoString()呼び出し
-"fooさんは2001年4月1日に}神奈川で生まれました。"
+"fooさんは2001年4月1日に神奈川で生まれました。"
 \end{Verbatim}
  16行目から24行目でゲッター\texttt{age}が定義されている。
  \begin{itemize}
@@ -289,10 +289,10 @@ const Student = (function(){
 >s = new Student("foo",2001,4,1);  //初めのインスタンスの id は 10000
 {name: "foo", birthday: {…}, hometown: "神奈川", id: 10000}
 >`${s}`;
-"fooさんは2001年4月1日に}神奈川で生まれました。"
+"fooさんは2001年4月1日に神奈川で生まれました。"
 >s2 = new Student("foo",2001,4,1,"厚木");  //次のインスタンスの id は 10001
 {name: "foo", birthday: {…}, hometown: "厚木", id: 10001}
 >`${s2}`;
-"fooさんは2001年4月1日に}厚木で生まれました。"
+"fooさんは2001年4月1日に厚木で生まれました。"
 \end{Verbatim}
 \end{Exec}

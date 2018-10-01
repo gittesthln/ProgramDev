@@ -1,6 +1,7 @@
 \section{オブジェクトリテラルとJSON}
 JSON(JavaScript Object Notation)はデータ交換のための軽量なフォーマットで
-ある。形式はJavaScriptのオブジェクトリテラルの記述法と全く同じである。
+ある。形式はJavaScriptのオブジェクトリテラルの記述を文字列として表現した
+ものである。
 \begin{itemize}
  \item 正しく書かれたJSONフォーマットの文字列をブラウザとサーバーの間で
        データ交換の手段として利用できる。
@@ -36,6 +37,8 @@ let persons = [{
 "hometown":"北海道"}]"
 >s2 = JSON.stringify(persons,["name","hometown"]);
 "[{"name":"foo","hometown":"神奈川"},{"name":"Foo","hometown":"北海道"}]"
+>typeof s;
+"string"
 >o = JSON.parse(s2);
 [Object, Object]
 >o[0];

@@ -5,8 +5,8 @@ JavaScript における関数はいろいろな目的のために利用される
 ここでは次の事柄について説明する。
 \else
 \section{今回の内容}
-JavaScript における関数はいろいろな目的のために利用される。
-今回の授業では次のことについて説明する。
+JavaScript では関数はいろいろな目的のために利用される。
+今回は次のことを取り扱う。
 \fi
 \begin{itemize}
  \item 関数の定義方法と使用法
@@ -15,7 +15,7 @@ JavaScript における関数はいろいろな目的のために利用される
  \item JavaScriptにおける変数のスコープ
 % \item 関数も単なるオブジェクト
 \end{itemize}
-さらに次の事柄についても説明する。
+さらに次のような JavaScript 特有の事柄についても説明する。
 \begin{itemize}
  \item 無名関数とコールバック関数
  \item 自己実行関数
@@ -26,7 +26,7 @@ JavaScript における関数はいろいろな目的のために利用される
 %関数はオブジェクトを作成するときのも用いられるが、その解説は次回で行う。
 \section{関数の定義方法と呼び出し}
 \subsection{簡単な関数の例}
-次の例は \Verb+sum()+という関数を定義している。
+次の例は関数 \Verb+sum()+を定義している。
 \begin{Verbatim}
 function sum(a,b) {
   let c = a + b;
@@ -35,33 +35,33 @@ function sum(a,b) {
 \end{Verbatim}
 関数の定義は次の部分から成り立っている。
 \begin{itemize}
- \item \ElmJ{function}キーワード\\
+ \item {\bfseries \ElmJ{function}キーワード} %\\
 戻り値の型を記す必要はない。
- \item 関数の名前\\
-\ElmJ{function} の後にある識別名が関数の名前になる。この場合は \texttt{sum}
-       が関数の名前になる。
- \item 引数のリスト\\
+ \item {\bfseries 関数の名前} %\\
+\ElmJ{function} の後にある識別名が関数の名前になる。ここでは \texttt{sum}
+       が関数の名前である。
+ \item {\bfseries 引数のリスト} %\\
 関数名の後に\Verb+()+内にカンマで区切られた引数を記述する。この場合は変数
        \Verb+a+と\Verb+b+が与えられている。引数はなくてもよい。
- \item 関数の本体であるコードブロック\\
+ \item {\bfseries 関数の本体であるコードブロック} %\\
 \Verb+{}+で囲まれた部分に関数の内容を記述する。
-\item \Verb+return+ キーワード\\
-関数の戻り値をこの後に記述する。戻り値がない場合は
+\item {\bfseries \Verb+return+ キーワード} \\
+関数の戻り値をこの後に記述する。戻り値を明示的に示さない場合は
        \Verb+undefined+が返される。
 \end{itemize}
 %\paragraph{実行例}
-次の部分はこの関数の実行例である。
+次にこの関数の実行例を掲げる。
 \begin{Verbatim}
 >sum(1,2)  // 戻り値は 3
 >sum(1)    // 戻り値は NaN
 >sum(1,2,3)// 戻り値は 3
 \end{Verbatim} 
 \begin{itemize}
- \item 引数に \Verb+1+ と \Verb+2+ を与えれば期待通りの結果が得られる。
+ \item 引数に \Verb+1+ と \Verb+2+ を与えられているので期待通りの結果が得られる。
  \item 引数に \Verb+1+ だけを与えた場合、エラーが起こらず、\Verb+NaN+ と
        なる。これは、不足している引数 \Verb+b+ には
        \Verb+undefined+ が渡され、戻り値は \Verb-1+undefined- の計算
-       結果(\Verb+NaN+)であるためである。
+       結果(\Verb+NaN+)となる。
  \item 引数を多く渡してもエラーが発生しない。無視されるだけである。
 \end{itemize}
 これらのことから JavaScript の関数はオブジェクト指向で使われるポリモーフィ
@@ -75,39 +75,41 @@ function sum(a,b) {
 とそうでないときとでは呼び出し元における変数の値が異なる。
 \begin{Exec}\label{Params}\upshape
  次の例は呼び出した関数の中で仮引数の値を変化させたときの例である。
-\begin{Verbatim}[numbers=left]
+\end{Exec}
+\begin{Verbatim}
 function func1(a){
   a = a*2;
   return 0;
 }
-function func2(a){
-  a[0] *=2;
-  return 0;
-}
 \end{Verbatim}
-\end{Exec}
-\begin{itemize}
- \item \Verb+func1()+では仮引数\Verb+a+の値を2倍している。これを次のよう
-       に実行すると、呼び出し元の変数の値には変化がないことがわかる。つ
-       まり、プリミティブデータ型を関数の引数で渡すと値そのものが渡され
-       る(値渡し)。
+\Verb+func1()+では仮引数\Verb+a+の値を2倍している。次のように実行する。
 \begin{Verbatim}
 >a = 4;
 >func1(a); // 戻り値は 0
 >a;
 4          //a の値は変化しない
 \end{Verbatim}
- \item \Verb+func2()+の仮引数は配列が想定してあり、その配列の先頭の値だ
-       け2倍する関数である。この関数に配列を渡すと、実行後、配列の先頭の値
-       が変化している。つまり、プライミティブ型以外では仮引数の渡し方が
-       参照渡しであることがわかる。
+       この結果から呼び出し元の変数の値には変化がないことがわかる。つ
+       まり、プリミティブデータ型の引数は値そのものが渡され
+       る(値渡し)。
+
+次の例は配列を引数に渡す関数の例である。
+\begin{Verbatim}
+function func2(a){
+  a[0] *=2;
+  return 0;
+}
+\end{Verbatim}
+\Verb+func2()+の仮引数は配列が想定してあり、その配列の先頭の値だ
+       け2倍する関数である。
 \begin{Verbatim}
 >a = [1,2,3];
 >func2(a);// 戻り値は 0
 >a;
 [2, 2, 3] //配列の先頭の値が2倍されている
 \end{Verbatim}
-\end{itemize}
+この関数の実行後、配列の先頭の値が変化している。
+この結果、プライミティブ型以外の引数の渡し方が参照渡しであることがわかる。
 \iffalse
 \subsection{\protect\texttt{aruguments}について}
 JavaScriptでは引数リストで引数の値などが渡されるほかに\texttt{arguments}
@@ -173,13 +175,13 @@ function sum2(a, b){
 \end{itemize}
 \else
 \subsection{可変引数をとる関数}
-前節で定義した引数の和を計算する関数において、引数の数を固定しないように
-するためには仮引数に展開演算子をつける\footnote{これまでのJavaScript で
+前節の引数の和を計算する関数で、引数の数を固定しないものを定義
+するには仮引数に展開演算子をつける\footnote{これまでのJavaScript で
 は、関数の引数を表す配列のような性質を持つ\texttt{arguments}オブジェクト
-が用意されていたが、\ES では非推奨となった。}。
+が用意されていたが、\ES 以降非推奨となった。}。
 \begin{Exec}\upshape\label{DefOfFunctionwithIndefiniteArges}
 次で定義された関数は任意個数の引数を取る関数の例である。
-\begin{Verbatim}
+\begin{Verbatim}[numbers=left]
 function sumN(...args) {
     let S = 0;
     for(let i=0;i<args.length;i++) {
@@ -200,27 +202,26 @@ function sumN(...args) {
 >sumN(1,2,3,4);  //戻り値は 10
 >sumN(1,2,3,4,5);//戻り値は 15
 \end{Verbatim}
-
 \end{Exec}
 \input 03-02FunctionWithArbituraryArgs.tex
 \fi
 \subsection{変数のスコープ}
-変数のスコープとはある場所で使われている変数がどこから参照できるかという
+変数のスコープとはある場所で使われている変数がどこで定義されているものかという
 概念である。JavaScriptでは次の特徴がある。
 \begin{enumerate}
  \item 非\Strict では変数は宣言しなくても使用できる。\label{3-4NoDeclare}
  \item \label{3-4DeclareInFunc}
-       関数内で \ElmJ{let} により明示的に定義された変数はブロック内で有
+       関数内で \ElmJ{let} により明示的に宣言された変数はブロック内で有
        効となる。ブロックとは\Verb+{+と\Verb+}+で囲まれた部分である。ただし、宣言
-       よりも前では使用できない。同じスコープ
+       よりも前では使用できない。同じブロック
        内で \ElmJ{let} による同一変数名の宣言はエラーになる。
  \item 変数を\ElmJ{var}で宣言すると関数の途中で宣言しても、関数の先頭で
        宣言したと同じ効果を持つ。これを変数の巻き上げという。関数の外で
        \ElmJ{var} で宣言された変数は、プログラムの先頭で宣言したものとみ
        なされる。ただし、初期化は宣言された位置で行われる。同じスコープ
        内で \ElmJ{var} による同一変数名の宣言はエラーにならない。
- \item 関数の外で宣言された変数や宣言されないで使用された変数はすべてグ
-       ローバルとなる。\label{3-4Declare2}
+ \item 関数の外で宣言された変数や宣言されないで使用された変数はすべてど
+       こからからでも参照できるグローバルとなる。\label{3-4Declare2}
 \end{enumerate}
 %\subsection{スコープチェイン}
 関数やブロックの中で関数を定義したりブロックを作成すると、その
@@ -239,9 +240,9 @@ function func1(a) {
 }
 \end{Verbatim}
 \begin{itemize}
- \item 関数\Verb+func1()+ではグローバル変数\Verb+G1+と\Verb+G2+、
+ \item 関数\Verb+func1()+内ではグローバル変数\Verb+G1+と\Verb+G2+、
        仮引数\Verb+a+ とローカル変数\Verb+b+と\Verb+c+が利用できる。
- \item 関数\Verb+func2()+ではグローバル変数\Verb+G1+、
+ \item 関数\Verb+func2()+内ではグローバル変数\Verb+G1+、
        \Verb+func1()+の仮引数\Verb+a+ と\Verb+func1()+のローカル変数
        \Verb+b+、\Verb+func2()+のローカル変数\Verb+G2+と\Verb+c+が利用で
        きる。
@@ -288,9 +289,9 @@ function func4(){
 \end{Exec}
 このリストは次のようになっている。
 \begin{itemize}
- \item \Verb+func1()+から\Verb+func4()+までの関数が定義されている。
+ \item \Verb+func1()+から\Verb+func4()+まで4つの関数が定義されている。
  \item 1行目ではグローバル変数 \Verb+S+ が宣言されて、文字列\Verb+"global"+
-       という値に初期化されている。
+       で初期化されている。
  \item 2行目から5行目で\Verb+func1()+が定義されている。
 \begin{itemize}
  \item 3行目で\Verb+S+の値をコンソールに出力している。
@@ -346,7 +347,7 @@ local in func4
  \item \Verb+func4()+を実行した後では\Verb+func5()+が実行できる。
  \item 関数\Verb+func5()+が定義された段階では変数\Verb+S+が、この関数を
        定義している\Verb+func4()+の中にあるので、18行目の変数\Verb+S+が参
-       照される。この状況についてはスコープチェーンの項で説明する。
+       照される。%この状況についてはスコープチェーンの項で説明する。
 \begin{Verbatim}
 func5();
 local in func4
@@ -358,21 +359,24 @@ local in func4
 \section{JavaScriptにおける関数の特徴}
 %JavaScript関数ではほかの言語では見られない関数の取り扱い方法がある。
 \subsection{関数もデータ}
-関数もデータ型のひとつなので、関数の定義を変数に代入することができる。
-課題\ref{ExecScope}の19行目以降で関数オブジェクトを変数に代入している。
-代入はいつでもできるので、実行時に関数の定義を変えることも可能である。
+JavaScriptでは関数もデータ型のひとつなので次のようなことが可能となってい
+る。
+\begin{itemize}
+ \item 関数の定義を変数に代入したり(実行例\ref{ExecScope}の19行目以降参
+       照)関数の引数として渡しす。
+ \item 代入はいつでもできるので、実行時に関数の定義を変える。
+ \item 関数の戻り値として関数自体を返す。
+\end{itemize}
+
 %\subsection{関数を返す関数}
-また、%関数もオブジェクトなので、
-ある関数の戻り値として関数自体を返すこともできる。
-%使用例は次節を参照のこと。
 \iffalse
 この使用法の例としてはある処理がブラウザごとに異なる作業を必要とするとき
 に、それに適応した判定を1回だけしてあとは戻した関数を実行するだけにする
 ことができる。%他の利用法については後で例をあげる。
 \fi
 \subsection{コールバック関数}
-課題\ref{ExecScope}の19行目以降の関数オブジェクトは関数の引数として直接
-渡すこともできる。このとき、\Verb+function+の後には関数名がない。このよ
+実行例\ref{ExecScope}の19行目以降の関数オブジェクトでは
+\Verb+function+の後には関数名がない。このよ
 うな関数は無名関数と呼ばれる。HTML文書などでは、イベント(マウ
 スがクリックされた、一定の時間が経過した)が発生したときに、その処理を行
 う関数を登録する必要がある。関数に引数として渡される関数
@@ -396,7 +400,7 @@ window.setTimeout(
  \item このメソッドは一定時間経過後に呼び出される関数と、実行される経過
        時間(単位はミリ秒)を引数に取る。
  \item 実行する関数は3行目から9行目で定義されている。
- \item この関数内で一定の条件のときはこの関数を呼び出す。この関数
+ \item この関数内で一定時間経過後にこの関数を呼び出す。この関数
        に名前は\Verb+callMe+である(3行目)\footnote{\Verb+function+オブ
        ジェクトの引数を表す配列のようなオブジェクト\Verb+arguments+の
        プロパティ\texttt{callee}を使うのが従来の方法である。
@@ -415,16 +419,16 @@ window.setTimeout(
 			 \fi
 \end{itemize}
 \end{Exec}
-なお、関数の宣言を \Verb+function foo(){...}+ でする代わりに、
-{\Verb+let foo = function(){...}+} と無名関数で定義してもよい。
+%なお、関数の宣言を \Verb+function foo(){...}+ でする代わりに、
+%{\Verb+let foo = function(){...}+} と無名関数で定義してもよい。
 
-\Verb+setTimeout()+メソッドのコールバック関数に引数の値を渡したいときは、
+\Verb+setTimeout()+メソッドのコールバック関数の引数に値を渡したいときは、
 \Verb+setTimeout()+メソッドの3番目以降の引数に記述する。
 \input 03-04setTimeout.tex
 %\input prob03-03factorial.tex
   \subsection{自己実行関数}
-関数を定義してその場で直ちに実行することができる。たとえば次のコードを
-考える。これは課題\ref{FisatJS}の関数の中身である。
+関数を定義してその場で直ちに実行することができる。次のコードは課題
+\ref{FisatJS}の関数の中身である。
 \begin{Verbatim}
   let i;
   for(i=1;i<10;i++) {
@@ -441,8 +445,10 @@ window.setTimeout(
 きない(\Verb+undefined+が出力される)。
 
 前者の場合は変数\texttt{i}、後者の場合は関数名\texttt{foo}がグローバル変
-数が残っている。グローバル変数を残さないために、定義した関数をその場で実
-行する方法がある。これを実現するためには次のように記述する。
+数が残っている。JavaScriptでは定義した関数をその場で実行する方法があり、
+これを利用すると不要なグローバル変数を残さないことができる。
+
+次の例はこれを実現している。
 \begin{Verbatim}
 (function(){
   let i;
@@ -454,11 +460,13 @@ window.setTimeout(
 すための\Verb+()+を付ける。
 
 この技法は、初期化の段階で1回しか実行しない事柄を記述し、かつグローバル
-な空間に余計な変数などを残さない手段として用いられる。
+な空間に余計な変数などを残さない手段としてJavaScriptのライブラリーで用いられる。
 
+\iffalse
 なお、\ElmJ{let}で変数\Verb+i+を\ElmJ{for}内で宣言すると、
 その変数は\ElmJ{for}文内でしか存在しない。また、スコープの規則が少し異な
 る。実行例\ref{declareVariableInFor}を参照のこと。
+\fi
 \iffalse
 \begin{Verbatim}
   for(let i=1;i<10;i++) {
@@ -470,16 +478,16 @@ window.setTimeout(
 関数内部で宣言された変数は、その外側から参照することができない。
 つまり、その関数は関数内のローカル変数を閉じ込めている。しかし、関数内部
 で定義された関数を外部に持ち出す(グローバルな関数にする)と、持ち出された
-関数のスコープチェイン内に定義された親の関数のスコープを引き継いでいるこ
-とから、親の関数のローカル変数の参照が可能となる。
+関数のスコープチェイン内に定義された親の関数のスコープを引き継ぐので、親
+の関数のローカル変数の参照が可能となる。
 
-このように関数とその
+関数とその
 依存する環境(変数や呼び出せる関数などのリスト)を合わせたものをその関数の
 クロージャと呼ぶ。
 
 \subsection{クロージャの例 -- 変数を隠す}
 ここで上げる例は実用に乏しいと思われるかもしれないが、この後に出てくる
-オブジェクトの項ではより実用的なものと理解できるであろう。
+オブジェクトの項の例でより実用的なものと理解できるであろう。
 %\newpage
 \begin{Exec}\label{Closure1}\upshape
  次の関数を考える。
@@ -529,7 +537,7 @@ VM351:2 Uncaught ReferenceError: n is not defined(…)
  \end{itemize}
 \end{Exec}
   \subsection{クロージャの例 -- 無名関数をその場で実行する}
- 例\ref{Closure1}で定義された関数\texttt{f1}を一度だけ実行して、それがこ
+ 実行例\ref{Closure1}で定義された関数\texttt{f1}を一度だけ実行して、それがこ
 				れ以上実行されないようにするためにはこの関数を無名関数としてそ
 				の場で実行すればよい。
 \begin{Exec}\upshape
@@ -595,7 +603,7 @@ function f2() {
 この不具合は、\ElmJ{for}の制御変数\Verb+i+を\Verb+for+文の初
  期化のところで宣言すれば発生しない\footnote{\ES では\texttt{for}文の初
  期化内で\texttt{let}で宣言された変数のスコープ規則が別に定められている。}。
-\begin{Verbatim}
+\begin{Verbatim}[numbers=left]
  function f2() {
   let a = [];
   for(let i=0; i<3; i++) {
@@ -640,6 +648,7 @@ function f3() {
        後、もとの変数の値が変わっても呼び出されたときの値が仮引数の
        \texttt{x}に保持される。
 \end{itemize}
+ \ElmJ{let}を利用することで記述が分かりやすくなっていることが分かる。
 \end{Exec}
 \begin{Prob}\upshape
  実行例\ref{functionsReturnLocalValue}において、\ElmJ{for}文の代わりに
