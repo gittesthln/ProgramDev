@@ -1,4 +1,3 @@
-\beamer@endinputifotherversion {3.36pt}
 \beamer@sectionintoc {1}{前回のレポートから}{2}{0}{1}
 \beamer@sectionintoc {2}{JavaScriptが取り扱うデータ}{6}{0}{2}
 \beamer@subsectionintoc {2}{1}{データーの型}{6}{0}{2}
