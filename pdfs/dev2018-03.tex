@@ -69,9 +69,9 @@ Mon Oct 02 2017 00:00:00 GMT+0900 (東京 (標準時))
 \end{verbatim}
 \begin{Verbatim}
 >for(m=0;m<12;m++){
-    theDay = new Date(2017,m,4);
+    theDay = new Date(2018,m,12);
     console.log(new Date(theDay.getFullYear(),theDay.getMonth(),
-                     (theDay.getDate()-theDay.getDay()+8)%7||7));
+                     (theDay.getDate()-theDay.getDay()+1 +7)%7||7));
 }
  Mon Jan 02 2017 00:00:00 GMT+0900 (東京 (標準時))
  Mon Feb 06 2017 00:00:00 GMT+0900 (東京 (標準時))
@@ -100,6 +100,7 @@ Mon Oct 02 2017 00:00:00 GMT+0900 (東京 (標準時))
   \Verb+4-"5"+& $-1$& 演算子が\Verb+-+なので右の文字列が数に変換される。\\ \hline
   \Verb-4+"ff"-&\Verb+"4ff"+ & 前と同様\\ \hline
   \Verb-4+"0xff"-& \Verb+"40xff"+& 前と同様\\ \hline
+  \Verb+4-"0xff"+& \Verb+"-251"+& 前と同様\\ \hline
  \end{tabular}
 \end{center}
 \end{frame}
@@ -260,12 +261,10 @@ NaN
 エラーにならない。後の関数の定義が優先される。
 \begin{Verbatim}
 function sum(a, b){
-  let c = a+b;
-  return c;
+  return a+b;
 }
 function sum(a, b, c){
-  let d = a+b+c;
-  return d;
+  return a+b+c;
 }
 \end{Verbatim}
 \end{frame}
@@ -301,9 +300,9 @@ function func2(a){
 \begin{Verbatim}
 >a = 4;
 4
->func1(a);
+>func1(a); // 戻り値は 0
 0
->a;
+>a;        //a の値は変化しない
 4
 \end{Verbatim}
 \end{frame}
@@ -459,6 +458,47 @@ function sumN(...args) {
        じ。初期化は宣言の位置で行われる。
 \end{enumerate}
 \end{frame}
+%\subsection{スコープチェイン}
+\begin{frame}[containsverbatim]
+\frametitle{スコープチェイン}
+関数の中で関数を定義すると、その
+内側の関数内で\Verb+var+や\Verb+let+で宣言された変数のほかに、一つ上の関数で利用でき
+る(スコープにある)変数が利用できる。これがスコープチェインである。
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{スコープチェインの解説}
+\begin{Verbatim}
+let G1, G2;
+function func1(a) {
+  let b, c;
+  function func2() [
+    let G2, c;
+   ...
+  }
+}
+\end{Verbatim}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{スコープチェインの解説}
+\begin{itemize}
+ \item 関数\Verb+func1()+ではグローバル変数である\Verb+G1+と\Verb+G2+、
+       仮引数の \Verb+a+ とローカル変数\Verb+b+と\Verb+c+が利用できる。
+ \item 関数\Verb+func2()+ではグローバル変数である\Verb+G1+、
+       \Verb+func1()+の仮引数の \Verb+a+ と\Verb+func1()+のローカル変数
+       \Verb+b+、\Verb+func2()+のローカル変数\Verb+G2+と\Verb+c+が利用で
+       きる。
+\end{itemize}
+このように内側で定義された関数は自分自身の中で定義されたローカル変数があ
+るかを探し、見つからない場合には一つ上のレベルでの変数を探す。これがスコー
+プチェインである。
+
+JavaScriptの関数のスコープは関数が定義されたときのスコー
+プチェインが適用される。これをレキシカルスコープと呼ぶ。
+
+レキシカルスコー
+プは静的スコープとも呼ばれる。これに対して実行時にスコープが決まるものは
+動的スコープと呼ばれる。
+\end{frame}
 \begin{frame}[containsverbatim]
 \frametitle{変数のスコープの確認(1)}
 \begin{Verbatim}
@@ -583,47 +623,6 @@ func5();
 local in func4
 0
 \end{Verbatim}
-\end{frame}
-%\subsection{スコープチェイン}
-\begin{frame}[containsverbatim]
-\frametitle{スコープチェイン}
-関数の中で関数を定義すると、その
-内側の関数内で\Verb+var+や\Verb+let+で宣言された変数のほかに、一つ上の関数で利用でき
-る(スコープにある)変数が利用できる。これがスコープチェインである。
-\end{frame}
-\begin{frame}[containsverbatim]
-\frametitle{スコープチェインの解説}
-\begin{Verbatim}
-let G1, G2;
-function func1(a) {
-  let b, c;
-  function func2() [
-    let G2, c;
-   ...
-  }
-}
-\end{Verbatim}
-\end{frame}
-\begin{frame}[containsverbatim]
-\frametitle{スコープチェインの解説}
-\begin{itemize}
- \item 関数\Verb+func1()+ではグローバル変数である\Verb+G1+と\Verb+G2+、
-       仮引数の \Verb+a+ とローカル変数\Verb+b+と\Verb+c+が利用できる。
- \item 関数\Verb+func2()+ではグローバル変数である\Verb+G1+、
-       \Verb+func1()+の仮引数の \Verb+a+ と\Verb+func1()+のローカル変数
-       \Verb+b+、\Verb+func2()+のローカル変数\Verb+G2+と\Verb+c+が利用で
-       きる。
-\end{itemize}
-このように内側で定義された関数は自分自身の中で定義されたローカル変数があ
-るかを探し、見つからない場合には一つ上のレベルでの変数を探す。これがスコー
-プチェインである。
-
-JavaScriptの関数のスコープは関数が定義されたときのスコー
-プチェインが適用される。これをレキシカルスコープと呼ぶ。
-
-レキシカルスコー
-プは静的スコープとも呼ばれる。これに対して実行時にスコープが決まるものは
-動的スコープと呼ばれる。
 \end{frame}
 \subsection{JavaScriptにおける関数の特徴}
 \begin{frame}[containsverbatim]
