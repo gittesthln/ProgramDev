@@ -21,7 +21,8 @@ let foo = (function () {
 
 function f2() {
   let a = [];
-  for(let i=0; i<3; i++) {
+  let i;
+  for(i=0; i<3; i++) {
     a[i] = function() {
       return i;
     };
@@ -30,8 +31,16 @@ function f2() {
 }
 
 function f3() {
-  var a = [];
-  var i;
+  let a = [];
+  for(let i=0; i<3; i++) {
+    a[i] = function() {
+      return i;
+    };
+  }
+  return a;
+}
+function ff(){
+  var a = [], i;
   for(i=0; i<3; i++) {
     a[i] = (function(x){
       return function() {
@@ -41,41 +50,6 @@ function f3() {
   };
   return a;
 }
-function f4() {
-  var a = [];
-  var i;
-  for(i=0; i<3; i++) {
-    a[i] = (function(x){
-      return function() {
-        return x;
-      }
-    })([i]);
-  };
-  return a;
-}
-function f5() {
-  var a = [], b;
-  var i;
-  for(i=0; i<3; i++) {
-    b=[i];
-    a[i] = function() {
-      return b;
-    };
-  }
-  return a;
-}
-function f6() {
-  var a = [], b=[];
-  var i;
-  for(i=0; i<3; i++) {
-    b[i]=i;
-    a[i] = function() {
-      return b[i];
-    };
-  }
-  return a;
-}
-
 //]]>
 </script>
 </head>

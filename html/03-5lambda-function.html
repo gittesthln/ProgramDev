@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<title>コールバック関数の例</title>
+<script type="text/ecmascript">
+  //<![CDATA[
+  function foo(){
+    let T = new Date();
+    window.setTimeout(
+      function callMe(){
+        let NT = new Date();
+        if(NT.getTime()-T.getTime()<10000) {
+          console.log(Math.floor((NT.getTime()-T.getTime())/1000));
+          window.setTimeout(callMe,1000);
+        }
+      },1000);
+    }
+//]]>
+</script>
+</head>
+</html>
