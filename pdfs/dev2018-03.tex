@@ -3,7 +3,7 @@
 \title{ソフトウェア開発\\第3回目授業}
 \author{平野 照比古}
 \institute{}
-\date{2017/10/6}
+\date{2018/10/12}
 \begin{document}
 \frame{\maketitle}
 %\frame{\tableofcontents}
@@ -19,9 +19,11 @@
   \end{frame}
   \begin{frame}[containsverbatim]
    \frametitle{問題2}
-
-   単に実行結果しか書いていないものが多かった。必ず、意味も含めた考察が
+\begin{itemize}
+ \item    単に実行結果しか書いていないものが多かった。必ず、意味も含めた考察が
    欲しい。
+ \item 2.では2つの変数の値の交換が簡単にできることを指摘してほしい。
+\end{itemize}
   \end{frame}
   \begin{frame}[containsverbatim]
    \frametitle{問題3}
@@ -62,16 +64,20 @@ Sat Sep 30 2017 00:00:00 GMT+0900 (東京 (標準時))
   \end{frame}
   \begin{frame}[containsverbatim]\scriptsize
    \frametitle{問題4(2)--与えられた日時の月の第1月曜日}
-\begin{verbatim}
+\begin{Verbatim}
 >new Date(theDay.getFullYear(),theDay.getMonth(),
-  (theDay.getDate()-theDay.getDay()+8)%7||7);
+  (theDay.getDate()-theDay.getDay()+7+1)%7||7);
 Mon Oct 02 2017 00:00:00 GMT+0900 (東京 (標準時))
-\end{verbatim}
+\end{Verbatim}
+   \begin{itemize}
+    \item 第1月曜日を求めることに関しては正しい答えが多かった。
+    \item その他の曜日に変更したときに簡単に変更できない解答がすべて
+   \end{itemize}
 \begin{Verbatim}
 >for(m=0;m<12;m++){
     theDay = new Date(2018,m,12);
     console.log(new Date(theDay.getFullYear(),theDay.getMonth(),
-                     (theDay.getDate()-theDay.getDay()+1 +7)%7||7));
+                (theDay.getDate()-theDay.getDay()+1 +7)%7||7));
 }
  Mon Jan 02 2017 00:00:00 GMT+0900 (東京 (標準時))
  Mon Feb 06 2017 00:00:00 GMT+0900 (東京 (標準時))
@@ -158,7 +164,9 @@ Mon Oct 02 2017 00:00:00 GMT+0900 (東京 (標準時))
     される\\ \hline
   \Verb+0 == []+& \Verb+true+& 空の配列が空文字\texttt{""}に変換されたのち、
     数 $0$ に変換される。\\ \hline
-  \Verb+![]+& \Verb+false+& 空の配列の位置はオブジェクトとして存在するの
+  \Verb+"0" == []+& \Verb+false+& 空の配列が空文字\texttt{""}に変換されたのち、
+    文字列同士の比較が行われる。\\ \hline
+  \Verb+![]+& \Verb+false+& 空の配列はオブジェクトとして存在するの
           で\texttt{true}と解釈され、否定演算子で\texttt{false}になる。
           \\ \hline
  \end{tabular}
@@ -248,7 +256,7 @@ NaN
  \item 引数に \Verb+1+ と \Verb+2+ を与えれば期待通りの結果が得られる。
  \item 引数に \Verb+1+ だけを与えた場合、エラーが起こらず、\Verb+NaN+ と
        なる。これは、不足している引数(この場合には \Verb+b+)にば
-       \Verb+undefined+ が渡されるためである。\Verb+1+undefined+の結果は
+       \Verb+undefined+ が渡されるためである。\Verb-1+undefined-の結果は
        \Verb+NaN+ になる。
  \item 引数を多く渡してもエラーが発生しない。無視されるだけである。
 \end{itemize}
@@ -452,10 +460,10 @@ function sumN(...args) {
        効\label{3-4DeclareInFunc}
  \item \Verb+let+で宣言された変数はそのブロック内で宣言より前で使用不可
        \label{3-4DeclareInFunc2}
+ \item 関数内で\Verb+var+により宣言された変数は関数の先頭で宣言したと同
+       じ(変数の巻き上げ)。初期化は宣言の位置で行われる。
  \item 関数の外で宣言された変数や宣言されないで使用された変数はすべてグ
        ローバルとなる。\label{3-4Declare2}
- \item 関数内で\Verb+var+により宣言された変数は関数の先頭で宣言したと同
-       じ。初期化は宣言の位置で行われる。
 \end{enumerate}
 \end{frame}
 %\subsection{スコープチェイン}
