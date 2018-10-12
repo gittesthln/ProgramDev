@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<title>オブジェクトの例</title>
+<script type="text/ecmascript">
+//<![CDATA[
+let p = {
+  name : "foo",
+  birthday :{
+    year : 2001,
+    month : 4,
+    day : 1
+  },
+  "hometown" : "神奈川",
+}
+function showExec(s) {
+  console.log(`>${s};`);
+  console.log(eval(s));
+}
+
+//showExec('p = new Person("foo",2001,4,1)');
+showExec('p.mother = "Alice"');
+showExec('p.grandmother = "Old Alice"');
+showExec('Object.preventExtensions(p)');
+showExec('p.father = "Bob"');
+showExec('p.father');
+showExec('delete p.mother');
+showExec('p.mother');
+showExec('Object.seal(p)');
+showExec('Object.isSealed(p)');
+showExec('delete p.grandmother');
+showExec('p.grandmother');
+showExec('p.grandmother = "Very Old Alice"');
+showExec('p.grandmother;');
+showExec('Object.freeze(p)');
+showExec('p.grandmother = "Very Very Old Alice"');
+showExec('p.grandmother');
+showExec('p.birthday');
+showExec('delete p.birthday');
+showExec('p.birthday = {}');
+showExec('p.birthday');
+showExec('delete p.birthday.year');
+showExec('p.birthday');
+//]]>
+</script>
+</head>
+</html>

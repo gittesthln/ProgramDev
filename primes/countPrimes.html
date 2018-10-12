@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <script type="text/ecmascript" src="make-svg-elm.js"></script>
+    <script type="text/ecmascript" src="countPrimes-Ajax.js"></script>
+    <style type="text/css">
+      td { text-align:right;}
+      </style>
+    <title>素数の数を数える</title>
+  </head>
+  <body>
+    <h1 class="head">素数の数を数える</h1>
+    <div>
+      <form name="Test" method="PUT" action="javascript:getData()">
+        <div><input type="radio" name="ajax-mode" value="true">非同期
+          <input type="radio" name="ajax-mode" value="false">同期</div>
+        <div><input type="SUBMIT" value="実行"/></div>
+      </form>
+    </div>
+    <div>
+      <table></table>
+    </div>
+  </body>
+</html>
