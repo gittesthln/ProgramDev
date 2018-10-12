@@ -179,8 +179,8 @@ Mon Oct 02 2017 00:00:00 GMT+0900 (東京 (標準時))
  \begin{tabular}{|>{\Rule}c|c|m{11zw}|}\hline
   \Verb+false == []+& \Verb+true+& 空の配列が空文字\texttt{""}に変換されたのち、
     数 $0$ に変換される。\\ \hline
-  \Verb+false == undefined+& \texttt{false}&この比較は\texttt{false}
-  と定義されている。\\ \hline
+  \Verb+false == undefined+& \texttt{false}&\texttt{false}が数に$0$に変
+          換され、数と\texttt+undefined+は等しくない。\\ \hline
   \Verb+[] == []+& \Verb+false+& 配列はオブジェクトであり、二つの空の配
     列は別物とみなされる。\\ \hline
   \Verb+typeof []+& "object"& 配列はオブジェクトである。\\ \hline
