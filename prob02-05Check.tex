@@ -57,8 +57,8 @@
   \AnsShow{![]}{\texttt{false}}{空の配列はオブジェクトとして存在するので
   \texttt{true}と解釈され、否定演算子で\texttt{false}になる。}
   \AnsShow{false == []}{\texttt{true}}{\texttt{[]}が空文字\texttt{""}に変換されたのち、\texttt{0}に変換される。}
-  \AnsShow{false == undefined}{\texttt{false}}{この比較は\texttt{false}
-  と定義されている。}
+  \AnsShow{false == undefined}{\texttt{false}}{\texttt{false}が数に$0$に変
+          換され、数と\texttt+undefined+は等しくない。}
   \AnsShow{[] == []}{\texttt{false}}{配列はオブジェクトであり、二つの空の配
 	  列は別物とみなされる。}
   \AnsShow{typeof []}{\texttt{"object"}}{配列はオブジェクトである。}
