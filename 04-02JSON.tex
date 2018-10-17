@@ -14,7 +14,7 @@ JavaScriptのオブジェクトとJSONフォーマットの文字列の相互変
 するのが\texttt{JSON}オブジェクトである。
 
 \begin{Exec}\label{JSONExec}\upshape
-次の例は2つの同じ形式からなるオブジェクトを通常の配列に入れたものを定義
+次の例は2つの同じ形式のオブジェクトを通常の配列に入れたものを定義
  している。
 \begin{Verbatim}
 let persons = [{
@@ -46,16 +46,16 @@ Object {name: "foo", hometown: "神奈川"}
 \end{Verbatim}
 \begin{itemize}
  \item JavaScriptのオブジェクトを文字列に変更する方法は
-       \texttt{JSON.stringify()}を用いる。このまま見ると\verb+"+がおかし
-       いように見えるが表示の関係でそうなっているだけである。%"
+       \texttt{JSON.stringify()}を用いる。このまま見ると\verb+"+%"
+			 がおかしいように見えるが表示の関係でそうなっているだけである。
 なお、結果は途中で改行を入れているが実際は一つの文字列となっている。
  \item \texttt{JSON.stringigy()}の二つ目の引数として対象のオブジェクトの
        キーの配列を与えることができる。このときは、指定されたキーのみが
        文字列に変換される。
  \item ここでは、\verb+"name"+ と \verb+"hometown"+が指定されているので
 \verb+"birthday"+のデータは変換されていない。
- \item JSONデータをJavaScriptのオブジェクトに変換するための方法は
-       \texttt{JSON.parse()}を用いる。
+ \item JSONデータをJavaScriptのオブジェクトに変換するためのメソッドは
+       \texttt{JSON.parse()}である。
  \item ここではオブジェクトの配列に変換されたことがわかる。
  \item 各配列の要素が正しく変換されていることがわかる。
 \end{itemize}

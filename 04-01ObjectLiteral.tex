@@ -91,6 +91,13 @@ mother aaa
 undefined
 \end{Verbatim}
 最後の\Verb+undefined+は\Verb+for+ループの戻り値である。
+ \item\Verb+Object.keys()+にオブジェクトを渡すと、キー名の配列が得られる。
+\begin{Verbatim}
+>Object.keys(person)
+(3) ["name", "birthday", "hometown"]
+\end{Verbatim}
+			これを用いてオブジェクトの値を得ることも可能である。子の利用法は後の回
+			で解説をする。
 \end{itemize}
 \end{Exec}
 オブジェクトを\Verb+{}+の形式で表したものを\ElmJ{オブジェクトリテラル}と
