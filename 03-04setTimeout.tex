@@ -25,4 +25,20 @@ window.setTimeout(
   \underline{\makebox[0.95\textwidth]{}}\\[1\baselineskip]
   \underline{\makebox[0.95\textwidth]{}}
   \fi
-\end{Prob}
+ \end{Prob}
+
+ \iffalse
+function foo(){
+let T = new Date();
+window.setTimeout(
+  function callMe(L){
+    let NT = new Date();
+    if(NT.getTime()-T.getTime()<10000) {
+      console.log(Math.floor((NT.getTime()-T.getTime())/1000));
+      L +=1000;
+      window.setTimeout(callMe,L,L);
+    	} else {
+			console.log(`Stopped`)}
+   	},1000,1000);
+		}
+\fi
