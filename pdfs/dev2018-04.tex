@@ -1,19 +1,29 @@
-\input devHeadMalmoe.tex
-%\input devHeadGoettingen.tex
+%\input devHeadMalmoe.tex
+%
+\input devHeadGoettingen.tex
 \title{ソフトウェア開発\\第4回目授業}
 \author{平野 照比古}
 \institute{}
 \date{2018/10/19}
 \begin{document}
-\frame{\maketitle}
+  \begin{frame}[containsverbatim]
+   \frametitle{今回の配布物}
+   \begin{itemize}
+    \item 返却レポート(提出者のみ)
+    \item テキストの訂正(9ページ)
+    \item 今回の授業の資料とレポート課題
+   \end{itemize}
+返却レポートがない学生は資料を取りに来てください。
+  \end{frame}
+ \frame{\maketitle}
 %\frame{\tableofcontents}
 \section{前回の問題から}
  \begin{frame}[containsverbatim]
   \frametitle{問題3.1}
   \begin{itemize}
    \item (1)の結果が\ElmJ{NaN}という結果が目立った。\\
-         テキスト内では同じ関数名を持つ2つの関数の後で\Verb+sum(1,2)+な
-         どを実行していたのと間違えている。
+         コンソールから1行ずつ事実行した場合と、まとめてコピー＆ペースし
+         た場合とでは関数定義の巻き上げにより結果が異なる。
    \item 計算の結果が\ElmJ{NaN}になる場合の説明がないものが目立った。
    \item 同じ関数名のものを同じスコープ内で再定義しない方法としては変数
          を\ElmJ{const}で定義し、そこに関数オブジェクトを代入する方法が
@@ -41,14 +51,32 @@
 \end{frame}
 \begin{frame}[containsverbatim]
  \frametitle{問題3.4}
- 結果のみでキャプチャ画面などの添付や、実行時に表示時間がだんだん伸びる
+\begin{itemize}
+ \item 結果のみでキャプチャ画面などの添付や、実行時に表示時間がだんだん伸びる
  などの指摘が少なかった。
+ \item コンソールに張り付けて実行したときに、\Verb+let T = new Date();+
+       の行とそのあとの部分を別に実行すると結果が異なる。
+\end{itemize}
+ \begin{Verbatim}[fontsize=\footnotesize]
+function foo(){
+let T = new Date();
+window.setTimeout(
+  function callMe(L){
+    let NT = new Date();
+    if(NT.getTime()-T.getTime()<10000) {
+      console.log(Math.floor((NT.getTime()-T.getTime())/1000));
+      L +=1000;
+      window.setTimeout(callMe,L,L);
+    	} else {
+			console.log(`Stopped`)}
+   	},1000,1000);
+		}
+\end{Verbatim}
 \end{frame}
 \begin{frame}[containsverbatim]
  \frametitle{レポートの体裁等}
  \begin{itemize}
-  \item レポートの考察はキャプチャ画面のそばに記すこと。手書きでかまわな
-        い。
+  \item レポートの考察はキャプチャ画面のそばに記すこと。手書きでもよいい。
   \item 考察には自分なりの考えを記すこと。
   \item 実行例を行って疑問に思った点があれば自分で実行結果を付け加えるこ
         と。
@@ -190,6 +218,17 @@ undefined
 最後の\Verb+undefined+は\Verb+for+ループの戻り値である。
 \end{itemize}
 \end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{オブジェクトのキーをすべて得る}
+ オブジェクトのキーをすべて得る方法としては\Verb+Object.keys()+を使う方
+ 法がある。
+ \begin{Verbatim}
+> Object.keys(person);
+["name", "birthday", "hometown"]
+ \end{Verbatim}
+ この結果の配列に対し、配列の要素を渡るようなメソッドを利用することでコー
+ ドが簡単に書ける。詳しくは今後の授業で解説をする。
+\end{frame}
 \section{オブジェクトリテラルとJSON}
 \begin{frame}[containsverbatim]
  \frametitle{JSON}
@@ -298,16 +337,14 @@ class Person{
        \begin{itemize}
         \item キーワード\ElmJ{class}の後にクラス名
        \texttt{Person}を記述
-        \item 通常、クラス名は大文字で始まる。
+        \item 通常、クラス名は大文字で始まる。(慣習)
         \item 関数の時と同様にクラスの宣言を変数に代入することもできる。
        \end{itemize}
  \item その後の\Verb+{+と\Verb+}+内にクラスの記述を行う。
  \item クラスの定義には初期化を行う\ElmJ{constructor()}が必須
        \begin{itemize}
-        \item こ
-       こでは5つの引数を取るコンストラクタが定義
-        \item 番目の引数
-       はデフォルトの値が指定
+        \item ここでは5つの引数を取るコンストラクタが定義
+        \item 5番目の引数はデフォルトの値が指定
        \end{itemize}
  \item キーワード\ElmJ{this}はクラスから作成されたインスタンスを指す。
  \item 3行目から9行目で、そのインスタンスのオブジェクトのキーはプロパティ
@@ -353,7 +390,7 @@ Person {name: "foo", birthday: {…}, hometown: "神奈川"}
 \texttt{Person}に文字列に変換する\ElmJ{toString()}と、実行時に
  おける年令を返すゲッター\texttt{age}を追加したもの
  {\scriptsize
-\begin{Verbatim}[numbers=left]
+\begin{Verbatim}[numbers=left,fontsize=\footnotesize]
 class Person{
   constructor(name, year, month, day, hometown = "神奈川"){
 .... //以前と同じなので省略
