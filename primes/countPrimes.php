@@ -7,7 +7,7 @@ array_push($primes,2);
 for($i=3;$i<$limit; $i+=2) {
     $flag = true;
     for($j=0;$j<count($primes);$j++) {
-				$p = $primes[$j];
+        $p = $primes[$j];
         if($i % $p == 0) {
              $flag = false;
             break;
@@ -19,24 +19,20 @@ for($i=3;$i<$limit; $i+=2) {
   $c = 0;
 if($start < $limit ) {
   $c = count($primes);
-	$start = $limit;
+  $start = $limit;
 }
 $start = $start - $start % 2 + 1;
 $pNo = count($primes);
 $L = ($start < $step)?$step: ($start + $step);
 for($i=$start;$i<$L; $i+=2) {
-    $flag = true;
-//
-for($j=0;$j<$pNo;$j++) {
-//    for($j=0;$j<count($primes);$j++) {
-				$p = $primes[$j];
-        if($i % $p == 0) {
-             $flag = false;
-            break;
-        }
-        if($i< ($p)*($p)) break;
+  for($j=0;$j<$pNo;$j++) {
+    $p = $primes[$j];
+    if($i % $p == 0) break;
+    if($i< ($p)*($p+1)) {
+		  $c++;
+      break;
     }
-    if($flag) $c++;
+	}
 }
 print $c;
 ?>

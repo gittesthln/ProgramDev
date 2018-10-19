@@ -7,7 +7,8 @@ function createXMLHTTPReq( func ) {
   return xmlHttpObj;
 }
 function getData() {
-	let interval =10**6;
+    let interval =10**6;
+    let primes = 0;
   let table = document.getElementsByTagName("table")[0];
   let P = table.parentNode;
   P.removeChild(table);
@@ -20,16 +21,17 @@ function getData() {
         MKHTMLElm(tr, "td", {}, {}).
             appendChild(document.createTextNode(i*interval+1));
         MKHTMLElm(tr, "td", {}, {}).
-            appendChild(document.createTextNode(httpObj.responseText));
+              appendChild(document.createTextNode(httpObj.responseText));
+          primes -= -httpObj.responseText;
         request--;
-        console.log(httpObj.responseText);
+          console.log(`${httpObj.responseText} total:${primes}`);
         console.log(new Date()-start);
         if(request <= 0) console.log("done");
       }
     });
     if(httpObj) {
       request++;
-			httpObj.open("PUT",`./countPrimes.php?N=${i*interval+1}&Step=${interval}`,
+      httpObj.open("PUT",`./countPrimes.php?N=${i*interval+1}&Step=${interval}`,
                    window.Test["ajax-mode"].value == "true");
       httpObj.send(null);
     }
