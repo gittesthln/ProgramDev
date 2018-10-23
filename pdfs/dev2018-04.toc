@@ -1,4 +1,3 @@
-\beamer@endinputifotherversion {3.36pt}
 \beamer@sectionintoc {1}{前回の問題から}{3}{0}{1}
 \beamer@sectionintoc {2}{オブジェクト}{8}{0}{2}
 \beamer@subsectionintoc {2}{1}{配列とオブジェクト}{8}{0}{2}

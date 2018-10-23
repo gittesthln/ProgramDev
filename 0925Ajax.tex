@@ -37,7 +37,7 @@ Ajax の機能は \texttt{XMLHTTPRequest}というオブジェクトの機能を
 	れたデータは文字列となる。このほかに\texttt{responXML}でXMLデー
 	タが得られる。
  \end{itemize}
- \item 56行目から58目が通信の開始する。ここでは、\texttt{GET}で行うので、
+ \item 56行目から58行目が通信の開始部分である。ここでは、\texttt{GET}で行うので、
        URLの後に必要なデータを付ける。
  \item \texttt{GET}では送るデータ本体がないので、通信終了のため
        \texttt{null}を送信する。\texttt{POST}のときはここでデータ本体を
@@ -161,3 +161,12 @@ Ajax の通信で大きなデータを渡すためには\texttt{POST}で行う�
  \item 受け取る側のPHPのプログラムでは\Verb+$_GET+のところを
 			 \Verb+$_POST+に変更する。
 \end{itemize}
+
+\begin{Exec}\upshape\label{contPrimes}
+ 次のリストは$10,000,000$以下の素数を$1,000,000$づつの区間に分けて求める
+ ものである。
+ \LISTN{../primes/countPrimes.html}{1}{last}{\normalsize}
+ \LISTN{../primes/countPrimes-Ajax.js}{1}{last}{\normalsize}
+ \LISTN{../primes/countPrimes.php}{1}{last}{\normalsize}
+
+\end{Exec}
