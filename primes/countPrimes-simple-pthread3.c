@@ -92,7 +92,7 @@ int main(int argc, char *argv[]) {
       pthread_create(hThreads+i, NULL, &GetNoPrimes, (void *)(no+i));
     }
 		for (i=1; i<=Threads; i++){		//Start number of Threads required
-      pthread_join(hThreads[i-1], NULL);
+      printf("%d:%d\n",i,pthread_join(hThreads[i-1], NULL));
 		}
 	}
   printf("Total number of Primes upto %d is %d\n", LIMIT, Cnt);
