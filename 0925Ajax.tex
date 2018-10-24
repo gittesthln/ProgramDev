@@ -161,11 +161,19 @@ Ajax の通信で大きなデータを渡すためには\texttt{POST}で行う�
  \item 受け取る側のPHPのプログラムでは\Verb+$_GET+のところを
 			 \Verb+$_POST+に変更する。
 \end{itemize}
-
+Ajax を用いてサーバーに同時に複数のデータを要求することも可能である。サー
+バーがそれらの要求を並行処理するのであればデータ処理の効率化ができる
+\footnote{PHPをサーバーモードで起動すると並行処理は行われないようである。
+XAMPPでは並行処理が行われる。}。
 \begin{Exec}\upshape\label{contPrimes}
- 次のリストは$10,000,000$以下の素数を$1,000,000$づつの区間に分けて求める
- ものである。
+ 次のリストは$10,000,000$以下の素数を$1,000,000$ずつの区間に分けてサーバー
+ に要求するものである。
+
+ 次のリストは計算の起動と、結果を表示するWebページのものである。
  \LISTN{../primes/countPrimes.html}{1}{last}{\normalsize}
+ \begin{itemize}
+  \item 5行目では実行例\ref{pulldownDate}で解説した
+ \end{itemize}
  \LISTN{../primes/countPrimes-Ajax.js}{1}{last}{\normalsize}
  \LISTN{../primes/countPrimes.php}{1}{last}{\normalsize}
 
