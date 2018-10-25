@@ -3,16 +3,13 @@
 \title{ソフトウェア開発\\第5回目授業}
 \author{平野 照比古}
 \institute{}
-\date{2018/10/25}
+\date{2018/10/26}
 \begin{document}
 \frame{\maketitle}
 %\frame{\tableofcontents}
 \section{レポート課題について}
 \begin{frame}[containsverbatim]
- \frametitle{レポート課題4.1につ
-%\frame{\tableofcontents}
-\section{レポート課題について}
-\begin{frame}[containsverbatim]いて}
+ \frametitle{レポート課題4.1について}
 \begin{Verbatim}
 for( i in window) console.log(`${i} ${window[i]}`);
 \end{Verbatim}
@@ -24,6 +21,8 @@ for( i in window) console.log(`${i} ${window[i]}`);
   \item 新しいオブジェクトが出てきて、文書化されていないときなどに利用で
         きる。
   \item コンソールでオブジェクトを出力すれば同様のことは可能
+  \item 相変わらず全画面表示をキャプチャして、表示した文字がほとんど読め
+        ないものが多くい受けられた。
  \end{itemize}
 \end{frame}
 \begin{frame}[containsverbatim]
@@ -46,7 +45,13 @@ for( i in window) console.log(`${i} ${window[i]}`);
 \end{frame}
 \begin{frame}[containsverbatim]
  \frametitle{レポート課題4.3について}
- 同様のことができることの確認が少ないレポートが多かった。
+ \begin{itemize}
+  \item 同様のことができることの確認が少ないレポートが多かった。
+  \item クラスの定義を変更して、変更が可能としているレポートが少なからず
+        あった。
+  \item インスタンスを作成して、その後、変更や追加が可能なことを示す必要
+        がある。
+ \end{itemize}
 \end{frame}
 \begin{frame}[containsverbatim]
  \frametitle{レポート課題4.4について}
@@ -78,7 +83,7 @@ for( i in window) console.log(`${i} ${window[i]}`);
   \item 実行方法は\texttt{()}を付ける(\texttt{get}がないとき)かどうか
   \item メソッドの定義(\texttt{get}がない場合)
         \begin{itemize}
-         \item 仮引数を与えることができる。
+         \item 仮引数を与えて値を得ることも可能。
          \item メソッドの書き換えが可能(できないようにすることは可能)
         \end{itemize}
  \end{itemize}
@@ -93,7 +98,7 @@ for( i in window) console.log(`${i} ${window[i]}`);
 \begin{itemize}
  \item セッターには仮引数が一つ必要
  \item 通常はこの値をチェックして、条件を満たせば該当する値をセットし、
-       しかるべき追加の処理を行う
+       しかるべき追加の処理を行う(今回の授業内容を参考に...)
 \end{itemize}
 \end{frame}
 \section{\protect\texttt{class}の実体}
