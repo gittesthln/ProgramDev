@@ -3,22 +3,31 @@
   <head>
     <meta charset="utf-8"/>
     <script type="text/ecmascript" src="countPrimes-Ajax.js"></script>
-    <style type="text/css">
-      td { text-align:right;}
-      </style>
-    <title>素数の数を数える</title>
+    <link href="primes.css" rel="stylesheet" type="text/css"></link>
+    <title>素数の数を数える(Ajax 版)</title>
   </head>
   <body>
-    <h1 class="head">素数の数を数える</h1>
-    <div>
-      <form name="Test" method="PUT" action="javascript:getData()">
-        <div><input type="radio" name="ajax-mode" value="true">非同期
-          <input type="radio" name="ajax-mode" value="false">同期</div>
-        <div><input type="SUBMIT" value="実行"/></div>
-      </form>
-    </div>
-    <div>
-      <table></table>
-    </div>
+    <h1 class="head">素数の数を数える(Ajax 版)</h1>
+    <form id="form" name="Test">
+      <table>
+        <tr>
+          <td align="center">範囲</td>
+          <td><input type="text" size="7" id="limit"/></td>
+        </tr>
+        <tr>
+          <td><input type="radio" name="ajax-mode" value="true">非同期</td>
+          <td><input type="radio" name="ajax-mode" value="false">同期</td>
+        </tr>
+        <tr>
+          <td align="center" >スレッド数</td>
+          <td><input type="text" size="7" id="No"/></td>
+        </tr>
+        <tr>
+          <td colspan="2", align="center">
+            <input type="button" id="Go" value="開始"></input>
+          </td>
+        </tr>
+      </table>
+      <table id="result"></table>
   </body>
 </html>

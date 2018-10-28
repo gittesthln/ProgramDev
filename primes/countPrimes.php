@@ -1,10 +1,9 @@
 <?php
-$start = (array_key_exists('N', $_GET))?$_GET['N']:$argv[1];
-$step  = (array_key_exists('Step', $_GET))?$_GET['Step']:$argv[2];
-$limit = 10000;
-$primes = [];
-array_push($primes,2);
-for($i=3;$i<$limit; $i+=2) {
+$from = (array_key_exists('from', $_GET))?$_GET['from']:$argv[1];
+$step  = (array_key_exists('step', $_GET))?$_GET['step']:$argv[2];
+$limit = 10010;
+$primes = [2,3];
+for($i=5;$i<$limit; $i+=2) {
   for($j=0;$j<count($primes);$j++) {
     $p = $primes[$j];
     if($i % $p == 0) break;
@@ -14,23 +13,26 @@ for($i=3;$i<$limit; $i+=2) {
     }
   }
 }
-$c = 0;
-if($start < $limit ) {
-  $c = count($primes);
-  $start = $limit;
+$cnt = 0;
+$res =array("from"=>$from);
+if($from < $limit ) {
+  $cnt = count($primes);
+  $from = $limit;
 }
-$start = $start - $start % 2 + 1;
+$from = $from | 1;
+$to = ($from < $step)?($step+1): ($from + $step);
+$res["to"] = $to;
 $pNo = count($primes);
-$L = ($start < $step)?$step: ($start + $step);
-for($i=$start;$i<$L; $i+=2) {
-  for($j=0;$j<$pNo;$j++) {
+for($i=$from; $i<$to; $i+=2) {
+  for($j=0; $j<$pNo; $j++) {
     $p = $primes[$j];
     if($i % $p == 0) break;
-    if($i< ($p)*($p+1)) {
-      $c++;
+    if($i< ($p+2)*$p) {
+      $cnt++;
       break;
     }
   }
 }
-print $c;
+$res["count"] = $cnt;
+print json_encode($res);
 ?>

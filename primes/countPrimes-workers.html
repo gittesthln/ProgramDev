@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8"/>
+    <script type="text/ecmascript" src="countPrimes-workers.js"></script>
+        <link href="primes.css" rel="stylesheet" type="text/css"></link>
+    <title>素数の数を数える(Web Worker版)</title>
+  </head>
+  <body>
+    <h1 class="head">素数の数を数える(Web Worker版)</h1>
+    <form id="form">
+      <table>
+        <tr>
+          <td align="center">範囲</td>
+          <td><input type="text" size="7" id="limit"/></td>
+        </tr>
+        <tr>
+          <td align="center" >Workerの数</td>
+          <td><input type="text" size="7" id="No"/></td>
+        </tr>
+        <tr>
+          <td colspan="2", align="center">
+            <input type="button" id="Go" value="開始"></input>
+          </td>
+        </tr>
+      </table>
+      <table id="result"></table>
+  </body>
+</html>
