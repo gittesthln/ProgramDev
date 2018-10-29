@@ -169,6 +169,29 @@ XAMPPでは並行処理が行われる。}。
  次のリストは$10,000,000$以下の素数を$1,000,000$ずつの区間に分けてサーバー
  に要求するものである。
 
+ 図\ref{countPrimes-Ajax-start}はこのWeb ページの初期画面である。
+ \begin{figure}[ht]
+	\begin{center}
+	 \includegraphics[width=0.5\textwidth]{primes/countPrimes-start.eps}
+	\end{center}
+ \caption{素数の数を数える(Ajax版)開始画面}\label{countPrimes-Ajax-start}
+ \end{figure}
+
+ 素数の数を求める範囲と、Ajaxを実行するモード、求める区間の分割数と実行
+ 開始の美単が並んでいる。
+
+図 \ref{countPrimes-Ajax-res}は求める範囲を$10,000,000$、分割を $10$に設
+ 定し、非同期モードで起動したことに結果画面である。
+ \begin{figure}[ht]
+	\begin{center}
+	 \includegraphics[width=0.5\textwidth]{primes/countPrimes-res.eps}
+	\end{center}
+ \caption{素数の数を数える(Ajax版)計算結果画面}\label{countPrimes-Ajax-res}
+ \end{figure}
+
+ 項目は左から区間の下限と上限、その区間に含まれる素数の数、開始時間からその区間の実行
+ 終了までの時間(ミリ秒単位)である。
+ 
  次のリストは計算の起動と、結果を表示するWebページのものである。
  \LISTN{../primes/countPrimes.html}{1}{last}{\normalsize}
  \begin{itemize}
@@ -270,7 +293,7 @@ XAMPPでは並行処理が行われる。}。
 グラムのアルゴリズムが簡単になる。一方、最近のCPUではマルチコアが標準と
 なり、複数の処理を同時に行うことは当たり前となっている。
 
-平行処理を行う方法としては独立したプログラム(プロセス)を用いる方法と、単一のプログ
+並行処理を行う方法としては独立したプログラム(プロセス)を用いる方法と、単一のプログ
 ラム内でスレッドと呼ばれる実行単位を起動して行う方法がある。
 独立したプログラムで行う場合にはそれぞれのプログラムがデータを個別に持つ
 ので共通のデータを必要な時に渡したり、参照し
@@ -285,19 +308,30 @@ JavaScriptで並行処理を行う機能を提供するものとしてWeb Worker
 \footnote{\texttt{https://developer.mozilla.org/en-US/docs/Web/API/Web\_Workers\_API/Using\_web\_workers}\label{webworkers}}
 。
 Workerオブジェクトは呼び出されるプログラムとは別のメモリー空間で実行され、
-元のプログラムとのデータ交換はメッセージと呼ばれるイベントを通じて行う。
+元のプログラムとのデータ交換はメッセージの通知というイベントを通じて行う。
 
 この節では前節の素数の数を求めるプログラムをWeb Worker を用いて書き直し
  たものを紹介する。
 
  なお、このプログラムをエクスプローラーからダブルク
- リックして起動する場合(URLが\texttt{file:}で始まる)、ブラウザによって
+ リックして起動する(URLが\texttt{file:}で始まる)と、ブラウザによって
  は\texttt{Worker}が起動できないことがある。その場合にはローカルにサーバー
  を起動し、必要なファイルをドキュメントルートにコピーすればよい。
  \pageref{webworkers}ページの脚注\ref{webworkers}にあるブラウザに関する互換
  性の部分を参照のこと。
 
- \begin{Exec}\upshape
+   \begin{Exec}\upshape
+    図\ref{countPrimes-workers-res}はWeb Workers を利用して素数を求める
+    Webページの結果画面である。
+    \begin{figure}[ht]
+	\begin{center}
+	 \includegraphics[width=0.5\textwidth]{primes/countPrimes-workers-res.eps}
+	\end{center}
+ \caption{素数の数を数える(Web workers版)計算結果画面}\label{countPrimes-workers-res}
+ \end{figure}
+
+    計算結果の順がばらばらで、計算速度も速いことが分かる。
+    
  次のリストはWeb Worker版の素数の数を求めるHTMLファイルである。
  \LISTN{../primes/countPrimes-workers.html}{1}{last}{\normalsize}
  以前のも のからラジオボタンの部分がないものとなっている。当然のことなが
