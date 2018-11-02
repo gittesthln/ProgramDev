@@ -1,14 +1,20 @@
+let Status = false;
+let limit = 10010;
+let primes = [];
 self.onmessage = function(M){
-  let limit = 10010;
-  let primes =[2,3];
-  for(let i=5;i<limit;i+=2) {
-    for(let j=1; j<primes.length; j++){
-      if(i%primes[j] ==0) break;
-      if(i<(primes[j]+2)*primes[j]) {
-        primes.push(i);//console.log(i);
-        break;
+		if(!Status) {
+				console.log(`initialized worker ${M.data.No}`);
+    primes =[2,3];
+    for(let i=5;i<limit;i+=2) {
+      for(let j=1; j<primes.length; j++){
+        if(i%primes[j] ==0) break;
+        if(i<(primes[j]+2)*primes[j]) {
+          primes.push(i);//console.log(i);
+          break;
+        }
       }
     }
+    Status = true;
   }
   let cnt = 0;
   let from = M.data.from-0;
@@ -30,6 +36,6 @@ self.onmessage = function(M){
       }
     }
   }
-  postMessage({from:M.data.from, to:to-1, count:cnt,
+  postMessage({from:M.data.from, to:to-1, count:cnt, No:M.data.No,
                time:new Date().getTime()-M.data.time});
 };
