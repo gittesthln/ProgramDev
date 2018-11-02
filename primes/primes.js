@@ -2,8 +2,8 @@ let Status = false;
 let limit = 10010;
 let primes = [];
 self.onmessage = function(M){
-		if(!Status) {
-				console.log(`initialized worker ${M.data.No}`);
+  if(!Status) {
+    console.log(`initialized worker ${M.data.No}`);
     primes =[2,3];
     for(let i=5;i<limit;i+=2) {
       for(let j=1; j<primes.length; j++){

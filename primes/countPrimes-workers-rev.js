@@ -46,10 +46,10 @@ window.onload = function(){
         }
       };
     }
-  for(i = 0; i<noW; i++){
-    worker[i].postMessage(
-      {from:1+i*step, step:step, time:start.getTime(), No:i});
-    workersNo++;
-  }
- });
+    for(i = 0; i<noW; i++){
+      worker[i].postMessage(
+        {from:1+i*step, step:step, time:start.getTime(), No:i});
+      workersNo++;
+    }
+  });
 }
