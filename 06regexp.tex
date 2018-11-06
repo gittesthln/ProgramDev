@@ -29,12 +29,13 @@ let pattern = /^s/;
 \paragraph{リテラル文字}
 
 正規表現では次の文字は特別な意味を持つ。これらはメタ文字と呼ばれる。
-\begin{Verbatim}
-^ $ . * + ? = ! | \ / ( ) [ ] { }
-\end{Verbatim}
+ \begin{center}
+\Verb:^ $ . * + ? = ! | \ / ( ) [ ] { }:
+ \end{center}
 これらの文字をそのまま文字として使いたい場合はその前にバックスラッシュ
-(\Verb+\+)を付ける。英数字の前にバックスラッシュを付けると別な意味になる
-場合がある(表\ref{character})。
+(\Verb+\+)\footnote{日本語キーボードでは円記号(\textyen)が表示される。}を付け
+る。英数字の前にバックスラッシュを付けると別な意味になる場合がある(表
+\ref{character})。
 \begin{table}[ht]
  \caption{正規表現のリテラル文字}\label{character}
 \begin{center}
@@ -254,26 +255,26 @@ let ex = /\d\d\d\d/;
  とがわかる。
 \end{Exec}
 \begin{Exec}\upshape
-次の例はマッチした文字列を置換する。
+正規表現を用いた文字列の部分置換の例を挙げる。
+\begin{itemize}
+ \item マッチした2つの文字列の位置を交換
 \begin{Verbatim}
 >"aaa bbb".replace(/(\w*)\s*(\w*)/,"$2,$1"); //戻り値は "bbb,aaa"
 \end{Verbatim}
-英数字からなる2つの文字列(\Verb+(\w*)+)の順序を入れ替えて、その間に
- \Verb+,+を挿入する。
+ \item 英数字からなる2つの文字列(\Verb+(\w*)+)の順序を入れ替えて、その間に
+ \Verb+,+を挿入\\
 \Verb+$1+ は文字列 \Verb+aaa+に、
 \Verb+$2+ は文字列 \Verb+bbb+にマッチしている。
-\end{Exec}
-\begin{Exec}\upshape
-次の例は文中の \Verb+Java+ を \Verb+JavaScript+ に変える。
+ \item 文中の \Verb+Java+ を \Verb+JavaScript+ に変える。\\
 ここでは\Verb+JavaScript+ を \Verb+JavaJavaScript+ にしないために
 \Verb+(?!p)+を用いる。
 \begin{Verbatim}
 >"JavaとJavaScriptは全く違う言語です。".replace(/Java(?!Script)/,"JavaScript");
 "JavaScriptとJavaScriptは全く違う言語です。"
 \end{Verbatim}
+\end{itemize}
 \end{Exec}
-\begin{Exec}\label{greedy}\upshape
- 貪欲さと非貪欲さの確認を行う。
+ \begin{Exec}\upshape\label{greedy} 貪欲さと非貪欲さの確認する。
 \begin{Verbatim}
 >"aaaaab".match(/a+/);    //戻り値は ["aaaaa"]
 >"aaaaab".match(/a+?/);   //戻り値は ["a"]
@@ -283,11 +284,11 @@ let ex = /\d\d\d\d/;
 \begin{Verbatim}
 >"aaaaab".match(/a+?b/);  //戻り値は ["aaaaab"]
 \end{Verbatim}
- %この例では、\Verb+ab+ にマッチしていない。
  初めに先頭の\Verb+a+にマッチしたので\Verb+b+が来るところまでマッチする。
-\end{Exec}
-\begin{Exec}\upshape
-次の例は前方参照を行っている。
+ %この例では、\Verb+ab+ にマッチしていない。
+ \end{Exec}
+ \begin{Exec}\upshape
+ ここでは前方参照の例を示す。
 \begin{Verbatim}
 >"abcdbcc".search(/((.)\2).*\1/);  //戻り値は -1
 \end{Verbatim}
@@ -338,8 +339,8 @@ let ex = /\d\d\d\d/;
  \Verb+cc+ にはさまれた部分と \Verb+aa+ ではさまれた部分がそれぞれマッチする。
 
 \iffalse\else
-次の例は前方参照を利用してデータなどに含まれる文字列の引用符が対応してい
- る(シングルクオート同士、ダブルクオート同士)かを確認している。
+ 前方参照を利用しでデータなどに含まれる文字列の引用符が対応してい
+ る(シングルクオート同士、ダブルクオート同士)かの確認\\
 \begin{Verbatim}
 >'\'abcd"df"\''.search(^/(['"]).*\1$/); //戻り値は 0
 >'\'abcd"df"\''.match(/^(['"]).*\1$/);  //戻り値は ["'abcd"df"'", "'"]
@@ -355,10 +356,11 @@ let ex = /\d\d\d\d/;
        きは、初めがマッチした文字列、以下順に\Verb+\1+,\Verb+\2,..+にマッ
        チした文字列が入っている。
 \end{itemize}
-\fi
-\end{Exec}
-\begin{Exec}\upshape
- 文字列を指定した文字列で分割する \Verb+split()+ の分割する文字列にも正規表現が使える。
+  \fi
+ \end{Exec}
+ \begin{Exec}\upshape
+ 文字列を指定した文字列で分割する \Verb+split()+ の分割する文字列
+       にも正規表現が使える。
 \begin{Verbatim}
 >" 1, 2 , 3   ,  4".split(/\s*,\s*/);//戻り値は [" 1", "2", "3", "4"]
 \end{Verbatim}
@@ -377,7 +379,8 @@ $0$個以上の空白、\Verb+,+、$0$個以上の空白の部分で分割して
  き換えて(取り除いて)いる。その文字列に対し非単語文字列で分割しているの
  で空文字が分割結果に表れない。
 
-この様に文字列に対してメソッドを順に続けて記述することができる。
-\end{Exec}
+       この様に文字列に対してメソッドを順に続けて記述することができる。
+ \end{Exec}
+\input 06-01getDate.tex
 \input 06-02checkRegEx.tex
 \input 06-03checkPromptValue.tex
