@@ -75,7 +75,7 @@ let pattern = /^s/;
   \Verb+\S+& 任意のUnicode空白文字以外の文字\\ \hline
   \Verb+\d+& 任意の数字。\Verb+[0-9]+ と同じ\\ \hline
   \Verb+\D+&任意の数字以外の文字。\Verb+[^0-9]+ と同じ\\\hline
-  \Verb+\[\b]+& リテラルバックスペース\\ \hline
+  \Verb+[\b]+& バックスペース\\ \hline
  \end{tabular}
 \end{center}
 \end{table}
@@ -99,14 +99,17 @@ let pattern = /^s/;
 \end{tabular}
 \end{center}
 \end{table}
+
+\begin{Exec}\upshape 10進数を表す正規表現を考える。
 \begin{itemize}
  \item 4桁の10進数のパターンは\Verb+\d\d\d\d+で表されるが、繰り返しを
-       使うと\Verb+\d{4}+で表される。
+       使うと\Verb+\d{4}+と表すこともできる。
  \item 1桁以上の10進数は\Verb-\d+-で表される。先頭が\texttt{0}でないよう
-       にすると、\Verb+[1-9]\d*+と表される。
+       にするには、\Verb+[1-9]\d*+とすればよい。
 \end{itemize}
+\end{Exec}
 \paragraph{非貪欲な繰り返し}
-通常、正規表現において繰り返しはできるだけ長く一致するように繰り返しが行
+通常、正規表現において繰り返しはできるだけ長く一致するように行
 われる。これを貪欲な繰り返しという。たとえば、\Verb+"aaaaab"+という文字
 列に対し、正規表現 \Verb-/a+/- がマッチする部分は \Verb+aaaaa+ の長さ5
 の文字列になる(もっともここではこのパターンが含まれることしかわからない)。
@@ -153,8 +156,8 @@ JavaScript では文字列は\Verb+"+%"
 \Verb-JavaScript-, 
 \Verb-Javascript-,
 \Verb-javaScript-,
-\Verb-javascript- の4つにマッチする。
- \item \Verb/[+-]?\d+/ は符号つき(なくてもよい)10進数とマッチする。
+\Verb-javascript- の4つの部分文字列を含む文字列にマッチする。
+ \item \Verb/[+-]?\d+/ は符号つき(なくてもよい)10進数を含む文字列とマッチする。
 \Verb/[+-]?/により、符号がなくてもよいことに注意すること。
 \end{itemize}
 \end{Exec}
@@ -361,11 +364,14 @@ let ex = /\d\d\d\d/;
  \begin{Exec}\upshape
  文字列を指定した文字列で分割する \Verb+split()+ の分割する文字列
        にも正規表現が使える。
-\begin{Verbatim}
->" 1, 2 , 3   ,  4".split(/\s*,\s*/);//戻り値は [" 1", "2", "3", "4"]
-\end{Verbatim}
-$0$個以上の空白、\Verb+,+、$0$個以上の空白の部分で分割している。\Verb+1+の前にあ
- る空白が除去できていない。
+
+次の例では文字列を$0$個以上の空白、\Verb+,+、$0$個以上の空白の部分からな
+	る文字列で分割している。まお、下記の文字列の中で\protect\verb*+ +は空白を表す。
+\begin{Verbatim*}
+>" 1, 2 , 3   ,  4".split(/\s*,\s*/);
+\end{Verbatim*}
+	戻り値は \Verb+[+\Verb*+" 1",+\Verb+ "2", "3", "4"]+となり、
+	\Verb+1+の前にある空白が除去できていない。
 \begin{Verbatim}
 >" 1, 2 , 3   ,  4".split(/\W+/);  //戻り値は ["", "1", "2", "3", "4"]
 \end{Verbatim}

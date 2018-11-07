@@ -66,10 +66,10 @@
 \contentsline {paragraph}{リテラル文字}{51}{section*.8}
 \contentsline {paragraph}{文字クラス}{52}{section*.9}
 \contentsline {paragraph}{繰り返し}{52}{section*.10}
-\contentsline {paragraph}{非貪欲な繰り返し}{52}{section*.11}
+\contentsline {paragraph}{非貪欲な繰り返し}{53}{section*.11}
 \contentsline {paragraph}{選択、グループ化、参照}{53}{section*.12}
 \contentsline {paragraph}{一致位置の指定}{53}{section*.13}
-\contentsline {paragraph}{フラグ}{53}{section*.14}
+\contentsline {paragraph}{フラグ}{54}{section*.14}
 \contentsline {section}{\numberline {6.2}文字列のパターンマッチングメソッド}{55}{section.6.2}
 \contentsline {chapter}{\numberline {第7回}DOMの利用}{59}{chapter.7}
 \contentsline {section}{\numberline {7.1}HTML文書の構成}{59}{section.7.1}
