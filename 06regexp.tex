@@ -327,7 +327,7 @@ let ex = /\d\d\d\d/;
        まれた部分である。
  % \item
        \Verb+g+フラグがないので、\Verb+aa+ではさまれた部分文字列はマッチしない。
- \item 配列の残りの成分には\Verb+\1+と\Verb+\2+が入っている。
+ \item 配列の残りの成分には\Verb+\1+と\Verb+\2+でマッチした部分文字列が入っている。
 \end{itemize}
 \begin{Verbatim}
 >"abccbcckkccaaMMaa".match(/((.)\2).*\1/g); //戻り値は ["ccbcckkcc", "aaMMaa"]
@@ -345,7 +345,7 @@ let ex = /\d\d\d\d/;
  前方参照を利用しでデータなどに含まれる文字列の引用符が対応してい
  る(シングルクオート同士、ダブルクオート同士)かの確認\\
 \begin{Verbatim}
->'\'abcd"df"\''.search(^/(['"]).*\1$/); //戻り値は 0
+>'\'abcd"df"\''.search(/^(['"]).*\1$/); //戻り値は 0
 >'\'abcd"df"\''.match(/^(['"]).*\1$/);  //戻り値は ["'abcd"df"'", "'"]
 \end{Verbatim}
 \begin{itemize}
@@ -366,7 +366,7 @@ let ex = /\d\d\d\d/;
        にも正規表現が使える。
 
 次の例では文字列を$0$個以上の空白、\Verb+,+、$0$個以上の空白の部分からな
-	る文字列で分割している。まお、下記の文字列の中で\protect\verb*+ +は空白を表す。
+	る文字列で分割している。なお、下記の文字列の中で\protect\verb*+ +は空白を表す。
 \begin{Verbatim*}
 >" 1, 2 , 3   ,  4".split(/\s*,\s*/);
 \end{Verbatim*}
