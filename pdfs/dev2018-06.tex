@@ -4,19 +4,30 @@
 \title{ソフトウェア開発\\第6回目授業}
 \author{平野 照比古}
 \institute{}
-\date{2017/10/27}
+\date{2018/11/9}
 \begin{document}
 \frame{\maketitle}
 %\frame{\tableofcontents}
 \section{前回のレポートから}
+\subsection{レポートの形式について}
+\begin{frame}
+ \frametitle{レポートの形式}
+ 問題1の解答で実行結果のキャプチャ画面の内容についての解説がない、または
+ 見にくいものが多かった。
+ \begin{itemize}
+  \item 個々の実行結果が何を目的としているかの説明がない。
+  \item キャプチャ画面に重複部分がある。
+  \item これを避けるために、個々の実行結果の脇に手書きで何をしているかを
+        書いてほしい。
+ \end{itemize}
+\end{frame}
 \subsection{クラスの\ElmJ{extensible}属性}
 \begin{frame}
  \frametitle{クラスの\ElmJ{extensible}属性}
  \begin{itemize}
-	\item \texttt{PersonF}のほうで行っている解答が少しあった。
-	\item \ElmJ{class}のほうで起このうこと
-	\item 結果は同じ
-	\item 関数のほうを\ElmJ{freeze}してもインスタンスは\ElmJ{freeze}されな
+	\item \ElmJ{class} \texttt{Person}を\texttt{freeze}していない解答が目立っ
+        た。
+	\item クラスのほうを\ElmJ{freeze}してもインスタンスは\ElmJ{freeze}されな
 				いことを確認してほしい。
  \end{itemize}
 \end{frame}
@@ -25,7 +36,7 @@
  \frametitle{\texttt{Person}クラスの\ElmJ{prototype}}
  \begin{itemize}
 	\item 関数で定義したクラスとクラスによる定義の違いを認識してほしい。
-	\item 両者の比較をしてある解答は非常に少なかった。
+	\item 両者の比較をしてある解答はなかった。
   \item \ElmJ{prototype}内にメソッドが存在する
   \item インスタンス内の\Verb+__proto__+はコンストラクタの
         \texttt{prototype}への参照
@@ -53,7 +64,8 @@ true
  \frametitle{\ElmJ{WeakMap}を利用したクラス(2)}
  \texttt{p.birthday}のプロパティを書き直せなくするには次の方法がある。
  \begin{itemize}
-	\item コンストラクタ内でオブジェクトを\ElmJ{freeze}する。
+	\item コンストラクタ内でオブジェクトを\ElmJ{freeze}する。\\
+        この方法だとオブジェクトの内容の変更ができない。
 	\item \texttt{birthday}オブジェクトの内容をコピーして返す。
 \end{itemize}
 \begin{Verbatim}[fontsize=\scriptsize]
@@ -75,6 +87,7 @@ true
     return res;
   }
 \end{Verbatim}
+オブジェクトが変更になっても限定的ではあるが利用可能
 \end{frame}
  \begin{frame}[containsverbatim]
   \frametitle{別解}
@@ -141,10 +154,10 @@ let pattern = /^s/;
 \subsection{リテラル文字}
 \begin{frame}[containsverbatim]
  \frametitle{メタ文字}
-正規表現では次の文字は特別な意味を持つ。
-\begin{Verbatim}
-^ $ . * + ? = ! | \ / ( ) [ ] { }
-\end{Verbatim}
+ 正規表現では次の文字は特別な意味を持つ。
+ \begin{center}
+  \Verb,^ $ . * + ? = ! | \ / ( ) [ ] { },
+ \end{center}
 \begin{itemize}
  \item これらの文字をそのまま文字として使いたい場合はその前にバックスラッシュ
 (\Verb+\+)を付ける。
@@ -187,7 +200,7 @@ let pattern = /^s/;
   \Verb+\S+& 任意のUnicode空白文字以外の文字\\ \hline
   \Verb+\d+& 任意の数字。\Verb+[0-9]+ と同じ\\ \hline
   \Verb+\D+&任意の数字以外の文字。\Verb+[^0-9]+ と同じ\\\hline
-  \Verb+\[\b]+& リテラルバックスペース\\ \hline
+  \Verb+[\b]+& リテラルバックスペース\\ \hline
  \end{tabular}
 \end{center}
 \end{frame}
@@ -264,7 +277,7 @@ let pattern = /^s/;
       る。また、グループに一致した文字列を記憶して後で参照できる。\\\hline
 \Verb+(?:..)+&グループ化しか行わない。一致した文字列を記憶しない。\\\hline
 \Verb+\n+&グループ番号\Verb+n+で指定された部分表現に一致する。グループ番
-      号は左から数えた\Verb+(+の数である。ただし、\Verb+(?+は数えない。\\\hline
+      号は左から数えた\Verb+(+の数である。ただし、\Verb+(?+は数えない。)\\\hline
 \end{tabular}
 \end{center}
 \end{frame}
@@ -500,10 +513,10 @@ undefined
 \iffalse\else
 \begin{frame}[containsverbatim]
 \frametitle{\protect\texttt{split()}における正規表現の利用(1)}
-\begin{Verbatim}
+\begin{Verbatim*}
 >" 1, 2 , 3   ,  4".split(/\s*,\s*/);
-[" 1", "2", "3", "4"]
-\end{Verbatim}
+\end{Verbatim*}
+\Verb+[+\Verb*+" 1",+\Verb+ "2", "3", "4"]+
 \begin{itemize}
  \item $0$個以上の空白、\Verb+,+$0$個以上の空白で分割
  \item \Verb+1+の前にある空白が除去できていない
@@ -534,10 +547,6 @@ undefined
  で空文字が分割結果に表れない。
 \end{frame}
 \fi
-\begin{frame}[containsverbatim]
- \frametitle{今日の演習}
-正規表現に関する演習を行います。
-\end{frame}
 \end{document}
 
 
