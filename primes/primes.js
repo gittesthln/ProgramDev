@@ -38,4 +38,5 @@ self.onmessage = function(M){
   }
   postMessage({from:M.data.from, to:to-1, count:cnt, No:M.data.No,
                time:new Date().getTime()-M.data.time});
+//  close();
 };

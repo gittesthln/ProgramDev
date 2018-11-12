@@ -34,16 +34,15 @@ window.onload = function(){
         let wNo = M.data.No-0;
         if(i<noI) {
           worker[wNo].postMessage(
-            {from:1+i*step, step:step, time:start.getTime(), No:wNo});
+               {from:1+i*step, step:step, time:start.getTime(), No:wNo});
+//            worker[i].postMessage(
+//                {from:1+i*step, step:step, time:start.getTime(), No:i});
           i++;
           workersNo++;
-        } else {
-          if(workersNo == 0){
+        }
+          if(workersNo == 0 && i==noI){
             E.target.removeAttribute("disabled");
           }
-          worker[wNo].terminate();
-          delete worker[wNo];
-        }
       };
     }
     for(i = 0; i<noW; i++){
