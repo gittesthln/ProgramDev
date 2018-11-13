@@ -123,59 +123,63 @@
 \contentsline {paragraph}{\texttt {\$\_SESSION}}{99}{section*.24}
 \contentsline {section}{\numberline {10.3}Web Storage}{99}{section.10.3}
 \contentsline {section}{\numberline {10.4}Ajax}{103}{section.10.4}
-\contentsline {section}{\numberline {10.5}Web Worker}{115}{section.10.5}
-\contentsline {chapter}{\numberline {第11回}jQuery}{121}{chapter.11}
-\contentsline {section}{\numberline {11.1}jQueryとは}{121}{section.11.1}
-\contentsline {section}{\numberline {11.2}jQueryの利用方法}{121}{section.11.2}
-\contentsline {section}{\numberline {11.3}jQuery()関数とjQueryオブジェクト}{122}{section.11.3}
-\contentsline {section}{\numberline {11.4}jQueryオブジェクトのメソッド}{122}{section.11.4}
-\contentsline {paragraph}{HTML属性の取得と設定}{123}{section*.25}
-\contentsline {paragraph}{CSS属性の取得と設定}{123}{section*.26}
-\contentsline {paragraph}{HTMLフォーム要素の値の取得と設定}{123}{section*.27}
-\contentsline {paragraph}{要素のコンテンツの取得と設定}{123}{section*.28}
-\contentsline {section}{\numberline {11.5}ドキュメントの構造の変更}{123}{section.11.5}
-\contentsline {section}{\numberline {11.6}イベントハンドラーの取り扱い}{124}{section.11.6}
-\contentsline {section}{\numberline {11.7}Ajaxの処理}{124}{section.11.7}
-\contentsline {section}{\numberline {11.8}jQuery のサンプル}{125}{section.11.8}
-\contentsline {chapter}{\numberline {第12回}XMLファイルの処理}{129}{chapter.12}
-\contentsline {section}{\numberline {12.1}XMLファイルとは}{129}{section.12.1}
-\contentsline {subsection}{\numberline {12.1.1}W3CにおけるXMLの解説}{129}{subsection.12.1.1}
-\contentsline {subsection}{\numberline {12.1.2}XMLファイルの例}{130}{subsection.12.1.2}
-\contentsline {subsubsection}{GPXファイルの構造}{130}{section*.29}
-\contentsline {subsubsection}{GPXファイルの例}{130}{section*.30}
-\contentsline {subsubsection}{地球の形}{131}{section*.31}
-\contentsline {section}{\numberline {12.2}Google Mapsにおける\texttt {Polyline}の表示}{132}{section.12.2}
-\contentsline {section}{\numberline {12.3}ブラウザでの処理}{132}{section.12.3}
-\contentsline {section}{\numberline {12.4}PHPによる処理}{137}{section.12.4}
-\contentsline {chapter}{\numberline {第13回}クラスの例}{139}{chapter.13}
-\contentsline {section}{\numberline {13.1}例の概要}{139}{section.13.1}
-\contentsline {section}{\numberline {13.2}ソースコードの解説}{140}{section.13.2}
-\contentsline {subsection}{\numberline {13.2.1}HTMLファイル}{140}{subsection.13.2.1}
-\contentsline {subsection}{\numberline {13.2.2}ユーザーインターフェイス}{140}{subsection.13.2.2}
-\contentsline {subsection}{\numberline {13.2.3}ユーザーインターフェイスを引用するJavaScriptファイル}{148}{subsection.13.2.3}
-\contentsline {chapter}{\numberline {第14回}システム開発のためのヒント}{149}{chapter.14}
-\contentsline {section}{\numberline {14.1}コードの構造}{149}{section.14.1}
-\contentsline {subsubsection}{良いコードとは}{149}{section*.32}
-\contentsline {subsubsection}{プログラムとデータの分離}{149}{section*.33}
-\contentsline {section}{\numberline {14.2}コードの管理の問題点}{150}{section.14.2}
-\contentsline {subsubsection}{複数でシステム開発をするときの問題点}{150}{section*.34}
-\contentsline {section}{\numberline {14.3}バージョン管理}{151}{section.14.3}
-\contentsline {subsection}{\numberline {14.3.1}バージョン管理の概念}{151}{subsection.14.3.1}
-\contentsline {subsection}{\numberline {14.3.2}バージョン管理ソフト}{151}{subsection.14.3.2}
-\contentsline {subsection}{\numberline {14.3.3}gitの使い方}{151}{subsection.14.3.3}
-\contentsline {subsubsection}{git の特徴}{152}{section*.35}
-\contentsline {subsubsection}{git のインストール}{152}{section*.36}
-\contentsline {subsubsection}{初期設定}{152}{section*.37}
-\contentsline {paragraph}{ユーザーネームの登録}{152}{section*.38}
-\contentsline {paragraph}{メールアドレスの登録}{152}{section*.39}
-\contentsline {paragraph}{SSH Keyの登録}{152}{section*.40}
-\contentsline {subsubsection}{GitHub のアカウントの取得}{153}{section*.41}
-\contentsline {subsubsection}{リポジトリの作成と運用}{153}{section*.42}
-\contentsline {chapter}{\numberline {第15回}JavaScriptライブラリーの配布}{155}{chapter.15}
-\contentsline {section}{\numberline {15.1}jQueryのコードを読む}{155}{section.15.1}
-\contentsline {section}{\numberline {15.2}JavaScriptファイルの短縮化}{157}{section.15.2}
-\contentsline {subsection}{\numberline {15.2.1}JavaScriptファイルの短縮化について}{157}{subsection.15.2.1}
-\contentsline {subsection}{\numberline {15.2.2}短縮化の例}{157}{subsection.15.2.2}
-\contentsline {section}{\numberline {15.3}Webサイトの効率化}{162}{section.15.3}
-\contentsline {subsection}{\numberline {15.3.1}Contents Deliverly Network(CDN)}{162}{subsection.15.3.1}
-\contentsline {subsection}{\numberline {15.3.2}CSS Sprite}{162}{subsection.15.3.2}
+\contentsline {chapter}{\numberline {第11回}多重化プログラミング}{109}{chapter.11}
+\contentsline {section}{\numberline {11.1}多重化プログラミングとは}{109}{section.11.1}
+\contentsline {section}{\numberline {11.2}Ajaxによる並行処理}{109}{section.11.2}
+\contentsline {section}{\numberline {11.3}Web Worker}{116}{section.11.3}
+\contentsline {section}{\numberline {11.4}\texttt {pthread}による多重化}{121}{section.11.4}
+\contentsline {chapter}{\numberline {第12回}jQuery}{125}{chapter.12}
+\contentsline {section}{\numberline {12.1}jQueryとは}{125}{section.12.1}
+\contentsline {section}{\numberline {12.2}jQueryの利用方法}{125}{section.12.2}
+\contentsline {section}{\numberline {12.3}jQuery()関数とjQueryオブジェクト}{126}{section.12.3}
+\contentsline {section}{\numberline {12.4}jQueryオブジェクトのメソッド}{126}{section.12.4}
+\contentsline {paragraph}{HTML属性の取得と設定}{127}{section*.25}
+\contentsline {paragraph}{CSS属性の取得と設定}{127}{section*.26}
+\contentsline {paragraph}{HTMLフォーム要素の値の取得と設定}{127}{section*.27}
+\contentsline {paragraph}{要素のコンテンツの取得と設定}{127}{section*.28}
+\contentsline {section}{\numberline {12.5}ドキュメントの構造の変更}{127}{section.12.5}
+\contentsline {section}{\numberline {12.6}イベントハンドラーの取り扱い}{128}{section.12.6}
+\contentsline {section}{\numberline {12.7}Ajaxの処理}{128}{section.12.7}
+\contentsline {section}{\numberline {12.8}jQuery のサンプル}{129}{section.12.8}
+\contentsline {chapter}{\numberline {第13回}XMLファイルの処理}{133}{chapter.13}
+\contentsline {section}{\numberline {13.1}XMLファイルとは}{133}{section.13.1}
+\contentsline {subsection}{\numberline {13.1.1}W3CにおけるXMLの解説}{133}{subsection.13.1.1}
+\contentsline {subsection}{\numberline {13.1.2}XMLファイルの例}{134}{subsection.13.1.2}
+\contentsline {subsubsection}{GPXファイルの構造}{134}{section*.29}
+\contentsline {subsubsection}{GPXファイルの例}{134}{section*.30}
+\contentsline {subsubsection}{地球の形}{135}{section*.31}
+\contentsline {section}{\numberline {13.2}Google Mapsにおける\texttt {Polyline}の表示}{136}{section.13.2}
+\contentsline {section}{\numberline {13.3}ブラウザでの処理}{136}{section.13.3}
+\contentsline {section}{\numberline {13.4}PHPによる処理}{141}{section.13.4}
+\contentsline {chapter}{\numberline {第14回}クラスの例}{143}{chapter.14}
+\contentsline {section}{\numberline {14.1}例の概要}{143}{section.14.1}
+\contentsline {section}{\numberline {14.2}ソースコードの解説}{144}{section.14.2}
+\contentsline {subsection}{\numberline {14.2.1}HTMLファイル}{144}{subsection.14.2.1}
+\contentsline {subsection}{\numberline {14.2.2}ユーザーインターフェイス}{144}{subsection.14.2.2}
+\contentsline {subsection}{\numberline {14.2.3}ユーザーインターフェイスを引用するJavaScriptファイル}{152}{subsection.14.2.3}
+\contentsline {chapter}{\numberline {第15回}システム開発のためのヒント}{153}{chapter.15}
+\contentsline {section}{\numberline {15.1}コードの構造}{153}{section.15.1}
+\contentsline {subsubsection}{良いコードとは}{153}{section*.32}
+\contentsline {subsubsection}{プログラムとデータの分離}{153}{section*.33}
+\contentsline {section}{\numberline {15.2}コードの管理の問題点}{154}{section.15.2}
+\contentsline {subsubsection}{複数でシステム開発をするときの問題点}{154}{section*.34}
+\contentsline {section}{\numberline {15.3}バージョン管理}{155}{section.15.3}
+\contentsline {subsection}{\numberline {15.3.1}バージョン管理の概念}{155}{subsection.15.3.1}
+\contentsline {subsection}{\numberline {15.3.2}バージョン管理ソフト}{155}{subsection.15.3.2}
+\contentsline {subsection}{\numberline {15.3.3}gitの使い方}{155}{subsection.15.3.3}
+\contentsline {subsubsection}{git の特徴}{156}{section*.35}
+\contentsline {subsubsection}{git のインストール}{156}{section*.36}
+\contentsline {subsubsection}{初期設定}{156}{section*.37}
+\contentsline {paragraph}{ユーザーネームの登録}{156}{section*.38}
+\contentsline {paragraph}{メールアドレスの登録}{156}{section*.39}
+\contentsline {paragraph}{SSH Keyの登録}{156}{section*.40}
+\contentsline {subsubsection}{GitHub のアカウントの取得}{157}{section*.41}
+\contentsline {subsubsection}{リポジトリの作成と運用}{157}{section*.42}
+\contentsline {chapter}{\numberline {第16回}JavaScriptライブラリーの配布}{159}{chapter.16}
+\contentsline {section}{\numberline {16.1}jQueryのコードを読む}{159}{section.16.1}
+\contentsline {section}{\numberline {16.2}JavaScriptファイルの短縮化}{161}{section.16.2}
+\contentsline {subsection}{\numberline {16.2.1}JavaScriptファイルの短縮化について}{161}{subsection.16.2.1}
+\contentsline {subsection}{\numberline {16.2.2}短縮化の例}{161}{subsection.16.2.2}
+\contentsline {section}{\numberline {16.3}Webサイトの効率化}{166}{section.16.3}
+\contentsline {subsection}{\numberline {16.3.1}Contents Deliverly Network(CDN)}{166}{subsection.16.3.1}
+\contentsline {subsection}{\numberline {16.3.2}CSS Sprite}{166}{subsection.16.3.2}
