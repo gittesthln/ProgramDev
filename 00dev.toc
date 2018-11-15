@@ -75,9 +75,8 @@
 \contentsline {section}{\numberline {7.1}HTML文書の構成}{59}{section.7.1}
 \contentsline {section}{\numberline {7.2}CSSの利用}{61}{section.7.2}
 \contentsline {section}{\numberline {7.3}DOMとは}{64}{section.7.3}
-\contentsline {section}{\numberline {7.4}DOM のメソッドとプロパティ}{64}{section.7.4}
-\contentsline {subsection}{\numberline {7.4.1}DOMのメソッド}{64}{subsection.7.4.1}
-\contentsline {subsection}{\numberline {7.4.2}DOMの要素のプロパティ}{68}{subsection.7.4.2}
+\contentsline {section}{\numberline {7.4}DOM のメソッド}{64}{section.7.4}
+\contentsline {section}{\numberline {7.5}DOMの要素のプロパティ}{67}{section.7.5}
 \contentsline {chapter}{\numberline {第8回}イベント}{69}{chapter.8}
 \contentsline {section}{\numberline {8.1}イベント概説}{69}{section.8.1}
 \contentsline {section}{\numberline {8.2}イベント処理の方法}{69}{section.8.2}

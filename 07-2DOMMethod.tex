@@ -1,19 +1,11 @@
 表\ref{MethodDOM}は DOM のメソッドのリストである。\texttt{document}だけ
-に適用できるものと、すべての要素に適応できるものとがある。一番右の項目
-「PHP」はPHPの\texttt{DOMDocument}クラスにおけるサポート状態を示す。
-\Yes はサポートされていて\No はサポートされていないこと
-を示す。
+に適用できるものと、すべての要素に適応できるものとがある。
 なお、結果が要素のリストであるものについては通常の配列と同様に\texttt{[ ]}によ
 りそれぞれの要素を指定できる。
 
-表中の名前空間(Namespace)とは、指定した要素が定義されている規格を指定するもの
-である。一つの文書内で複数の規格を使用する場合、作成する要素がどこで定義
-されているのかを指定する。これにより、異なる規格で同じ要素名が定義されて
-いてもそれらを区別することが可能となる。通常はルート要素(\HTML では
-\ElmJ{html})の名前空間が指定される。
-HTML文書では\texttt{ http://www.w3.org/1999/xhtml}を指定する
-\footnote{\texttt{http://dev.w3.org/html5/spec-LC/namespaces.html}}。
-\newpage
+一番右の項目はPHPの\texttt{DOMDocument}クラスにおけるサポート状況を示す。
+\Yes と\No はそれぞれサポートあり、なしを示す。
+%\newpage
 {\setlength{\tabcolsep}{0.2em}
 \begin{longtable}{|c|c|m{20em}|c|}
 \caption{DOMのメソッド}\label{MethodDOM}
@@ -85,3 +77,11 @@ HTML文書では\texttt{ http://www.w3.org/1999/xhtml}を指定する
 %	  \texttt{value}にする。}\\ \hline
 \end{longtable}
 }
+
+表中の名前空間(Namespace)とは、指定した要素が定義されている規格を指定するもの
+である。一つの文書内で複数の規格を使用する場合、作成する要素がどこで定義
+されているのかを指定する。これにより、異なる規格で同じ要素名が定義されて
+いてもそれらを区別することが可能となる。通常はルート要素(\HTML では
+\ElmJ{html})の名前空間が指定される。
+HTML文書では\texttt{ http://www.w3.org/1999/xhtml}を指定する
+\footnote{\texttt{http://dev.w3.org/html5/spec-LC/namespaces.html}}。
