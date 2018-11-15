@@ -1,7 +1,0 @@
-document.getElementById("card_list_1");
-cards =document.getElementById("card_list_1");
-cards.getElementsByClassName("pack_ja");
-packs = cards.getElementsByClassName("pack_ja");
-info = Array.prototype.map.call(packs, function(x) {return x.innerText;});
-tt=text.split("\n");
-tt[1].match(/\[\s*(\w(\w|\s)*\w)\s*\]/);
