@@ -1,0 +1,574 @@
+\input devHead.tex
+\SetTheme{AnnArbor}
+\title{ソフトウェア開発\\第8回目授業}
+\author{平野 照比古}
+\institute{}
+\date{2018/11/23}
+\newtheorem{Prob}{解説}
+\newcommand{\Elm}[1]{\texttt{<#1>}}
+\setbeamercovered{transparent}
+
+\newcommand{\DOMM}{\texttt}
+\newcommand{\Event}{\texttt}
+\newcommand{\DOMP}{\texttt}
+\newcommand{\DOM}{\texttt{DOM}}
+\newcommand{\keyitem}{\relax}
+\newcommand{\HTML}{HTML文書}
+\begin{document}
+\frame{\maketitle}
+\section{前回のレポートから}
+ \begin{frame}[containsverbatim]
+  \frametitle{CSSの\protect\texttt{nth-child}について}
+  \begin{itemize}
+   \item おおむね解答は正しかった。
+   \item \texttt{nth-child}に現れる\texttt{n}は$0,1,2\dots$と変化する。
+%         (言及者が少なかった。)
+   \item 下からの要素を指定するためには\texttt{nth-last-child}を用いる。
+	 \item リストの数を変化させて同様に動作することの確認が必要（いくつか
+				 のレポートでは行われていた）
+  \end{itemize}
+ \end{frame}
+ \begin{frame}[containsverbatim]
+  \frametitle{プルダウンメニュー作成の関数}
+\begin{itemize}
+ \item 引数に親要素を与えていない解答が目立った。
+ \item 作成した\Elm{select}を関数の戻り値にしていない。\\
+       後で、要素を参照する必要があるので戻り値はあった方がよい。
+ \item この後で一つの例を与える。
+\end{itemize}
+ \end{frame}
+ \begin{frame}[containsverbatim]
+   \frametitle{子要素の数について}
+   \begin{itemize}
+    \item 直接、要素をエディタで記述したものには\Elm{option}の前後に改行
+          や空白があるので、そこがテキストノードとなる。
+    \item プログラムで作成した場合には意識的にテキストノードを入れないと
+          そのようなものが入らない。
+   \end{itemize}
+\end{frame}
+
+\section{Event}
+\subsection{イベント概説}
+\begin{frame}[containsverbatim]
+\frametitle{イベントとは}
+\begin{itemize}
+ \item イベントとはプログラムに対して働きかける動作
+ \item マウスボタンが押された(\keyitem{クリック})
+などのユーザからの要求
+ \item 一定時間経ったことをシステムから通知される
+(タイマーイベント)
+ \item プログラムが開始さ
+れるということ自体イベントである。このイベントは初期化をするために利用され
+る。
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{イベントドリブンなプログラム}
+\begin{itemize}
+ \item イベントの発生する順序はあらかじめ決まっていない
+ \item それぞれのイベントを処理するプログラムは独立している必要
+\end{itemize}
+イベントの発
+生を順次処理していくプログラムのモデルを\keyitem{イベントドリブン}なプロ
+グラムという。
+\end{frame}
+\subsection{イベント処理の方法}
+\begin{frame}[containsverbatim]
+\frametitle{イベントハンドラー}
+\begin{itemize}
+ \item イベントを処理する関数(イベントハンドラー)を適当な要素に登録
+ \item 属性に関数を登録する方法と、メソッドを用い
+て要素に登録する方法がある。
+ \item この授業ではメソッドを通じて登録する方法だけを紹介
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{イベントハンドラーを登録するメソッド}
+\texttt{addEventListener(string }{\sl type}
+\texttt{,functiion }{\sl listener}
+\texttt{,[boolean }
+{\sl useCapture}
+\texttt{])}
+
+引数の意味は次のとおり
+\begin{itemize}
+ \item {\sl type} はイベントの種類を示す文字列であり、
+イベントの属性名から\texttt{on}を取り除いたもの
+ \item {\sl listener} はイベントを処理する関数(イベントハンドラー)
+ \item {\sl useCapture} はイベントの処理順序(詳しくは後述)
+\end{itemize}
+イベントハンドラーの関数は通常、イベントオブジェクトを引数に取るよ
+うに定義する。
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{イベントハンドラーの削除}
+\texttt{removeEventListener(string }{\sl type}
+\texttt{,functiion }{\sl listener}
+\texttt{,[boolean }
+{\sl useCapture}
+\texttt{])}
+
+イベントハンドラーが削除されるためには登録したときと同じ条件であ
+ることが必要
+\end{frame}
+\subsection{HTML における代表的なイベント}
+\begin{frame}[containsverbatim]
+\frametitle{ドキュメントの\Event{onload}イベント}
+WebブラウザはHTML文書を次のような順序で解釈し、実行する
+\begin{enumerate}
+ \item 初めに\texttt{document}オブジェクトを作成し、Webページの解釈を行
+       う。
+ \item HTML要素やテキストコンテンツを解釈しながら要素やテキスト(ノード)を
+       追加する。この時点では、\texttt{document.readystate}プロパティは
+       \texttt{"loading"}という値を持つ。
+ \item \texttt{<script>}要素が来ると、このこの要素を\texttt{document}に
+       追加し、スクリプトを実行する。したがって、この時点で存在しない要
+       素に対してアクセスすることはできない。つまり、\texttt{<script>}要
+       素より後に書かれている要素のはアクセスできない。
+ \item したがって、この段階では後で利用するための関数の定義やイベントハ
+       ンドラーの登録だけをするのがふつうである。
+\end{enumerate}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{ドキュメントの\Event{onload}イベント}
+\begin{enumerate}\setcounter{enumi}{5}
+ \item ドキュメントが完全に解釈できたら、\texttt{document.readystate}プロパティは
+       \texttt{"interactive"}という値に変わる。
+ \item ブラウザはドキュメントオブジェクトに対し\texttt{DOMContentLoaded}
+       イベントを発生させる。
+ \item この時点では画像などの追加コ
+       ンテンツの読み込みは終了していない可能性がある。
+ \item それらのことが終了すると、\texttt{document.readyState}プロパティ
+       の値が\texttt{"complete"}となり、\texttt{window}オブジェクトに対し
+       て\texttt{load}イベントを発生させる。
+\end{enumerate}
+\end{frame}
+\subsubsection{マウスイベント}
+%\newcommand{\ElmJ}{\texttt}
+\newcommand{\ShowRaw}[4]{%
+#2&%#3&
+#4&#1\\\hline}
+\begin{frame}[containsverbatim]
+\frametitle{マウスイベントのプロパティ}
+\begin{table}[ht]
+\begin{center}
+\begin{tabular}{|c|c|}\hline
+イベントの発生条件& イベントの属性名%&
+\\\hline
+ボタンがクリックされた &\Event{onclick}  \\ \hline
+ボタンが押された &\Event{onmousedown}  \\ \hline
+マウスカーソルが移動した&\Event{onmousemove}  \\ \hline
+マウスボタンが離された&  \Event{onmouseup} \\ \hline
+マウスカーソルが範囲に入った&\Event{onmouseover}  \\ \hline
+マウスカーソルが範囲から出た&\Event{onmouseout}  \\ \hline
+\end{tabular} 
+\end{center}
+\end{table}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{マウスイベントのプロパティ(1)}
+%\begin{minipage}[t]{\textwidth}
+\begin{table}[ht]
+\begin{center}%\ \\[-2.em]
+\begin{tabular}[t]{|c|%c|
+c|%m{4.9cm}
+m{15zw}
+|}
+ \hline
+\ShowRaw{\multicolumn{1}{c|}{意味}}{プロパティ}{メソッド}{型}
+\ShowRaw{イベントが発生したオブジェクト}{\DOMP{target}}{
+	 \DOMM{getTarget}{()}}{\texttt{EventTarget}}
+\ShowRaw{イベントハンドラーが登録されているオブジェクト}{\DOMP{currentTarget} }{
+	 \DOMM{getCurrentTarget}{()}}{\texttt{EventTarget} }
+\end{tabular}
+\end{center}
+\end{table}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{\keyitem{マウスイベントのプロパティ}(2)}
+\begin{table}[ht]
+\begin{center}%\ \\[-2.em]
+\begin{tabular}[t]{|c|%c|
+c|%m{4.9cm}
+m{23zw}
+|}\hline
+\ShowRaw{マウスポインタのディスプレイ画面における$x$座標}
+    {\DOMP{screenX} }{\DOMM{getScreenX}{()}}{\texttt{long}}
+\ShowRaw{マウスポインタのディスプレイ画面における$y$座標 }
+    {\DOMP{screenY} }{\DOMM{getScreenY}{()}}{\texttt{long}}
+\ShowRaw{マウスポインタのクライアント領域における相対的な$x$座標(スク
+ ロールしている場合には\DOMP{window.pageXOffset}を加える) }
+     {\DOMP{clientX} }{\DOMM{getclientX}{()} }{\texttt{long}}
+\ShowRaw{マウスポインタのクライアント領域における相対的な$y$座標(スク
+ ロールしている場合には\DOMP{window.pageYOffset}を加える) }
+     {\DOMP{clientY} }{\DOMM{getclientY}{()} }{\texttt{long}}
+\ShowRaw{マウスポインタの\texttt{document}領域における相対的な$x$座標}
+     {\DOMP{pageX} }{}{\texttt{long}}
+\ShowRaw{マウスポインタの\texttt{document}領域における相対的な$y$座標}
+     {\DOMP{pageY} }{}{\texttt{long}}
+\end{tabular}
+\end{center}
+\end{table}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{\keyitem{マウスイベントのプロパティ}(3)}
+\begin{table}[ht]
+\begin{center}%\ \\[-2.em]
+\begin{tabular}[t]{|c|%c|
+c|%m{4.9cm}
+m{15zw}
+|}\hline
+\ShowRaw{\texttt{cntrl}キーが押されているか }
+   {\DOMP{ctrlKey} }{ \DOMM{getCntrlKey}{()}}{\texttt{boolean} }
+\ShowRaw{\texttt{shift}キーが押されているか }
+   {\DOMP{shiftKey} }{ \DOMM{getShiftKey}{()}}{ \texttt{boolean} }
+\ShowRaw{\texttt{alt}キーが押されているか }
+   {\DOMP{altKey} }{ \DOMM{getAltKey}{()}}{\texttt{boolean} }
+\ShowRaw{\texttt{meta}キーが押されているか }
+   {\DOMP{metaKey} }{ \DOMM{getMetaKey}{()}}{\texttt{boolean} }
+\ShowRaw{マウスボタンの種類、$0$は左ボタン、$1$は中ボタン、$2$は右ボタン
+ を表す。}{\DOMP{button} }{
+ \DOMM{getButton}{()}}{\texttt{unsigned short}}
+\ShowRaw{イベント伝播の現在の段階を表す。\newline
+\ElmJ{Event.CAPUTURING\_PHASE}($1$)、
+\ElmJ{Event.AT\_TARGET}($2$)、\ElmJ{Event.BUBBLING\_PHASE}($3$)の値をとる
+}
+      {\DOMP{eventPhase}}{}{\texttt{unsigned short}}
+\end{tabular}
+ \end{center}
+\end{table}
+\end{frame}
+\subsection{DOM Level 2 のイベント処理モデル}
+\begin{frame}[containsverbatim]
+\frametitle{DOM Level 2 のイベント処理モデル}
+あるオブジェクトの上でイベントが発生
+すると次の順序で各オブジェクトにイベントの発生が伝えられる。
+\begin{enumerate}
+ \item 発生したオブジェクトを含む最上位のオブジェクトにイベントの発生が
+       伝えられる。このオブジェクトにイベント処理関数が定義されていな
+       ければなにも起きない。
+ \item 以下順に DOM ツリーに沿ってイベントが発生したオブジェクトの途中に
+       あるオブジェクトにイベントの発生が伝えられる。(イベントキャプチャリング)
+ \item イベントが発生したオブジェクトまでイベントの発生が伝えられる。
+ \item その後、DOM ツリーに沿ってこのオブジェクトを含む最上位のオブジェクトま
+       で再びイベントの発生が伝えられる(イベントバブリング)。
+\end{enumerate}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{}
+\begin{itemize}
+ \item \DOMM{addEventListner}の3番目の引数で\ElmJ{false}にするとイベント処理はイ
+ベントバブリングの段階で呼び出される。
+ \item \ElmJ{true}にするとイベント処理はイベントキャプチャリングの段階で呼び出される。
+ \item イベントの伝播を途中で中断させるメソッドが\DOMM{stopPropagation}{()}
+ \item ブラウザの画面で右クリックをすると、ページのコンテキストメニュが表
+示される。このようなデフォルトの操作を行わせないようにする方法が
+\DOMM{preventDefault}{()}
+\end{itemize}
+\end{frame}
+\subsection{イベント処理の例}
+\begin{frame}[containsverbatim]
+\frametitle{ユーザの入力を取り扱う例}
+大きさが指定された\texttt{div}要素が3つ並び、その横にプル
+ ダウンメニュー、ラジオボタン、テキスト入力エリアと設定ボタンが並んでい
+ る。
+このページでは次のことができる。
+\begin{itemize}
+ \item 左にある3つの領域でマウスをクリックすると、クリックした位置の情報
+       が右側下方の8つのテキストボックスに表示
+ \item 上の6つはイベントオブジェクトのプロパティをそのまま表示
+ \item 最下部の値はそれぞれの領域から見た相対位置を表示
+ \item 右最上のプルダウンメニューからは一番左の領域の背景色を変えること
+       が可能
+ \item ラジオボタンで選択された色が中央の領域の背景色になる。
+ \item テキストボックスにはCSS3で定義された色の指定方法で右の領
+       域の背景色を設定できる。設定するためには隣の「設定」ボタンを押す
+       必要
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{ファイルのリスト(1)}
+\LISTNN{09-01event.html}{1}{7}{\small}
+CSSファイル、JavaScriptファイルが外部ファイル
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{ファイルのリスト(2)}
+\LISTNN{09-01event.html}{8}{11}{\small}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{ファイルのリスト(3)}
+\LISTNN{09-01event.html}{12}{26}{\footnotesize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{ファイルのリスト(4)}
+\LISTNN{09-01event.html}{27}{last}{\footnotesize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{CSSファイル(1)---左部分}
+\LISTNN{event.css}{1}{9}{\footnotesize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{CSSファイルの解説(1)---左部分}
+\begin{itemize}
+ \item 左側の3つの領域は
+       \texttt{id}が\texttt{block}である要素の直下の\texttt{div}要素であ
+       ることから5行目のセレクタが適用される。
+\begin{itemize}
+ \item これらの3つの部分は大きさが$200$pxの正方形となっている(6行目と7行
+       目)。
+ \item 横に並べるようにするため、\texttt{display}を\texttt{inline-block}
+       に指定している。
+ \item 背景色(\texttt{background})はプログラムから設定される。
+\end{itemize}
+ \item これらの領域全体を囲む\texttt{div}の垂直方向の配置の位置が3行目で
+       定められている。
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{CSSファイル(2)---右部分}
+\LISTNN{event.css}{10}{22}{\footnotesize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{CSSファイル(3)---右部分(続き)}
+\LISTNN{event.css}{23}{last}{\footnotesize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{CSSファイルの解説(2)---右部分}
+\begin{itemize}
+ \item 右上方のプルダウンメニューのフォントの大きさは20pxに定義されてい
+       るが、文書のロード時に30pxに変更している。
+ \item ラジオボタンの要素の幅は\texttt{\#radio}のセレクタで定められている。
+
+ \item クリックしたときの位置情報を示す部分のCSSは\texttt{\#position}で始
+       まるセレクタで定められている。
+ \begin{itemize}
+  \item テキストボックスがない行は\texttt{\#position > div}が適用されている。
+  \item テキストボックスがある行は、テキストボックスの位置をそろえるため
+	に、その前の文字列を\texttt{div}要素の中に入れ、幅、テキ
+	ストの配置位置とフォントの大きさを指定(\texttt{\#position
+	> div >div})。
+ \end{itemize}
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{JavaScript(1)}
+\LISTNN{event.js}{1}{8}{\footnotesize}
+ここでは\texttt{id}属性を持つ要素すべてを得ている。
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{JavaScript(2)}
+\LISTNN{event.js}{9}{12}{\footnotesize}
+\begin{itemize}
+ \item \texttt{id}が\texttt{Squares}である\texttt{div}要素の下には3つの
+ \texttt{div}要素がある。これらの要素の背景色を指定するために、
+ \texttt{children}プロパティを用いて参照
+ \item スタイルを変更するためには\texttt{style}プロパティの後に属性を付
+       ける。
+ \item 9行目から11行目では左の3つの領域の背景色(\texttt{background})を設
+       定
+ \item フォントの大きさを指定するCSS属性は\texttt{font-size}であるが、こ
+       れは\texttt{-}を含んでいる。このような属性は\texttt{-}を省き、次
+       の単語を大文字で始める。この場合には\texttt{fontSize}となる。
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{}
+\LISTNN{event.js}{13}{25}{\footnotesize}
+この領域がクリックされたときのイベントハンドラーを定義している。
+\begin{itemize}
+ \item 表示するためのテキストボックスのリスト得る(7行目)
+ \item テキストボックスに該当する値を代入(14行目から19行目)
+ \item 21行目から23行目では該当する領域からの相対位置を求めている。
+       
+       それぞれの領域がページの先頭からどれだけ離れているかを求めるメソッ
+       ドが \texttt{getBoundingClientRect()}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[containsverbatim]
+\frametitle{\texttt{getBoundingClientRect()}の戻り値}
+ \texttt{getBoundingClientRect()}メソッドは\texttt{ClientRect}オブジェクトを返す。
+\begin{center}
+\begin{tabular}{|c|c|}\hline
+プロパティ&\multicolumn{1}{c|}{解説} \\\hline
+ \texttt{top}&領域の上端のY座標 \\\hline
+ \texttt{bottom}&領域の下端のY座標 \\\hline
+ \texttt{left}& 領域の左端のX座標\\\hline
+ \texttt{right}& 領域の右端のX座標\\\hline
+ \texttt{width}& 領域の幅\\\hline
+ \texttt{height}& 領域の高さ\\\hline
+\end{tabular}
+\end{center}
+これらの値とイベントが起きた位置の情報から領域内での位置が計算できる。
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{イベントハンドラーの定義--プルダウンメニュー}
+ ここでは3つの入力方法に対して、イベントハンドラーを定義している。
+ 
+\LISTNN{event.js}{26}{27}{\footnotesize}
+ プルダウンメニューに\texttt{change}イベントの
+       ハンドラーを定義している。左側の部分の背景色を変えている。
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{イベントハンドラーの定義--ラジオボタン}
+\LISTNN{event.js}{28}{35}{\footnotesize}
+ 25行目から31行目はラジオボタンのイベントハンドラーを設定。
+
+ ラジオボタンは\texttt{name}属性が同じグループとして扱われる(どこか一つ
+ だけオンになる)。 
+\end{frame}
+\begin{frame}[containsverbatim]
+\begin{itemize}
+ \item 27行目ではクリックされた場所の要素名を表示(通常は必要ない)。
+       
+       HTMLの要素名は大文字に変換されることの確認。
+ \item ここではHTMLのリストの28行目にある
+       \texttt{div}要素にクリックのイベントハンドラーを登録するので、ク
+       リックされた場所がラジオボタンの上でなくても、この範囲内であれば
+       イベントは発生
+ \item クリックされた場所がラジオボタンの上でなければ(このと
+       きは、ラジオボタンの親要素の\texttt{div}要素が\texttt{E.target}と
+       なる)のでその\texttt{firstChild}が値を変えるラジオボタンになる(28
+       行目)。
+ \item ラジオボタンの集まりには\texttt{value}プロパティがないので、チェッ
+       クされている場所を探すために
+       \texttt{querySelector("input:checked")}を用いる(31行目の右辺)。
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{イベントハンドラーの定義--テキストボックス}
+\LISTNN{event.js}{36}{38}{\footnotesize}
+ テキストボックスの値を設定するためには記入されたテキストをそのま
+       ま設定すればよい。
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{日付}
+3つのプルダウンメニューが順に年、月、日を選択できる
+
+年や月が変化(\texttt{change}イベントが発生)すると日
+ のプルダウンメニューの日付のメニューがその年月にある日までに変わるよう
+ になっている。
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{日付--リスト(1)}
+\LISTNN{09-03pulldown.html}{1}{16}{\footnotesize}
+ このJavaScriptのプログラムは8行目で定義されている
+       \texttt{window.onload}のイベントハンドラーの中に入っている。
+
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{日付--リスト(1)---解説}
+ 9行目から16行目では指定された範囲の値を選択できるプルダウンメニュー
+       を作成する関数\texttt{makeSelectNumber()}を定義
+\begin{itemize}
+ \item 引数は順に、下限値(\texttt{from})、上限値(\texttt{to})、数字の前
+       後に付ける文字列(\texttt{prefix}と\texttt{suffix})、プルダウンメ
+       ニュ－の\texttt{id}属性の属性値(\texttt{id})と親要素
+       (\texttt{parent})
+ \item 10行目で\texttt{select}要素を作成。作成のために
+       \texttt{makeElm}関数(17行目以降で定義)を呼びだす。
+ \item 11行目から14行目で\texttt{option}要素を順に作成
+ \item 13行目でプルダウンメニューに表示される文字列をテキストノードを作
+       成(関数\texttt{makeTextNode()})。
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{日付--リスト(2)}
+\LISTNN{09-03pulldown.html}{17}{27}{\footnotesize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{日付--リスト(2)---解説}
+与えられた要素を作成する関数\texttt{makeElm()}を定義
+\begin{itemize}
+ \item 引数は順に、要素名(\texttt{name})、属性値のリスト
+       (\texttt{attribs})と親要素の指定
+ \item 18行目で指定された要素を作成
+ \item 19行目から21行目で与えられた属性とその属性値がメンバーになっているオ
+       ブジェクトの値を順に選んで属性値を設定
+ \item 22行目では指定された親オブジェクトが有効な場合には、作成した要素
+       を子要素に付け加えている。
+ \item 23行目で作成した要素を戻り値としている。
+ \item 25行目から27行目で関数\texttt{makeTextNode()}は指定された文字列
+			 を基にテキストノードを作成し、指定された親要素の子要素に設定して
+			 いる。
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{日付--リスト(3)}
+\LISTNN{09-03pulldown.html}{28}{34}{\footnotesize}
+59行目の\texttt{form}要素内にプルダウンメニューを作成する。プルダウンメ
+ ニューで表示される日付は実行当日になるように設定される。
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{日付--リスト(3)---解説}
+\begin{itemize}
+ \item 28行目では\texttt{form}要素を得ている。
+ \item 29行目と30行目ではそれぞれ年、月のプルダウンメニューを作成して
+       \texttt{form}要素の子要素にしている。
+ \item 日については28日から31日まであるプルダウンメニューを4つ作成して配
+       列に格納している。
+ \item ここでの関数呼び出しは最後の親要素がないので、いずれも子要素
+       としては登録されない。
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{日付--リスト(4)}
+\LISTNN{09-03pulldown.html}{35}{40}{\footnotesize}
+ここでは、実行時の日付がプルダウンメニューの初期値として表示されるように
+ している。
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{日付--リスト(4)---解説}
+\begin{itemize}
+ \item \texttt{Date()}オブジェクトを引数なしでよぶと、実行時の時間が得ら
+       れる。この時間は1970年1月1日午前0時(GMT)からの経過時間であり、単位はミリ秒。
+ \item 36行目で年を得ている。\texttt{Date}オブジェクトには
+       \texttt{getYear()}というメソッドも存在するが、これは西暦の下2桁し
+       か返さないので使わないこと。
+ \item 37行目で月を得ている。\texttt{getMonth()}メソッドの戻り値は
+       $0$(1月)から $11$(12月)であることに注意
+ \item 39行目と40行目では、得られた年と月をそれぞれのプルダウンメニュー
+       に設定している。月の値を1増やしていることに注意
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{リスト(5)}
+\LISTNN{09-03pulldown.html}{41}{52}{\footnotesize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{リスト(5)---解説}
+プルダウンメニューの値が変化したイベント(\texttt{change})ハンド
+ ラーを登録している。
+\begin{itemize}
+ \item イベントハンドラーは\texttt{form}要素につけている。
+ \item 42行目で、現在表示している日を保存している。
+ \item 43行目で、現在、プルダウンメニューで設定されている年月の日数を求
+       めている。
+ \item この日数と現在表示されている日数のプルダウンメニューの日数が異な
+       る場合には(44行目)子ノードを入れ替える(45行目)。さらに、初期値を
+       現在のままか、月の最終日の小さいほうに設定する(46行目)。
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{リスト(5)---解説(続き)}
+\begin{itemize}
+ \item \texttt{Date()}オブジェクトに年、月、日(さらに、時、分、秒もオプ
+       ションの引数として与えられる)を与えて、経過時間を得るとができる。
+       こここでは実行当日の翌月の0日を指定することで翌月の1日の1日前の日
+       付に設定できる。その日付から日を得る(\texttt{getDate()}メソッド)
+       ことで当月の日数がわかる(43行目)。
+ \item \texttt{Date}オブジェクトには\texttt{Day()}というメソッドも存在す
+       る。これは曜日を得るメソッドで$0$(日曜日)から$6$(土曜日)の値が返
+       る。
+ \item 44行目ではこの日数を持つプルダウンメニューを子要素として追加して
+       いる。
+ \item 46行目で、日の選択する値を設定している。
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{リスト(6)}
+\LISTNN{09-03pulldown.html}{53}{last}{\footnotesize}
+ここではHTML文書内で表示される要素を記述している。
+ここでは\texttt{body}要素内に\texttt{form}要素があるだけである。
+\end{frame}
+\end{document}
