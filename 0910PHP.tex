@@ -52,8 +52,10 @@ JavaScriptと同様に文字列の型はあるが、文字の型はない。
  \item 2 種類の複合型
  \begin{itemize}
   \item 配列 (array)\\
-\texttt{array()}を用いて作成する。引数にはカンマで区切られた
-	\texttt{key=>value}の形で定義する。\texttt{key=>}の部分はなくて
+\texttt{array()}またはJavaScritと同様に\texttt{[]}を用いて作成する。引数
+        にはカンマで区切られた
+	\texttt{key=>value}の形で定義する。\texttt{key}の部分は文字列で定義す
+        る。\texttt{key=>}の部分はなくて
 	もよい。このときは\texttt{key}として\texttt{0,1,2,...}が順に与え
 	られる。なお、PHPの配列はキーと値を関連付ける連想配列しかない。
   \item オブジェクト (object)
@@ -70,7 +72,7 @@ JavaScriptと同様に文字列の型はあるが、文字の型はない。
 \section{変数}
 PHPの変数の特徴は次のとおりである。
 \begin{itemize}
- \item 変数は特に宣言しない。
+ \item 変数は特に宣言しないで使用できる。
  \item 変数名は \texttt{\$}で始まる。
  \item 変数に値を代入すればその値はすべてコピーされる。
  \item コピーではなく参照にしたい場合には変数の前に \texttt{\&}を付
@@ -102,18 +104,16 @@ print "4:\$a=$a, \$b=$b\n";// 4:$a=10, $b=10
  \end{itemize}
  \end{Exec}
  \iffalse
+ \begin{Exec}\upshape
  次の例は配列に対して同様のことをしている。
 \begin{Verbatim}[numbers=left]
 <?php
 $a = array(1,2);
 $b = $a;
-
 print_r($a);
 print_r($b);
-
 $a[0] = 20;
 print "1:\$b[0]=$b[0]\n";
-
 $b = &$a;
 $a[1] = 30;
 print "2:\$b=";
@@ -143,13 +143,15 @@ Array
 \begin{itemize}
  \item 2行目で配列の成分が\texttt{1}と\texttt{2}である配列を作成している。
        さらに、3行目でこの配列を別の変数に代入している。
- \item 9行目では配列の一部分の値を変えているが、3行目で代入された変数の
-       値には変化がないことがわかる(10行目)。
-
-       これから単純な配列の代入は配列全体がコピーされていることがわかる。
- \item 関数\texttt{print\_r()}は配列などの構造を持つ変数の内容をわかりや
+ \item 4行目と5行目で2つの変数の値を確認している。
+       
+      関数\texttt{print\_r()}は配列などの構造を持つ変数の内容をわかりや
  すく表示する関数である。より詳しい情報を知りたい場合には関数
        \texttt{var\_dump()} を用いるとよい
+ \item 6行目では配列の一部分の値を変えているが、3行目で代入された変数の
+       値には変化がないことがわかる(7行目)。
+
+       これから単純な配列の代入は配列全体がコピーされていることがわかる。
 \end{itemize}
 \end{Exec}
 \input 09prob-02.tex
@@ -206,7 +208,7 @@ PHP にはいくつかの定義済みの変数が存在する。そのうち、�
 \end{center}
 \end{table}
 
-これらの変数のうち、{\texttt{\$\_ENV}} \Verb+$argc+ と
+これらの変数のうち、{\texttt{\$\_ENV}}、 \Verb+$argc+ と
 \Verb+$argv+ 以外はCGIで使用する。
 
 \Verb+$argv+はPHPをコマンドプロンプトから実行したときの(空白で区切られた)パ
@@ -234,17 +236,14 @@ PHP にはいくつかの定義済みの変数が存在する。そのうち、�
 <?php
 print 'string1 \':abcd\n';
 print "string2 \":abcd\n";    // string1 ':abcd\nstring2 ":abcd
-
 $a = 1;
 print 'string3 \':$a bcd\n';
 print "string4 \":$a bcd\n"; //string3 ':$a bcd\nstring4 ":1 bcd
 print "string5 \":{$a}bcd\n";//string5 ":1bcd
-
 $b = array(1,2,3);
 print "string6:$b\n";        //string6:Array
 print "string7:$b[1]aa\n";  //string7:2aa
 print "string7:$b[$a]aa\n"; //string7:2aa
-
 print <<<_EOL_
 string8:
   aa
@@ -258,18 +257,19 @@ _EOL_;          //string8:
  \item シングルクオートの文字列では改行を意味する\texttt{\textbackslash
        n}がそのまま
        出力されているのに対し、ダブルクオートの文字列では改行に変換され
-       ている。
+       ている(2行目の出力結果の後に改行されないで3行目の結果が表示されて
+       いる)。
  \item シングルクオートの文字列では変数名がそのまま
        出力されているのに対し、ダブルクオートの文字列では変数の値に変換され
        ている。この場合、変数と
        して解釈されるのは変数名の区切りとなる文字(空白など)である。その
        ため7行目では変数の後に空白を入れている。
  \item 空白を入れたくない場合などは変数名全体を\texttt{\{}と\texttt{\}}
-       で囲む(8行目)。
+       で囲む(7行目)。
  \item 変数が配列の場合には添え字を個々に指定しなくてはいけない。その指定
-       には別の変数が使用できる。
+       には別の変数が使用できる(11行目)。
  \item ヒアドキュメントでは途中の改行もそのまま出力される。また、変数は
-       展開される。
+       展開される(12行目から16行目)。
 \end{itemize}
 \end{Exec}
 \subsection{文字列を取り扱う関数}
@@ -312,7 +312,8 @@ PHPでは分岐、繰り返しなどの制御構造はC言語と同じように\
 
 \section{配列}
 \subsection{配列の基礎}
-PHPの配列は \texttt{array()}関数で作成する。配列にはC言語などのような数
+PHPの配列は \texttt{array()}関数またはJavaScriptのように\texttt{[]}で作
+成する。配列にはC言語などのような数
 字を添え字とするものとキーと値の組み合わせであるものがある。
 \begin{Exec}
  \upshape

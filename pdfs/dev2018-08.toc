@@ -1,3 +1,4 @@
+\beamer@endinputifotherversion {3.36pt}
 \beamer@sectionintoc {1}{前回のレポートから}{2}{0}{1}
 \beamer@sectionintoc {2}{Event}{5}{0}{2}
 \beamer@subsectionintoc {2}{1}{イベント概説}{5}{0}{2}

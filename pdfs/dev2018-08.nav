@@ -1,33 +1,31 @@
+\beamer@endinputifotherversion {3.36pt}
 \headcommand {\slideentry {0}{0}{1}{1/1}{}{0}}
 \headcommand {\beamer@framepages {1}{1}}
+\headcommand {\sectionentry {1}{前回のレポートから}{2}{前回のレポートから}{0}}
 \headcommand {\beamer@sectionpages {1}{1}}
 \headcommand {\beamer@subsectionpages {1}{1}}
-\headcommand {\sectionentry {1}{前回のレポートから}{2}{前回のレポートから}{0}}
 \headcommand {\slideentry {1}{0}{1}{2/2}{}{0}}
 \headcommand {\beamer@framepages {2}{2}}
 \headcommand {\slideentry {1}{0}{2}{3/3}{}{0}}
 \headcommand {\beamer@framepages {3}{3}}
 \headcommand {\slideentry {1}{0}{3}{4/4}{}{0}}
 \headcommand {\beamer@framepages {4}{4}}
+\headcommand {\sectionentry {2}{Event}{5}{Event}{0}}
 \headcommand {\beamer@sectionpages {2}{4}}
 \headcommand {\beamer@subsectionpages {2}{4}}
-\headcommand {\sectionentry {2}{Event}{5}{Event}{0}}
-\headcommand {\beamer@subsectionpages {5}{4}}
-\headcommand {\beamer@subsectionentry {0}{2}{1}{5}{イベント概説}}
+\headcommand {\beamer@subsectionentry {0}{2}{1}{5}{イベント概説}}\headcommand {\beamer@subsectionpages {5}{4}}
 \headcommand {\slideentry {2}{1}{1}{5/5}{イベント概説}{0}}
 \headcommand {\beamer@framepages {5}{5}}
 \headcommand {\slideentry {2}{1}{2}{6/6}{イベント概説}{0}}
 \headcommand {\beamer@framepages {6}{6}}
-\headcommand {\beamer@subsectionpages {5}{6}}
-\headcommand {\beamer@subsectionentry {0}{2}{2}{7}{イベント処理の方法}}
+\headcommand {\beamer@subsectionentry {0}{2}{2}{7}{イベント処理の方法}}\headcommand {\beamer@subsectionpages {5}{6}}
 \headcommand {\slideentry {2}{2}{1}{7/7}{イベント処理の方法}{0}}
 \headcommand {\beamer@framepages {7}{7}}
 \headcommand {\slideentry {2}{2}{2}{8/8}{イベント処理の方法}{0}}
 \headcommand {\beamer@framepages {8}{8}}
 \headcommand {\slideentry {2}{2}{3}{9/9}{イベント処理の方法}{0}}
 \headcommand {\beamer@framepages {9}{9}}
-\headcommand {\beamer@subsectionpages {7}{9}}
-\headcommand {\beamer@subsectionentry {0}{2}{3}{10}{HTML における代表的なイベント}}
+\headcommand {\beamer@subsectionentry {0}{2}{3}{10}{HTML における代表的なイベント}}\headcommand {\beamer@subsectionpages {7}{9}}
 \headcommand {\slideentry {2}{3}{1}{10/10}{HTML における代表的なイベント}{0}}
 \headcommand {\beamer@framepages {10}{10}}
 \headcommand {\slideentry {2}{3}{2}{11/11}{HTML における代表的なイベント}{0}}
@@ -41,14 +39,12 @@
 \headcommand {\beamer@framepages {14}{14}}
 \headcommand {\slideentry {2}{3}{6}{15/15}{HTML における代表的なイベント}{0}}
 \headcommand {\beamer@framepages {15}{15}}
-\headcommand {\beamer@subsectionpages {10}{15}}
-\headcommand {\beamer@subsectionentry {0}{2}{4}{16}{DOM Level 2 のイベント処理モデル}}
+\headcommand {\beamer@subsectionentry {0}{2}{4}{16}{DOM Level 2 のイベント処理モデル}}\headcommand {\beamer@subsectionpages {10}{15}}
 \headcommand {\slideentry {2}{4}{1}{16/16}{DOM Level 2 のイベント処理モデル}{0}}
 \headcommand {\beamer@framepages {16}{16}}
 \headcommand {\slideentry {2}{4}{2}{17/17}{DOM Level 2 のイベント処理モデル}{0}}
 \headcommand {\beamer@framepages {17}{17}}
-\headcommand {\beamer@subsectionpages {16}{17}}
-\headcommand {\beamer@subsectionentry {0}{2}{5}{18}{イベント処理の例}}
+\headcommand {\beamer@subsectionentry {0}{2}{5}{18}{イベント処理の例}}\headcommand {\beamer@subsectionpages {16}{17}}
 \headcommand {\slideentry {2}{5}{1}{18/18}{イベント処理の例}{0}}
 \headcommand {\beamer@framepages {18}{18}}
 \headcommand {\slideentry {2}{5}{2}{19/19}{イベント処理の例}{0}}
@@ -115,4 +111,4 @@
 \headcommand {\beamer@subsectionpages {18}{48}}
 \headcommand {\beamer@sectionpages {5}{48}}
 \headcommand {\beamer@documentpages {48}}
-\headcommand {\gdef \inserttotalframenumber {48}}
+\headcommand {\def \inserttotalframenumber {48}}
