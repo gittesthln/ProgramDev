@@ -2,7 +2,8 @@
 $A = 2;               //JavaScriptのときは $ は取り除く。
 $B = 5;
 
-print "1:$A+$B\n";    //JavaScriptのときは print は　console.log() になおす。
+print "1:$A+$B\n";  //JavaScriptのときは print は　console.log() になおす。
+                    //文字列はテンプレートリテラルに、変数の埋め込みの形に直す。
 print "2:"+$A+$B+"\n";
 print "3:".$A+$B."\n";//JavaScript のときは省略すること
 

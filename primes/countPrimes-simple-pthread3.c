@@ -62,9 +62,9 @@ int main(int argc, char *argv[]) {
 	pthread_t hThreads[MaxThreads];
 	int threadID[MaxThreads];
 	int Threads;
-  int no[MaxThreads];
+  int threadParams[MaxThreads];
   for(i=0;i<MaxThreads;i++){
-    no[i]=i+1;
+    threadparams[i]=i+1;
   }
 	for(i = 1; i <argc; i++) {
 		if(*argv[i] != '-') break;
@@ -89,7 +89,7 @@ int main(int argc, char *argv[]) {
 		} else if(Threads >MaxThreads) Threads = MaxThreads;
     Step = LIMIT/Threads;
 		for (i=0; i<Threads; i++){		//Start number of Threads required
-      pthread_create(hThreads+i, NULL, &GetNoPrimes, (void *)(no+i));
+      pthread_create(hThreads+i, NULL, &GetNoPrimes, (void *)(threadParams+i));
     }
 		for (i=1; i<=Threads; i++){		//Start number of Threads required
       printf("%d:%d\n",i,pthread_join(hThreads[i-1], NULL));
