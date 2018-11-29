@@ -3,7 +3,7 @@
 \title{ソフトウェア開発\\第9回目授業}
 \author{平野 照比古}
 \institute{}
-\date{2017/11/24}
+\date{2018/11/30}
 \newtheorem{Prob}{解説}
 \newcommand{\Elm}[1]{\texttt{<#1>}}
 \setbeamercovered{transparent}
@@ -40,7 +40,7 @@
 \begin{itemize}
  \item 全体をまとめるために\texttt{div}要素内にラジオボタンを置く。
  \item ラジオボタンの説明文字列はラジオボタンと同じレベルの子要素にする。
- \item ラジオボタンの子要素では表示されない。(資料が間違っていました。)
+ \item ラジオボタンの子要素では表示されない。
 \end{itemize}
  \end{frame}
  \subsection{問題2}
@@ -48,11 +48,13 @@
    \begin{itemize}
     \item \ElmJ{clientX}と\ElmJ{pageX}などの違いについての操作はほとんど
           合っていた。
+		\item $\ElmJ{pageY}=\ElmJ{clientY}+\ElmJ{window.pageOffsetY}$の指摘
+					がなかった。
     \item \ElmJ{target}と\ElmJ{currentTarget}の違いを確認するところで
           \ElmJ{target.value}のように要素の\ElmJ{value}を表示させていた
           誤答が目立った。
-    \item \ElmJ{alert}で表示させている誤答もあった。このように表示させる
-          と文字列に変換されるので要素の詳細がわからない。
+%    \item \ElmJ{alert}で表示させている誤答もあった。このように表示させる
+%          と文字列に変換されるので要素の詳細がわからない。
    \end{itemize}
   \end{frame}
   \subsection{問題3}
@@ -148,6 +150,6 @@
 \end{itemize}
 \end{frame}
 \input dev2016-09php1.tex
-%\input dev2016-09php2.tex
+\input dev2016-09php2.tex
 \end{document}
 
