@@ -41,8 +41,8 @@ PHP は 8 種類の基本型をサポートする。
  \begin{itemize}
   \item 論理値 (boolean)\\\texttt{TRUE} と \texttt{FALSE} の値をとる。小
 	文字で書いてもよい。
-  \item 整数 (integer)\\整数の割り算はない。つまり $1/2$ は $0$ ではなく
-	$0.5$ となる。{なお、PHP 7 では整数の割り算の結果を与える
+  \item 整数 (integer)\\整数の割り算はない。$1/2$ は %$0$ ではなく
+	$0.5$ となる。{PHP 7 では整数の割り算の結果を与える
         \Verb+intdiv()+関数が導入された。たとえば、\Verb+intdiv(1,2)+の結果は
         \Verb+0+となる。}
   \item 浮動小数点数 (float, double も同じ)
@@ -156,34 +156,6 @@ Array
 \end{Exec}
 \input 09prob-02.tex
  \fi
- \iffalse%\else
- \subsection{可変変数}
- ある変数の値が文字列のとき、その前に\Verb+$+をつけると、その文字列が変
- 数名として使える。
- \begin{Exec}\upshape
-  次のリストは可変変数の使用例である。
-\begin{Verbatim}[numbers=left]
-<?php
-$a = 1;
-$b = 2;
-
-$c = "a";
-print "\$\$c = " . $$c ."\n";  // $$c = 1
-
-$c = "b";
-print "\$\$c = " . $$c . "\n"; // $$c = 2
-?>
-\end{Verbatim}
-  \begin{itemize}\upshape
-   \item 変数\Verb+$a+ と \Verb+$b+ にそれぞれ$1$と$2$を代入している(1行
-         目と2行目)。
-   \item 変数\Verb+$c+に文字列\Verb+"a"+を代入し、\Verb+$$c+を出力させ
-         ると\Verb+$a+の値が表示される(5行目と6行目)。
-   \item 同様に、変数\Verb+$c+に文字列\Verb+"b"+を代入して、\Verb+$$c+を出力させ
-         ると\Verb+$b+の値が表示される(8行目と9行目)。
-  \end{itemize}
- \end{Exec}
- \fi
 \subsection{定義済み変数}
 PHP にはいくつかの定義済みの変数が存在する。そのうち、スーパーグローバル
 と呼ばれる変数はグローバルスコープを持つ定義済みの変数である(表\ref{superglobal})。
@@ -221,12 +193,12 @@ PHP にはいくつかの定義済みの変数が存在する。そのうち、�
  \item シングルクオート(\texttt{'})ではさむ。\\
    中に書かれた文字がそのまま定義される。
  \item ダブルクオート(\Verb+"+)ではさむ。%"
-       \\改行などの制御文字が有効になる。また、変数はその値で置き換えら
+       \\改行などの制御文字が有効になり、変数はその値で置き換えら
        れる。これを変数が展開されるという。
  \item ヒアドキュメント形式\\
    複数行にわたる文字列を定義できる。\texttt{<<<}の後に識別子を置く。文
        字列の最後は行の先頭に初めの識別子を置き、そのあとに文の終了を表
-       す\texttt{;}を置く。平ドキュメントの終わりを示す識別子は行の先頭から書く必要がある。
+       す\texttt{;}を置く。ドキュメントの終わりを示す識別子は行の先頭から書く必要がある。
        {\bfseries 識別子の前に空白などを入れてはいけない。}
 \end{itemize}
 \begin{Exec}\upshape
@@ -268,7 +240,7 @@ _EOL_;          //string8:
        で囲む(7行目)。
  \item 変数が配列の場合には添え字を個々に指定しなくてはいけない。その指定
        には別の変数が使用できる(11行目)。
- \item ヒアドキュメントでは途中の改行もそのまま出力される。また、変数は
+ \item ヒアドキュメントでは途中の改行も文字列に含まれる。また、変数は
        展開される(12行目から16行目)。
 \end{itemize}
 \end{Exec}
@@ -327,7 +299,7 @@ PHPの配列は \texttt{array()}関数またはJavaScriptのように\texttt{[]}
 			 用いている。
 \end{itemize}
 出力結果は次のとおりである。
-\begin{Verbatim}
+\begin{Verbatim}[fontsize=\footnotesize]
 Array
 (
     [0] => 5
@@ -559,17 +531,17 @@ array(7) {
 \subsection{PHPの関数の特徴}
 PHPの関数の特徴は次のとおりである。
 \begin{itemize}
- \item 関数はキーワード\texttt{function} に引き続いて\texttt{()}内に、仮
-       引数のリストを書く。そのあとに\texttt{\{\}}内にプログラム本体を書
-       く。
- \item 引数は値渡しである。参照渡しをするときは仮引数の前に\texttt{\&}を
-       付ける。
+ \item 関数はキーワード\texttt{function} に引き続いて関数名、そのあとの
+       \texttt{()}内に、仮引数のリストを書く。そのあとに\texttt{\{\}}内
+       にプログラム本体を書く。
  \item 関数のオーバーロードはサポートされない。
  \item 関数の宣言を取り消せない。
- \item 仮引数の後に値を書くことができる。この値は引数がなかった場合のデ
-       フォルトの値となる。デフォルトの値を与えた仮引数の後にデフォルト
-       の値がない仮引数を置くことはできない。
  \item 関数は使用される前に定義する必要はない。
+ \item 引数は値渡しである。参照渡しをするときは仮引数の前に\texttt{\&}を
+       付ける。
+ \item 仮引数の後にデフォルトの値を指定できる。この値は引数がなかった場合の
+       値となる。デフォルトの値を与えた仮引数の後にデフォルト
+       の値がない仮引数を置くことはできない。
  \item 関数内で関数を定義できる。関数内で定義された関数はグローバルスコー
        プに存在する。ただし、外側の関数が実行されないと定義はされない。
  \item 関数内の変数はすべてローカルである。
@@ -648,7 +620,7 @@ $GLOBALS['x'] = $x is defined at top level
        される。
 \end{itemize}
 21行目から23行目の出力は次のようになる。
-\begin{Verbatim}
+\begin{Verbatim}[fontsize=\footnotesize]
 $a = 10
 Array
 (
@@ -677,7 +649,7 @@ print "\$resa = $resa\n";
        代入することになる。
  \end{itemize}
 この部分の結果は次のとおりである。
-\begin{Verbatim}
+\begin{Verbatim}[fontsize=\footnotesize]
 $a = 10
 Array
 (
@@ -689,36 +661,59 @@ $x = defined in function
 $resa = 20
 \end{Verbatim}
 \end{Exec}
-\iffalse%\else
-\subsection{可変関数}
+\iffalse\else
+\subsection{可変変数と可変関数}
+ \iffalse\else
+\paragraph{可変変数}
+% \subsection{可変変数}
+ 変数の値が文字列のとき、その前に\Verb+$+をつけると、その文字列が変
+ 数名として使える。
+ \begin{Exec}\upshape
+  次のリストは可変変数の使用例である。
+\begin{Verbatim}[numbers=left]
+<?php
+$a = 1;
+$b = 2;
+$c = "a";
+print "\$\$c = " . $$c ."\n";  // $$c = 1
+$c = "b";
+print "\$\$c = " . $$c . "\n"; // $$c = 2
+?>
+\end{Verbatim}
+  \begin{itemize}\upshape
+   \item 変数\Verb+$a+ と \Verb+$b+ にそれぞれ$1$と$2$を代入している(1行
+         目と2行目)。
+   \item 変数\Verb+$c+に文字列\Verb+"a"+を代入し、\Verb+$$c+を出力させ
+         ると\Verb+$a+の値が表示される(4行目と5行目)。
+   \item 同様に、変数\Verb+$c+に文字列\Verb+"b"+を代入して、\Verb+$$c+を出力させ
+         ると\Verb+$b+の値が表示される(6行目と7行目)。
+  \end{itemize}
+ \end{Exec}
+ \fi
+\paragraph{可変関数}
 文字列が代入された変数を用いて、その文字列を変数名にできる可変変数と同様
 に、文字列が代入された変数の後に\texttt{()}をつけると、その文字列の関数
-を呼び出すことができる。
+を呼び出すことができる。これを用いれば、関数の実引数として関数を渡すこと
+ができる。
 \begin{Exec}\upshape
 次のリストは可変変数の利用例である。
 \begin{Verbatim}[numbers=left]
 <?php
 function add($a, $b) { return $a+$b;}
 function sub($a, $b) { return $a-$b;}
-
-$a = 5;
-$b = 2;
 $f = "add";
-print "$f($a,$b) = " . $f($a,$b) ."\n";// add(5,2) = 7
-
+print "$f($a,$b) = " . $f(5,2) ."\n";// add(5,2) = 7
 $f = "sub";
-print "$f($a,$b) = " . $f($a,$b) ."\n";// sub(5,2) = 3
+print "$f($a,$b) = " . $f(5,2) ."\n";// sub(5,2) = 3
 ?>
 \end{Verbatim}
 \begin{itemize}\upshape
  \item 2行目と3行目で2つの関数\texttt{add()}と
        \texttt{sub()}を定義している。
- \item 7行目で変数\Verb+$f+に文字列\Verb+"add"+を代入して、8行目で可変
-       関数として呼び出すと、関数\texttt{add}が呼び出されていることがわ
-       かる。
- \item 同様に、変数\Verb+$f+に文字列\Verb+"sub"+を代入して、可変
-       関数として呼び出すと、関数\texttt{sub}が呼び出されていることがわ
-       かる。
+ \item 変数\Verb+$f+に文字列\Verb+"add"+を代入して、\Verb+$f(5,2)+を実行
+       すると、関数\texttt{add}が呼び出される。
+ \item 同様に、変数\Verb+$f+に文字列\Verb+"sub"+を代入して、\Verb+$f(5,2)+を実行
+       すると、関数\texttt{sub}が呼び出される。
 \end{itemize}
 \end{Exec}
 \fi

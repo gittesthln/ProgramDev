@@ -13,7 +13,6 @@ function example($a, $as, &$b, $f=false) {
   $b = $b*2;
   return array($a,$as);
 }
-
 $a = 10;
 $as = array(1,2);
 $b = 15;

@@ -103,7 +103,7 @@
 \contentsline {section}{\numberline {9.7}式と文}{86}{section.9.7}
 \contentsline {section}{\numberline {9.8}配列}{88}{section.9.8}
 \contentsline {subsection}{\numberline {9.8.1}配列の基礎}{88}{subsection.9.8.1}
-\contentsline {subsection}{\numberline {9.8.2}配列に関する制御構造}{90}{subsection.9.8.2}
+\contentsline {subsection}{\numberline {9.8.2}配列に関する制御構造}{89}{subsection.9.8.2}
 \contentsline {subsection}{\numberline {9.8.3}配列に関する関数}{91}{subsection.9.8.3}
 \contentsline {paragraph}{\texttt {list()}}{91}{section*.16}
 \contentsline {paragraph}{\texttt {array\textunderscore pop()}と\texttt {array\textunderscore push()}}{92}{section*.17}
@@ -114,12 +114,15 @@
 \contentsline {section}{\numberline {9.9}関数}{93}{section.9.9}
 \contentsline {subsection}{\numberline {9.9.1}PHPの関数の特徴}{93}{subsection.9.9.1}
 \contentsline {subsection}{\numberline {9.9.2}関数の定義の例}{94}{subsection.9.9.2}
+\contentsline {subsection}{\numberline {9.9.3}可変変数と可変関数}{96}{subsection.9.9.3}
+\contentsline {paragraph}{可変変数}{96}{section*.22}
+\contentsline {paragraph}{可変関数}{96}{section*.23}
 \contentsline {chapter}{\numberline {第10回}サーバーとのデータのやり取り}{97}{chapter.10}
 \contentsline {section}{\numberline {10.1}サーバーとのデータ交換の基本}{97}{section.10.1}
 \contentsline {section}{\numberline {10.2}スパーグローバルの補足}{99}{section.10.2}
-\contentsline {paragraph}{\texttt {\$\_SERVER}}{99}{section*.22}
-\contentsline {paragraph}{\texttt {\$\_COOKIE}}{99}{section*.23}
-\contentsline {paragraph}{\texttt {\$\_SESSION}}{99}{section*.24}
+\contentsline {paragraph}{\texttt {\$\_SERVER}}{99}{section*.24}
+\contentsline {paragraph}{\texttt {\$\_COOKIE}}{99}{section*.25}
+\contentsline {paragraph}{\texttt {\$\_SESSION}}{99}{section*.26}
 \contentsline {section}{\numberline {10.3}Web Storage}{99}{section.10.3}
 \contentsline {section}{\numberline {10.4}Ajax}{103}{section.10.4}
 \contentsline {chapter}{\numberline {第11回}多重化プログラミング}{109}{chapter.11}
@@ -132,10 +135,10 @@
 \contentsline {section}{\numberline {12.2}jQueryの利用方法}{125}{section.12.2}
 \contentsline {section}{\numberline {12.3}jQuery()関数とjQueryオブジェクト}{126}{section.12.3}
 \contentsline {section}{\numberline {12.4}jQueryオブジェクトのメソッド}{126}{section.12.4}
-\contentsline {paragraph}{HTML属性の取得と設定}{127}{section*.25}
-\contentsline {paragraph}{CSS属性の取得と設定}{127}{section*.26}
-\contentsline {paragraph}{HTMLフォーム要素の値の取得と設定}{127}{section*.27}
-\contentsline {paragraph}{要素のコンテンツの取得と設定}{127}{section*.28}
+\contentsline {paragraph}{HTML属性の取得と設定}{127}{section*.27}
+\contentsline {paragraph}{CSS属性の取得と設定}{127}{section*.28}
+\contentsline {paragraph}{HTMLフォーム要素の値の取得と設定}{127}{section*.29}
+\contentsline {paragraph}{要素のコンテンツの取得と設定}{127}{section*.30}
 \contentsline {section}{\numberline {12.5}ドキュメントの構造の変更}{127}{section.12.5}
 \contentsline {section}{\numberline {12.6}イベントハンドラーの取り扱い}{128}{section.12.6}
 \contentsline {section}{\numberline {12.7}Ajaxの処理}{128}{section.12.7}
@@ -144,9 +147,9 @@
 \contentsline {section}{\numberline {13.1}XMLファイルとは}{133}{section.13.1}
 \contentsline {subsection}{\numberline {13.1.1}W3CにおけるXMLの解説}{133}{subsection.13.1.1}
 \contentsline {subsection}{\numberline {13.1.2}XMLファイルの例}{134}{subsection.13.1.2}
-\contentsline {subsubsection}{GPXファイルの構造}{134}{section*.29}
-\contentsline {subsubsection}{GPXファイルの例}{134}{section*.30}
-\contentsline {subsubsection}{地球の形}{135}{section*.31}
+\contentsline {subsubsection}{GPXファイルの構造}{134}{section*.31}
+\contentsline {subsubsection}{GPXファイルの例}{134}{section*.32}
+\contentsline {subsubsection}{地球の形}{135}{section*.33}
 \contentsline {section}{\numberline {13.2}Google Mapsにおける\texttt {Polyline}の表示}{136}{section.13.2}
 \contentsline {section}{\numberline {13.3}ブラウザでの処理}{136}{section.13.3}
 \contentsline {section}{\numberline {13.4}PHPによる処理}{141}{section.13.4}
@@ -158,22 +161,22 @@
 \contentsline {subsection}{\numberline {14.2.3}ユーザーインターフェイスを引用するJavaScriptファイル}{152}{subsection.14.2.3}
 \contentsline {chapter}{\numberline {第15回}システム開発のためのヒント}{153}{chapter.15}
 \contentsline {section}{\numberline {15.1}コードの構造}{153}{section.15.1}
-\contentsline {subsubsection}{良いコードとは}{153}{section*.32}
-\contentsline {subsubsection}{プログラムとデータの分離}{153}{section*.33}
+\contentsline {subsubsection}{良いコードとは}{153}{section*.34}
+\contentsline {subsubsection}{プログラムとデータの分離}{153}{section*.35}
 \contentsline {section}{\numberline {15.2}コードの管理の問題点}{154}{section.15.2}
-\contentsline {subsubsection}{複数でシステム開発をするときの問題点}{154}{section*.34}
+\contentsline {subsubsection}{複数でシステム開発をするときの問題点}{154}{section*.36}
 \contentsline {section}{\numberline {15.3}バージョン管理}{155}{section.15.3}
 \contentsline {subsection}{\numberline {15.3.1}バージョン管理の概念}{155}{subsection.15.3.1}
 \contentsline {subsection}{\numberline {15.3.2}バージョン管理ソフト}{155}{subsection.15.3.2}
 \contentsline {subsection}{\numberline {15.3.3}gitの使い方}{155}{subsection.15.3.3}
-\contentsline {subsubsection}{git の特徴}{156}{section*.35}
-\contentsline {subsubsection}{git のインストール}{156}{section*.36}
-\contentsline {subsubsection}{初期設定}{156}{section*.37}
-\contentsline {paragraph}{ユーザーネームの登録}{156}{section*.38}
-\contentsline {paragraph}{メールアドレスの登録}{156}{section*.39}
-\contentsline {paragraph}{SSH Keyの登録}{156}{section*.40}
-\contentsline {subsubsection}{GitHub のアカウントの取得}{157}{section*.41}
-\contentsline {subsubsection}{リポジトリの作成と運用}{157}{section*.42}
+\contentsline {subsubsection}{git の特徴}{156}{section*.37}
+\contentsline {subsubsection}{git のインストール}{156}{section*.38}
+\contentsline {subsubsection}{初期設定}{156}{section*.39}
+\contentsline {paragraph}{ユーザーネームの登録}{156}{section*.40}
+\contentsline {paragraph}{メールアドレスの登録}{156}{section*.41}
+\contentsline {paragraph}{SSH Keyの登録}{156}{section*.42}
+\contentsline {subsubsection}{GitHub のアカウントの取得}{157}{section*.43}
+\contentsline {subsubsection}{リポジトリの作成と運用}{157}{section*.44}
 \contentsline {chapter}{\numberline {第16回}JavaScriptライブラリーの配布}{159}{chapter.16}
 \contentsline {section}{\numberline {16.1}jQueryのコードを読む}{159}{section.16.1}
 \contentsline {section}{\numberline {16.2}JavaScriptファイルの短縮化}{161}{section.16.2}
