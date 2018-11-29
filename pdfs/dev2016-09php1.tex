@@ -189,6 +189,7 @@ Array
        \verb+var_dump()+ を利用。
 \end{itemize}
  \end{frame}
+ \iffalse
  \begin{frame}[containsverbatim]
   \frametitle{可変変数}
 ある変数の値が文字列のとき、その前に\verb+$+をつけると、その文字列が変
@@ -217,7 +218,8 @@ print "\$\$c = " . $$c . "\n"; // $$c = 2
          ると\verb+$b+の値が表示(8行目と9行目)。
   \end{itemize}
  \end{frame}
-\begin{frame}[containsverbatim]
+ \fi
+ \begin{frame}[containsverbatim]
 \frametitle{変数のスコープ}
 \begin{itemize}
  \item 変数は特に宣言しなくても使用できる。
@@ -229,7 +231,7 @@ print "\$\$c = " . $$c . "\n"; // $$c = 2
 されたファイルを読み込む\texttt{require\_once()}がある。このファイルの中
 で定義された変数は、読み込むテキストを直接記述したときと同じ
 \end{itemize}
-\end{frame}
+ \end{frame}
 \begin{frame}[containsverbatim]
 \frametitle{定義済み変数}
 スーパーグローバルと呼ばれるグローバルスコープを持つ定義済みの変数
