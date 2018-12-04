@@ -128,7 +128,7 @@
 \contentsline {chapter}{\numberline {第11回}多重化プログラミング}{109}{chapter.11}
 \contentsline {section}{\numberline {11.1}多重化プログラミングとは}{109}{section.11.1}
 \contentsline {section}{\numberline {11.2}Ajaxによる並行処理}{109}{section.11.2}
-\contentsline {section}{\numberline {11.3}Web Worker}{116}{section.11.3}
+\contentsline {section}{\numberline {11.3}Web Workers}{116}{section.11.3}
 \contentsline {section}{\numberline {11.4}\texttt {pthread}による多重化}{121}{section.11.4}
 \contentsline {chapter}{\numberline {第12回}jQuery}{125}{chapter.12}
 \contentsline {section}{\numberline {12.1}jQueryとは}{125}{section.12.1}

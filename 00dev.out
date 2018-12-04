@@ -103,7 +103,7 @@
 \BOOKMARK [0][-]{chapter.11}{多重化プログラミング}{}% 103
 \BOOKMARK [1][-]{section.11.1}{多重化プログラミングとは}{chapter.11}% 104
 \BOOKMARK [1][-]{section.11.2}{Ajaxによる並行処理}{chapter.11}% 105
-\BOOKMARK [1][-]{section.11.3}{Web Worker}{chapter.11}% 106
+\BOOKMARK [1][-]{section.11.3}{Web Workers}{chapter.11}% 106
 \BOOKMARK [1][-]{section.11.4}{pthreadによる多重化}{chapter.11}% 107
 \BOOKMARK [0][-]{chapter.12}{jQuery}{}% 108
 \BOOKMARK [1][-]{section.12.1}{jQueryとは}{chapter.12}% 109
