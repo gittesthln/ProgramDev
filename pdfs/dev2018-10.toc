@@ -1,4 +1,10 @@
-\beamer@sectionintoc {1}{前回のレポートから}{1}{0}{1}
-\beamer@subsectionintoc {1}{1}{問1}{1}{0}{1}
-\beamer@sectionintoc {2}{サーバーとのデータ－の交換}{2}{0}{2}
-\beamer@subsectionintoc {2}{1}{サーバーとのデータ交換の基本}{2}{0}{2}
+\beamer@endinputifotherversion {3.36pt}
+\beamer@sectionintoc {1}{前回のレポートから}{2}{0}{1}
+\beamer@subsectionintoc {1}{1}{問1}{2}{0}{1}
+\beamer@subsectionintoc {1}{2}{問2}{3}{0}{1}
+\beamer@subsectionintoc {1}{3}{問3}{4}{0}{1}
+\beamer@subsectionintoc {1}{4}{問4}{5}{0}{1}
+\beamer@sectionintoc {2}{サーバーとのデータ－の交換}{6}{0}{2}
+\beamer@subsectionintoc {2}{1}{サーバーとのデータ交換の基本}{6}{0}{2}
+\beamer@sectionintoc {3}{Web Storage}{16}{0}{3}
+\beamer@sectionintoc {4}{Ajax}{25}{0}{4}

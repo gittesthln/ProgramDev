@@ -1,9 +1,9 @@
 \input devHead.tex
 \SetTheme{AnnArbor} %10
-\title{ソフトウェア開発\\第9回目授業}
+\title{ソフトウェア開発\\第10回目授業}
 \author{平野 照比古}
 \institute{}
-\date{2018/11/30}
+\date{2018/12/7}
 \newtheorem{Prob}{解説}
 \newcommand{\Elm}[1]{\texttt{<#1>}}
 \setbeamercovered{transparent}
@@ -15,18 +15,54 @@
 \newcommand{\keyitem}{\relax}
 \newcommand{\HTML}{HTML文書}
 \begin{document}
+\frame{\maketitle}
 \section{前回のレポートから}
  \subsection{問1}
-	\begin{frame}[containsverbatim]
-	 \begin{itemize}
-		\item \texttt{if(変数)}の動作の確認がない、または間違っている内容のものが多かっ
-	た。
-		\item 基本的には3項演算子\texttt{?}を用いればよい。
-		\item \Verb+print("0"?"true":"false");+などと書けばよい。
-		\item ルーブリックに挙げた例はJavaScriptとPHPで結果が異なる。
-	 \end{itemize}
- 	\end{frame}
-	
+ \begin{frame}[containsverbatim]
+  \frametitle{問1}
+ \begin{itemize}
+	\item \texttt{if(変数)}の動作の確認がない、または間違っている内容のものが多かっ
+た。
+  \item 基本的には3項演算子\texttt{?}を用いればよい。
+	\item \Verb+print("0"?"true":"false");+などと書けばよい。
+	\item ルーブリックに挙げた例はJavaScriptとPHPで結果が異なる。
+	\end{itemize}
+ \end{frame}
+ \subsection{問2}
+ \begin{frame}[containsverbatim]
+  \frametitle{問2}
+  \begin{itemize}
+   \item \texttt{print\_r}での表示では同じに見えるものが、
+         \texttt{var\_dump}では違いが分かる例を示したものがなかった。
+   \item サーバーを通じた実行結果の場合にはページのソースで確認をしてほ
+         しい。
+  \end{itemize}
+ \end{frame}
+ \subsection{問3}
+ \begin{frame}[containsverbatim]
+  \frametitle{問3}
+  \begin{itemize}
+   \item \texttt{pop}や\texttt{unshift}では戻り値の確認も必要
+  \end{itemize}
+  \VerbatimInput{../html/09pop-push.php}
+ \end{frame}
+ \subsection{問4}
+  \begin{frame}[containsverbatim]
+   \frametitle{問4}
+   \bfseries{4.1}
+   \begin{itemize}
+   \item 実行途中で表示される警告文に対する考察が足りない。
+   \item 関数\texttt{sum2}において変数のスコープに関する考察が欲しい
+   \end{itemize}
+   \bfseries{4.2}\\
+ 問題文で文字列をテンプレートリテラルに直すように指示があったの
+         に通常の文字列のままの解答であった。\\
+ \bfseries{4.3}\\
+   \begin{itemize}
+    \item 解答が中たものが多かった。
+    \item 変数の宣言、スコープの違い、関数の定義などに違いがある。
+   \end{itemize}
+  \end{frame}
  \section{サーバーとのデータ－の交換}
  \subsection{サーバーとのデータ交換の基本}
  \begin{frame}[containsverbatim]
@@ -37,11 +73,11 @@
  \begin{frame}[containsverbatim]
  \frametitle{\texttt{POST}による送信}
  \texttt{windows.onload =function()}内に次のコードを追加する。
- \begin{verbatim}
-    var Form = document.getElementsByTagName("form")[0];
+ \begin{Verbatim}
+    let Form = document.getElementsByTagName("form")[0];
     Form.setAttribute("method","POST");
     Form.setAttribute("action","09sendData.php");
- \end{verbatim}
+ \end{Verbatim}
  HTMLの要素に対しては次のことを行う。
  \begin{itemize}
  \item \texttt{<select>}要素の属性に\verb+name="select"+ を追加する。
@@ -64,8 +100,7 @@
  \end{frame}
  \begin{frame}[containsverbatim]
  \frametitle{サーバープログラムのリスト}
- {\scriptsize
- \begin{listing}{1}
+ \begin{Verbatim}[numbers=left,fontsize=\footnotesize]
  <?php
  print <<<_EOL_
  <!DOCTYPE html>
@@ -85,52 +120,42 @@
  </html>
  _EOL_;
  ?>
- \end{listing}
- }
+ \end{Verbatim}
  \end{frame}
  \begin{frame}[containsverbatim]
  \frametitle{サーバープログラムのリスト(解説)}
  \begin{itemize}
  \item 2行目から10行目の間はヒアドキュメント形式でHTML文書の初めの部分を
        出力させている。
- \item \verb+method="POST"+で呼び出されたときには\texttt{form}要素内の
+ \item \Verb+method="POST"+で呼び出されたときには\texttt{form}要素内の
        \texttt{name}属性が指定されたものの値がスーパーグローバル
-       \verb+$_POST+内の連想配列としてアクセスができる。
+       \Verb+$_POST+内の連想配列としてアクセスができる。
+  \item フォームの中のデータを
+       \texttt{application/x-www-form-urlencoded} あるいは
+       \texttt{multipart/form-data} に
+       よりエンコードされたもの
  \item 11行目から13行目でそれらの値を\texttt{table}要素内の要素として出
        力している。
  \end{itemize}
  \end{frame}
  \begin{frame}[containsverbatim]
- \frametitle{サーバープログラムのリスト(ソース)}
- \begin{verbatim}
- <!DOCTYPE html>
- <head>
- <meta charset="UTF-8"/>
- <title>サーバーに送られたデータ</title>
- </head>
- <body>
- <table><tr><td>select</td><td>yellow</td></tr>
- <tr><td>color</td><td>green</td></tr>
- <tr><td>colorName</td><td>gray</td></tr>
- </table>
- </body>
- </html>
- \end{verbatim}
+ \frametitle{サーバープログラムの結果}
+ \VerbatimInput{../09sendData.res}
  \end{frame}
  \begin{frame}[containsverbatim]
  \frametitle{\texttt{GET}による通信}
  \begin{itemize}
  \item \verb+method="PUT"+で呼び出した場合にはスーパーグローバル
  \verb+$_GET+を用いる。
- \item スーパーグローバル\verb+$_REQUEST+は
+ \item スーパーグローバル\Verb+$_REQUEST+は
  \verb+method="POST"+でも\verb+method="PUT"+で呼び出された場合の
- \verb+$_POST+や\verb+$_GET+の代わりに使用できる。
+ \verb+$_POST+や\Verb+$_GET+の代わりに使用できる(非推奨)。
  \end{itemize}
  \end{frame}
  \begin{frame}[containsverbatim]
  \frametitle{通信に関する注意}
  \begin{itemize}
- \item \verb+type="submit"+の\texttt{input}要素は、ボタンが押されたときに直ちに、
+ \item \Verb+type="submit"+の\texttt{input}要素は、ボタンが押されたときに直ちに、
  \texttt{action}属性で指定された処理が呼び出される。
  \item サーバーにデータを送る前に最低限のエラーチェックを行い、エラーが
        ない場合にだけサーバーと通信するのが良い。
@@ -166,6 +191,7 @@
  \item この機能はCOOKIEの機能を利用して実現
  \end{itemize}
  \end{frame}
+ \section{Web Storage}
 \begin{frame}[containsverbatim]
  \frametitle{Web Storage}
  \begin{itemize}
@@ -189,70 +215,174 @@
  \end{frame}
 \begin{frame}[containsverbatim]
  \frametitle{WebStrageの例(1)}
- {\small
- \begin{verbatim}
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-<title>WebStorage --- localStorage</title>
-\end{verbatim}
- }
+ \VerbatimInput[firstline=1,lastline=5,fontsize=\footnotesize]
+ {../html/10storage.html}
  \end{frame}
 \begin{frame}[containsverbatim]
  \frametitle{WebStrageの例(2)}
- {\small
-  \begin{verbatim}
-<script type="text/javascript">
-//<![CDATA[
-var Storage = window.localStorage;
-//var Storage = window.sessionStorage;
-window.onload = function() {
-  var AccessList, Message = document.getElementById("message");
-  var D = new Date();
-  if(Storage["access"]) {
-    AccessList = JSON.parse(Storage["access"]);
-  } else {
-    AccessList = [];
-    appendMessage(Message, "初めてのアクセスです");
-  }
-  AccessList.unshift(D.getTime());
-  Storage["access"] = JSON.stringify(AccessList);
-  appendMessage(Message, "今までのアクセス時間です");
-  AccessList.forEach(function(D, i, A) {
-    appendMessage(Message, new Date(D));
-  });
-}
-\end{verbatim}
- }
+ \VerbatimInput[firstline=6,lastline=25,numbers=left,fontsize=\footnotesize]
+ {../html/10storage.html}
  \end{frame}
 \begin{frame}[containsverbatim]
  \frametitle{WebStrageの例(3)}
- {\small
-  \begin{verbatim}
-function appendMessage(P, Mess) {
-  var div = document.createElement("div");
-  P.appendChild(div);
-  div.appendChild(document.createTextNode(Mess));
-}
-//]]
-</script>
-</head>
- \end{verbatim}
- }
-\end{frame}
+ \VerbatimInput[firstline=26,lastline=30,numbers=left,fontsize=\footnotesize]
+ {../html/10storage.html}
+ \end{frame}
 \begin{frame}[containsverbatim]
  \frametitle{WebStrageの例(4)}
- {\small
-  \begin{verbatim}
-<body>
-  <form action="10next.html">
-    <input type="submit" value="次のページ"></input>
-  </form>
-  <div  id="message"/>
-</body>
-</html>
-\end{verbatim}
- }
+ \VerbatimInput[firstline=31,lastline=last,numbers=left,fontsize=\footnotesize]
+ {../html/10storage.html}
+ \end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{WebStrageの例(5)}
+ \VerbatimInput[firstline=1,lastline=7,fontsize=\footnotesize]
+ {../html/10next.html}
+ \end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{WebStrageの例(6)}
+ \VerbatimInput[firstline=8,lastline=22,fontsize=\footnotesize]
+ {../html/10next.html}
+ \end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{WebStrageの例(7)}
+ \VerbatimInput[firstline=23,lastline=last,fontsize=\footnotesize]
+ {../html/10next.html}
+ \end{frame}
+ \section{Ajax}
+\begin{frame}[containsverbatim]
+\frametitle{Ajaxとは}
+\begin{itemize}
+ \item Ajax とは Asynchronous Javascript+XML の略で、非同期(Asynchronous)でWeb
+ページとサーバーでデータの交換を行い、クライアント側で得られたデータをも
+とにそのWebページを書き直す手法
+ \item Google Maps がこの技術を利用したことで一気に認知度が高まった。
+ \item Ajax の機能は \texttt{XMLHTTPRequest}というオブジェクトの機能を用いて実現
+\end{itemize}\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{Ajaxの例}
+ \begin{itemize}
+  \item 日付が変わったときに、その日の記念日を
+ メニューの下部に示すもの
+  \item \texttt{http://ja.wikipedia.org/wiki/日本の記念日一覧}の表示画面からコ
+ ピーして作成
+ \end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{Ajaxの例(2)}
+ \LISTN{09-01whatday.html}{1}{8}{\footnotesize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{Ajaxの例(3)}
+ \LISTN{09-01whatday.html}{9}{16}{\footnotesize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{Ajaxの例(4)}
+ \LISTN{09-01whatday.html}{17}{27}{\footnotesize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{Ajaxの例(5)}
+ \LISTN{09-01whatday.html}{28}{40}{\footnotesize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{Ajaxの例(6)}
+ \LISTN{09-01whatday.html}{41}{48}{\footnotesize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{Ajaxの例(7)}
+ \LISTN{09-01whatday.html}{49}{63}{\footnotesize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{Ajaxの例(5)}
+ \LISTN{09-01whatday.html}{64}{last}{\footnotesize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{Ajaxで呼び出されるPHPのプログラム}
+\LISTNN{aniversary.php}{1}{last}{\scriptsize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{Ajaxで呼び出されるPHPのプログラム--解説}
+\begin{itemize}
+ \item 2行目で内部で処理をするエンコーディングを\texttt{UTF8}にしている。
+       関数、\texttt{mb\_internal\_encoding}関数を引数なしで呼び出すと
+       現在採用されているエンコーディングを得ることができる。
+ \item 4行目と5行目では月(\verb+$m+)と日(\verb+$d+)の値をそれぞれの変数
+       に設定している。
+\begin{itemize}
+ \item ここではコマンドプロンプトからもデバッグで
+       きるように、スーパーグローバル\verb+$_GET+内に値があれば
+       (\Verb+isset()+)が\Verb+true+になれば、その値を、そうでなければコ
+       マンドからの引数を設定している。
+ \item スーパーグローバル\verb+$argv+はの先頭は呼び出したファイル名であ
+       り、その後に引数が順に入る\footnote{C言語の\texttt{main}関数は通
+       常、\texttt{int main(int argc, char* argv[])}と宣言される。%
+       \texttt{argc}は\texttt{argv}の配列の大きさを表し、渡された引数の
+       リストが\texttt{argv[]}に入っている。このとき、\texttt{argv[0]}は実行
+       したときのファイル名が入る。}。
+\end{itemize}
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{\texttt{file()}関数}
+指定されたファイルを行末文字で区切って配列として返す関数\\
+\begin{itemize}
+\item 引数にはURLも指定できる。
+\item この関数は2番目の引数をとることができる。
+\begin{center}
+ \begin{tabular}{|c|m{15zw}|}\hline
+ \Verb+FILE_USE_INCLUDE_PATH+ & \Verb+include_path+ のファイルを探す\\\hline
+ \Verb+FILE_IGNORE_NEW_LINES+ & 配列の各要素の最後に改行文字を追加しない
+      \\ \hline
+  \Verb+FILE_SKIP_EMPTY_LINES+&空行を読み飛ばす \\ \hline
+ \end{tabular}
+\end{center}
+ \item \verb+file_get_contents()+はファイルの内容を一つの文字列として
+       読み込む。Webページの解析にはこちらの関数を使うとよい。
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{読み込むファイルの一部}
+\begin{Verbatim}
+1月[編集]
+1日 - 鉄腕アトムの日
+2日 - 月ロケットの日
+[中略]
+31日 - 生命保険の日、愛妻家の日
+2月[編集]
+1日 - テレビ放送記念日、ニオイの日
+2日 - 頭痛の日
+[以下略]
+\end{Verbatim}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{}
+\begin{itemize}
+ \item 月の部分の後には\texttt{[}がある。
+ \item 日の情報は\verb*+ - +で区切られている(\verb*+ +は空白を表す)。
+ \item すべての日の情報が入っている。
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{データの処理---月を探す}
+\begin{itemize}
+ \item 8行目で念のためコードを\texttt{UTF8}に変更
+ \item 関数\Verb+mb_split()+関数は第1引数に指定された文字列パターンで第2
+       引数で指定された文字列を分割して配列として返す関数
+ \item 分割を指定する文字列には正規表現が使えるので、文字\Verb+[+で分割
+       するために、\Verb+"\["+としている(9行目)。
+ \item 指定された文字列があれば配列の大きさが1より大きくなる。その行に対
+       して求める月と一致しているか判定し、等しければループを抜ける(11行
+       目)。
+\end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+\frametitle{}
+\begin{itemize}
+ \item 14行目から18行目までは指定された月での指定された日の情報を探して
+       いる。日を決定する方法も月と同じである。文字列の分割は
+       \verb+"\s-\s"+となっている\footnote{これは\texttt{"\textbackslash
+       s"}ではうまく行かなかっ
+       たためである。}。
+ \item 20行目で得られた情報をストリームに出力している。
+\end{itemize}
 \end{frame}
 \end{document}
