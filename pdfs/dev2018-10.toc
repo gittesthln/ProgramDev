@@ -1,0 +1,4 @@
+\beamer@sectionintoc {1}{前回のレポートから}{1}{0}{1}
+\beamer@subsectionintoc {1}{1}{問1}{1}{0}{1}
+\beamer@sectionintoc {2}{サーバーとのデータ－の交換}{2}{0}{2}
+\beamer@subsectionintoc {2}{1}{サーバーとのデータ交換の基本}{2}{0}{2}
