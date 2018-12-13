@@ -29,7 +29,7 @@ Download the uncompressed, development jQuery 3.3.1
 
 これらのファイルの違いはコメントなどがそのまま入っているもの(uncompressed)と、
 コメントを取り除き、変数名などを短いものに置き換えて、ファイルサイズを小
-さくしたもの(compressed)の2種類がある。通常は compressed　バージョンを用
+さくしたもの(compressed)の2種類がある。通常は compressed バージョンを用
 いる。ダウンロードしたファイルを取り込む\Elm{script}要素を記述すれば利用できる。
 
 jQuery のファイルをローカルにダウンロードしないでCDN(Contents Deliverly
@@ -219,10 +219,12 @@ jQueryではAjaxの処理に関するいろいろな方法を提供している�
 	       行目は\texttt{appendTo()}メソッドを用いると17行目のコメン
 	       トアウトしてあるように記述することができる。
 	\end{itemize}
+ \LISTN{09-01whatday-jquery.html}{21}{35}{\normalsize}
   \item 21行目から34行目も依然とほとんど同じである。24行目では機能
 	\ref{HTMLText}を用いて要素を参照している。
   \item 31行目、32行目と35行目はプルダウンメニューの初期値を本日に設定し
 	ている。
+ \LISTN{09-01whatday-jquery.html}{36}{53}{\normalsize}
   \item 36行目から53行目はプルダウンメニュが変化したときに呼び出される関
 	数を定義している。
 	\begin{itemize}
@@ -232,8 +234,8 @@ jQueryではAjaxの処理に関するいろいろな方法を提供している�
 	       \texttt{<option>}要素を選択し、その数を\texttt{length}で
 	       調べている。
 	 \item 43行目から52行目はAjaxの処理を定義している。
- \LISTN{09-01whatday-jquery.html}{43}{53}{\normalsize}
-\begin{itemize}
+% \LISTN{09-01whatday-jquery.html}{43}{53}{\normalsize}
+%\begin{itemize}
  \item 44行目では通信の方法を\texttt{GET}に指定している。
  \item 45行目では通信の相手のファイルを指定している。呼び出されるファイ
        ルは106ページのものがそのまま使える。
@@ -248,7 +250,7 @@ jQueryではAjaxの処理に関するいろいろな方法を提供している�
          %ブラウザによる違いに対する対処や、
          XMLHTTPRequestの処理部分が大幅に減っ
 	       ていて見やすいコードになっていることがわかる。
-	\end{itemize}
+%	\end{itemize}
  \end{itemize}
  \end{Exec}
  \begin{Prob}\upshape
