@@ -3,7 +3,7 @@
 \title{ソフトウェア開発\\第11回目授業}
 \author{平野 照比古}
 \institute{}
-\date{2017/12/8}
+\date{2018/12/14}
 \newtheorem{Prob}{解説}
 \newcommand{\Elm}[1]{\texttt{<#1>}}
 \setbeamercovered{transparent}
@@ -26,6 +26,7 @@
          でもデータのチェックをする必要がある。
    \item \texttt{POST}では直接見えないが、呼び出し側で直接記述が可能
          (前回のAjax通信を\texttt{POST}で行うところを参照)
+   \item サーバーを起動して実行していない場合もあった。
   \end{itemize}
  \end{frame}
  \begin{frame}[containsverbatim]
@@ -36,6 +37,7 @@
    \item セキュリティに関する考察が欲しい。
   \end{itemize}
  \end{frame}
+ \iffalse
  \section{前回補足}
 \begin{frame}[containsverbatim]
 \frametitle{Ajaxで呼び出されるPHPのプログラム}
@@ -127,11 +129,12 @@
  \item 20行目で得られた情報をストリームに出力している。
 \end{itemize}
 \end{frame}
+\fi
 \section{jQuery}
 \subsection{jQueryとは}
 \begin{frame}[containsverbatim]
 \frametitle{jQueryとは}
-jQuery の開発元\footnote{\texttt{jQuery.com}参照日:2017/11/29}には次のよ
+jQuery の開発元\footnote{\texttt{jQuery.com}参照日:2018/12/12}には次のよ
  うに書かれている。
 \begin{quotation}
 jQuery is a fast, small, and feature-rich JavaScript library. It makes
@@ -149,9 +152,9 @@ jQuery is a fast, small, and feature-rich JavaScript library. It makes
 jQuery」をクリックすることでダウンロードのページに行く
  \item 次の2つの最新版がダウンロード可能
 
-     Download the compressed, production jQuery 3.2.1
+     Download the compressed, production jQuery 3.3.1
 
-    Download the uncompressed, development jQuery 3.2.1
+    Download the uncompressed, development jQuery 3.3.1
  \item ファイルの違いはコメントなどがそのまま入っているもの(uncompressed)と、
 コメントを取り除き、変数名などを短いものに置き換えて、ファイルサイズを小
 さくしたもの(compressed)
@@ -160,9 +163,9 @@ jQuery」をクリックすることでダウンロードのページに行く
  \item または、CDN(Contents Deliverly Network)を利用
 \begin{Verbatim}[fontsize=\small]
 <script
- src="https://code.jquery.com/jquery-3.2.1.min.js"
- integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
- crossorigin="anonymous"></script>
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
 \end{Verbatim}
 \end{enumerate}
 
@@ -193,9 +196,8 @@ jQuery() 関数の呼び出し方は引数の型により返される要素群�
 
 \begin{itemize}
  \item CSSセレクタにマッチした要素群を返す。
- \item 省略可能な2番目の引数として要素やjQueryオブ
-       ジェクトを指定した場合には、その要素の子要素からマッチしたものを
-       返す。
+ \item 省略可能な2番目の引数として要素やjQueryオブジェクトを指定した場合
+       には、その要素の子要素からマッチしたものを返す。
  \item この形はすでに解説したDOMのメソッド
        \texttt{querySelectorAll()}と似ている。
 \end{itemize}  
@@ -360,7 +362,8 @@ jQueryオブジェクトに対する多くの処理はHTMLの属性やCSSスタ�
   \hline
   \texttt{url}&サーバーのアドレス\\ \hline
   \texttt{data}&\texttt{"GET"}のときはURLの後に続けるデータ。
-      \texttt{"POST"}のときは\texttt{null}\\ \hline
+      \texttt{"POST"}のときも同様
+      \\ \hline
   \texttt{dataType}&戻り値のデータの型を指定する。\texttt{"text"}、
       \texttt{"html"}、\texttt{"script"}、      
 \texttt{"json"}、\texttt{"xml"}などがある\\ \hline
