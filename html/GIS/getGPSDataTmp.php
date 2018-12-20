@@ -4,16 +4,15 @@ function getPos($lat, $lon) {
     $latRad = $lat * M_PI/180;
     $lonRad = $lon * M_PI/180;
     $latCos = cos($latRad);
-    return array(
-        $R*$latCos*cos($lonRad),$R*$latCos*sin($lonRad),$R*sin($latRad));
+    return [$R*$latCos*cos($lonRad),$R*$latCos*sin($lonRad),$R*sin($latRad)];
 }
-function SetDatafromFile($fn,$mode) {
+function SetDatafromFile($fn) {
   $data = new DOMDocument();
   $data->load($fn);
   $trks = $data->getElementsByTagName("trk");
   $len = $trks->length;
-  $trackdata = array();
-  $lengthdata = array();
+  $trackdata = [];
+  $lengthdata = [];
   $cnt=0;
   for($i=0;$i<$len;$i++){
     $trk = $trks->item($i);
@@ -23,7 +22,7 @@ function SetDatafromFile($fn,$mode) {
     $trkseg = $trksegs->item(0);
     $latmin = $latMax = $lat = $trkseg->getAttribute("lat");
     $lonmin = $lonMax = $lon = $trkseg->getAttribute("lon");
-    $newtrk = array("[$lat,$lon]");
+    $newtrk = [[$lat,$lon]];
     $ppos = getPos($lat, $lon);
     $length = 0;
     for($j = 1; $j < $len2; $j++) {
@@ -34,7 +33,7 @@ function SetDatafromFile($fn,$mode) {
       $latmin = min($lat-0,$latmin);
       $lonMax = max($lon-0,$lonMax);
       $lonmin = min($lon-0, $lonmin);
-      array_push($newtrk,"[$lat,$lon]");
+      array_push($newtrk,[$lat,$lon]);
       $cpos = getPos($lat, $lon);
       $xd = $ppos[0]-$cpos[0];
       $yd = $ppos[1]-$cpos[1];
@@ -44,11 +43,11 @@ function SetDatafromFile($fn,$mode) {
     }
     if($lonMax - $lonmin >0.001 ||$latMax - $latmin > 0.001) {
       $cnt++;
-      array_push($trackdata,
-        '{"range":['."$latMax,$latmin,$lonMax,$lonmin".'],"route":[' .
-      implode(",",$newtrk).'],"length":'.($length/1000).'}');
+      array_push($trackdata, ["range"=>[$latMax,$latmin,$lonMax,$lonmin],
+                              "route"=>$newtrk,"length"=>$length/1000]);
     }
   }
   return $trackdata;
 }
+print json_encode(SetDatafromFile($argv[1]));
 ?>

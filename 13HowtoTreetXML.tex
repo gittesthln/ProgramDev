@@ -78,7 +78,7 @@ GPXファイルの構造は次のようになっている。
 \end{center}
 \subsubsection{GPXファイルの例}
 次のGPXファイルの例は Garmin E-treck Vista における記録の例である。
- \LISTN{GIS/sample.gpx}{1}{last}{\small}
+ \LISTN{GIS/sample.gpx}{1}{last}{\normalsize}
  \begin{itemize}
   \item 2行目から7行目が\texttt{gpx}のルート要素
   \item 8行目に\texttt{trk}要素
@@ -144,7 +144,7 @@ GPXファイルの構造は次のようになっている。
  与えられたGPXファイル内の道のりをGoogle Maps 上に表示する例を考える。
 
  次のリストはHTMLの部分である。
- \LISTN{GIS/show-trace.html}{1}{last}{\small}
+ \LISTN{GIS/show-trace.html}{1}{last}{\normalsize}
  \begin{itemize}
 	\item 6行目はこのページの外部スタイルシートを読み込むことを指定している。
 	\item ７行目から８行目でGoogle Maps API のファイルを読み込む。ここでは
@@ -157,14 +157,14 @@ GPXファイルの構造は次のようになっている。
 	\item 19行目は表示されたGPXファイルに関する情報を示す位置を定めている。
  \end{itemize}
  次のリストはこのHTMLで読み込まれるスタイルシート(\texttt{map.css})である。
- \LISTN{GIS/map.css}{1}{last}{\small}
+ \LISTN{GIS/map.css}{1}{last}{\normalsize}
  主に、地図とフォームを横並びにし(2行目と5行目の
  \texttt{display:inline-block})、表の数字を右寄せに(9行目)、文字のところ
  を中央ぞろえにしている(12行目)。 
 
  次のリストは外部のJavaScriptファイルである。
 読み込み終了後に実行される関数だけを定義している。
- \LISTN{GIS/map-new2.js}{1}{9}{\small}
+ \LISTN{GIS/map-new2.js}{1}{9}{\normalsize}
  \begin{itemize}
   \item 2行目で地図を設定するデフォルトのパラメータを設定している。
 	\item 3行目でURLの後ろにパラメータ(\Verb+?+)があるかをチェックするため
@@ -174,15 +174,15 @@ GPXファイルの構造は次のようになっている。
 				\Verb+forEach+)、パラメタ(変数\Verb+PARAM+)に代入している
 				(7行目)。
  \end{itemize}
- \LISTN{GIS/map-new2.js}{10}{14}{\small}
+ \LISTN{GIS/map-new2.js}{10}{14}{\normalsize}
  ここでは、GPXのログ内に複数の\Verb+<trkseg>+があった場合に、それらを色
  分けするための色を指定している。道のりの色は後で見るように下が透けるよ
  うに指定して(86行目)いるので、地図上と情報用の背景色が同じように見える
  ように色を調整している。
- \LISTN{GIS/map-new2.js}{15}{24}{\small}
+ \LISTN{GIS/map-new2.js}{15}{24}{\normalsize}
  ここでは初期の地図の表示を行っている。地図の中央(\texttt{center})を指定
  していないのでこの時点では地図は表示されない。
- \LISTN{GIS/map-new2.js}{25}{53}{\small}
+ \LISTN{GIS/map-new2.js}{25}{53}{\normalsize}
  ここでは、アップロードするファイルが変化したときのイベント処理を行って
  いる。
  \begin{itemize}
@@ -212,7 +212,7 @@ GPXファイルの構造は次のようになっている。
 				る。
  \end{itemize}
  次の部分は、ログの情報を表示する部分である。
- \LISTN{GIS/map-new2.js}{54}{63}{\small}
+ \LISTN{GIS/map-new2.js}{54}{63}{\normalsize}
  \begin{itemize}
 	\item この関数の引数は、表に表示するデータ、表示するオブジェクト、
 				(11行目で定義した)背景色の指定の3つである。
@@ -220,7 +220,7 @@ GPXファイルの構造は次のようになっている。
 				行目から62行目)する。
  \end{itemize}
  次のリストは道のりを表示する部分である。
- \LISTN{GIS/map-new2.js}{64}{last}{\small}
+ \LISTN{GIS/map-new2.js}{64}{last}{\normalsize}
  \begin{itemize}
 	\item この関数の引数は道のりの幅、不透明度である。
 	\item 69行目から76行目で道のりを構成する地点を Google Maps の地点オブ
@@ -236,50 +236,76 @@ GPXファイルの構造は次のようになっている。
  \section{PHPによる処理}
  XMLファイルの処理はPHPでも可能である。次の例はGPXアイルから道のりに必要
  なJSONオブジェクトを作成する例である。
- \LISTN{GIS/getGPSData.php}{1}{9}{\small}
+ \LISTN{GIS/getGPSDataTmp.php}{1}{9}{\normalsize}
  与えられた緯度経度から空間の位置を求める関数である。
  戻り値は空間の位置を配列として返す。
 
  次のリストは与えられたファイルからGPXファイルを処理する関数である。ファ
  イル名は初めの引数で与えられる。
-\LISTN{GIS/getGPSDataTmp.php}{10}{17}{\small}
+\LISTN{GIS/getGPSDataTmp.php}{10}{16}{\normalsize}
  \begin{itemize}
 %  \item ファイル\texttt{\$fn}からログ内の道程の距離を求める関数である。
   \item XMLファイルを読み込むために\texttt{DOMDocument}のインスタン
-        スを作成(11行目)している。
+        スを作成(10行目)している。
   \item \texttt{load}メソッドにファイル名を指定することで、DOMオブジェク
-        トに変換される(12行目)。
+        トに変換される(11行目)。
   \item PHPではピリオド\texttt{.}は文字列の連接演算子なのでメソッドを使
         用するためには\texttt{->}を用いる。
-  \item \texttt{getElementsByTagName}で\texttt{trk}を取得(13行目)する。
-  \item 14行目でその数を変数\texttt{\$len}に格納している。
-  \item トラックごとの情報をしまうための変数を初期化(15行目と16行目)して
+  \item \texttt{getElementsByTagName}で\texttt{trk}を取得(12行目)する。
+  \item 13行目でその数を変数\texttt{\$len}に格納している。
+  \item トラックごとの情報をしまうための変数を初期化(14行目から16行目)して
 				いる。
  \end{itemize}
-\LISTN{GIS/getGPSDAtaTmp.php}{18}{28}{\small}
+\LISTN{GIS/getGPSDAtaTmp.php}{17}{27}{\normalsize}
  各\texttt{trk}に対して距離などを求める。
  \begin{itemize}
-  \item \texttt{trk}の一つを変数\texttt{\$trk}に格納している。呼び出しに注意(19行
+  \item \texttt{trk}の一つを変数\texttt{\$trk}に格納している。呼び出しに注意(18行
         目)すること。
-  \item \texttt{\$trk}に含まれる\texttt{trkpt}のリストを得る(20行目)。
-  \item 極端に短いログは省く(22行目)。
-  \item ログ内の地点の範囲を示す変数を初期化(24、25行目)している。
-  \item 地点の情報をしまう配列を初期化(26行目)している。
-  \item 初めの位置の空間座標を変数\texttt{\$ppos}に格納(27行目)している。
-  \item 積算距離の変数を初期化(28行目)する。
+  \item \texttt{\$trk}に含まれる\texttt{trkpt}のリストを得る(19行目)。
+  \item 極端に短いログは省く(21行目)。
+  \item ログ内の地点の範囲を示す変数を初期化(22から24行目)している。
+  \item 地点の情報をしまう配列を初期化(25行目)している。
+  \item 初めの位置の空間座標を変数\texttt{\$ppos}に格納(26行目)している。
+  \item 積算距離の変数を初期化(27行目)する。
  \end{itemize}
- \LISTN{GIS/getGPSDAtaTmp.php}{29}{44}{\small}
+ \LISTN{GIS/getGPSDAtaTmp.php}{28}{43}{\normalsize}
  \begin{itemize}
-  \item 各\texttt{trkpt}から緯度と経度を取り出し(31、32行目)、
-  今までの範囲外ならば範囲を更新(33行目から36行目)している。
-  \item 緯度と経度を配列に追加(37行目)し、空間の位置を計算(38行目)する。
-  \item ひとつ前の点との差を求め(39行目から41行目)、距離を計算(42行目)す
+  \item 各\texttt{trkpt}から緯度と経度を取り出し(30、31行目)、
+  今までの範囲外ならば範囲を更新(32行目から35行目)している。
+  \item 緯度と経度を配列に追加(36行目)し、空間の位置を計算(37行目)する。
+  \item ひとつ前の点との差を求め(38行目から40行目)、距離を計算(41行目)す
 				る。
-  \item ひとつ前の点を更新(43行目)する。
+  \item ひとつ前の点を更新(42行目)する。
  \end{itemize}
- \LISTN{GIS/getGPSDAtaTmp.php}{45}{last}{\small}
+ \LISTN{GIS/getGPSDAtaTmp.php}{44}{last}{\normalsize}
  \begin{itemize}
-  \item 移動がほとんどないトラックは登録しない(45行目)。
-  \item 登録するトラックをJSON形式で作成(48行目から49行目)する。
-  \item 関数\texttt{implode}は配列の要素を与えられた文字列を挟んで出力する。
-  \end{itemize}
+  \item 移動がほとんどないトラックは登録しない(44行目)。
+  \item 登録するトラックを追加する(46行目から48行目)する。
+  \item すべてのデータを戻り値とする(50行目)。
+	\item 52行目はコマンドプロンプトからファイル名を与えて得られたものを
+				\Verb+json_encode+関数を用いてJSON形式の文字列に変換して出力している。
+ \end{itemize}
+ コマンドプロンプトからの実行は\texttt{php <このファイル> <gpxファイル>}
+ で実行すればよい。ネットからファイル名を指定するのであればスパーグロー
+ バル変数の適当な値に変えればよい。
+
+ 
+なお、\Verb+json_encode+をデフォルトのままで使用すると、改行コードや空
+白がない文字列となる。また、漢字などはUTF形式の文字コードとなる。デバッ
+グのときには読みやすい形式に変換するとよい。表\ref{json_encode}主なパラ
+メータの名称とその意味の一覧である。
+\begin{table}[htb]
+ \caption{\texttt{json\_encode}関数のオプションパラメータの例}\label{json_encode}
+ \begin{center}
+\begin{tabular}{|c|c|}
+ \hline
+ パラメータ名& 意味\\\hline
+ \Verb+JSON_PRETTY_PRINT+& 表示を改行や空白を使用してきれいに整形する。
+		 \\ \hline
+ \Verb+JSON_PRETTY_PRINT+& \texttt{/}をエスケープしない\\ \hline
+ \Verb+SON_UNESCAPED_UNICODE+& ユニコード文字をそのままの形式で表示する\\ \hline
+\end{tabular}
+ \end{center}
+\end{table}
+
+これらの値を複数使用する場合には\texttt{+}または\texttt{|}でつなぐ。
