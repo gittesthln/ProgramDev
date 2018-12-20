@@ -280,7 +280,7 @@ GPXファイルの構造は次のようになっている。
  \LISTN{GIS/getGPSDAtaTmp.php}{44}{last}{\normalsize}
  \begin{itemize}
   \item 移動がほとんどないトラックは登録しない(44行目)。
-  \item 登録するトラックを追加する(46行目から48行目)する。
+  \item 登録するトラックを追加する(46行目から48行目)。
   \item すべてのデータを戻り値とする(50行目)。
 	\item 52行目はコマンドプロンプトからファイル名を与えて得られたものを
 				\Verb+json_encode+関数を用いてJSON形式の文字列に変換して出力している。
@@ -302,8 +302,8 @@ GPXファイルの構造は次のようになっている。
  パラメータ名& 意味\\\hline
  \Verb+JSON_PRETTY_PRINT+& 表示を改行や空白を使用してきれいに整形する。
 		 \\ \hline
- \Verb+JSON_PRETTY_PRINT+& \texttt{/}をエスケープしない\\ \hline
- \Verb+SON_UNESCAPED_UNICODE+& ユニコード文字をそのままの形式で表示する\\ \hline
+ \Verb+JSON_UNESCAPED_SLASHES+& \texttt{/}をエスケープしない\\ \hline
+ \Verb+JSON_UNESCAPED_UNICODE+& ユニコード文字をそのままの形式で表示する\\ \hline
 \end{tabular}
  \end{center}
 \end{table}

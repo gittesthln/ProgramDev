@@ -3,7 +3,7 @@
 \title{ソフトウェア開発\\第12回目授業}
 \author{平野 照比古}
 \institute{}
-\date{2017/12/15}
+\date{2018/12/21}
 \newtheorem{Prob}{解説}
 \newcommand{\Elm}[1]{\texttt{<#1>}}
 \setbeamercovered{transparent}
@@ -328,63 +328,91 @@ XMLは構造化されたデータを表現する単純なテキストベース�
 \end{frame}
 \begin{frame}[containsverbatim]
  \frametitle{与えられたファイルからGPXファイルを処理}
-\LISTN{GIS/getGPSDataTmp.php}{10}{17}{\tiny}
+\LISTN{GIS/getGPSDataTmp.php}{10}{16}{\tiny}
 \end{frame}
 \begin{frame}[containsverbatim]
  \frametitle{}
  \begin{itemize}
 %  \item ファイル\texttt{\$fn}からログ内の道程の距離を求める関数である。
   \item XMLファイルを読み込むために\texttt{DOMDocument}のインスタン
-        スを作成(11行目)
+        スを作成(10行目)
   \item \texttt{load}メソッドにファイル名を指定することで、DOMオブジェク
-        トに変換される(12行目)。
+        トに変換される(11行目)。
   \item PHPではピリオド\texttt{.}は文字列の連接演算子なのでメソッドは
         \texttt{->}を用いる。
-  \item \texttt{getElementsByTagName}で\texttt{trk}を取得(13行目)する。
+  \item \texttt{getElementsByTagName}で\texttt{trk}を取得(12行目)する。
   \item 14行目でその数を変数\texttt{\$len}に格納
-  \item トラックごとの情報をしまうための変数を初期化(15行目と16行目)
-				いる。
+  \item トラックごとの情報をしまうための変数を初期化(14行目から16行目)
  \end{itemize}
 \end{frame}
 \begin{frame}[containsverbatim]
  \frametitle{}
-\LISTN{GIS/getGPSDAtaTmp.php}{18}{28}{\tiny}
+\LISTN{GIS/getGPSDAtaTmp.php}{17}{27}{\tiny}
  各\texttt{trk}に対して距離などを求める。
 \end{frame}
 \begin{frame}[containsverbatim]
  \frametitle{}
  \begin{itemize}
-  \item \texttt{trk}の一つを変数\texttt{\$trk}に格納している。呼び出しに注意(19行
+  \item \texttt{trk}の一つを変数\texttt{\$trk}に格納している。呼び出しに注意(18行
         目)
-  \item \texttt{\$trk}に含まれる\texttt{trkpt}のリストを得る(20行目)。
-  \item 極端に短いログは省く(22行目)。
-  \item ログ内の地点の範囲を示す変数を初期化(24、25行目)
-  \item 地点の情報をしまう配列を初期化(26行目)
-  \item 初めの位置の空間座標を変数\texttt{\$ppos}に格納(27行目)
-  \item 積算距離の変数を初期化(28行目)
+  \item \texttt{\$trk}に含まれる\texttt{trkpt}のリストを得る(19行目)。
+  \item 極端に短いログは省く(21行目)。
+  \item ログ内の地点の範囲を示す変数を初期化(22行目から24行目)
+  \item 地点の情報をしまう配列を初期化(25行目)
+  \item 初めの位置の空間座標を変数\texttt{\$ppos}に格納(26行目)
+  \item 積算距離の変数を初期化(27行目)
  \end{itemize}
 \end{frame}
 \begin{frame}[containsverbatim]
  \frametitle{}
- \LISTN{GIS/getGPSDAtaTmp.php}{29}{44}{\tiny}
+ \LISTN{GIS/getGPSDAtaTmp.php}{28}{43}{\tiny}
 \end{frame}
 \begin{frame}[containsverbatim]
  \frametitle{}
  \begin{itemize}
-  \item 各\texttt{trkpt}から緯度と経度を取り出し(31、32行目)、
-  今までの範囲外ならば範囲を更新(33行目から36行目)
-  \item 緯度と経度を配列に追加(37行目)し、空間の位置を計算(38行目)
-  \item ひとつ前の点との差を求め(39行目から41行目)、距離を計算(42行目)
-  \item ひとつ前の点を更新(43行目)
+  \item 各\texttt{trkpt}から緯度と経度を取り出し(30、31行目)、
+  今までの範囲外ならば範囲を更新(32行目から35行目)
+  \item 緯度と経度を配列に追加(36行目)し、空間の位置を計算(37行目)
+  \item ひとつ前の点との差を求め(38行目から40行目)、距離を計算(41行目)
+  \item ひとつ前の点を更新(42行目)
  \end{itemize}
 \end{frame}
 \begin{frame}[containsverbatim]
  \frametitle{}
-\LISTN{GIS/getGPSDAtaTmp.php}{45}{last}{\tiny}
+\LISTN{GIS/getGPSDAtaTmp.php}{44}{last}{\tiny}
   \begin{itemize}
-  \item 移動がほとんどないトラックは登録しない(45行目)。
-  \item 登録するトラックをJSON形式で作成(48行目から49行目)
-  \item 関数\texttt{implode}は配列の要素を与えられた文字列を挟んで出力
+  \item 移動がほとんどないトラックは登録しない(44行目)。
+  \item 登録するトラックを追加(46行目から48行目)
+  \item すべてのデータを戻り値とする(50行目)。
+	\item 52行目はコマンドプロンプトからファイル名を与えて得られたものを
+				\Verb+json_encode+関数を用いてJSON形式の文字列に変換して出力
   \end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{プログラムの実行方法}
+ \begin{itemize}
+  \item コマンドプロンプトからの実行は
+        \texttt{php <このファイル> <gpxファイル>}
+  \item ネットからファイル名を指定するのであればスパーグロー
+ バル変数の適当な値に変える
+ \end{itemize}
+\end{frame}
+\begin{frame}[containsverbatim]
+ \frametitle{\texttt{json\_encode}のオプション}
+ \begin{itemize}
+  \item デフォルトでは改行コードや空白がない文字列に変換
+  \item 漢字などはUTF形式の文字コード
+ \end{itemize}
+ 2番目の引数に指定するパラメータの例
+
+ \begin{tabular}{|c|c|}
+ \hline
+ パラメータ名& 意味\\\hline
+ \Verb+JSON_PRETTY_PRINT+& 表示を改行や空白を使用してきれいに整形
+		 \\ \hline
+ \Verb+JSON_UNESCAPED_SLASHES+& \texttt{/}をエスケープしない\\ \hline
+ \Verb+JSON_UNESCAPED_UNICODE+& ユニコード文字をそのままの形式で表示\\ \hline
+\end{tabular}
+ これらの値を複数使用する場合には\texttt{+}または\texttt{|}でつなぐ。
 \end{frame}
 \end{document}
