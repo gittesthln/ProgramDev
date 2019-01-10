@@ -150,8 +150,8 @@
 \contentsline {section}{\numberline {12.4}PHPによる処理}{126}{section.12.4}
 \contentsline {chapter}{\numberline {第13回}クラスの例}{129}{chapter.13}
 \contentsline {section}{\numberline {13.1}例の概要}{129}{section.13.1}
-\contentsline {section}{\numberline {13.2}ソースコードの解説}{130}{section.13.2}
-\contentsline {subsection}{\numberline {13.2.1}HTMLファイル}{130}{subsection.13.2.1}
+\contentsline {section}{\numberline {13.2}ソースコードの解説}{129}{section.13.2}
+\contentsline {subsection}{\numberline {13.2.1}HTMLファイル}{129}{subsection.13.2.1}
 \contentsline {subsection}{\numberline {13.2.2}ユーザーインターフェイス}{130}{subsection.13.2.2}
 \contentsline {subsection}{\numberline {13.2.3}ユーザーインターフェイスを引用するJavaScriptファイル}{138}{subsection.13.2.3}
 \contentsline {chapter}{\numberline {第14回}システム開発のためのヒント}{139}{chapter.14}

@@ -5,8 +5,7 @@ function setOptions(props, Opt) {
 }
 function setStyle(props, Opt) {
   setOptions(props, Opt);
-  return {
-    style: JSON.stringify(props).replace(/[{"]/g,"").replace(/[,}]/g,";")};
+  return {style: JSON.stringify(props).replace(/[{"]/g,"").replace(/[,}]/g,";")};
 }
 let DOMObject = (()=>{
   let NS ={
@@ -26,19 +25,12 @@ let DOMObject = (()=>{
       if(elm){        
         this.elm = document.createElementNS(NS[nameSpace], elm);
         this.setAttribs(attribs);//console.log(parentNode);
-        if(parentNode&& parentNode.elm) {
-          parentNode.elm.appendChild(this.elm);
-        }
-        for(let evt in events) {
-          this.elm.addEventListener(evt, events[evt], true);
-        }
+        if(parentNode&& parentNode.elm) parentNode.elm.appendChild(this.elm);
+        for(let evt in events) this.elm.addEventListener(evt, events[evt], true);
       }
     }
     setAttribs(Opt) {
-      let elm = this.elm;
-      for(let attrib in Opt) {
-        elm.setAttribute(attrib,Opt[attrib]);
-      }
+      for(let attrib in Opt) this.elm.setAttribute(attrib,Opt[attrib]);
     }
   };})();
 class divWithText extends DOMObject{
@@ -55,8 +47,7 @@ class SpinBox {
       skip: 1, bigSkip:5, value:0,
       type:"limited"// "cyclic" 
     },
-    this.boundary = {
-        display:"block", margin: "0px", border: "0px", padding:"0px"};
+    this.boundary = {display:"block", margin: "0px", border: "0px", padding:"0px"};
     let container = new DOMObject("div", setStyle(this.boundary, Opt), P);
     setOptions(this.values, Opt);
     let div0 = new DOMObject("div",
@@ -105,7 +96,7 @@ class SpinBox {
 }
 class SetColor {
   constructor(title, type, P, callback, opt) {
-//    let that = this;
+    //let that = this;
     this.callback = callback;
     if(title) {
       new divWithText(title, P,
