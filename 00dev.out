@@ -124,16 +124,9 @@
 \BOOKMARK [2][-]{subsection.13.2.3}{ユーザーインターフェイスを引用するJavaScriptファイル}{section.13.2}% 124
 \BOOKMARK [0][-]{chapter.14}{システム開発のためのヒント}{}% 125
 \BOOKMARK [1][-]{section.14.1}{コードの構造}{chapter.14}% 126
-\BOOKMARK [1][-]{section.14.2}{コードの管理の問題点}{chapter.14}% 127
-\BOOKMARK [1][-]{section.14.3}{バージョン管理}{chapter.14}% 128
-\BOOKMARK [2][-]{subsection.14.3.1}{バージョン管理の概念}{section.14.3}% 129
-\BOOKMARK [2][-]{subsection.14.3.2}{バージョン管理ソフト}{section.14.3}% 130
-\BOOKMARK [2][-]{subsection.14.3.3}{gitの使い方}{section.14.3}% 131
-\BOOKMARK [0][-]{chapter.15}{JavaScriptライブラリーの配布}{}% 132
-\BOOKMARK [1][-]{section.15.1}{jQueryのコードを読む}{chapter.15}% 133
-\BOOKMARK [1][-]{section.15.2}{JavaScriptファイルの短縮化}{chapter.15}% 134
-\BOOKMARK [2][-]{subsection.15.2.1}{JavaScriptファイルの短縮化について}{section.15.2}% 135
-\BOOKMARK [2][-]{subsection.15.2.2}{短縮化の例}{section.15.2}% 136
-\BOOKMARK [1][-]{section.15.3}{Webサイトの効率化}{chapter.15}% 137
-\BOOKMARK [2][-]{subsection.15.3.1}{Contents Deliverly Network\(CDN\)}{section.15.3}% 138
-\BOOKMARK [2][-]{subsection.15.3.2}{CSS Sprite}{section.15.3}% 139
+\BOOKMARK [1][-]{section.14.2}{バージョン管理}{chapter.14}% 127
+\BOOKMARK [2][-]{subsection.14.2.1}{バージョン管理の概念}{section.14.2}% 128
+\BOOKMARK [2][-]{subsection.14.2.2}{バージョン管理ソフト}{section.14.2}% 129
+\BOOKMARK [2][-]{subsection.14.2.3}{gitの使い方}{section.14.2}% 130
+\BOOKMARK [1][-]{section.14.3}{分散処理}{chapter.14}% 131
+\BOOKMARK [1][-]{section.14.4}{Web Workers}{chapter.14}% 132

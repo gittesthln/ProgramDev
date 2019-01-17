@@ -158,12 +158,11 @@
 \contentsline {section}{\numberline {14.1}コードの構造}{139}{section.14.1}
 \contentsline {subsubsection}{良いコードとは}{139}{section*.34}
 \contentsline {subsubsection}{プログラムとデータの分離}{139}{section*.35}
-\contentsline {section}{\numberline {14.2}コードの管理の問題点}{140}{section.14.2}
+\contentsline {section}{\numberline {14.2}バージョン管理}{140}{section.14.2}
 \contentsline {subsubsection}{複数でシステム開発をするときの問題点}{140}{section*.36}
-\contentsline {section}{\numberline {14.3}バージョン管理}{141}{section.14.3}
-\contentsline {subsection}{\numberline {14.3.1}バージョン管理の概念}{141}{subsection.14.3.1}
-\contentsline {subsection}{\numberline {14.3.2}バージョン管理ソフト}{141}{subsection.14.3.2}
-\contentsline {subsection}{\numberline {14.3.3}gitの使い方}{141}{subsection.14.3.3}
+\contentsline {subsection}{\numberline {14.2.1}バージョン管理の概念}{141}{subsection.14.2.1}
+\contentsline {subsection}{\numberline {14.2.2}バージョン管理ソフト}{141}{subsection.14.2.2}
+\contentsline {subsection}{\numberline {14.2.3}gitの使い方}{141}{subsection.14.2.3}
 \contentsline {subsubsection}{git の特徴}{142}{section*.37}
 \contentsline {subsubsection}{git のインストール}{142}{section*.38}
 \contentsline {subsubsection}{初期設定}{142}{section*.39}
@@ -172,11 +171,5 @@
 \contentsline {paragraph}{SSH Keyの登録}{142}{section*.42}
 \contentsline {subsubsection}{GitHub のアカウントの取得}{143}{section*.43}
 \contentsline {subsubsection}{リポジトリの作成と運用}{143}{section*.44}
-\contentsline {chapter}{\numberline {第15回}JavaScriptライブラリーの配布}{145}{chapter.15}
-\contentsline {section}{\numberline {15.1}jQueryのコードを読む}{145}{section.15.1}
-\contentsline {section}{\numberline {15.2}JavaScriptファイルの短縮化}{147}{section.15.2}
-\contentsline {subsection}{\numberline {15.2.1}JavaScriptファイルの短縮化について}{147}{subsection.15.2.1}
-\contentsline {subsection}{\numberline {15.2.2}短縮化の例}{147}{subsection.15.2.2}
-\contentsline {section}{\numberline {15.3}Webサイトの効率化}{152}{section.15.3}
-\contentsline {subsection}{\numberline {15.3.1}Contents Deliverly Network(CDN)}{152}{subsection.15.3.1}
-\contentsline {subsection}{\numberline {15.3.2}CSS Sprite}{152}{subsection.15.3.2}
+\contentsline {section}{\numberline {14.3}分散処理}{144}{section.14.3}
+\contentsline {section}{\numberline {14.4}Web Workers}{144}{section.14.4}
