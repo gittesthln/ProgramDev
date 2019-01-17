@@ -6,8 +6,9 @@
 #define L       32000		/* limit of primes stored in memory */
 #define Pnum		 3500		/* size of area which stores primes */
 #define LIMIT 100000000
+#define No    10
 
-#define MaxThreads  10
+#define MaxThreads  No
 
 #define TRUE 1
 #define FALSE 0
@@ -16,7 +17,11 @@
 int Prime[  Pnum ] = {2,3};//    Prime[0] = 2, Prime[1] = 3;
 int Prime2[ Pnum ] = {2*2,5*5};//    Prime2[0] = 4, Prime[1] = 25;
 int ic, Cnt = 0;
-int Step;
+
+  pthread_mutex_t mutex   = PTHREAD_MUTEX_INITIALIZER;
+  pthread_cond_t  request = PTHREAD_COND_INITIALIZER;
+
+#define Step (LIMIT/No);
 
 int GenerateSmallPrimes( void ){
   int i, j, ic = 1;
@@ -55,6 +60,8 @@ void * GetNoPrimes(void *m){
   }
   printf("Number of Primes between %10d and %10d %10d\n", Start,End,Count);
   Cnt += Count;
+  //  pthread_mutex_lock(&mutex);
+  pthread_cond_signal(&request);
 }
 
 int main(int argc, char *argv[]) {
@@ -64,7 +71,7 @@ int main(int argc, char *argv[]) {
 	int Threads;
   int threadParams[MaxThreads];
   for(i=0;i<MaxThreads;i++){
-    threadparams[i]=i+1;
+    threadParams[i]=i+1;
   }
 	for(i = 1; i <argc; i++) {
 		if(*argv[i] != '-') break;
@@ -78,7 +85,7 @@ int main(int argc, char *argv[]) {
 	}
 	ic = GenerateSmallPrimes();
 	if( argc == i) {//With no arguments, Execute sequencially
-    Step = LIMIT/MaxThreads;
+    //    Step = LIMIT/MaxThreads;
 		for (i=1;i<= MaxThreads; i++) {
 			GetNoPrimes((void *)&i);
 		}
@@ -87,12 +94,14 @@ int main(int argc, char *argv[]) {
 		if(Threads <=0) {
 			Threads = 1;
 		} else if(Threads >MaxThreads) Threads = MaxThreads;
-    Step = LIMIT/Threads;
 		for (i=0; i<Threads; i++){		//Start number of Threads required
       pthread_create(hThreads+i, NULL, &GetNoPrimes, (void *)(threadParams+i));
     }
-		for (i=1; i<=Threads; i++){		//Start number of Threads required
-      printf("%d:%d\n",i,pthread_join(hThreads[i-1], NULL));
+		for (; i<=No; i++){		//Start number of Threads required
+      pthread_mutex_lock(&mutex);
+      pthread_cond_wait(&request, &mutex);
+      pthread_mutex_unlock(&mutex);
+      pthread_create(hThreads+i, NULL, &GetNoPrimes, (void *)(threadParams+i));
 		}
 	}
   printf("Total number of Primes upto %d is %d\n", LIMIT, Cnt);
